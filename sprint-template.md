@@ -8,7 +8,7 @@ Triplet is an iOS application aimed to facilitate and streamline the trip planni
 
 > [https://trello.com/invite/b/OypZmBTq/ATTI206a0bd3b645a7a996c3d7a407be8f3a38BA8E12/triplet]
 
-### **Figma Page**
+### **Figma Page:**
 
 > [https://www.figma.com/file/YD1pgMpGIpVLccyFjbvJRt/Triplet-Flow-Chart?type=whiteboard&node-id=0%3A1&t=WyW6GuQih4Op8yX0-1]
 
