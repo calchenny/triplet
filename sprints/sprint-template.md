@@ -4,13 +4,10 @@
 
 Triplet is an iOS application aimed to facilitate and streamline the trip planning process. With seamless sharing and commenting capabilities, our application will empower users to effortlessly organize, coordinate, and optimize their travel experience with friends and family. 
 
-### **Trello Board:**
+### **Important Links:**
+[Trello Board](https://trello.com/invite/b/OypZmBTq/ATTI206a0bd3b645a7a996c3d7a407be8f3a38BA8E12/triplet)
 
-> [https://trello.com/invite/b/OypZmBTq/ATTI206a0bd3b645a7a996c3d7a407be8f3a38BA8E12/triplet]
-
-### **Figma Page:**
-
-> [https://www.figma.com/file/YD1pgMpGIpVLccyFjbvJRt/Triplet-Flow-Chart?type=whiteboard&node-id=0%3A1&t=WyW6GuQih4Op8yX0-1]
+[Figma Page](https://www.figma.com/file/YD1pgMpGIpVLccyFjbvJRt/Triplet-Flow-Chart?type=whiteboard&node-id=0%3A1&t=WyW6GuQih4Op8yX0-1)
 
 ### **Sprint Meeting Notes:**
 
