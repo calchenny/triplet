@@ -14,13 +14,13 @@ Triplet is an iOS application aimed to facilitate and streamline the trip planni
 
 ### **Sprint Meeting Notes:**
 
-**What we did**
+**What we did:**
 * BLah
 
-**What we plan to do**
+**What we plan to do:**
 * BLah
 
-**Issues that we are facing**
+**Issues that we are facing:**
 * BLah
 
 ### **Individual Notes:**
