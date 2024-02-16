@@ -13,6 +13,7 @@ Individual Notes:
 Done: ([Link to Commit 1] - [Task Description 1], [Link to Commit 2] - [Task Description 2], etc.)
 To Do: ([Task Description 1], [Task Description 2], etc.)
 Impediments: ([Description of issue], [Description of issue], etc.)
+
 [Name of Team Member 2]:
 Done: ([Link to Commit 1] - [Task Description 1], [Link to Commit 2] - [Task Description 2], etc.)
 To Do: ([Task Description 1], [Task Description 2], etc.)
