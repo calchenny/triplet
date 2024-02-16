@@ -1,35 +1,94 @@
-Sprint Planning Meeting Notes - [Date]
-Project Summary:
+## Sprint Planning Meeting Notes - [Date]
 
-Briefly describe your project in 2-3 sentences. Include its goals and current stage of development.
+### **Project Summary:**
 
-Trello Board:
+Triplet is an iOS application aimed to facilitate and streamline the trip planning process. With seamless sharing and commenting capabilities, our application will empower users to effortlessly organize, coordinate, and optimize their travel experience with friends and family. 
 
-[Link to your Trello board containing the current sprint tasks and progress]
+### **Trello Board:**
 
-Individual Notes:
+> [https://trello.com/invite/b/OypZmBTq/ATTI206a0bd3b645a7a996c3d7a407be8f3a38BA8E12/triplet]
 
-[Name of Team Member 1]:
-Done: ([Link to Commit 1] - [Task Description 1], [Link to Commit 2] - [Task Description 2], etc.)
-To Do: ([Task Description 1], [Task Description 2], etc.)
-Impediments: ([Description of issue], [Description of issue], etc.)
+### **Figma Page**
 
-[Name of Team Member 2]:
-Done: ([Link to Commit 1] - [Task Description 1], [Link to Commit 2] - [Task Description 2], etc.)
-To Do: ([Task Description 1], [Task Description 2], etc.)
-Impediments: ([Description of issue], [Description of issue], etc.)
-[Continue for all team members]
-Additional Notes:
+> [https://www.figma.com/file/YD1pgMpGIpVLccyFjbvJRt/Triplet-Flow-Chart?type=whiteboard&node-id=0%3A1&t=WyW6GuQih4Op8yX0-1]
 
-Discuss any major project updates or changes.
-Highlight key achievements or challenges faced during the week.
-Plan for upcoming tasks and potential roadblocks.
-Mention any collaborative efforts or dependencies between team members.
-Action Items:
+### **Sprint Meeting Notes:**
 
-Summarize key action items arising from the discussion (e.g., follow-up on specific issues, assign new tasks).
-Specify clear ownership and deadlines for each action item.
-Commit Link Example:
+**What we did**
+* BLah
 
-For tasks completed this week, link to the corresponding commit(s) on Github.
-Briefly describe the commit message or task completed if no code changes were involved.
+**What we plan to do**
+* BLah
+
+**Issues that we are facing**
+* BLah
+
+### **Individual Notes:**
+
+* **[Calvin Chen]:**
+    * **Done:**
+        * [Link to Commit 1] - [Task Description 1]
+        * [Link to Commit 2] - [Task Description 2]
+        * ...
+    * **To Do:**
+        * [Task Description 1]
+        * [Task Description 2]
+        * ...
+    * **Blockers:**
+        * [Description of issue 1]
+        * [Description of issue 2]
+
+* **[Xiaolin Ma]:**
+    * **Done:**
+        * [Link to Commit 1] - [Task Description 1]
+        * [Link to Commit 2] - [Task Description 2]
+        * ...
+    * **To Do:**
+        * [Task Description 1]
+        * [Task Description 2]
+        * ...
+    * **Blockers:**
+        * [Description of issue 1]
+        * [Description of issue 2]
+     
+* **[Derek Ma]:**
+    * **Done:**
+        * [Link to Commit 1] - [Task Description 1]
+        * [Link to Commit 2] - [Task Description 2]
+        * ...
+    * **To Do:**
+        * [Task Description 1]
+        * [Task Description 2]
+        * ...
+    * **Blockers:**
+        * [Description of issue 1]
+        * [Description of issue 2]
+     
+* **[Andy Lam]:**
+    * **Done:**
+        * [Link to Commit 1] - [Task Description 1]
+        * [Link to Commit 2] - [Task Description 2]
+        * ...
+    * **To Do:**
+        * [Task Description 1]
+        * [Task Description 2]
+        * ...
+    * **Blockers:**
+        * [Description of issue 1]
+        * [Description of issue 2]
+     
+* **[Newland Luu]:**
+    * **Done:**
+        * [Link to Commit 1] - [Task Description 1]
+        * [Link to Commit 2] - [Task Description 2]
+        * ...
+    * **To Do:**
+        * [Task Description 1]
+        * [Task Description 2]
+        * ...
+    * **Blockers:**
+        * [Description of issue 1]
+        * [Description of issue 2]
+
+### **Additional Notes:**
+* 
