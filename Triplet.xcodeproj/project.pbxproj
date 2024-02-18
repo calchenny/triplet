@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		89031F1F2B7FFC0A00282C88 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 89031F1E2B7FFC0A00282C88 /* GoogleService-Info.plist */; };
 		89031F222B7FFCE200282C88 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 89031F212B7FFCE200282C88 /* FirebaseAnalytics */; };
 		89031F242B7FFCE200282C88 /* FirebaseAnalyticsOnDeviceConversion in Frameworks */ = {isa = PBXBuildFile; productRef = 89031F232B7FFCE200282C88 /* FirebaseAnalyticsOnDeviceConversion */; };
 		89031F262B7FFCE200282C88 /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 89031F252B7FFCE200282C88 /* FirebaseAnalyticsSwift */; };
@@ -39,16 +38,17 @@
 		8935A4282B7F496200F62185 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8935A4272B7F496200F62185 /* ContentView.swift */; };
 		8935A42A2B7F496300F62185 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8935A4292B7F496300F62185 /* Assets.xcassets */; };
 		8935A42D2B7F496300F62185 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8935A42C2B7F496300F62185 /* Preview Assets.xcassets */; };
+		897674002B8194EF00390C0B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 897673FF2B8194EF00390C0B /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		89031F1E2B7FFC0A00282C88 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		89031F572B80012800282C88 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		8935A4222B7F496200F62185 /* Triplet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Triplet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8935A4252B7F496200F62185 /* TripletApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripletApp.swift; sourceTree = "<group>"; };
 		8935A4272B7F496200F62185 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		8935A4292B7F496300F62185 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8935A42C2B7F496300F62185 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		897673FF2B8194EF00390C0B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,7 +111,7 @@
 				8935A4252B7F496200F62185 /* TripletApp.swift */,
 				8935A4272B7F496200F62185 /* ContentView.swift */,
 				8935A4292B7F496300F62185 /* Assets.xcassets */,
-				89031F1E2B7FFC0A00282C88 /* GoogleService-Info.plist */,
+				897673FF2B8194EF00390C0B /* GoogleService-Info.plist */,
 				89031F572B80012800282C88 /* Info.plist */,
 				8935A42B2B7F496300F62185 /* Preview Content */,
 			);
@@ -218,7 +218,7 @@
 			files = (
 				8935A42D2B7F496300F62185 /* Preview Assets.xcassets in Resources */,
 				8935A42A2B7F496300F62185 /* Assets.xcassets in Resources */,
-				89031F1F2B7FFC0A00282C88 /* GoogleService-Info.plist in Resources */,
+				897674002B8194EF00390C0B /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
