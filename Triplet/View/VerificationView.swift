@@ -8,8 +8,10 @@
 import SwiftUI
 
 struct VerificationView: View {
-    @ObservedObject var login : LoginViewModel
+    @EnvironmentObject var login : LoginViewModel
     @Environment(\.presentationMode) var present
+    @State var navigateToHome: Bool = false
+    
     var body: some View {
         ZStack {
             VStack {
@@ -52,14 +54,18 @@ struct VerificationView: View {
                         Text("Didn't receive code?")
                             .foregroundStyle(Color.gray)
                         
-                        Button(action: login.requestCode) {
+                        Button {
+                            resendCode()
+                        }label: {
                             Text("Request Again")
                                 .fontWeight(.bold)
                                 .foregroundStyle(Color.black)
                         }
                     }
                     
-                    Button(action: login.verifyCode) {
+                    Button{
+                        verifyAndCreateAccount()
+                    } label: {
                         Text("Verify and Create Account")
                             .foregroundStyle(Color.black)
                             .padding(.vertical)
@@ -67,6 +73,10 @@ struct VerificationView: View {
                             .background(Color.gray)
                             .cornerRadius(15)
                     }
+                }
+                .navigationDestination(isPresented: $navigateToHome) {
+                    ContentView()
+                        .navigationBarBackButtonHidden(true)
                 }
                 .frame(height: UIScreen.main.bounds.height / 1.8)
                 .background(Color.white)
@@ -83,6 +93,33 @@ struct VerificationView: View {
         .navigationBarBackButtonHidden(true)
     }
     
+    
+    //function to resend code
+    func resendCode() {
+            Task {
+                do {
+                    try await login.requestCode()
+                }catch {
+                    print("An unexpected error occurred: \(error)")
+                }
+            }
+    }
+
+    // function that verifies otp code and then creates the account (same process)
+    func verifyAndCreateAccount() {
+        Task {
+            do {
+                try await login.verifyCode()
+                navigateToHome = true
+                
+            } catch {
+                navigateToHome = false
+                print("An unexpected error occurred: \(error)")
+            }
+        }
+    }
+    
+    // this function handles code view
     func getCodeAtIndex(index: Int) -> String {
         if login.code.count > index {
             let start = login.code.startIndex
@@ -113,5 +150,5 @@ struct CodeView: View {
     }
 }
 #Preview {
-    VerificationView(login: LoginViewModel())
+    VerificationView()
 }

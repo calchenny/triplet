@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// this structure creates the custom number pad used in the app
 struct CustomNumPad: View {
     @Binding var value: String
     var isVerify: Bool
@@ -46,6 +47,7 @@ struct CustomNumPad: View {
         .padding()
     }
     
+    // function to get entire width of screen
     func getWidth(frame: CGRect)-> CGFloat{
         
         let width = frame.width
@@ -54,6 +56,7 @@ struct CustomNumPad: View {
         
     }
     
+    // function to get entire height of screen
     func getHeight(frame: CGRect)-> CGFloat {
         let height = frame.height
         let actualHeight = height - 30
@@ -61,6 +64,7 @@ struct CustomNumPad: View {
         return actualHeight / 4
     }
     
+    // handles button actions on the number pad
     func buttonAction(value: String) {
         if value == "delete.left" && self.value != "" {
             self.value.removeLast()

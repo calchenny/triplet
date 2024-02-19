@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+
+// this view handles alerts for the logging in process
 struct AlertView: View {
     var msg: String
     @Binding var show: Bool

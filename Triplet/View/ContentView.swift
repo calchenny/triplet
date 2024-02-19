@@ -8,25 +8,14 @@
 import SwiftUI
 
 struct ContentView: View {
-    @AppStorage("log_Status") var status = false
     var body: some View {
-        ZStack{
-            
-            if status {
-                VStack(spacing: 15){
-                    Text("Logged in Successfully")
-                        .font(.title)
-                        .fontWeight(.heavy)
-                        .foregroundStyle(Color.black)
-                }
-            }
-            else{
-                NavigationStack {
-                    Login()
-                        .navigationBarBackButtonHidden(true)
-                }
-            }
+        VStack {
+            Image(systemName: "globe")
+                .imageScale(.large)
+                .foregroundStyle(.tint)
+            Text("Hello, world!")
         }
+        .padding()
     }
 }
 
