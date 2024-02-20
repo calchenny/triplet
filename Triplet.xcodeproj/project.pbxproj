@@ -39,6 +39,8 @@
 		8935A42A2B7F496300F62185 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8935A4292B7F496300F62185 /* Assets.xcassets */; };
 		8935A42D2B7F496300F62185 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8935A42C2B7F496300F62185 /* Preview Assets.xcassets */; };
 		894846222B85428F00F7347A /* TripModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 894846212B85428F00F7347A /* TripModel.swift */; };
+		894846242B85586600F7347A /* OverviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 894846232B85586600F7347A /* OverviewView.swift */; };
+		894846272B8558DC00F7347A /* ScalingHeaderScrollView in Frameworks */ = {isa = PBXBuildFile; productRef = 894846262B8558DC00F7347A /* ScalingHeaderScrollView */; };
 		897674002B8194EF00390C0B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 897673FF2B8194EF00390C0B /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
@@ -50,6 +52,7 @@
 		8935A4292B7F496300F62185 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8935A42C2B7F496300F62185 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		894846212B85428F00F7347A /* TripModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripModel.swift; sourceTree = "<group>"; };
+		894846232B85586600F7347A /* OverviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverviewView.swift; sourceTree = "<group>"; };
 		897673FF2B8194EF00390C0B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -85,6 +88,7 @@
 				89031F3C2B7FFCE200282C88 /* FirebaseFirestoreCombine-Community in Frameworks */,
 				89031F4C2B7FFCE200282C88 /* FirebaseMessaging in Frameworks */,
 				89031F482B7FFCE200282C88 /* FirebaseInstallations in Frameworks */,
+				894846272B8558DC00F7347A /* ScalingHeaderScrollView in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -142,6 +146,7 @@
 		89E7759F2B853A7400A5F603 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				894846232B85586600F7347A /* OverviewView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -197,6 +202,7 @@
 				89031F512B7FFCE200282C88 /* FirebaseRemoteConfigSwift */,
 				89031F532B7FFCE200282C88 /* FirebaseStorage */,
 				89031F552B7FFCE200282C88 /* FirebaseStorageCombine-Community */,
+				894846262B8558DC00F7347A /* ScalingHeaderScrollView */,
 			);
 			productName = Triplet;
 			productReference = 8935A4222B7F496200F62185 /* Triplet.app */;
@@ -228,6 +234,7 @@
 			mainGroup = 8935A4192B7F496200F62185;
 			packageReferences = (
 				89031F202B7FFCE200282C88 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				894846252B8558DC00F7347A /* XCRemoteSwiftPackageReference "ScalingHeaderScrollView" */,
 			);
 			productRefGroup = 8935A4232B7F496200F62185 /* Products */;
 			projectDirPath = "";
@@ -259,6 +266,7 @@
 				8935A4282B7F496200F62185 /* ContentView.swift in Sources */,
 				8935A4262B7F496200F62185 /* TripletApp.swift in Sources */,
 				894846222B85428F00F7347A /* TripModel.swift in Sources */,
+				894846242B85586600F7347A /* OverviewView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -474,6 +482,14 @@
 				minimumVersion = 10.21.0;
 			};
 		};
+		894846252B8558DC00F7347A /* XCRemoteSwiftPackageReference "ScalingHeaderScrollView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/exyte/ScalingHeaderScrollView.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.1.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -611,6 +627,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 89031F202B7FFCE200282C88 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = "FirebaseStorageCombine-Community";
+		};
+		894846262B8558DC00F7347A /* ScalingHeaderScrollView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 894846252B8558DC00F7347A /* XCRemoteSwiftPackageReference "ScalingHeaderScrollView" */;
+			productName = ScalingHeaderScrollView;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
