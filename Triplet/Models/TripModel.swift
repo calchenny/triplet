@@ -9,6 +9,7 @@ import FirebaseFirestore
 
 struct Trip: Identifiable, Codable {
     @DocumentID var id: String?
+    var owner: String
     var name: String
     var start: Date
     var end: Date
