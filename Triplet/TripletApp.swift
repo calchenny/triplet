@@ -14,6 +14,11 @@ class AppDelegate: NSObject, UIApplicationDelegate {
     FirebaseApp.configure()
     return true
   }
+    
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        
+    }
+    
 }
 
 @main
@@ -22,7 +27,7 @@ struct TripletApp: App {
     
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            RootView()
         }
     }
 }
