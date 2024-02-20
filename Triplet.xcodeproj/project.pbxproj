@@ -108,6 +108,8 @@
 		8935A4242B7F496200F62185 /* Triplet */ = {
 			isa = PBXGroup;
 			children = (
+				89E775A02B853A8300A5F603 /* ViewModels */,
+				89E7759F2B853A7400A5F603 /* Views */,
 				8935A4252B7F496200F62185 /* TripletApp.swift */,
 				8935A4272B7F496200F62185 /* ContentView.swift */,
 				8935A4292B7F496300F62185 /* Assets.xcassets */,
@@ -124,6 +126,20 @@
 				8935A42C2B7F496300F62185 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		89E7759F2B853A7400A5F603 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		89E775A02B853A8300A5F603 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModels;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
