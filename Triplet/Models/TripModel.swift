@@ -4,14 +4,14 @@
 //
 //  Created by Derek Ma on 2/20/24.
 //
-import Foundation
+
 import FirebaseFirestore
 
-struct Trip: Identifiable, Decodable {
-    let id: String
-    let name: String
-    let start: Date
-    let end: Date
-    let destination: GeoPoint
-    let numGuests: Int?
+struct Trip: Identifiable, Codable {
+    @DocumentID var id: String?
+    var name: String
+    var start: Date
+    var end: Date
+    var destination: GeoPoint
+    var numGuests: Int?
 }
