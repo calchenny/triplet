@@ -6,15 +6,15 @@
 //
 
 import SwiftUI
-import MapKit
 
 struct NewTripView: View {
-    @State var destination: String = ""
+    @Binding var destination: String
     @State var guests: Int = 0
     @State var showsDatePicker = false
-    @State var startDate: Date? = Date()
-    @State var endDate: Date? = Date()
+    @State var startDate: Date = Date()
+    @State var endDate: Date = Date()
     @State var tripName: String = ""
+    @State var showDestinationSheet: Bool = false
 
     @State var date: Date = Date()
     
@@ -52,67 +52,75 @@ struct NewTripView: View {
                 )
                 .padding(.horizontal, 20)
                 .padding(.top, 10)
+                .onTapGesture {
+                    showDestinationSheet.toggle()
+                }
+                .sheet(isPresented: $showDestinationSheet, onDismiss: {
+                    destination = destination
+                }) {
+                    DestinationSearchView(locationService: LocationService(), destination: $destination)
+                }
             
             Text("Dates (optional)")
                 .font(.headline)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.top)
             
-            if showDate {
-                DatePicker(
-                    "",
-                    selection: $hiddenDate,
-                    in: Date.now...,
-                    displayedComponents: .date
-                )
-                .labelsHidden()
-                .onChange(of: hiddenDate) {
-                    startDate = hiddenDate
-                }
-
-            } else {
-                Button {
-                    showDate = true
-                    startDate = hiddenDate
-                } label: {
-                    Image(systemName: "calendar")
-                        .foregroundColor(.gray)
-                    Text("Start Date")
-                        .multilineTextAlignment(.center)
-                        .foregroundColor(.black)
-                }
-                .frame(width: 120, height: 34)
-                .background(
-                    RoundedRectangle(cornerRadius: 8)
-                        .fill(.placeholder)
-                )
-                .multilineTextAlignment(.trailing)
-                
-            }
+//            if showDate {
+//                DatePicker(
+//                    "",
+//                    selection: $hiddenDate,
+//                    in: Date.now...,
+//                    displayedComponents: .date
+//                )
+//                .labelsHidden()
+//                .onChange(of: hiddenDate) {
+//                    startDate = hiddenDate
+//                }
+//
+//            } else {
+//                Button {
+//                    showDate = true
+//                    startDate = hiddenDate
+//                } label: {
+//                    Image(systemName: "calendar")
+//                        .foregroundColor(.gray)
+//                    Text("Start Date")
+//                        .multilineTextAlignment(.center)
+//                        .foregroundColor(.black)
+//                }
+//                .frame(width: 120, height: 34)
+//                .background(
+//                    RoundedRectangle(cornerRadius: 8)
+//                        .fill(.placeholder)
+//                )
+//                .multilineTextAlignment(.trailing)
+//                
+//            }
             
             HStack {
-//                DatePicker("",selection: $startDate, in: Date.now..., displayedComponents: .date)
-//                .datePickerStyle(.compact)
-//                .labelsHidden()
-//                .padding(8)
-//                .cornerRadius(10)
-//                .overlay(
-//                    RoundedRectangle(cornerRadius: 10)
-//                        .stroke(.gray)
-//                )
-//                .padding(.horizontal, 10)
-//                .background(.white)
-//                
-//                DatePicker("", selection: $endDate, in: startDate..., displayedComponents: .date)
-//                    .datePickerStyle(.compact)
-//                    .labelsHidden()
-//                    .padding(8)
-//                    .cornerRadius(10)
-//                    .overlay(
-//                        RoundedRectangle(cornerRadius: 10)
-//                            .stroke(.gray)
-//                    )
-//                    .padding(.horizontal, 10)
+                DatePicker("",selection: $startDate, in: Date.now..., displayedComponents: .date)
+                .datePickerStyle(.compact)
+                .labelsHidden()
+                .padding(8)
+                .cornerRadius(10)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 10)
+                        .stroke(.gray)
+                )
+                .padding(.horizontal, 10)
+                .background(.white)
+                
+                DatePicker("", selection: $endDate, in: startDate..., displayedComponents: .date)
+                    .datePickerStyle(.compact)
+                    .labelsHidden()
+                    .padding(8)
+                    .cornerRadius(10)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 10)
+                            .stroke(.gray)
+                    )
+                    .padding(.horizontal, 10)
             }
             
             HStack {
@@ -188,5 +196,5 @@ struct NewTripView: View {
 }
 
 #Preview {
-    NewTripView()
+    NewTripView(destination: .constant(""))
 }

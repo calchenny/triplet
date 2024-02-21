@@ -10,13 +10,36 @@ import MapKit
 
 struct DestinationSearchView: View {
     @ObservedObject var locationService: LocationService
-
-    func selectedDestination() {
-        print("Selected place")
+    @Binding var destination: String
+    @Environment(\.dismiss) var dismiss
+    
+    func selectedDestination(completion: MKLocalSearchCompletion) {
+        print("Selected place: \(completion.title)")
+        
+        // Store into model eventually
+        destination = completion.title
+        
+        dismiss()
     }
     
     var body: some View {
         VStack {
+            HStack {
+                Button(action: {
+                    dismiss()
+                }, label: {
+                    Image(systemName: "xmark")
+                        .font(.title3.weight(.semibold))
+                        .padding(7)
+                        .background(.gray)
+                        .foregroundColor(.white)
+                        .clipShape(Circle())
+                        .shadow(radius: 4, x: 0, y: 4)
+                })
+                Spacer()
+            }
+            .padding()
+            
                 Form {
                     Section(header: Text("Location Search")) {
                         ZStack(alignment: .trailing) {
@@ -30,20 +53,18 @@ struct DestinationSearchView: View {
                     }
                     Section(header: Text("Results")) {
                         List {
-                            Group { () -> AnyView in
-                                switch locationService.status {
-                                case .noResults: return AnyView(Text("No Results"))
-                                case .error(let description): return AnyView(Text("Error: \(description)"))
-                                default: return AnyView(EmptyView())
-                                }
-                            }.foregroundColor(Color.gray)
+//                            Group { () -> AnyView in
+//                                switch locationService.status {
+//                                case .noResults: return AnyView(Text("No Results"))
+//                                case .error(let description): return AnyView(Text("Error: \(description)"))
+//                                default: return AnyView(EmptyView())
+//                                }
+//                            }.foregroundColor(Color.gray)
 
-                            ForEach(locationService.searchResults, id: \.self) { completionResult in
-                                // This simply lists the results, use a button in case you'd like to perform an action
-                                // or use a NavigationLink to move to the next view upon selection.
-                                Button(action: selectedDestination) {
+                            ForEach(locationService.searchResults, id: \.self) { completion in
+                                Button(action: { selectedDestination(completion: completion) }) {
                                     HStack {
-                                        Text(completionResult.title)
+                                        Text(completion.title)
                                             .foregroundStyle(.black)
                                     }
                                 }
@@ -56,5 +77,5 @@ struct DestinationSearchView: View {
 }
 
 #Preview {
-    DestinationSearchView(locationService: LocationService())
+    DestinationSearchView(locationService: LocationService(), destination: .constant(""))
 }

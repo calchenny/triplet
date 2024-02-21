@@ -50,23 +50,23 @@ class LocationService: NSObject, ObservableObject {
 
 extension LocationService: MKLocalSearchCompleterDelegate {
     func completerDidUpdateResults(_ completer: MKLocalSearchCompleter) {
-        self.searchResults = completer.results.filter({ $0.subtitle == "" })
-        self.status = completer.results.isEmpty ? .noResults : .result
-//        self.searchResults = completer.results.filter { result in
-//            if !result.title.contains(",") {
-//                return false
-//            }
-//
-//            if result.title.rangeOfCharacter(from: CharacterSet.decimalDigits) != nil {
-//                return false
-//            }
-//
-//            if result.subtitle.rangeOfCharacter(from: CharacterSet.decimalDigits) != nil {
-//                return false
-//            }
-//
-//            return true
-//        }
+        self.searchResults = completer.results.filter { result in
+            if !result.title.contains(",") {
+                return false
+            }
+
+            if result.title.rangeOfCharacter(from: CharacterSet.decimalDigits) != nil {
+                return false
+            }
+
+            if result.subtitle.rangeOfCharacter(from: CharacterSet.decimalDigits) != nil {
+                return false
+            }
+
+            return true
+        }
+        
+//        self.status = completer.results.isEmpty ? .noResults : .result
 
     }
     
