@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3CA4C32B2B8583DE00E4D39B /* ExpensesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CA4C32A2B8583DE00E4D39B /* ExpensesView.swift */; };
 		89031F222B7FFCE200282C88 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 89031F212B7FFCE200282C88 /* FirebaseAnalytics */; };
 		89031F242B7FFCE200282C88 /* FirebaseAnalyticsOnDeviceConversion in Frameworks */ = {isa = PBXBuildFile; productRef = 89031F232B7FFCE200282C88 /* FirebaseAnalyticsOnDeviceConversion */; };
 		89031F262B7FFCE200282C88 /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 89031F252B7FFCE200282C88 /* FirebaseAnalyticsSwift */; };
@@ -43,6 +44,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3CA4C32A2B8583DE00E4D39B /* ExpensesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpensesView.swift; sourceTree = "<group>"; };
 		89031F572B80012800282C88 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		8935A4222B7F496200F62185 /* Triplet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Triplet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8935A4252B7F496200F62185 /* TripletApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripletApp.swift; sourceTree = "<group>"; };
@@ -142,6 +144,7 @@
 		89E7759F2B853A7400A5F603 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				3CA4C32A2B8583DE00E4D39B /* ExpensesView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -259,6 +262,7 @@
 				8935A4282B7F496200F62185 /* ContentView.swift in Sources */,
 				8935A4262B7F496200F62185 /* TripletApp.swift in Sources */,
 				894846222B85428F00F7347A /* TripModel.swift in Sources */,
+				3CA4C32B2B8583DE00E4D39B /* ExpensesView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
