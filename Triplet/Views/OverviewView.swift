@@ -9,12 +9,6 @@ import SwiftUI
 import MapKit
 import ScalingHeaderScrollView
 
-struct ToggleStates {
-    var notes: Bool = false
-    var housing: Bool = false
-    var food: Bool = false
-}
-
 struct OverviewView: View {
     @State private var toggleStates = ToggleStates()
     
@@ -50,12 +44,22 @@ struct OverviewView: View {
                             .padding()
                         }
                     } label: {
-                        Text("Food")
+                        HStack {
+                            Text("Food")
+                            Spacer()
+                            Button {
+                                
+                            } label: {
+                                Image(systemName: "trash")
+                            }
+                        }
+                        .padding([.leading, .trailing])
                     }
                     .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/)
                     .padding()
                     .background(Color(.secondarySystemBackground))
                     .clipShape(RoundedRectangle(cornerRadius: 15, style: .continuous))
+                    .disclosureGroupStyle(DisclosureStyle())
                     Spacer()
                     DisclosureGroup(isExpanded: $toggleStates.housing) {
                         Button {
@@ -69,12 +73,22 @@ struct OverviewView: View {
                             .padding()
                         }
                     } label: {
-                        Text("Hotels & Lodging")
+                        HStack {
+                            Text("Hotel & Lodging")
+                            Spacer()
+                            Button {
+                                
+                            } label: {
+                                Image(systemName: "trash")
+                            }
+                        }
+                        .padding([.leading, .trailing])
                     }
                     .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/)
                     .padding()
                     .background(Color(.secondarySystemBackground))
                     .clipShape(RoundedRectangle(cornerRadius: 15, style: .continuous))
+                    .disclosureGroupStyle(DisclosureStyle())
                     Spacer()
                     DisclosureGroup(isExpanded: $toggleStates.food) {
                         Button {
@@ -88,18 +102,54 @@ struct OverviewView: View {
                             .padding()
                         }
                     } label: {
-                        Text("Food Spots")
+                        HStack {
+                            Text("Food Spots")
+                            Spacer()
+                            Button {
+                                
+                            } label: {
+                                Image(systemName: "trash")
+                            }
+                        }
+                        .padding([.leading, .trailing])
                     }
                     .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/)
                     .padding()
                     .background(Color(.secondarySystemBackground))
                     .clipShape(RoundedRectangle(cornerRadius: 15, style: .continuous))
+                    .disclosureGroupStyle(DisclosureStyle())
                 }
             }
         }
         .height(min: minHeight, max: maxHeight)
         .allowsHeaderCollapse()
         .ignoresSafeArea()
+    }
+}
+
+struct ToggleStates {
+    var notes: Bool = false
+    var housing: Bool = false
+    var food: Bool = false
+}
+
+struct DisclosureStyle: DisclosureGroupStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        VStack {
+            Button {
+                withAnimation {
+                    configuration.isExpanded.toggle()
+                }
+            } label: {
+                Image(systemName: "chevron.right")
+                    .rotationEffect(.degrees(configuration.isExpanded ? 90 : 0))
+                    .foregroundStyle(.tertiary)
+                configuration.label
+            }
+            if configuration.isExpanded {
+                configuration.content
+            }
+        }
     }
 }
 
