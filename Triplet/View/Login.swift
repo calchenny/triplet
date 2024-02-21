@@ -32,19 +32,13 @@ struct Login: View {
         ZStack {
             VStack{
                 VStack {
-                    Text("Get Started with Phone Number")
-                        .font(.title2)
-                        .fontWeight(.bold)
-                        .foregroundStyle(Color.black)
-                        .padding()
-                    
-                    // add our logo image here
+                    // add an image here
                     Image("")
                         .resizable()
                         .aspectRatio(contentMode:.fit)
                         .padding()
                     
-                    Text("You'll receive a code\n to verify.")
+                    Text("Enter phone number\n to receive code.")
                         .font(.title2)
                         .foregroundStyle(Color.gray)
                         .multilineTextAlignment(.center)

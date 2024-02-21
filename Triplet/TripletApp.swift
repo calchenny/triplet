@@ -27,7 +27,7 @@ struct TripletApp: App {
     
     var body: some Scene {
         WindowGroup {
-            RootView()
+            ItineraryView()
         }
     }
 }

@@ -53,10 +53,6 @@ class LoginViewModel: ObservableObject {
     }
     
     
-    //Loading View
-    
-    @Published var loading = false
-    
     
     // function to send code to user following phone number request
     // used PhoneAuthProvider api calls
@@ -107,7 +103,6 @@ class LoginViewModel: ObservableObject {
         do {
             let _ = try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) in
                 Auth.auth().signIn(with: credential) { (result, error) in
-                    self.loading = false
                     if let error = error {
                         DispatchQueue.main.async {
                             self.errorMsg = error.localizedDescription

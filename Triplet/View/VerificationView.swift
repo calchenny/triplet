@@ -31,8 +31,6 @@ struct VerificationView: View {
                             .foregroundStyle(Color.black)
                         
                         Spacer()
-                        
-                        if login.loading{ProgressView()}
                     }
                     .padding()
                     
