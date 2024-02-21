@@ -59,7 +59,6 @@ struct OverviewView: View {
                     .padding()
                     .background(Color(.secondarySystemBackground))
                     .clipShape(RoundedRectangle(cornerRadius: 15, style: .continuous))
-                    .disclosureGroupStyle(DisclosureStyle())
                     Spacer()
                     DisclosureGroup(isExpanded: $toggleStates.housing) {
                         Button {
@@ -88,7 +87,6 @@ struct OverviewView: View {
                     .padding()
                     .background(Color(.secondarySystemBackground))
                     .clipShape(RoundedRectangle(cornerRadius: 15, style: .continuous))
-                    .disclosureGroupStyle(DisclosureStyle())
                     Spacer()
                     DisclosureGroup(isExpanded: $toggleStates.food) {
                         Button {
@@ -117,7 +115,6 @@ struct OverviewView: View {
                     .padding()
                     .background(Color(.secondarySystemBackground))
                     .clipShape(RoundedRectangle(cornerRadius: 15, style: .continuous))
-                    .disclosureGroupStyle(DisclosureStyle())
                 }
             }
         }
@@ -131,26 +128,6 @@ struct ToggleStates {
     var notes: Bool = false
     var housing: Bool = false
     var food: Bool = false
-}
-
-struct DisclosureStyle: DisclosureGroupStyle {
-    func makeBody(configuration: Configuration) -> some View {
-        VStack {
-            Button {
-                withAnimation {
-                    configuration.isExpanded.toggle()
-                }
-            } label: {
-                Image(systemName: "chevron.right")
-                    .rotationEffect(.degrees(configuration.isExpanded ? 90 : 0))
-                    .foregroundStyle(.tertiary)
-                configuration.label
-            }
-            if configuration.isExpanded {
-                configuration.content
-            }
-        }
-    }
 }
 
 #Preview {
