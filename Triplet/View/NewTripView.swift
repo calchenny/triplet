@@ -124,7 +124,7 @@ struct NewTripView: View {
             }
             
             HStack {
-                Text("How many guests?")
+                Text("How many people are going?")
                     .font(.headline)
 
                 Stepper {
@@ -190,7 +190,6 @@ struct NewTripView: View {
 
         }
         .padding()
-        
 
     }
 }

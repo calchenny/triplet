@@ -18,6 +18,9 @@
 		24334E562B85BCCB006F0EBC /* NewTripView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24334E542B85BCCA006F0EBC /* NewTripView.swift */; };
 		24334E582B85BCD1006F0EBC /* LocationServiceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24334E572B85BCD1006F0EBC /* LocationServiceModel.swift */; };
 		24334E5A2B85BCDA006F0EBC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 24334E592B85BCDA006F0EBC /* GoogleService-Info.plist */; };
+		24C872FA2B866A9600122EAF /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24C872F72B866A9500122EAF /* SettingView.swift */; };
+		24C872FB2B866A9600122EAF /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24C872F82B866A9600122EAF /* HomeView.swift */; };
+		24C872FC2B866A9600122EAF /* MyTripsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24C872F92B866A9600122EAF /* MyTripsView.swift */; };
 		89031F222B7FFCE200282C88 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 89031F212B7FFCE200282C88 /* FirebaseAnalytics */; };
 		89031F242B7FFCE200282C88 /* FirebaseAnalyticsOnDeviceConversion in Frameworks */ = {isa = PBXBuildFile; productRef = 89031F232B7FFCE200282C88 /* FirebaseAnalyticsOnDeviceConversion */; };
 		89031F262B7FFCE200282C88 /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 89031F252B7FFCE200282C88 /* FirebaseAnalyticsSwift */; };
@@ -62,6 +65,9 @@
 		24334E542B85BCCA006F0EBC /* NewTripView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewTripView.swift; sourceTree = "<group>"; };
 		24334E572B85BCD1006F0EBC /* LocationServiceModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LocationServiceModel.swift; path = Triplet/ViewModel/LocationServiceModel.swift; sourceTree = SOURCE_ROOT; };
 		24334E592B85BCDA006F0EBC /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		24C872F72B866A9500122EAF /* SettingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SettingView.swift; path = ../../../../../../../../../Downloads/SettingView.swift; sourceTree = "<group>"; };
+		24C872F82B866A9600122EAF /* HomeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HomeView.swift; path = ../../../../../../../../../Downloads/HomeView.swift; sourceTree = "<group>"; };
+		24C872F92B866A9600122EAF /* MyTripsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MyTripsView.swift; path = ../../../../../../../../../Downloads/MyTripsView.swift; sourceTree = "<group>"; };
 		89031F572B80012800282C88 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		8935A4222B7F496200F62185 /* Triplet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Triplet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8935A4252B7F496200F62185 /* TripletApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripletApp.swift; sourceTree = "<group>"; };
@@ -110,6 +116,9 @@
 		128284132B81FADE00E3E084 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				24C872F82B866A9600122EAF /* HomeView.swift */,
+				24C872F72B866A9500122EAF /* SettingView.swift */,
+				24C872F92B866A9600122EAF /* MyTripsView.swift */,
 				24334E532B85BCCA006F0EBC /* DestinationSearchView.swift */,
 				24334E542B85BCCA006F0EBC /* NewTripView.swift */,
 				128284292B81FC4B00E3E084 /* ContentView.swift */,
@@ -273,7 +282,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				24334E562B85BCCB006F0EBC /* NewTripView.swift in Sources */,
+				24C872FB2B866A9600122EAF /* HomeView.swift in Sources */,
 				12A5B5932B82D81400BF1220 /* RootView.swift in Sources */,
+				24C872FC2B866A9600122EAF /* MyTripsView.swift in Sources */,
 				1282842A2B81FC4B00E3E084 /* ContentView.swift in Sources */,
 				24334E582B85BCD1006F0EBC /* LocationServiceModel.swift in Sources */,
 				8935A4262B7F496200F62185 /* TripletApp.swift in Sources */,
@@ -281,6 +292,7 @@
 				128284342B81FCCD00E3E084 /* LoginViewModel.swift in Sources */,
 				24334E552B85BCCA006F0EBC /* DestinationSearchView.swift in Sources */,
 				128284322B81FCAE00E3E084 /* CustomNumPad.swift in Sources */,
+				24C872FA2B866A9600122EAF /* SettingView.swift in Sources */,
 				1282842C2B81FC6400E3E084 /* VerificationView.swift in Sources */,
 				128284302B81FC9900E3E084 /* Login.swift in Sources */,
 			);
