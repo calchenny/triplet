@@ -10,19 +10,16 @@ import MapKit
 import ScalingHeaderScrollView
 
 struct OverviewView: View {
-    @State private var toggleStates = ToggleStates()
+    @State var toggleStates = ToggleStates()
+    @State var cameraPosition = MapCameraPosition.region(MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 47.608013, longitude: -122.335167), span: MKCoordinateSpan(latitudeDelta: 0.5, longitudeDelta: 0.5)))
+    @State var notes: [String] = ["aa", "bbb"]
     
     private let minHeight: CGFloat = 150.0
     private let maxHeight: CGFloat = 300.0
 
     var body: some View {
-       ScalingHeaderScrollView {
-           ZStack(alignment: .bottom) {
-               Map {
-                   Marker("Seattle", coordinate: CLLocationCoordinate2D(latitude: 47.608013, longitude: -122.335167))
-                       .tint(.blue)
-               }
-           }
+        ScalingHeaderScrollView {
+            Map(position: $cameraPosition)
         } content: {
             ScrollView {
                 LazyVStack {
@@ -33,19 +30,29 @@ struct OverviewView: View {
                     }
                     .padding(30)
                     DisclosureGroup(isExpanded: $toggleStates.notes) {
-                        Button {
-                            
-                        } label: {
-                            HStack {
-                                Image(systemName: "plus")
-                                Text("Add another Lodging")
-                                Spacer()
+                        VStack {
+                            ForEach(notes.indices, id: \.self) { index in
+                                TextEditor(text: $notes[index])
+                                    .padding(10)
+                                    .frame(minHeight: 80)
+                                    .background(RoundedRectangle(cornerRadius: 10).stroke(.gray, lineWidth: 1))
+                                    .cornerRadius(10)
+                                    .padding(.top)
+                                    .scrollContentBackground(.hidden)
                             }
-                            .padding()
+                            Button {
+                                notes.append("New Note")
+                            } label: {
+                                HStack {
+                                    Image(systemName: "plus")
+                                    Text("Add notes")
+                                }
+                            }
+                            .padding(.top)
                         }
                     } label: {
                         HStack {
-                            Text("Food")
+                            Text("Notes")
                             Spacer()
                             Button {
                                 
@@ -55,11 +62,12 @@ struct OverviewView: View {
                         }
                         .padding([.leading, .trailing])
                     }
-                    .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/)
+                    .frame(maxWidth: .infinity)
                     .padding()
                     .background(Color(.secondarySystemBackground))
-                    .clipShape(RoundedRectangle(cornerRadius: 15, style: .continuous))
+                    .clipShape(RoundedRectangle(cornerRadius: 15))
                     Spacer()
+                        .frame(height: 30)
                     DisclosureGroup(isExpanded: $toggleStates.housing) {
                         Button {
                             
@@ -67,7 +75,6 @@ struct OverviewView: View {
                             HStack {
                                 Image(systemName: "plus")
                                 Text("Add another Lodging")
-                                Spacer()
                             }
                             .padding()
                         }
@@ -83,11 +90,12 @@ struct OverviewView: View {
                         }
                         .padding([.leading, .trailing])
                     }
-                    .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/)
+                    .frame(maxWidth: .infinity)
                     .padding()
                     .background(Color(.secondarySystemBackground))
-                    .clipShape(RoundedRectangle(cornerRadius: 15, style: .continuous))
+                    .clipShape(RoundedRectangle(cornerRadius: 15))
                     Spacer()
+                        .frame(height: 30)
                     DisclosureGroup(isExpanded: $toggleStates.food) {
                         Button {
                             
@@ -95,7 +103,6 @@ struct OverviewView: View {
                             HStack {
                                 Image(systemName: "plus")
                                 Text("Add another food spot")
-                                Spacer()
                             }
                             .padding()
                         }
@@ -111,23 +118,24 @@ struct OverviewView: View {
                         }
                         .padding([.leading, .trailing])
                     }
-                    .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/)
+                    .frame(maxWidth: .infinity)
                     .padding()
                     .background(Color(.secondarySystemBackground))
-                    .clipShape(RoundedRectangle(cornerRadius: 15, style: .continuous))
+                    .clipShape(RoundedRectangle(cornerRadius: 15))
                 }
             }
         }
         .height(min: minHeight, max: maxHeight)
         .allowsHeaderCollapse()
+        .setHeaderSnapMode(.immediately)
         .ignoresSafeArea()
     }
 }
 
 struct ToggleStates {
-    var notes: Bool = false
-    var housing: Bool = false
-    var food: Bool = false
+    var notes: Bool = true
+    var housing: Bool = true
+    var food: Bool = true
 }
 
 #Preview {
