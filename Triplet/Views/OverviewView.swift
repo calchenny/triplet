@@ -10,32 +10,14 @@ import MapKit
 import ScalingHeaderScrollView
 
 struct OverviewView: View {
-    @State var toggleStates = ToggleStates()
-    @State var cameraPosition = MapCameraPosition.region(MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 47.608013, longitude: -122.335167), span: MKCoordinateSpan(latitudeDelta: 0.5, longitudeDelta: 0.5)))
-    @State var notes: [Note] = []
-    @State var showAlert: Bool = false
-    @State var newNoteTitle: String = ""
-    
-    private let minHeight: CGFloat = 150.0
-    private let maxHeight: CGFloat = 300.0
-    
-    func addNote() {
-        guard !newNoteTitle.isEmpty else {
-            print("Note name must be non-empty")
-            return
-        }
-        withAnimation {
-            notes.append(Note(title: newNoteTitle))
-            newNoteTitle = ""
-        }
-    }
+    @EnvironmentObject var viewModel: OverviewViewModel
 
     var body: some View {
         NavigationStack {
             GeometryReader { geometry in
                 ScalingHeaderScrollView {
                     ZStack(alignment: .topLeading) {
-                        Map(position: $cameraPosition)
+                        Map(position: $viewModel.cameraPosition)
                         Button {
                         } label: {
                             Image(systemName: "chevron.left")
@@ -55,9 +37,9 @@ struct OverviewView: View {
                         Text("Seattle, WA | 10/20 - 10/25")
                     }
                     .padding(30)
-                    DisclosureGroup(isExpanded: $toggleStates.notes) {
+                    DisclosureGroup(isExpanded: $viewModel.toggleStates.notes) {
                         VStack {
-                            ForEach(notes, id: \.id) { note in
+                            ForEach(viewModel.notes, id: \.id) { note in
                                 NavigationLink {
                                     EmptyView()
                                 } label: {
@@ -73,7 +55,7 @@ struct OverviewView: View {
                                 .padding(.top)
                             }
                             Button {
-                                showAlert.toggle()
+                                viewModel.showAlert.toggle()
                             } label: {
                                 HStack {
                                     Image(systemName: "plus")
@@ -81,9 +63,9 @@ struct OverviewView: View {
                                 }
                             }
                             .padding(.top)
-                            .alert("Add New Note", isPresented: $showAlert) {
-                                TextField("Enter note title", text: $newNoteTitle)
-                                Button("Add", action: addNote)
+                            .alert("Add New Note", isPresented: $viewModel.showAlert) {
+                                TextField("Enter note title", text: $viewModel.newNoteTitle)
+                                Button("Add", action: viewModel.addNote)
                                 Button("Cancel", role: .cancel) { }
                             } message: {
                                 Text("Please enter a title for the new note")
@@ -100,7 +82,7 @@ struct OverviewView: View {
                     .tint(.primary)
                     Spacer()
                         .frame(height: 15)
-                    DisclosureGroup(isExpanded: $toggleStates.housing) {
+                    DisclosureGroup(isExpanded: $viewModel.toggleStates.housing) {
                         Button {
                             
                         } label: {
@@ -121,7 +103,7 @@ struct OverviewView: View {
                     .tint(.primary)
                     Spacer()
                         .frame(height: 15)
-                    DisclosureGroup(isExpanded: $toggleStates.food) {
+                    DisclosureGroup(isExpanded: $viewModel.toggleStates.food) {
                         Button {
                             
                         } label: {
@@ -141,7 +123,7 @@ struct OverviewView: View {
                     .clipShape(RoundedRectangle(cornerRadius: 15))
                     .tint(.primary)
                 }
-                .height(min: minHeight, max: maxHeight)
+                .height(min: viewModel.minHeight, max: viewModel.maxHeight)
                 .allowsHeaderCollapse()
                 .setHeaderSnapMode(.immediately)
                 .ignoresSafeArea()
@@ -150,13 +132,8 @@ struct OverviewView: View {
     }
 }
 
-struct ToggleStates {
-    var notes: Bool = true
-    var housing: Bool = true
-    var food: Bool = true
-}
-
 #Preview {
     OverviewView()
+        .environmentObject(OverviewViewModel())
 }
 

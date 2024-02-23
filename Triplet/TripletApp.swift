@@ -19,10 +19,12 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 @main
 struct TripletApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
+    @StateObject var overviewViewModel = OverviewViewModel()
     
     var body: some Scene {
         WindowGroup {
             OverviewView()
+                .environmentObject(overviewViewModel)
         }
     }
 }
