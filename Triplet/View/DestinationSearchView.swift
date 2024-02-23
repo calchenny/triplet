@@ -51,6 +51,8 @@ struct DestinationSearchView: View {
                             }
                         }
                     }
+                    .listRowBackground(Color(UIColor.systemGray6))
+                    
                     Section(header: Text("Results")) {
                         List {
 //                            Group { () -> AnyView in
@@ -71,7 +73,10 @@ struct DestinationSearchView: View {
                             }
                         }
                     }
+                    .listRowBackground(Color(UIColor.systemGray6))
                 }
+                .background(.white)
+                .scrollContentBackground(.hidden)
             }
     }
 }

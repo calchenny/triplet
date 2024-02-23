@@ -11,18 +11,18 @@ struct NewTripView: View {
     @Binding var destination: String
     @State var guests: Int = 0
     @State var showsDatePicker = false
-    @State var startDate: Date = Date()
-    @State var endDate: Date = Date()
+    @State var startDate: Date = Date.distantPast
+    @State var endDate: Date = Date.distantPast
     @State var tripName: String = ""
     @State var showDestinationSheet: Bool = false
-
-    @State var date: Date = Date()
-    
+        
     @State private var hiddenDate: Date = Date()
     @State private var showDate: Bool = false
     
     func startPlan() {
-        print("submit planning data")
+        print("submit data")
+        print(startDate)
+        print(endDate)
     }
     
     var body: some View {
@@ -45,7 +45,6 @@ struct NewTripView: View {
             TextField("e.g, New York, Japan, Sacramento", text: $destination)
                 .keyboardType(.alphabet)
                 .padding(8)
-                .cornerRadius(10)
                 .overlay(
                     RoundedRectangle(cornerRadius: 10)
                         .stroke(.gray)
@@ -66,62 +65,62 @@ struct NewTripView: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.top)
             
-//            if showDate {
-//                DatePicker(
-//                    "",
-//                    selection: $hiddenDate,
-//                    in: Date.now...,
-//                    displayedComponents: .date
-//                )
-//                .labelsHidden()
-//                .onChange(of: hiddenDate) {
-//                    startDate = hiddenDate
-//                }
-//
-//            } else {
-//                Button {
-//                    showDate = true
-//                    startDate = hiddenDate
-//                } label: {
-//                    Image(systemName: "calendar")
-//                        .foregroundColor(.gray)
-//                    Text("Start Date")
-//                        .multilineTextAlignment(.center)
-//                        .foregroundColor(.black)
-//                }
-//                .frame(width: 120, height: 34)
-//                .background(
-//                    RoundedRectangle(cornerRadius: 8)
-//                        .fill(.placeholder)
-//                )
-//                .multilineTextAlignment(.trailing)
-//                
-//            }
-            
             HStack {
-                DatePicker("",selection: $startDate, in: Date.now..., displayedComponents: .date)
-                .datePickerStyle(.compact)
-                .labelsHidden()
-                .padding(8)
-                .cornerRadius(10)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 10)
-                        .stroke(.gray)
-                )
-                .padding(.horizontal, 10)
-                .background(.white)
+                Image(systemName: "calendar")
                 
-                DatePicker("", selection: $endDate, in: startDate..., displayedComponents: .date)
+                if (startDate ==  Date.distantPast) {
+                    Text("Start Date")
+                        .frame(width: 150)
+                        .foregroundStyle(.placeholder)
+                } else {
+                    Text(startDate, style: .date)
+                        .frame(width: 150)
+
+                }
+                
+            }
+            .padding(8)
+            .overlay(
+                RoundedRectangle(cornerRadius: 10)
+                    .stroke(.gray)
+            )
+            .padding(.horizontal, 10)
+            .padding(.top, 10)
+            .overlay{
+                DatePicker("",selection: $startDate, in: Date.now..., displayedComponents: .date)
                     .datePickerStyle(.compact)
                     .labelsHidden()
-                    .padding(8)
-                    .cornerRadius(10)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 10)
-                            .stroke(.gray)
-                    )
+                    .blendMode(.destinationOver)
                     .padding(.horizontal, 10)
             }
+            
+            HStack {
+                Image(systemName: "calendar")
+                if (endDate ==  Date.distantPast) {
+                    Text("End Date")
+                        .frame(width: 150)
+                        .foregroundStyle(.placeholder)
+                } else {
+                    Text(endDate, style: .date)
+                        .frame(width: 150)
+
+                }
+            }
+            .padding(8)
+            .overlay(
+                RoundedRectangle(cornerRadius: 10)
+                    .stroke(.gray)
+            )
+            .padding(.horizontal, 10)
+            .padding(.top, 10)
+            .overlay{
+                DatePicker("",selection: $endDate, in: startDate..., displayedComponents: .date)
+                    .datePickerStyle(.compact)
+                    .labelsHidden()
+                    .blendMode(.destinationOver)
+                    .padding(.horizontal, 10)
+            }
+                
             
             HStack {
                 Text("How many guests?")
@@ -148,8 +147,7 @@ struct NewTripView: View {
 
                     }
                 }
-                .padding(8)
-                .cornerRadius(10)
+                .padding(.leading, 10)
                 .overlay(
                     RoundedRectangle(cornerRadius: 10)
                         .stroke(.gray)
@@ -169,7 +167,6 @@ struct NewTripView: View {
             TextField("e.g, Most Amazing Trip Ever", text: $tripName)
                 .keyboardType(.alphabet)
                 .padding(8)
-                .cornerRadius(10)
                 .overlay(
                     RoundedRectangle(cornerRadius: 10)
                         .stroke(.gray)
