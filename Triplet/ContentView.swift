@@ -2,7 +2,7 @@
 //  ContentView.swift
 //  Triplet
 //
-//  Created by Andy Lam on 2/18/24.
+//  Created by Derek Ma on 2/15/24.
 //
 
 import SwiftUI
