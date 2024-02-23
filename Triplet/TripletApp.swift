@@ -22,7 +22,7 @@ struct TripletApp: App {
     
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ExpensesView()
         }
     }
 }
