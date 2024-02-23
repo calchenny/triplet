@@ -15,4 +15,11 @@ struct Trip: Identifiable, Codable {
     var end: Date
     var destination: GeoPoint
     var numGuests: Int?
+    var notes: [Note]
+}
+
+struct Note: Identifiable, Codable {
+    var id = UUID()
+    var title: String = "Untitled Note"
+    var content: String = ""
 }
