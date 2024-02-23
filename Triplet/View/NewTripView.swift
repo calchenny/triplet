@@ -123,18 +123,20 @@ struct NewTripView: View {
                 
             
             HStack {
-                Text("How many guests?")
-                    .font(.headline)
+                VStack {
+                    Text("How many guests?")
+                        .font(.headline)
+                        .padding(.trailing)
+                    Text("(Including yourself)")
+                        .font(.caption)
+                        .foregroundStyle(.placeholder)
+                        .padding(.trailing)
+                }
 
                 Stepper {
-                    if (guests == 0) {
-                        Text("e.g, 3 or 5")
-                            .foregroundStyle(.placeholder)
-                    } else {
-                        Text("\(guests)")
-                            .foregroundStyle(.black)
-
-                    }
+                    Text("\(guests)")
+                        .foregroundStyle(.black)
+                    
                 } onIncrement: {
                     if (guests < 20) {
                         guests += 1
