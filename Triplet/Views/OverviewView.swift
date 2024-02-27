@@ -94,7 +94,11 @@ struct OverviewView: View {
                                 HStack {
                                     Image(systemName: "plus")
                                     Text("Add notes")
+                                        .font(.system(size: 16, weight: .medium))
+                                    Spacer()
                                 }
+                                .padding(.bottom, 5)
+                                .tint(.gray)
                             }
                             .padding(.top)
                             .alert("Add New Note", isPresented: $viewModel.showAlert) {
@@ -122,8 +126,12 @@ struct OverviewView: View {
                         } label: {
                             HStack {
                                 Image(systemName: "plus")
-                                Text("Add another Lodging")
+                                Text("Add another lodging")
+                                    .font(.system(size: 16, weight: .medium))
+                                Spacer()
                             }
+                            .padding(.bottom, 5)
+                            .tint(.gray)
                         }
                         .padding(.top)
                     } label: {
@@ -144,7 +152,11 @@ struct OverviewView: View {
                             HStack {
                                 Image(systemName: "plus")
                                 Text("Add another food spot")
+                                    .font(.system(size: 16, weight: .medium))
+                                Spacer()
                             }
+                            .padding(.bottom, 5)
+                            .tint(.gray)
                         }
                         .padding(.top)
                     } label: {
