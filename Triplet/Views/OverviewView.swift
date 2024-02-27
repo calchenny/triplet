@@ -75,7 +75,7 @@ struct OverviewView: View {
                         VStack {
                             ForEach(viewModel.notes, id: \.id) { note in
                                 NavigationLink {
-                                    EmptyView()
+                                    NoteView(note: note)
                                 } label: {
                                     HStack {
                                         Text(note.title)

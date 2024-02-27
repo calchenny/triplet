@@ -43,6 +43,7 @@
 		894846272B8558DC00F7347A /* ScalingHeaderScrollView in Frameworks */ = {isa = PBXBuildFile; productRef = 894846262B8558DC00F7347A /* ScalingHeaderScrollView */; };
 		8966A50B2B885B7D00A952DF /* OverviewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8966A50A2B885B7D00A952DF /* OverviewViewModel.swift */; };
 		897674002B8194EF00390C0B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 897673FF2B8194EF00390C0B /* GoogleService-Info.plist */; };
+		89F96D652B8E7DB5007AFF7A /* NoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89F96D642B8E7DB5007AFF7A /* NoteView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -56,6 +57,7 @@
 		894846232B85586600F7347A /* OverviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverviewView.swift; sourceTree = "<group>"; };
 		8966A50A2B885B7D00A952DF /* OverviewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverviewViewModel.swift; sourceTree = "<group>"; };
 		897673FF2B8194EF00390C0B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		89F96D642B8E7DB5007AFF7A /* NoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -149,6 +151,7 @@
 			isa = PBXGroup;
 			children = (
 				894846232B85586600F7347A /* OverviewView.swift */,
+				89F96D642B8E7DB5007AFF7A /* NoteView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -268,6 +271,7 @@
 			files = (
 				8935A4282B7F496200F62185 /* ContentView.swift in Sources */,
 				8935A4262B7F496200F62185 /* TripletApp.swift in Sources */,
+				89F96D652B8E7DB5007AFF7A /* NoteView.swift in Sources */,
 				894846222B85428F00F7347A /* TripModel.swift in Sources */,
 				8966A50B2B885B7D00A952DF /* OverviewViewModel.swift in Sources */,
 				894846242B85586600F7347A /* OverviewView.swift in Sources */,
