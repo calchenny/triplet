@@ -23,7 +23,6 @@ struct OverviewView: View {
                                 .frame(width: max((1 - viewModel.collapseProgress) * geometry.size.width * 0.9, geometry.size.width * 0.5),
                                        height: max((1 - viewModel.collapseProgress) * 100, CGFloat.init(60)))
                                 .foregroundStyle(.white)
-                                .opacity(0.8)
                                 .overlay(
                                     VStack {
                                         Text("Most Amazing Trip")
@@ -41,7 +40,8 @@ struct OverviewView: View {
                             Image(systemName: "chevron.left")
                                 .font(.title2)
                                 .padding()
-                                .background(.white)
+                                .background(.indigo)
+                                .foregroundStyle(.white)
                                 .clipShape(Circle())
                         }
                         .padding(.top, 60)
