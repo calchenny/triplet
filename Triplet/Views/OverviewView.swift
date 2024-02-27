@@ -10,14 +10,32 @@ import MapKit
 import ScalingHeaderScrollView
 
 struct OverviewView: View {
-    @EnvironmentObject var viewModel: OverviewViewModel
+    @StateObject var viewModel = OverviewViewModel()
 
     var body: some View {
         NavigationStack {
             GeometryReader { geometry in
                 ScalingHeaderScrollView {
                     ZStack(alignment: .topLeading) {
-                        Map(position: $viewModel.cameraPosition)
+                        ZStack(alignment: .bottom) {
+                            Map(position: $viewModel.cameraPosition)
+                            RoundedRectangle(cornerRadius: 15)
+                                .frame(width: max((1 - viewModel.collapseProgress) * geometry.size.width * 0.9, geometry.size.width * 0.5),
+                                       height: max((1 - viewModel.collapseProgress) * 100, CGFloat.init(60)))
+                                .foregroundStyle(.white)
+                                .opacity(0.8)
+                                .overlay(
+                                    VStack {
+                                        Text("Most Amazing Trip")
+                                            .font(.system(size: max((1 - viewModel.collapseProgress) * 30, CGFloat.init(16.0)), weight: .bold))
+                                            .foregroundStyle(.indigo)
+                                        Text("Seattle, WA | 10/20 - 10/25")
+                                            .font(.system(size: 14, weight: .medium))
+                                            .foregroundStyle(.indigo)
+                                    }
+                                )
+                                .padding(.bottom, 30)
+                        }
                         Button {
                         } label: {
                             Image(systemName: "chevron.left")
@@ -26,17 +44,16 @@ struct OverviewView: View {
                                 .background(.white)
                                 .clipShape(Circle())
                         }
-                        .padding(.top, 50)
+                        .padding(.top, 60)
                         .padding(.leading)
                         .tint(.primary)
                     }
+                    .frame(maxWidth: .infinity)
                 } content: {
-                    VStack {
-                        Text("Most Amazing Trip")
-                            .font(.largeTitle)
-                        Text("Seattle, WA | 10/20 - 10/25")
-                    }
-                    .padding(30)
+                    Text("Overview")
+                        .font(.system(size: 30, weight: .bold))
+                        .foregroundStyle(.indigo)
+                        .padding(25)
                     DisclosureGroup(isExpanded: $viewModel.toggleStates.notes) {
                         VStack {
                             ForEach(viewModel.notes, id: \.id) { note in
@@ -73,13 +90,13 @@ struct OverviewView: View {
                         }
                     } label: {
                         Text("Notes")
-                            .font(.title2)
+                            .font(.system(size: 24, weight: .bold))
                     }
                     .frame(maxWidth: geometry.size.width * 0.85)
                     .padding()
                     .background(Color(.secondarySystemBackground))
                     .clipShape(RoundedRectangle(cornerRadius: 15))
-                    .tint(.primary)
+                    .tint(.indigo)
                     Spacer()
                         .frame(height: 15)
                     DisclosureGroup(isExpanded: $viewModel.toggleStates.housing) {
@@ -94,13 +111,13 @@ struct OverviewView: View {
                         .padding(.top)
                     } label: {
                         Text("Hotel & Lodging")
-                            .font(.title2)
+                            .font(.system(size: 24, weight: .bold))
                     }
                     .frame(maxWidth: geometry.size.width * 0.85)
                     .padding()
                     .background(Color(.secondarySystemBackground))
                     .clipShape(RoundedRectangle(cornerRadius: 15))
-                    .tint(.primary)
+                    .tint(.indigo)
                     Spacer()
                         .frame(height: 15)
                     DisclosureGroup(isExpanded: $viewModel.toggleStates.food) {
@@ -115,16 +132,17 @@ struct OverviewView: View {
                         .padding(.top)
                     } label: {
                         Text("Food Spots")
-                            .font(.title2)
+                            .font(.system(size: 24, weight: .bold))
                     }
                     .frame(maxWidth: geometry.size.width * 0.85)
                     .padding()
                     .background(Color(.secondarySystemBackground))
                     .clipShape(RoundedRectangle(cornerRadius: 15))
-                    .tint(.primary)
+                    .tint(.indigo)
                 }
                 .height(min: viewModel.minHeight, max: viewModel.maxHeight)
                 .allowsHeaderCollapse()
+                .collapseProgress($viewModel.collapseProgress)
                 .setHeaderSnapMode(.immediately)
                 .ignoresSafeArea()
             }

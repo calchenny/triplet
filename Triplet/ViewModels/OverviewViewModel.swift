@@ -15,6 +15,7 @@ class OverviewViewModel: ObservableObject {
     @Published var showAlert: Bool = false
     @Published var newNoteTitle: String = ""
     @Published var validationError: String = ""
+    @Published var collapseProgress: CGFloat = 0
     
     let minHeight: CGFloat = 150.0
     let maxHeight: CGFloat = 300.0

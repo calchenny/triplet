@@ -5,6 +5,7 @@
 //  Created by Derek Ma on 2/20/24.
 //
 
+import Foundation
 import FirebaseFirestore
 
 struct Trip: Identifiable, Codable {
