@@ -11,6 +11,24 @@ import ScalingHeaderScrollView
 
 struct OverviewView: View {
     @StateObject var viewModel = OverviewViewModel()
+    
+    func getHeaderWidth(screenWidth: CGFloat) -> CGFloat {
+        let maxWidth = screenWidth * 0.9
+        let minWidth = screenWidth * 0.5
+        return max((1 - viewModel.collapseProgress + 0.5 * viewModel.collapseProgress) * maxWidth, minWidth)
+    }
+    
+    func getHeaderHeight() -> CGFloat {
+        let maxHeight = CGFloat(100)
+        let minHeight = CGFloat(60)
+        return max((1 - viewModel.collapseProgress + 0.5 * viewModel.collapseProgress) * maxHeight, minHeight)
+    }
+    
+    func getHeaderTitleSize() -> CGFloat {
+        let maxSize = CGFloat(30)
+        let minSize = CGFloat(16)
+        return max((1 - viewModel.collapseProgress + 0.5 * viewModel.collapseProgress) * maxSize, minSize)
+    }
 
     var body: some View {
         NavigationStack {
@@ -20,13 +38,12 @@ struct OverviewView: View {
                         ZStack(alignment: .bottom) {
                             Map(position: $viewModel.cameraPosition)
                             RoundedRectangle(cornerRadius: 15)
-                                .frame(width: max((1 - viewModel.collapseProgress) * geometry.size.width * 0.9, geometry.size.width * 0.5),
-                                       height: max((1 - viewModel.collapseProgress) * 100, CGFloat.init(60)))
+                                .frame(width: getHeaderWidth(screenWidth: geometry.size.width), height: getHeaderHeight())
                                 .foregroundStyle(.white)
                                 .overlay(
                                     VStack {
                                         Text("Most Amazing Trip")
-                                            .font(.system(size: max((1 - viewModel.collapseProgress) * 30, CGFloat.init(16.0)), weight: .bold))
+                                            .font(.system(size: getHeaderTitleSize(), weight: .bold))
                                             .foregroundStyle(.indigo)
                                         Text("Seattle, WA | 10/20 - 10/25")
                                             .font(.system(size: 14, weight: .medium))
