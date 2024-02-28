@@ -72,6 +72,8 @@
 		89C1396B2B8FF07500DEE0CD /* Poppins-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 89BDCE742B8FE28A00C69895 /* Poppins-Medium.ttf */; };
 		89C1396C2B8FF07500DEE0CD /* Poppins-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 89BDCE732B8FE26500C69895 /* Poppins-Bold.ttf */; };
 		89C139702B8FF8DE00DEE0CD /* HousingPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C1396F2B8FF8DE00DEE0CD /* HousingPopupView.swift */; };
+		89C1396D2B8FF0CB00DEE0CD /* Poppins-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 89BDCE742B8FE28A00C69895 /* Poppins-Medium.ttf */; };
+		89C1396E2B8FF0CB00DEE0CD /* Poppins-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 89BDCE732B8FE26500C69895 /* Poppins-Bold.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -359,6 +361,8 @@
 			files = (
 				89C1396B2B8FF07500DEE0CD /* Poppins-Medium.ttf in Resources */,
 				89C1396C2B8FF07500DEE0CD /* Poppins-Bold.ttf in Resources */,
+				89C1396D2B8FF0CB00DEE0CD /* Poppins-Medium.ttf in Resources */,
+				89C1396E2B8FF0CB00DEE0CD /* Poppins-Bold.ttf in Resources */,
 				8935A42D2B7F496300F62185 /* Preview Assets.xcassets in Resources */,
 				89B3F3BA2B8FA7C600D79E5D /* Poppins-Regular.ttf in Resources */,
 				8935A42A2B7F496300F62185 /* Assets.xcassets in Resources */,
