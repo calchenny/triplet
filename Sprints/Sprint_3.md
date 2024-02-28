@@ -36,8 +36,7 @@ Triplet is an application aimed to minimize disruptions during trips. Our applic
 - **[Calvin Chen]:**
 
   - **Done:**
-    - [Link to Commit 1] - Search feature in the new trip view
-    - [Link to Commit 2] - [Task Description 2]
+    - [Link to Commit 1](https://github.com/calchenny/triplet/pull/3/commits/8b026e253e3cc98ce96fa81e57e15c087bef0e2e) - Search feature in the new trip view
 
   - **To Do:**
     - Build the interactive map view 
@@ -57,21 +56,21 @@ Triplet is an application aimed to minimize disruptions during trips. Our applic
     - N/A
 - **[Derek Ma]:**
   - **Done:**
-    - [Link to Commit 1] - Got the look of the overview page
+    - [Link to Commit 1](https://github.com/calchenny/triplet/pull/6/commits/8b0baf984b6e67bab05d796f2e9a3e542ba0faa2) - Got the look of the overview page
   - **To Do:**
     - Write functions to connect front-end and back-end server
   - **Blockers:**
     - N/A
 - **[Andy Lam]:**
   - **Done:**
-    - [Link to Commit 1] - Add event feature on the itinenary view
+    - [Link to Commit 1](https://github.com/calchenny/triplet/pull/7/commits/3932a602e41f21cc335336395c14f25d9c06f6aa) - Add event feature on the itinenary view
   - **To Do:**
     - Finish loading the events on itinenary view
   - **Blockers:**
     - N/A
 - **[Newland Luu]:**
   - **Done:**
-    - [Link to Commit 1] - Expenses view total value, add new expense
+    - [Link to Commit 1](https://github.com/calchenny/triplet/pull/4/commits/c744f81878c1e91812b7cba8265fa3fb260a7f8d) - Expenses view total value, add new expense
   - **To Do:**
     - Fix calendar
     - Implement progress bar
