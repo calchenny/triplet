@@ -8,6 +8,7 @@
 import SwiftUI
 import MapKit
 import ScalingHeaderScrollView
+import PopupView
 
 struct OverviewView: View {
     @StateObject var viewModel = OverviewViewModel()
@@ -147,7 +148,7 @@ struct OverviewView: View {
                         .frame(height: 15)
                     DisclosureGroup(isExpanded: $viewModel.toggleStates.food.all) {
                         Button {
-                            
+                            viewModel.showFoodPopup.toggle()
                         } label: {
                             HStack {
                                 Image(systemName: "plus")
@@ -195,6 +196,54 @@ struct OverviewView: View {
                 .collapseProgress($viewModel.collapseProgress)
                 .setHeaderSnapMode(.immediately)
                 .ignoresSafeArea()
+                .popup(isPresented: $viewModel.showFoodPopup) {
+                    RoundedRectangle(cornerRadius: 15)
+                        .foregroundStyle(.white)
+                        .overlay(
+                            VStack {
+                                HStack {
+                                    Spacer()
+                                    Button {
+                                        viewModel.showFoodPopup.toggle()
+                                    } label: {
+                                        Image(systemName: "xmark.circle.fill")
+                                            .foregroundStyle(.gray)
+                                    }
+                                }
+                                Text("New Food Spot")
+                                    .font(.system(size: getHeaderTitleSize(), weight: .bold))
+                                    .foregroundStyle(.indigo)
+                                Spacer()
+                                Button {
+                                    
+                                } label: {
+                                    RoundedRectangle(cornerRadius: 15)
+                                        .frame(width: 200, height: 50)
+                                        .foregroundStyle(.indigo)
+                                        .overlay(
+                                            HStack {
+                                                Image(systemName: "plus")
+                                                Text("Add food")
+                                            }
+                                            .tint(.white)
+                                        )
+                                        .padding(.bottom)
+                                }
+                            }
+                            .padding()
+                        )
+                        .padding()
+                        .frame(maxHeight: geometry.size.height * 0.8)
+                } customize: { popup in
+                    popup
+                        .type(.floater())
+                        .position(.center)
+                        .animation(.spring())
+                        .closeOnTap(false)
+                        .closeOnTapOutside(false)
+                        .useKeyboardSafeArea(true)
+                        .backgroundColor(.black.opacity(0.25))
+                }
             }
         }
     }

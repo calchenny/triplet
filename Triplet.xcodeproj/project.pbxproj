@@ -43,6 +43,7 @@
 		894846272B8558DC00F7347A /* ScalingHeaderScrollView in Frameworks */ = {isa = PBXBuildFile; productRef = 894846262B8558DC00F7347A /* ScalingHeaderScrollView */; };
 		8966A50B2B885B7D00A952DF /* OverviewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8966A50A2B885B7D00A952DF /* OverviewViewModel.swift */; };
 		897674002B8194EF00390C0B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 897673FF2B8194EF00390C0B /* GoogleService-Info.plist */; };
+		8997E8E42B8ECDCB000D6A58 /* PopupView in Frameworks */ = {isa = PBXBuildFile; productRef = 8997E8E32B8ECDCB000D6A58 /* PopupView */; };
 		89F96D652B8E7DB5007AFF7A /* NoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89F96D642B8E7DB5007AFF7A /* NoteView.swift */; };
 /* End PBXBuildFile section */
 
@@ -78,6 +79,7 @@
 				89031F2E2B7FFCE200282C88 /* FirebaseAuth in Frameworks */,
 				89031F322B7FFCE200282C88 /* FirebaseCrashlytics in Frameworks */,
 				89031F522B7FFCE200282C88 /* FirebaseRemoteConfigSwift in Frameworks */,
+				8997E8E42B8ECDCB000D6A58 /* PopupView in Frameworks */,
 				89031F442B7FFCE200282C88 /* FirebaseInAppMessaging-Beta in Frameworks */,
 				89031F362B7FFCE200282C88 /* FirebaseDatabaseSwift in Frameworks */,
 				89031F402B7FFCE200282C88 /* FirebaseFunctions in Frameworks */,
@@ -209,6 +211,7 @@
 				89031F532B7FFCE200282C88 /* FirebaseStorage */,
 				89031F552B7FFCE200282C88 /* FirebaseStorageCombine-Community */,
 				894846262B8558DC00F7347A /* ScalingHeaderScrollView */,
+				8997E8E32B8ECDCB000D6A58 /* PopupView */,
 			);
 			productName = Triplet;
 			productReference = 8935A4222B7F496200F62185 /* Triplet.app */;
@@ -241,6 +244,7 @@
 			packageReferences = (
 				89031F202B7FFCE200282C88 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				894846252B8558DC00F7347A /* XCRemoteSwiftPackageReference "ScalingHeaderScrollView" */,
+				8997E8E22B8ECDCB000D6A58 /* XCRemoteSwiftPackageReference "PopupView" */,
 			);
 			productRefGroup = 8935A4232B7F496200F62185 /* Products */;
 			projectDirPath = "";
@@ -498,6 +502,14 @@
 				minimumVersion = 1.1.0;
 			};
 		};
+		8997E8E22B8ECDCB000D6A58 /* XCRemoteSwiftPackageReference "PopupView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/exyte/PopupView";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.9.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -640,6 +652,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 894846252B8558DC00F7347A /* XCRemoteSwiftPackageReference "ScalingHeaderScrollView" */;
 			productName = ScalingHeaderScrollView;
+		};
+		8997E8E32B8ECDCB000D6A58 /* PopupView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8997E8E22B8ECDCB000D6A58 /* XCRemoteSwiftPackageReference "PopupView" */;
+			productName = PopupView;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
