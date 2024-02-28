@@ -53,6 +53,10 @@
 		89BDCE4C2B8FAEE800C69895 /* OverviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BDCE4B2B8FAEE800C69895 /* OverviewView.swift */; };
 		89BDCE4F2B8FAF1500C69895 /* PopupView in Frameworks */ = {isa = PBXBuildFile; productRef = 89BDCE4E2B8FAF1500C69895 /* PopupView */; };
 		89BDCE522B8FAF6D00C69895 /* ScalingHeaderScrollView in Frameworks */ = {isa = PBXBuildFile; productRef = 89BDCE512B8FAF6D00C69895 /* ScalingHeaderScrollView */; };
+		89BDCE542B8FAFCF00C69895 /* DestinationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BDCE532B8FAFCF00C69895 /* DestinationViewModel.swift */; };
+		89BDCE562B8FAFF500C69895 /* LocationSearchModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BDCE552B8FAFF500C69895 /* LocationSearchModel.swift */; };
+		89BDCE582B8FB01400C69895 /* NewTripView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BDCE572B8FB01400C69895 /* NewTripView.swift */; };
+		89BDCE5A2B8FB03D00C69895 /* DestinationSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BDCE592B8FB03D00C69895 /* DestinationSearchView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -75,6 +79,10 @@
 		89BDCE472B8FAECA00C69895 /* FoodPopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodPopupView.swift; sourceTree = "<group>"; };
 		89BDCE492B8FAED600C69895 /* NoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteView.swift; sourceTree = "<group>"; };
 		89BDCE4B2B8FAEE800C69895 /* OverviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverviewView.swift; sourceTree = "<group>"; };
+		89BDCE532B8FAFCF00C69895 /* DestinationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DestinationViewModel.swift; sourceTree = "<group>"; };
+		89BDCE552B8FAFF500C69895 /* LocationSearchModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSearchModel.swift; sourceTree = "<group>"; };
+		89BDCE572B8FB01400C69895 /* NewTripView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTripView.swift; sourceTree = "<group>"; };
+		89BDCE592B8FB03D00C69895 /* DestinationSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DestinationSearchView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -129,6 +137,8 @@
 				89BDCE472B8FAECA00C69895 /* FoodPopupView.swift */,
 				89BDCE492B8FAED600C69895 /* NoteView.swift */,
 				89BDCE4B2B8FAEE800C69895 /* OverviewView.swift */,
+				89BDCE572B8FB01400C69895 /* NewTripView.swift */,
+				89BDCE592B8FB03D00C69895 /* DestinationSearchView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -138,6 +148,8 @@
 			children = (
 				128284332B81FCCD00E3E084 /* LoginViewModel.swift */,
 				89BDCE452B8FAEB100C69895 /* OverviewViewModel.swift */,
+				89BDCE532B8FAFCF00C69895 /* DestinationViewModel.swift */,
+				89BDCE552B8FAFF500C69895 /* LocationSearchModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -314,14 +326,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				89BDCE582B8FB01400C69895 /* NewTripView.swift in Sources */,
 				12A5B5932B82D81400BF1220 /* RootView.swift in Sources */,
 				1282842A2B81FC4B00E3E084 /* ContentView.swift in Sources */,
 				89BDCE4A2B8FAED700C69895 /* NoteView.swift in Sources */,
 				89BDCE442B8FAE8E00C69895 /* TripModel.swift in Sources */,
 				89BDCE462B8FAEB100C69895 /* OverviewViewModel.swift in Sources */,
+				89BDCE542B8FAFCF00C69895 /* DestinationViewModel.swift in Sources */,
+				89BDCE5A2B8FB03D00C69895 /* DestinationSearchView.swift in Sources */,
 				8935A4262B7F496200F62185 /* TripletApp.swift in Sources */,
 				89BDCE482B8FAECA00C69895 /* FoodPopupView.swift in Sources */,
 				1282842E2B81FC7C00E3E084 /* AlertView.swift in Sources */,
+				89BDCE562B8FAFF500C69895 /* LocationSearchModel.swift in Sources */,
 				128284342B81FCCD00E3E084 /* LoginViewModel.swift in Sources */,
 				128284322B81FCAE00E3E084 /* CustomNumPad.swift in Sources */,
 				1282842C2B81FC6400E3E084 /* VerificationView.swift in Sources */,
