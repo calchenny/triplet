@@ -60,6 +60,9 @@
 		89BDCE5C2B8FB0D900C69895 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BDCE5B2B8FB0D900C69895 /* HomeView.swift */; };
 		89BDCE5E2B8FB0EE00C69895 /* MyTripsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BDCE5D2B8FB0EE00C69895 /* MyTripsView.swift */; };
 		89BDCE602B8FB11800C69895 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BDCE5F2B8FB11800C69895 /* SettingsView.swift */; };
+		89BDCE622B8FB23C00C69895 /* AddNewExpenseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BDCE612B8FB23C00C69895 /* AddNewExpenseView.swift */; };
+		89BDCE642B8FB2AA00C69895 /* ExpenseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BDCE632B8FB2AA00C69895 /* ExpenseModel.swift */; };
+		89BDCE662B8FB31400C69895 /* ExpensesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BDCE652B8FB31400C69895 /* ExpensesView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -89,6 +92,9 @@
 		89BDCE5B2B8FB0D900C69895 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		89BDCE5D2B8FB0EE00C69895 /* MyTripsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTripsView.swift; sourceTree = "<group>"; };
 		89BDCE5F2B8FB11800C69895 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		89BDCE612B8FB23C00C69895 /* AddNewExpenseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewExpenseView.swift; sourceTree = "<group>"; };
+		89BDCE632B8FB2AA00C69895 /* ExpenseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseModel.swift; sourceTree = "<group>"; };
+		89BDCE652B8FB31400C69895 /* ExpensesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpensesView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -148,6 +154,8 @@
 				89BDCE5B2B8FB0D900C69895 /* HomeView.swift */,
 				89BDCE5D2B8FB0EE00C69895 /* MyTripsView.swift */,
 				89BDCE5F2B8FB11800C69895 /* SettingsView.swift */,
+				89BDCE612B8FB23C00C69895 /* AddNewExpenseView.swift */,
+				89BDCE652B8FB31400C69895 /* ExpensesView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -223,6 +231,7 @@
 			isa = PBXGroup;
 			children = (
 				89BDCE432B8FAE8E00C69895 /* TripModel.swift */,
+				89BDCE632B8FB2AA00C69895 /* ExpenseModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -343,14 +352,17 @@
 				89BDCE602B8FB11800C69895 /* SettingsView.swift in Sources */,
 				89BDCE462B8FAEB100C69895 /* OverviewViewModel.swift in Sources */,
 				89BDCE5E2B8FB0EE00C69895 /* MyTripsView.swift in Sources */,
+				89BDCE642B8FB2AA00C69895 /* ExpenseModel.swift in Sources */,
 				89BDCE542B8FAFCF00C69895 /* DestinationViewModel.swift in Sources */,
 				89BDCE5A2B8FB03D00C69895 /* DestinationSearchView.swift in Sources */,
+				89BDCE622B8FB23C00C69895 /* AddNewExpenseView.swift in Sources */,
 				8935A4262B7F496200F62185 /* TripletApp.swift in Sources */,
 				89BDCE5C2B8FB0D900C69895 /* HomeView.swift in Sources */,
 				89BDCE482B8FAECA00C69895 /* FoodPopupView.swift in Sources */,
 				1282842E2B81FC7C00E3E084 /* AlertView.swift in Sources */,
 				89BDCE562B8FAFF500C69895 /* LocationSearchModel.swift in Sources */,
 				128284342B81FCCD00E3E084 /* LoginViewModel.swift in Sources */,
+				89BDCE662B8FB31400C69895 /* ExpensesView.swift in Sources */,
 				128284322B81FCAE00E3E084 /* CustomNumPad.swift in Sources */,
 				1282842C2B81FC6400E3E084 /* VerificationView.swift in Sources */,
 				128284302B81FC9900E3E084 /* Login.swift in Sources */,
