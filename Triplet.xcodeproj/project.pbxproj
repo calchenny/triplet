@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		120793172B8FA6610089B032 /* AddPlaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 120793162B8FA6610089B032 /* AddPlaceView.swift */; };
+		120793192B8FA6E40089B032 /* LocationSearchViewData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 120793182B8FA6E40089B032 /* LocationSearchViewData.swift */; };
 		128284222B81FB6400E3E084 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 128284212B81FB6400E3E084 /* GoogleService-Info.plist */; };
 		1282842A2B81FC4B00E3E084 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 128284292B81FC4B00E3E084 /* ContentView.swift */; };
 		1282842C2B81FC6400E3E084 /* VerificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1282842B2B81FC6400E3E084 /* VerificationView.swift */; };
@@ -51,6 +52,7 @@
 
 /* Begin PBXFileReference section */
 		120793162B8FA6610089B032 /* AddPlaceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPlaceView.swift; sourceTree = "<group>"; };
+		120793182B8FA6E40089B032 /* LocationSearchViewData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSearchViewData.swift; sourceTree = "<group>"; };
 		128284212B81FB6400E3E084 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		128284292B81FC4B00E3E084 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		1282842B2B81FC6400E3E084 /* VerificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationView.swift; sourceTree = "<group>"; };
@@ -154,6 +156,7 @@
 				89031F572B80012800282C88 /* Info.plist */,
 				128284212B81FB6400E3E084 /* GoogleService-Info.plist */,
 				8935A42B2B7F496300F62185 /* Preview Content */,
+				120793182B8FA6E40089B032 /* LocationSearchViewData.swift */,
 			);
 			path = Triplet;
 			sourceTree = "<group>";
@@ -278,6 +281,7 @@
 				12A5B5952B852E7D00BF1220 /* ItineraryView.swift in Sources */,
 				128284322B81FCAE00E3E084 /* CustomNumPad.swift in Sources */,
 				1282842C2B81FC6400E3E084 /* VerificationView.swift in Sources */,
+				120793192B8FA6E40089B032 /* LocationSearchViewData.swift in Sources */,
 				128284302B81FC9900E3E084 /* Login.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
