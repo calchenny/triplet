@@ -63,6 +63,12 @@
 		89BDCE622B8FB23C00C69895 /* AddNewExpenseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BDCE612B8FB23C00C69895 /* AddNewExpenseView.swift */; };
 		89BDCE642B8FB2AA00C69895 /* ExpenseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BDCE632B8FB2AA00C69895 /* ExpenseModel.swift */; };
 		89BDCE662B8FB31400C69895 /* ExpensesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BDCE652B8FB31400C69895 /* ExpensesView.swift */; };
+		89BDCE682B8FB37600C69895 /* ItineraryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BDCE672B8FB37600C69895 /* ItineraryViewModel.swift */; };
+		89BDCE6A2B8FB3C800C69895 /* LandmarkViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BDCE692B8FB3C800C69895 /* LandmarkViewModel.swift */; };
+		89BDCE6C2B8FB3DC00C69895 /* AddPlaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BDCE6B2B8FB3DC00C69895 /* AddPlaceView.swift */; };
+		89BDCE6E2B8FB43300C69895 /* ItineraryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BDCE6D2B8FB43300C69895 /* ItineraryView.swift */; };
+		89BDCE702B8FB45600C69895 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BDCE6F2B8FB45600C69895 /* LocationManager.swift */; };
+		89BDCE722B8FB46800C69895 /* LocationSearchViewData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BDCE712B8FB46800C69895 /* LocationSearchViewData.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -95,6 +101,12 @@
 		89BDCE612B8FB23C00C69895 /* AddNewExpenseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewExpenseView.swift; sourceTree = "<group>"; };
 		89BDCE632B8FB2AA00C69895 /* ExpenseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseModel.swift; sourceTree = "<group>"; };
 		89BDCE652B8FB31400C69895 /* ExpensesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpensesView.swift; sourceTree = "<group>"; };
+		89BDCE672B8FB37600C69895 /* ItineraryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItineraryViewModel.swift; sourceTree = "<group>"; };
+		89BDCE692B8FB3C800C69895 /* LandmarkViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandmarkViewModel.swift; sourceTree = "<group>"; };
+		89BDCE6B2B8FB3DC00C69895 /* AddPlaceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPlaceView.swift; sourceTree = "<group>"; };
+		89BDCE6D2B8FB43300C69895 /* ItineraryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItineraryView.swift; sourceTree = "<group>"; };
+		89BDCE6F2B8FB45600C69895 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
+		89BDCE712B8FB46800C69895 /* LocationSearchViewData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSearchViewData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -156,6 +168,8 @@
 				89BDCE5F2B8FB11800C69895 /* SettingsView.swift */,
 				89BDCE612B8FB23C00C69895 /* AddNewExpenseView.swift */,
 				89BDCE652B8FB31400C69895 /* ExpensesView.swift */,
+				89BDCE6B2B8FB3DC00C69895 /* AddPlaceView.swift */,
+				89BDCE6D2B8FB43300C69895 /* ItineraryView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -167,6 +181,8 @@
 				89BDCE452B8FAEB100C69895 /* OverviewViewModel.swift */,
 				89BDCE532B8FAFCF00C69895 /* DestinationViewModel.swift */,
 				89BDCE552B8FAFF500C69895 /* LocationSearchModel.swift */,
+				89BDCE672B8FB37600C69895 /* ItineraryViewModel.swift */,
+				89BDCE692B8FB3C800C69895 /* LandmarkViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -199,6 +215,8 @@
 				89031F572B80012800282C88 /* Info.plist */,
 				8935A4292B7F496300F62185 /* Assets.xcassets */,
 				8935A42B2B7F496300F62185 /* Preview Content */,
+				89BDCE6F2B8FB45600C69895 /* LocationManager.swift */,
+				89BDCE712B8FB46800C69895 /* LocationSearchViewData.swift */,
 			);
 			path = Triplet;
 			sourceTree = "<group>";
@@ -345,9 +363,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				89BDCE582B8FB01400C69895 /* NewTripView.swift in Sources */,
+				89BDCE722B8FB46800C69895 /* LocationSearchViewData.swift in Sources */,
 				12A5B5932B82D81400BF1220 /* RootView.swift in Sources */,
+				89BDCE6C2B8FB3DC00C69895 /* AddPlaceView.swift in Sources */,
 				1282842A2B81FC4B00E3E084 /* ContentView.swift in Sources */,
 				89BDCE4A2B8FAED700C69895 /* NoteView.swift in Sources */,
+				89BDCE6E2B8FB43300C69895 /* ItineraryView.swift in Sources */,
 				89BDCE442B8FAE8E00C69895 /* TripModel.swift in Sources */,
 				89BDCE602B8FB11800C69895 /* SettingsView.swift in Sources */,
 				89BDCE462B8FAEB100C69895 /* OverviewViewModel.swift in Sources */,
@@ -358,6 +379,7 @@
 				89BDCE622B8FB23C00C69895 /* AddNewExpenseView.swift in Sources */,
 				8935A4262B7F496200F62185 /* TripletApp.swift in Sources */,
 				89BDCE5C2B8FB0D900C69895 /* HomeView.swift in Sources */,
+				89BDCE682B8FB37600C69895 /* ItineraryViewModel.swift in Sources */,
 				89BDCE482B8FAECA00C69895 /* FoodPopupView.swift in Sources */,
 				1282842E2B81FC7C00E3E084 /* AlertView.swift in Sources */,
 				89BDCE562B8FAFF500C69895 /* LocationSearchModel.swift in Sources */,
@@ -365,7 +387,9 @@
 				89BDCE662B8FB31400C69895 /* ExpensesView.swift in Sources */,
 				128284322B81FCAE00E3E084 /* CustomNumPad.swift in Sources */,
 				1282842C2B81FC6400E3E084 /* VerificationView.swift in Sources */,
+				89BDCE702B8FB45600C69895 /* LocationManager.swift in Sources */,
 				128284302B81FC9900E3E084 /* Login.swift in Sources */,
+				89BDCE6A2B8FB3C800C69895 /* LandmarkViewModel.swift in Sources */,
 				89BDCE4C2B8FAEE800C69895 /* OverviewView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
