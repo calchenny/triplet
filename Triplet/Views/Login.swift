@@ -33,10 +33,12 @@ struct Login: View {
             VStack{
                 VStack {
                     Text("Get Started with Phone Number")
-                        .font(.title2)
-                        .fontWeight(.bold)
-                        .foregroundStyle(Color.black)
-                        .padding()
+                        .font(.custom("Poppins-Regular", size: 32))
+                        .fontWeight(.thin)
+//                        .font(.title2)
+//                        .fontWeight(.bold)
+//                        .foregroundStyle(Color.black)
+//                        .padding()
                     
                     // add our logo image here
                     Image("")
@@ -112,4 +114,5 @@ struct Login: View {
 
 #Preview {
     Login()
+        .environmentObject(LoginViewModel())
 }

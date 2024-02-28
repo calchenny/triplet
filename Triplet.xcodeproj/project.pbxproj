@@ -45,6 +45,7 @@
 		8935A42A2B7F496300F62185 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8935A4292B7F496300F62185 /* Assets.xcassets */; };
 		8935A42D2B7F496300F62185 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8935A42C2B7F496300F62185 /* Preview Assets.xcassets */; };
 		89B3F3A02B8FA44400D79E5D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 89B3F39F2B8FA44400D79E5D /* GoogleService-Info.plist */; };
+		89B3F3BA2B8FA7C600D79E5D /* Poppins-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 89B3F3AB2B8FA70100D79E5D /* Poppins-Regular.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -61,6 +62,7 @@
 		8935A4292B7F496300F62185 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8935A42C2B7F496300F62185 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		89B3F39F2B8FA44400D79E5D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		89B3F3AB2B8FA70100D79E5D /* Poppins-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Regular.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -141,6 +143,7 @@
 		8935A4242B7F496200F62185 /* Triplet */ = {
 			isa = PBXGroup;
 			children = (
+				89B3F3A12B8FA6DD00D79E5D /* Resources */,
 				128284142B81FAE500E3E084 /* ViewModels */,
 				128284132B81FADE00E3E084 /* Views */,
 				8935A4252B7F496200F62185 /* TripletApp.swift */,
@@ -158,6 +161,22 @@
 				8935A42C2B7F496300F62185 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		89B3F3A12B8FA6DD00D79E5D /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				89B3F3A22B8FA6E900D79E5D /* Fonts */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		89B3F3A22B8FA6E900D79E5D /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				89B3F3AB2B8FA70100D79E5D /* Poppins-Regular.ttf */,
+			);
+			path = Fonts;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -251,6 +270,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8935A42D2B7F496300F62185 /* Preview Assets.xcassets in Resources */,
+				89B3F3BA2B8FA7C600D79E5D /* Poppins-Regular.ttf in Resources */,
 				8935A42A2B7F496300F62185 /* Assets.xcassets in Resources */,
 				89B3F3A02B8FA44400D79E5D /* GoogleService-Info.plist in Resources */,
 			);
