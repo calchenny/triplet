@@ -101,7 +101,7 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		128284132B81FADE00E3E084 /* View */ = {
+		128284132B81FADE00E3E084 /* Views */ = {
 			isa = PBXGroup;
 			children = (
 				128284292B81FC4B00E3E084 /* ContentView.swift */,
@@ -111,15 +111,15 @@
 				128284312B81FCAE00E3E084 /* CustomNumPad.swift */,
 				12A5B5922B82D81400BF1220 /* RootView.swift */,
 			);
-			path = View;
+			path = Views;
 			sourceTree = "<group>";
 		};
-		128284142B81FAE500E3E084 /* ViewModel */ = {
+		128284142B81FAE500E3E084 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
 				128284332B81FCCD00E3E084 /* LoginViewModel.swift */,
 			);
-			path = ViewModel;
+			path = ViewModels;
 			sourceTree = "<group>";
 		};
 		8935A4192B7F496200F62185 = {
@@ -141,12 +141,12 @@
 		8935A4242B7F496200F62185 /* Triplet */ = {
 			isa = PBXGroup;
 			children = (
-				128284142B81FAE500E3E084 /* ViewModel */,
-				128284132B81FADE00E3E084 /* View */,
+				128284142B81FAE500E3E084 /* ViewModels */,
+				128284132B81FADE00E3E084 /* Views */,
 				8935A4252B7F496200F62185 /* TripletApp.swift */,
 				89B3F39F2B8FA44400D79E5D /* GoogleService-Info.plist */,
-				8935A4292B7F496300F62185 /* Assets.xcassets */,
 				89031F572B80012800282C88 /* Info.plist */,
+				8935A4292B7F496300F62185 /* Assets.xcassets */,
 				8935A42B2B7F496300F62185 /* Preview Content */,
 			);
 			path = Triplet;
