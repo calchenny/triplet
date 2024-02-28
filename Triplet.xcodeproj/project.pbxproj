@@ -44,6 +44,7 @@
 		8966A50B2B885B7D00A952DF /* OverviewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8966A50A2B885B7D00A952DF /* OverviewViewModel.swift */; };
 		897674002B8194EF00390C0B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 897673FF2B8194EF00390C0B /* GoogleService-Info.plist */; };
 		8997E8E42B8ECDCB000D6A58 /* PopupView in Frameworks */ = {isa = PBXBuildFile; productRef = 8997E8E32B8ECDCB000D6A58 /* PopupView */; };
+		8997E8E62B8EDB03000D6A58 /* FoodPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8997E8E52B8EDB03000D6A58 /* FoodPopupView.swift */; };
 		89F96D652B8E7DB5007AFF7A /* NoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89F96D642B8E7DB5007AFF7A /* NoteView.swift */; };
 /* End PBXBuildFile section */
 
@@ -58,6 +59,7 @@
 		894846232B85586600F7347A /* OverviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverviewView.swift; sourceTree = "<group>"; };
 		8966A50A2B885B7D00A952DF /* OverviewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverviewViewModel.swift; sourceTree = "<group>"; };
 		897673FF2B8194EF00390C0B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		8997E8E52B8EDB03000D6A58 /* FoodPopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodPopupView.swift; sourceTree = "<group>"; };
 		89F96D642B8E7DB5007AFF7A /* NoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -154,6 +156,7 @@
 			children = (
 				894846232B85586600F7347A /* OverviewView.swift */,
 				89F96D642B8E7DB5007AFF7A /* NoteView.swift */,
+				8997E8E52B8EDB03000D6A58 /* FoodPopupView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -274,6 +277,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8935A4282B7F496200F62185 /* ContentView.swift in Sources */,
+				8997E8E62B8EDB03000D6A58 /* FoodPopupView.swift in Sources */,
 				8935A4262B7F496200F62185 /* TripletApp.swift in Sources */,
 				89F96D652B8E7DB5007AFF7A /* NoteView.swift in Sources */,
 				894846222B85428F00F7347A /* TripModel.swift in Sources */,

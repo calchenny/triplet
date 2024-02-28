@@ -47,7 +47,7 @@ struct OverviewView: View {
                                             .font(.system(size: getHeaderTitleSize(), weight: .bold))
                                             .foregroundStyle(.indigo)
                                         Text("Seattle, WA | 10/20 - 10/25")
-                                            .font(.system(size: 14, weight: .medium))
+                                            .font(.caption)
                                             .foregroundStyle(.indigo)
                                     }
                                 )
@@ -69,7 +69,8 @@ struct OverviewView: View {
                     .frame(maxWidth: .infinity)
                 } content: {
                     Text("Overview")
-                        .font(.system(size: 30, weight: .bold))
+                        .font(.title)
+                        .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
                         .foregroundStyle(.indigo)
                         .padding(25)
                     DisclosureGroup(isExpanded: $viewModel.toggleStates.notes) {
@@ -95,7 +96,7 @@ struct OverviewView: View {
                                 HStack {
                                     Image(systemName: "plus")
                                     Text("Add notes")
-                                        .font(.system(size: 16, weight: .medium))
+                                        .fontWeight(.medium)
                                     Spacer()
                                 }
                                 .padding(.bottom, 5)
@@ -112,7 +113,8 @@ struct OverviewView: View {
                         }
                     } label: {
                         Text("Notes")
-                            .font(.system(size: 24, weight: .bold))
+                            .font(.title2)
+                            .fontWeight(.bold)
                     }
                     .frame(maxWidth: geometry.size.width * 0.85)
                     .padding()
@@ -128,7 +130,7 @@ struct OverviewView: View {
                             HStack {
                                 Image(systemName: "plus")
                                 Text("Add another lodging")
-                                    .font(.system(size: 16, weight: .medium))
+                                    .fontWeight(.medium)
                                 Spacer()
                             }
                             .padding(.bottom, 5)
@@ -137,7 +139,8 @@ struct OverviewView: View {
                         .padding(.top)
                     } label: {
                         Text("Hotel & Lodging")
-                            .font(.system(size: 24, weight: .bold))
+                            .font(.title2)
+                            .fontWeight(.bold)
                     }
                     .frame(maxWidth: geometry.size.width * 0.85)
                     .padding()
@@ -153,7 +156,7 @@ struct OverviewView: View {
                             HStack {
                                 Image(systemName: "plus")
                                 Text("Add another food spot")
-                                    .font(.system(size: 16, weight: .medium))
+                                    .fontWeight(.medium)
                                 Spacer()
                             }
                             .padding(.bottom, 5)
@@ -164,26 +167,30 @@ struct OverviewView: View {
                             
                         } label: {
                             Text("Breakfast/Brunch")
-                                .font(.system(size: 20, weight: .bold))
+                                .font(.title3)
+                                .fontWeight(.bold)
                         }
                         .padding([.top, .leading, .trailing])
                         DisclosureGroup(isExpanded: $viewModel.toggleStates.food.lunch) {
                             
                         } label: {
                             Text("Lunch")
-                                .font(.system(size: 20, weight: .bold))
+                                .font(.title3)
+                                .fontWeight(.bold)
                         }
                         .padding([.top, .leading, .trailing])
                         DisclosureGroup(isExpanded: $viewModel.toggleStates.food.dinner) {
                             
                         } label: {
                             Text("Dinner")
-                                .font(.system(size: 20, weight: .bold))
+                                .font(.title3)
+                                .fontWeight(.bold)
                         }
                         .padding([.top, .leading, .trailing, .bottom])
                     } label: {
                         Text("Food Spots")
-                            .font(.system(size: 24, weight: .bold))
+                            .font(.title2)
+                            .fontWeight(.bold)
                     }
                     .frame(maxWidth: geometry.size.width * 0.85)
                     .padding()
@@ -197,43 +204,8 @@ struct OverviewView: View {
                 .setHeaderSnapMode(.immediately)
                 .ignoresSafeArea()
                 .popup(isPresented: $viewModel.showFoodPopup) {
-                    RoundedRectangle(cornerRadius: 15)
-                        .foregroundStyle(.white)
-                        .overlay(
-                            VStack {
-                                HStack {
-                                    Spacer()
-                                    Button {
-                                        viewModel.showFoodPopup.toggle()
-                                    } label: {
-                                        Image(systemName: "xmark.circle.fill")
-                                            .foregroundStyle(.gray)
-                                    }
-                                }
-                                Text("New Food Spot")
-                                    .font(.system(size: getHeaderTitleSize(), weight: .bold))
-                                    .foregroundStyle(.indigo)
-                                Spacer()
-                                Button {
-                                    
-                                } label: {
-                                    RoundedRectangle(cornerRadius: 15)
-                                        .frame(width: 200, height: 50)
-                                        .foregroundStyle(.indigo)
-                                        .overlay(
-                                            HStack {
-                                                Image(systemName: "plus")
-                                                Text("Add food")
-                                            }
-                                            .tint(.white)
-                                        )
-                                        .padding(.bottom)
-                                }
-                            }
-                            .padding()
-                        )
-                        .padding()
-                        .frame(maxHeight: geometry.size.height * 0.8)
+                    FoodPopupView()
+                        .environmentObject(viewModel)
                 } customize: { popup in
                     popup
                         .type(.floater())
@@ -251,6 +223,5 @@ struct OverviewView: View {
 
 #Preview {
     OverviewView()
-        .environmentObject(OverviewViewModel())
 }
 
