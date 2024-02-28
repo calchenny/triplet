@@ -113,6 +113,6 @@ struct LoginView: View {
 }
 
 #Preview {
-    Login()
+    LoginView()
         .environmentObject(LoginViewModel())
 }
