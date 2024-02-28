@@ -14,7 +14,7 @@ struct RootView: View {
     var body: some View {
         // will probably need a switch statement here
         NavigationStack {
-            Login()
+            LoginView()
         }
         .environmentObject(userModel)
     }

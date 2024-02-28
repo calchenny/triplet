@@ -8,7 +8,7 @@
 import SwiftUI
 
 
-struct Login: View {
+struct LoginView: View {
     @EnvironmentObject var login: LoginViewModel
     @State var navigateToVerify: Bool = false
     

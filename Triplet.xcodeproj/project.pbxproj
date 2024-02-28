@@ -10,7 +10,7 @@
 		1282842A2B81FC4B00E3E084 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 128284292B81FC4B00E3E084 /* ContentView.swift */; };
 		1282842C2B81FC6400E3E084 /* VerificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1282842B2B81FC6400E3E084 /* VerificationView.swift */; };
 		1282842E2B81FC7C00E3E084 /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1282842D2B81FC7C00E3E084 /* AlertView.swift */; };
-		128284302B81FC9900E3E084 /* Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1282842F2B81FC9900E3E084 /* Login.swift */; };
+		128284302B81FC9900E3E084 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1282842F2B81FC9900E3E084 /* LoginView.swift */; };
 		128284322B81FCAE00E3E084 /* CustomNumPad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 128284312B81FCAE00E3E084 /* CustomNumPad.swift */; };
 		128284342B81FCCD00E3E084 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 128284332B81FCCD00E3E084 /* LoginViewModel.swift */; };
 		12A5B5932B82D81400BF1220 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12A5B5922B82D81400BF1220 /* RootView.swift */; };
@@ -75,7 +75,7 @@
 		128284292B81FC4B00E3E084 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		1282842B2B81FC6400E3E084 /* VerificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationView.swift; sourceTree = "<group>"; };
 		1282842D2B81FC7C00E3E084 /* AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
-		1282842F2B81FC9900E3E084 /* Login.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Login.swift; sourceTree = "<group>"; };
+		1282842F2B81FC9900E3E084 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		128284312B81FCAE00E3E084 /* CustomNumPad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNumPad.swift; sourceTree = "<group>"; };
 		128284332B81FCCD00E3E084 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		12A5B5922B82D81400BF1220 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
@@ -155,7 +155,7 @@
 				128284292B81FC4B00E3E084 /* ContentView.swift */,
 				1282842B2B81FC6400E3E084 /* VerificationView.swift */,
 				1282842D2B81FC7C00E3E084 /* AlertView.swift */,
-				1282842F2B81FC9900E3E084 /* Login.swift */,
+				1282842F2B81FC9900E3E084 /* LoginView.swift */,
 				128284312B81FCAE00E3E084 /* CustomNumPad.swift */,
 				12A5B5922B82D81400BF1220 /* RootView.swift */,
 				89BDCE472B8FAECA00C69895 /* FoodPopupView.swift */,
@@ -388,7 +388,7 @@
 				128284322B81FCAE00E3E084 /* CustomNumPad.swift in Sources */,
 				1282842C2B81FC6400E3E084 /* VerificationView.swift in Sources */,
 				89BDCE702B8FB45600C69895 /* LocationManager.swift in Sources */,
-				128284302B81FC9900E3E084 /* Login.swift in Sources */,
+				128284302B81FC9900E3E084 /* LoginView.swift in Sources */,
 				89BDCE6A2B8FB3C800C69895 /* LandmarkViewModel.swift in Sources */,
 				89BDCE4C2B8FAEE800C69895 /* OverviewView.swift in Sources */,
 			);
