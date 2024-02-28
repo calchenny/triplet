@@ -143,6 +143,7 @@
 		8935A4242B7F496200F62185 /* Triplet */ = {
 			isa = PBXGroup;
 			children = (
+				89BDCE422B8FAD5600C69895 /* New Group */,
 				89B3F3A12B8FA6DD00D79E5D /* Resources */,
 				128284142B81FAE500E3E084 /* ViewModels */,
 				128284132B81FADE00E3E084 /* Views */,
@@ -177,6 +178,13 @@
 				89B3F3AB2B8FA70100D79E5D /* Poppins-Regular.ttf */,
 			);
 			path = Fonts;
+			sourceTree = "<group>";
+		};
+		89BDCE422B8FAD5600C69895 /* New Group */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "New Group";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
