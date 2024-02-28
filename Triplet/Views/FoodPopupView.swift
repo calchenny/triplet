@@ -27,19 +27,23 @@ struct FoodPopupView: View {
                         Button {
                             overviewViewModel.showFoodPopup.toggle()
                         } label: {
-                            Image(systemName: "xmark.circle.fill")
-                                .foregroundStyle(.gray)
+                            Circle()
+                                .frame(maxWidth: 30)
+                                .foregroundStyle(Color("Dark Blue"))
+                                .overlay {
+                                    Image(systemName: "xmark")
+                                        .foregroundStyle(.white)
+                                }
                         }
                     }
                     Text("New Food Spot")
-                        .font(.title)
-                        .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
-                        .foregroundStyle(.indigo)
+                        .font(.custom("Poppins-Bold", size: 30))
+                        .foregroundStyle(Color("Dark Blue"))
                     Spacer()
                     HStack {
                         VStack(alignment: .leading) {
                             Text("Category")
-                                .font(.title3)
+                                .font(.custom("Poppins-Medium", size: 16))
                             Picker("Select a paint color", selection: $selection) {
                                 ForEach(FoodCategory.allCases, id: \.self) { category in
                                     Text(category.rawValue)
@@ -47,9 +51,9 @@ struct FoodPopupView: View {
                             }
                             .frame(maxWidth: 200)
                             .pickerStyle(.menu)
-                            .tint(.indigo)
+                            .tint(Color("Dark Blue"))
                             .padding(5)
-                            .overlay(RoundedRectangle(cornerRadius: 5).stroke(.gray))
+                            .overlay(RoundedRectangle(cornerRadius: 5).stroke(Color("Darker Gray")))
                         }
                         Spacer()
                     }
@@ -60,11 +64,12 @@ struct FoodPopupView: View {
                     } label: {
                         RoundedRectangle(cornerRadius: 15)
                             .frame(width: 200, height: 50)
-                            .foregroundStyle(.indigo)
+                            .foregroundStyle(Color("Dark Blue"))
                             .overlay(
                                 HStack {
                                     Image(systemName: "plus")
                                     Text("Add food")
+                                        .font(.custom("Poppins-Medium", size: 16))
                                 }
                                 .tint(.white)
                             )

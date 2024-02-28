@@ -107,6 +107,8 @@
 		89BDCE6D2B8FB43300C69895 /* ItineraryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItineraryView.swift; sourceTree = "<group>"; };
 		89BDCE6F2B8FB45600C69895 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		89BDCE712B8FB46800C69895 /* LocationSearchViewData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSearchViewData.swift; sourceTree = "<group>"; };
+		89BDCE732B8FE26500C69895 /* Poppins-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Bold.ttf"; sourceTree = "<group>"; };
+		89BDCE742B8FE28A00C69895 /* Poppins-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Medium.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -241,6 +243,8 @@
 			isa = PBXGroup;
 			children = (
 				89B3F3AB2B8FA70100D79E5D /* Poppins-Regular.ttf */,
+				89BDCE742B8FE28A00C69895 /* Poppins-Medium.ttf */,
+				89BDCE732B8FE26500C69895 /* Poppins-Bold.ttf */,
 			);
 			path = Fonts;
 			sourceTree = "<group>";

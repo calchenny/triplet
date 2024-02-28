@@ -40,15 +40,15 @@ struct OverviewView: View {
                             Map(position: $viewModel.cameraPosition)
                             RoundedRectangle(cornerRadius: 15)
                                 .frame(width: getHeaderWidth(screenWidth: geometry.size.width), height: getHeaderHeight())
-                                .foregroundStyle(.white)
+                                .foregroundStyle(Color("Even Lighter Blue"))
                                 .overlay(
                                     VStack {
                                         Text("Most Amazing Trip")
-                                            .font(.system(size: getHeaderTitleSize(), weight: .bold))
-                                            .foregroundStyle(.indigo)
+                                            .font(.custom("Poppins-Bold", size: getHeaderTitleSize()))
+                                            .foregroundStyle(Color("Dark Blue"))
                                         Text("Seattle, WA | 10/20 - 10/25")
-                                            .font(.caption)
-                                            .foregroundStyle(.indigo)
+                                            .font(.custom("Poppins-Medium", size: 13))
+                                            .foregroundStyle(Color("Dark Blue"))
                                     }
                                 )
                                 .padding(.bottom, 30)
@@ -58,7 +58,7 @@ struct OverviewView: View {
                             Image(systemName: "chevron.left")
                                 .font(.title2)
                                 .padding()
-                                .background(.indigo)
+                                .background(Color("Dark Blue"))
                                 .foregroundStyle(.white)
                                 .clipShape(Circle())
                         }
@@ -69,9 +69,8 @@ struct OverviewView: View {
                     .frame(maxWidth: .infinity)
                 } content: {
                     Text("Overview")
-                        .font(.title)
-                        .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
-                        .foregroundStyle(.indigo)
+                        .font(.custom("Poppins-Bold", size: 30))
+                        .foregroundStyle(Color("Dark Blue"))
                         .padding(25)
                     DisclosureGroup(isExpanded: $viewModel.toggleStates.notes) {
                         VStack {
@@ -96,7 +95,7 @@ struct OverviewView: View {
                                 HStack {
                                     Image(systemName: "plus")
                                     Text("Add notes")
-                                        .fontWeight(.medium)
+                                        .font(.custom("Poppins-Medium", size: 16))
                                     Spacer()
                                 }
                                 .padding(.bottom, 5)
@@ -113,14 +112,13 @@ struct OverviewView: View {
                         }
                     } label: {
                         Text("Notes")
-                            .font(.title2)
-                            .fontWeight(.bold)
+                            .font(.custom("Poppins-Bold", size: 24))
                     }
                     .frame(maxWidth: geometry.size.width * 0.85)
                     .padding()
                     .background(Color(.secondarySystemBackground))
                     .clipShape(RoundedRectangle(cornerRadius: 15))
-                    .tint(.indigo)
+                    .tint(Color("Dark Blue"))
                     Spacer()
                         .frame(height: 15)
                     DisclosureGroup(isExpanded: $viewModel.toggleStates.housing) {
@@ -130,7 +128,7 @@ struct OverviewView: View {
                             HStack {
                                 Image(systemName: "plus")
                                 Text("Add another lodging")
-                                    .fontWeight(.medium)
+                                    .font(.custom("Poppins-Medium", size: 16))
                                 Spacer()
                             }
                             .padding(.bottom, 5)
@@ -139,14 +137,13 @@ struct OverviewView: View {
                         .padding(.top)
                     } label: {
                         Text("Hotel & Lodging")
-                            .font(.title2)
-                            .fontWeight(.bold)
+                            .font(.custom("Poppins-Bold", size: 24))
                     }
                     .frame(maxWidth: geometry.size.width * 0.85)
                     .padding()
                     .background(Color(.secondarySystemBackground))
                     .clipShape(RoundedRectangle(cornerRadius: 15))
-                    .tint(.indigo)
+                    .tint(Color("Dark Blue"))
                     Spacer()
                         .frame(height: 15)
                     DisclosureGroup(isExpanded: $viewModel.toggleStates.food.all) {
@@ -156,7 +153,7 @@ struct OverviewView: View {
                             HStack {
                                 Image(systemName: "plus")
                                 Text("Add another food spot")
-                                    .fontWeight(.medium)
+                                    .font(.custom("Poppins-Medium", size: 16))
                                 Spacer()
                             }
                             .padding(.bottom, 5)
@@ -167,36 +164,32 @@ struct OverviewView: View {
                             
                         } label: {
                             Text("Breakfast/Brunch")
-                                .font(.title3)
-                                .fontWeight(.bold)
+                                .font(.custom("Poppins-Bold", size: 20))
                         }
                         .padding([.top, .leading, .trailing])
                         DisclosureGroup(isExpanded: $viewModel.toggleStates.food.lunch) {
                             
                         } label: {
                             Text("Lunch")
-                                .font(.title3)
-                                .fontWeight(.bold)
+                                .font(.custom("Poppins-Bold", size: 20))
                         }
                         .padding([.top, .leading, .trailing])
                         DisclosureGroup(isExpanded: $viewModel.toggleStates.food.dinner) {
                             
                         } label: {
                             Text("Dinner")
-                                .font(.title3)
-                                .fontWeight(.bold)
+                                .font(.custom("Poppins-Bold", size: 20))
                         }
                         .padding([.top, .leading, .trailing, .bottom])
                     } label: {
                         Text("Food Spots")
-                            .font(.title2)
-                            .fontWeight(.bold)
+                            .font(.custom("Poppins-Bold", size: 24))
                     }
                     .frame(maxWidth: geometry.size.width * 0.85)
                     .padding()
                     .background(Color(.secondarySystemBackground))
                     .clipShape(RoundedRectangle(cornerRadius: 15))
-                    .tint(.indigo)
+                    .tint(Color("Dark Blue"))
                 }
                 .height(min: viewModel.minHeight, max: viewModel.maxHeight)
                 .allowsHeaderCollapse()
