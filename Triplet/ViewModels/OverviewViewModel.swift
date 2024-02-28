@@ -17,6 +17,7 @@ class OverviewViewModel: ObservableObject {
     @Published var validationError: String = ""
     @Published var collapseProgress: CGFloat = 0
     @Published var showFoodPopup: Bool = false
+    @Published var showHousingPopup: Bool = false
     
     let minHeight: CGFloat = 150.0
     let maxHeight: CGFloat = 300.0

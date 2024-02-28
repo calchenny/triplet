@@ -123,7 +123,7 @@ struct OverviewView: View {
                         .frame(height: 15)
                     DisclosureGroup(isExpanded: $viewModel.toggleStates.housing) {
                         Button {
-                            
+                            viewModel.showHousingPopup.toggle()
                         } label: {
                             HStack {
                                 Image(systemName: "plus")
@@ -198,6 +198,19 @@ struct OverviewView: View {
                 .ignoresSafeArea()
                 .popup(isPresented: $viewModel.showFoodPopup) {
                     FoodPopupView()
+                        .environmentObject(viewModel)
+                } customize: { popup in
+                    popup
+                        .type(.floater())
+                        .position(.center)
+                        .animation(.spring())
+                        .closeOnTap(false)
+                        .closeOnTapOutside(false)
+                        .useKeyboardSafeArea(true)
+                        .backgroundColor(.black.opacity(0.25))
+                }
+                .popup(isPresented: $viewModel.showHousingPopup) {
+                    HousingPopupView()
                         .environmentObject(viewModel)
                 } customize: { popup in
                     popup

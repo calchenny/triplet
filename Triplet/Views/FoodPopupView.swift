@@ -44,13 +44,22 @@ struct FoodPopupView: View {
                         VStack(alignment: .leading) {
                             Text("Category")
                                 .font(.custom("Poppins-Medium", size: 16))
-                            Picker("Select a paint color", selection: $selection) {
-                                ForEach(FoodCategory.allCases, id: \.self) { category in
-                                    Text(category.rawValue)
+                            Menu {
+                                Picker("", selection: $selection) {
+                                    ForEach(FoodCategory.allCases, id: \.self) { category in
+                                        Text(category.rawValue)
+                                    }
+                                }
+                            } label: {
+                                HStack {
+                                    Text(selection.rawValue)
+                                        .font(.custom("Poppins-Regular", size: 16))
+                                        .frame(minWidth: 150)
+                                    Image(systemName: "chevron.down")
+                                        .foregroundStyle(Color("Darker Gray"))
                                 }
                             }
-                            .frame(maxWidth: 200)
-                            .pickerStyle(.menu)
+                            .frame(maxWidth: 200, maxHeight: 30)
                             .tint(Color("Dark Blue"))
                             .padding(5)
                             .overlay(RoundedRectangle(cornerRadius: 5).stroke(Color("Darker Gray")))
