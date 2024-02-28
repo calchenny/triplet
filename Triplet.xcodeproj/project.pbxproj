@@ -14,9 +14,10 @@
 		128284322B81FCAE00E3E084 /* CustomNumPad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 128284312B81FCAE00E3E084 /* CustomNumPad.swift */; };
 		128284342B81FCCD00E3E084 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 128284332B81FCCD00E3E084 /* LoginViewModel.swift */; };
 		12A5B5932B82D81400BF1220 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12A5B5922B82D81400BF1220 /* RootView.swift */; };
+		240FAC442B8870EE0098DF22 /* LocationSearchModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 240FAC432B8870EE0098DF22 /* LocationSearchModel.swift */; };
+		2410C5472B8EA456006ACF21 /* DestinationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2410C5462B8EA456006ACF21 /* DestinationViewModel.swift */; };
 		24334E552B85BCCA006F0EBC /* DestinationSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24334E532B85BCCA006F0EBC /* DestinationSearchView.swift */; };
 		24334E562B85BCCB006F0EBC /* NewTripView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24334E542B85BCCA006F0EBC /* NewTripView.swift */; };
-		24334E582B85BCD1006F0EBC /* LocationServiceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24334E572B85BCD1006F0EBC /* LocationServiceModel.swift */; };
 		24334E5A2B85BCDA006F0EBC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 24334E592B85BCDA006F0EBC /* GoogleService-Info.plist */; };
 		89031F222B7FFCE200282C88 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 89031F212B7FFCE200282C88 /* FirebaseAnalytics */; };
 		89031F242B7FFCE200282C88 /* FirebaseAnalyticsOnDeviceConversion in Frameworks */ = {isa = PBXBuildFile; productRef = 89031F232B7FFCE200282C88 /* FirebaseAnalyticsOnDeviceConversion */; };
@@ -58,9 +59,10 @@
 		128284312B81FCAE00E3E084 /* CustomNumPad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNumPad.swift; sourceTree = "<group>"; };
 		128284332B81FCCD00E3E084 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		12A5B5922B82D81400BF1220 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
+		240FAC432B8870EE0098DF22 /* LocationSearchModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationSearchModel.swift; sourceTree = "<group>"; };
+		2410C5462B8EA456006ACF21 /* DestinationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DestinationViewModel.swift; path = ../../../../../../../../../Documents/DestinationViewModel.swift; sourceTree = "<group>"; };
 		24334E532B85BCCA006F0EBC /* DestinationSearchView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DestinationSearchView.swift; sourceTree = "<group>"; };
 		24334E542B85BCCA006F0EBC /* NewTripView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewTripView.swift; sourceTree = "<group>"; };
-		24334E572B85BCD1006F0EBC /* LocationServiceModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LocationServiceModel.swift; path = Triplet/ViewModel/LocationServiceModel.swift; sourceTree = SOURCE_ROOT; };
 		24334E592B85BCDA006F0EBC /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		89031F572B80012800282C88 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		8935A4222B7F496200F62185 /* Triplet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Triplet.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -107,7 +109,7 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		128284132B81FADE00E3E084 /* View */ = {
+		128284132B81FADE00E3E084 /* Views */ = {
 			isa = PBXGroup;
 			children = (
 				24334E532B85BCCA006F0EBC /* DestinationSearchView.swift */,
@@ -119,16 +121,25 @@
 				128284312B81FCAE00E3E084 /* CustomNumPad.swift */,
 				12A5B5922B82D81400BF1220 /* RootView.swift */,
 			);
-			path = View;
+			path = Views;
 			sourceTree = "<group>";
 		};
-		128284142B81FAE500E3E084 /* ViewModel */ = {
+		128284142B81FAE500E3E084 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
 				128284332B81FCCD00E3E084 /* LoginViewModel.swift */,
-				24334E572B85BCD1006F0EBC /* LocationServiceModel.swift */,
+				240FAC432B8870EE0098DF22 /* LocationSearchModel.swift */,
+				2410C5462B8EA456006ACF21 /* DestinationViewModel.swift */,
 			);
-			path = ViewModel;
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		2410C5432B8E9CE2006ACF21 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Models;
+			path = ../Models;
 			sourceTree = "<group>";
 		};
 		8935A4192B7F496200F62185 = {
@@ -150,8 +161,9 @@
 		8935A4242B7F496200F62185 /* Triplet */ = {
 			isa = PBXGroup;
 			children = (
-				128284142B81FAE500E3E084 /* ViewModel */,
-				128284132B81FADE00E3E084 /* View */,
+				2410C5432B8E9CE2006ACF21 /* Models */,
+				128284142B81FAE500E3E084 /* ViewModels */,
+				128284132B81FADE00E3E084 /* Views */,
 				8935A4252B7F496200F62185 /* TripletApp.swift */,
 				8935A4292B7F496300F62185 /* Assets.xcassets */,
 				89031F572B80012800282C88 /* Info.plist */,
@@ -275,11 +287,12 @@
 				24334E562B85BCCB006F0EBC /* NewTripView.swift in Sources */,
 				12A5B5932B82D81400BF1220 /* RootView.swift in Sources */,
 				1282842A2B81FC4B00E3E084 /* ContentView.swift in Sources */,
-				24334E582B85BCD1006F0EBC /* LocationServiceModel.swift in Sources */,
+				240FAC442B8870EE0098DF22 /* LocationSearchModel.swift in Sources */,
 				8935A4262B7F496200F62185 /* TripletApp.swift in Sources */,
 				1282842E2B81FC7C00E3E084 /* AlertView.swift in Sources */,
 				128284342B81FCCD00E3E084 /* LoginViewModel.swift in Sources */,
 				24334E552B85BCCA006F0EBC /* DestinationSearchView.swift in Sources */,
+				2410C5472B8EA456006ACF21 /* DestinationViewModel.swift in Sources */,
 				128284322B81FCAE00E3E084 /* CustomNumPad.swift in Sources */,
 				1282842C2B81FC6400E3E084 /* VerificationView.swift in Sources */,
 				128284302B81FC9900E3E084 /* Login.swift in Sources */,

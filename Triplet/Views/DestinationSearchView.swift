@@ -9,15 +9,19 @@ import SwiftUI
 import MapKit
 
 struct DestinationSearchView: View {
-    @ObservedObject var locationService: LocationService
-    @Binding var destination: String
+    @ObservedObject var locationSearch = LocationSearch()
+    @EnvironmentObject var destinationViewModel: DestinationViewModel
     @Environment(\.dismiss) var dismiss
     
-    func selectedDestination(completion: MKLocalSearchCompletion) {
-        print("Selected place: \(completion.title)")
+    func selectedDestination(result: LocationSearch.CityResult) async {
+        print("Selected place: \(result.city)")
         
-        // Store into model eventually
-        destination = completion.title
+        // Store into model
+        await destinationViewModel.setDestination(city: result.city,
+                                                  state: result.state,
+                                                  country: result.country, 
+                                                  latitude: result.latitude,
+                                                  longitude: result.longitude)
         
         dismiss()
     }
@@ -43,9 +47,9 @@ struct DestinationSearchView: View {
                 Form {
                     Section(header: Text("Location Search")) {
                         ZStack(alignment: .trailing) {
-                            TextField("Search", text: $locationService.queryFragment)
+                            TextField("Search", text: $locationSearch.searchQuery)
                             // Displays an icon during an active search
-                            if locationService.status == .isSearching {
+                            if locationSearch.status == .isSearching {
                                 Image(systemName: "clock")
                                     .foregroundColor(Color.gray)
                             }
@@ -54,21 +58,15 @@ struct DestinationSearchView: View {
                     .listRowBackground(Color(UIColor.systemGray6))
                     
                     Section(header: Text("Results")) {
-                        List {
-//                            Group { () -> AnyView in
-//                                switch locationService.status {
-//                                case .noResults: return AnyView(Text("No Results"))
-//                                case .error(let description): return AnyView(Text("Error: \(description)"))
-//                                default: return AnyView(EmptyView())
-//                                }
-//                            }.foregroundColor(Color.gray)
-
-                            ForEach(locationService.searchResults, id: \.self) { completion in
-                                Button(action: { selectedDestination(completion: completion) }) {
-                                    HStack {
-                                        Text(completion.title)
-                                            .foregroundStyle(.black)
-                                    }
+                        List(locationSearch.searchResults, id: \.self) { result in
+                            Button(action: { 
+                                Task {
+                                    await selectedDestination(result: result)
+                                }
+                            }) {
+                                HStack {
+                                    Text("\(result.city), \(result.state), \(result.country)")
+                                        .foregroundStyle(.black)
                                 }
                             }
                         }
@@ -82,5 +80,6 @@ struct DestinationSearchView: View {
 }
 
 #Preview {
-    DestinationSearchView(locationService: LocationService(), destination: .constant(""))
+    DestinationSearchView(locationSearch: LocationSearch())
+        .environmentObject(DestinationViewModel())
 }
