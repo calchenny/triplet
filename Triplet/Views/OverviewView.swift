@@ -145,7 +145,7 @@ struct OverviewView: View {
                     .tint(.indigo)
                     Spacer()
                         .frame(height: 15)
-                    DisclosureGroup(isExpanded: $viewModel.toggleStates.food) {
+                    DisclosureGroup(isExpanded: $viewModel.toggleStates.food.all) {
                         Button {
                             
                         } label: {
@@ -159,6 +159,27 @@ struct OverviewView: View {
                             .tint(.gray)
                         }
                         .padding(.top)
+                        DisclosureGroup(isExpanded: $viewModel.toggleStates.food.breakfast) {
+                            
+                        } label: {
+                            Text("Breakfast/Brunch")
+                                .font(.system(size: 20, weight: .bold))
+                        }
+                        .padding([.top, .leading, .trailing])
+                        DisclosureGroup(isExpanded: $viewModel.toggleStates.food.lunch) {
+                            
+                        } label: {
+                            Text("Lunch")
+                                .font(.system(size: 20, weight: .bold))
+                        }
+                        .padding([.top, .leading, .trailing])
+                        DisclosureGroup(isExpanded: $viewModel.toggleStates.food.dinner) {
+                            
+                        } label: {
+                            Text("Dinner")
+                                .font(.system(size: 20, weight: .bold))
+                        }
+                        .padding([.top, .leading, .trailing, .bottom])
                     } label: {
                         Text("Food Spots")
                             .font(.system(size: 24, weight: .bold))

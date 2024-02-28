@@ -15,17 +15,10 @@ struct NoteView: View {
     
     var body: some View {
         VStack {
-            VStack {
-                TextField("Note Title", text: $title)
-                    .padding([.leading, .trailing], 40)
-                    .font(.system(size: 30, weight: .bold))
-                    .foregroundStyle(.indigo)
-                Rectangle()
-                    .frame(height: 1)
-                    .padding([.leading, .trailing], 40)
-                    .foregroundStyle(.tertiary)
-            }
-            
+            TextField("Note Title", text: $title)
+                .padding([.leading, .trailing], 40)
+                .font(.system(size: 30, weight: .bold))
+                .foregroundStyle(.indigo)
             Spacer()
                 .frame(maxHeight: 20)
             TextEditor(text: $content)

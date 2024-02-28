@@ -32,8 +32,15 @@ class OverviewViewModel: ObservableObject {
     }
 }
 
+struct FoodToggleStates {
+    var all: Bool = true
+    var breakfast: Bool = true
+    var lunch: Bool = true
+    var dinner: Bool = true
+}
+
 struct ToggleStates {
     var notes: Bool = true
     var housing: Bool = true
-    var food: Bool = true
+    var food: FoodToggleStates = FoodToggleStates()
 }
