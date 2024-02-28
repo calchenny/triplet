@@ -8,6 +8,7 @@
 import Foundation
 
 class Expense: ObservableObject {
+    @Published var id = UUID()
     @Published var expenseName: String
     @Published var cost: String
     @Published var date: Date

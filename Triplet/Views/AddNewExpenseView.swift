@@ -10,11 +10,17 @@ import SwiftUI
 struct AddNewExpenseView: View {
     
     @Binding var expenses: [Expense]
+    @Environment(\.dismiss) var dismiss
     @State private var name: String = ""
     @State private var cost: String = ""
     @State private var selection: String = "Select One"
     @State var date: Date = Date()
     @State private var error: Bool = false
+    
+    // function that will bring down the keyboard
+    func hideKeyboard() {
+        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+    }
     
     var body: some View {
         
@@ -56,7 +62,6 @@ struct AddNewExpenseView: View {
                     .padding(8)
                     .cornerRadius(10)
                     .frame(width: 75)
-                    //.padding(.horizontal, 150)
             }
             .overlay(
                 RoundedRectangle(cornerRadius: 10)
@@ -127,6 +132,7 @@ struct AddNewExpenseView: View {
                     print("creating new expense...")
                     let newExpense = Expense(expenseName: name, cost: cost, date: date, category: selection)
                     expenses.append(newExpense)
+                    dismiss()
                 }
                 
             } label: {
@@ -140,7 +146,10 @@ struct AddNewExpenseView: View {
                 
             }
             
-        }
+        } // VStack closing
+        .onTapGesture {
+            self.hideKeyboard() // hidekeyboard when the user taps anywhere on the Vstack if it is open
+            }
     }
 }
 

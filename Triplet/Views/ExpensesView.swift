@@ -14,6 +14,17 @@ struct ExpensesView: View {
     @State private var percentage: Float = 0
     @State private var showNewExpenseSheet: Bool = false
     
+//    func calculateTotal (total: Float) {
+//        ForEach($expenses, id: \.cost) { expense in
+//            if let newCost = Double(expense.cost) {
+//                total = total + newCost
+//            }
+//
+//                
+//        }
+//        
+//    }
+    
     var body: some View {
         VStack {
             Text("**Most Amazing Trip**\n10/20 - 10/25")
@@ -51,17 +62,74 @@ struct ExpensesView: View {
         }
         
         VStack {
-            Spacer()
+
             if !expenses.isEmpty {
                 
+                ScrollView {
+                    ForEach(expenses, id: \.expenseName) { expense in
+                        
+                        HStack {
+                            if (expense.category == "Housing") {
+                                Image(systemName: "house.fill")
+                                    .font(.title3)
+                                    .padding([.leading, .trailing], 10)
+                            }
+                            else if (expense.category == "Transportation") {
+                                Image(systemName: "car.side.fill")
+                                    .font(.title3)
+                                    .padding([.leading, .trailing], 10)
+                            }
+                            else if (expense.category == "Food") {
+                                Image(systemName: "fork.knife")
+                                    .font(.title3)
+                                    .padding([.leading, .trailing], 10)
+                            }
+                            else {
+                                Image(systemName: "dollarsign")
+                                    .font(.title3)
+                                    .padding([.leading, .trailing], 10)
+                            }
+                            VStack {
+                                    HStack{
+                                        Text("\(expense.expenseName)")
+                                            .bold()
+                                        Spacer()
+                                        Text("-$\(expense.cost)")
+                                            .bold()
+                                            .foregroundColor(.red)
+
+                                    }
+                                    .padding([.top, .leading, .trailing], 10)
+                                    HStack {
+                                        Text("\(expense.category)")
+                                            .font(.caption)
+                                        Spacer()
+                                        Text(expense.date, format: .dateTime.day().month())
+                                            .font(.caption)
+                                    }
+                                    .padding([.bottom, .leading, .trailing], 10)
+                                    
+                            }
+                        }
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 20)
+                                .fill(Color.gray.opacity(0.15))
+                        )
+                    }
+                }
+                Spacer()
+                    .onAppear {
+                        //calculateTotal(total: currentTotal)
+                    }
             }
             else {
+                Spacer()
                 Text("No expenses added yet.")
                     .font(.title3)
                     .bold()
                     .foregroundColor(.indigo)
+                Spacer()
             }
-            Spacer()
             Button() {
                 print("button pressed")
                 showNewExpenseSheet.toggle()
