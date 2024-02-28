@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		120793172B8FA6610089B032 /* AddPlaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 120793162B8FA6610089B032 /* AddPlaceView.swift */; };
 		128284222B81FB6400E3E084 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 128284212B81FB6400E3E084 /* GoogleService-Info.plist */; };
 		1282842A2B81FC4B00E3E084 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 128284292B81FC4B00E3E084 /* ContentView.swift */; };
 		1282842C2B81FC6400E3E084 /* VerificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1282842B2B81FC6400E3E084 /* VerificationView.swift */; };
@@ -46,11 +47,10 @@
 		8935A4262B7F496200F62185 /* TripletApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8935A4252B7F496200F62185 /* TripletApp.swift */; };
 		8935A42A2B7F496300F62185 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8935A4292B7F496300F62185 /* Assets.xcassets */; };
 		8935A42D2B7F496300F62185 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8935A42C2B7F496300F62185 /* Preview Assets.xcassets */; };
-		894846222B85428F00F7347A /* TripModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 894846212B85428F00F7347A /* TripModel.swift */; };
-		897674002B8194EF00390C0B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 897673FF2B8194EF00390C0B /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		120793162B8FA6610089B032 /* AddPlaceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPlaceView.swift; sourceTree = "<group>"; };
 		128284212B81FB6400E3E084 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		128284292B81FC4B00E3E084 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		1282842B2B81FC6400E3E084 /* VerificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationView.swift; sourceTree = "<group>"; };
@@ -65,8 +65,6 @@
 		8935A4252B7F496200F62185 /* TripletApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripletApp.swift; sourceTree = "<group>"; };
 		8935A4292B7F496300F62185 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8935A42C2B7F496300F62185 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		894846212B85428F00F7347A /* TripModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripModel.swift; sourceTree = "<group>"; };
-		897673FF2B8194EF00390C0B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,6 +115,7 @@
 				128284312B81FCAE00E3E084 /* CustomNumPad.swift */,
 				12A5B5922B82D81400BF1220 /* RootView.swift */,
 				12A5B5942B852E7D00BF1220 /* ItineraryView.swift */,
+				120793162B8FA6610089B032 /* AddPlaceView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -165,28 +164,6 @@
 				8935A42C2B7F496300F62185 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
-			sourceTree = "<group>";
-		};
-		894846202B85427D00F7347A /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				894846212B85428F00F7347A /* TripModel.swift */,
-			);
-			path = Models;
-			sourceTree = "<group>";
-		};
-		89E7759F2B853A7400A5F603 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Views;
-			sourceTree = "<group>";
-		};
-		89E775A02B853A8300A5F603 /* ViewModels */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = ViewModels;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -296,6 +273,7 @@
 				1282842A2B81FC4B00E3E084 /* ContentView.swift in Sources */,
 				8935A4262B7F496200F62185 /* TripletApp.swift in Sources */,
 				1282842E2B81FC7C00E3E084 /* AlertView.swift in Sources */,
+				120793172B8FA6610089B032 /* AddPlaceView.swift in Sources */,
 				128284342B81FCCD00E3E084 /* LoginViewModel.swift in Sources */,
 				12A5B5952B852E7D00BF1220 /* ItineraryView.swift in Sources */,
 				128284322B81FCAE00E3E084 /* CustomNumPad.swift in Sources */,
