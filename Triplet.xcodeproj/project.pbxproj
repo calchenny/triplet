@@ -45,7 +45,7 @@
 		8935A42A2B7F496300F62185 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8935A4292B7F496300F62185 /* Assets.xcassets */; };
 		8935A42D2B7F496300F62185 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8935A42C2B7F496300F62185 /* Preview Assets.xcassets */; };
 		89B3F3A02B8FA44400D79E5D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 89B3F39F2B8FA44400D79E5D /* GoogleService-Info.plist */; };
-		89B3F3BA2B8FA7C600D79E5D /* Poppins.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 89B3F3AB2B8FA70100D79E5D /* Poppins.ttf */; };
+		89B3F3BA2B8FA7C600D79E5D /* Poppins-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 89B3F3AB2B8FA70100D79E5D /* Poppins-Regular.ttf */; };
 		89BDCE442B8FAE8E00C69895 /* TripModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BDCE432B8FAE8E00C69895 /* TripModel.swift */; };
 		89BDCE462B8FAEB100C69895 /* OverviewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BDCE452B8FAEB100C69895 /* OverviewViewModel.swift */; };
 		89BDCE482B8FAECA00C69895 /* FoodPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BDCE472B8FAECA00C69895 /* FoodPopupView.swift */; };
@@ -85,7 +85,7 @@
 		8935A4292B7F496300F62185 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8935A42C2B7F496300F62185 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		89B3F39F2B8FA44400D79E5D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		89B3F3AB2B8FA70100D79E5D /* Poppins.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Poppins.ttf; sourceTree = "<group>"; };
+		89B3F3AB2B8FA70100D79E5D /* Poppins-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Regular.ttf"; sourceTree = "<group>"; };
 		89BDCE432B8FAE8E00C69895 /* TripModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripModel.swift; sourceTree = "<group>"; };
 		89BDCE452B8FAEB100C69895 /* OverviewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverviewViewModel.swift; sourceTree = "<group>"; };
 		89BDCE472B8FAECA00C69895 /* FoodPopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodPopupView.swift; sourceTree = "<group>"; };
@@ -240,7 +240,7 @@
 		89B3F3A22B8FA6E900D79E5D /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
-				89B3F3AB2B8FA70100D79E5D /* Poppins.ttf */,
+				89B3F3AB2B8FA70100D79E5D /* Poppins-Regular.ttf */,
 			);
 			path = Fonts;
 			sourceTree = "<group>";
@@ -349,7 +349,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8935A42D2B7F496300F62185 /* Preview Assets.xcassets in Resources */,
-				89B3F3BA2B8FA7C600D79E5D /* Poppins.ttf in Resources */,
+				89B3F3BA2B8FA7C600D79E5D /* Poppins-Regular.ttf in Resources */,
 				8935A42A2B7F496300F62185 /* Assets.xcassets in Resources */,
 				89B3F3A02B8FA44400D79E5D /* GoogleService-Info.plist in Resources */,
 			);

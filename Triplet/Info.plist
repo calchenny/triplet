@@ -4,7 +4,7 @@
 <dict>
 	<key>UIAppFonts</key>
 	<array>
-		<string>Poppins.ttf</string>
+		<string>Poppins-Regular.ttf</string>
 	</array>
 	<key>CFBundleURLTypes</key>
 	<array>
