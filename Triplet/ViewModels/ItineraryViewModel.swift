@@ -14,7 +14,7 @@ struct Event: Identifiable {
     let location: String
     let date: Date
     let time: Date
-    let category: String?
+    let category: String
 }
 
 class ItineraryViewModel: ObservableObject {
@@ -33,7 +33,14 @@ class ItineraryViewModel: ObservableObject {
 
     func addEvent(name: String, location: String, date: Date, time: Date, category: String) {
         let newEvent = Event(name: name, location: location, date: date, time: time, category: category)
+        print(formatDate(newEvent.date))
         events.append(newEvent)
+    }
+    
+    func formatDate(_ date: Date) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MM/dd" // Customize the format as needed
+        return dateFormatter.string(from: date)
     }
 
     func deleteEvent(at index: Int) {

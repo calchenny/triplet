@@ -8,12 +8,19 @@
 import SwiftUI
 import MapKit
 
+enum PlaceCategory: String, CaseIterable {
+    case restaurant = "Restaurant"
+    case attraction = "Attraction"
+    case hotel = "Hotel"
+    case transit = "Transit"
+}
+
 struct AddPlaceView: View {
 //    @Binding var startDate: Date
 //    @Binding var endDate: Date
     @EnvironmentObject var itineraryModel: ItineraryViewModel
     @State private var startDate = Date.now
-    @State private var startTime = Date.now
+    @State private var startTime: Date = Date()
     @State private var category: String = ""
     @State private var selectedLandmark: LandmarkViewModel?
     @Environment(\.presentationMode) var presentationMode
@@ -56,18 +63,13 @@ struct AddPlaceView: View {
             DatePicker(selection: $startDate, in: dateRange, displayedComponents: .date) {
                 Text("Date")
             }
-            DatePicker(selection: $startTime, in: ...Date.now, displayedComponents: .hourAndMinute) {
+            DatePicker(selection: $startTime, displayedComponents: .hourAndMinute) {
                 Text("Time")
             }
             
             DropDownPicker(
                 selection: $category,
-                options: [
-                    "Restaurant",
-                    "Attraction",
-                    "Hotel",
-                    "Transit",
-                ]
+                options: PlaceCategory.allCases.map { $0.rawValue }
             )
             .padding(30)
             
@@ -76,6 +78,7 @@ struct AddPlaceView: View {
                     self.getNearByLandmarks()
                 }.textFieldStyle(RoundedBorderTextFieldStyle())
                     .padding()
+                    .cornerRadius(10)
                     
                 List {
                     ForEach(self.landmarks, id: \.id) { landmark in
@@ -181,22 +184,22 @@ struct DropDownPicker: View {
     
     func OptionsView() -> some View {
         VStack(spacing: 0) {
-            ForEach(options, id: \.self) { option in
+            ForEach(PlaceCategory.allCases, id: \.self) { category in
                 HStack {
-                    Text(option)
+                    Text(category.rawValue)
                         .foregroundStyle(Color.black)
                     Spacer()
                     Image(systemName: "checkmark")
-                        .opacity(selection == option ? 1 : 0)
+                        .opacity(selection == category.rawValue ? 1 : 0)
                 }
-                .foregroundStyle(selection == option ? Color.primary : Color.gray)
+                .foregroundStyle(selection == category.rawValue ? Color.primary : Color.gray)
                 .animation(.none, value: selection)
                 .frame(height: 40)
                 .contentShape(.rect)
                 .padding(.horizontal, 15)
                 .onTapGesture {
                     withAnimation(.snappy) {
-                        selection = option
+                        selection = category.rawValue
                         showDropdown.toggle()
                     }
                 }

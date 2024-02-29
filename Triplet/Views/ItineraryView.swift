@@ -10,22 +10,38 @@
 import SwiftUI
 import EventKit
 
-//struct Event: Identifiable {
-//    let id = UUID()
-//    let name: String
-//    let location: String
-//}
+
+func getCategoryImageName(category: String) -> String {
+
+    switch category {
+    case "Restaurant":
+        return "fork.knife.circle"
+    case "Attraction":
+        return "star"
+    case "Hotel":
+        return "house"
+    case "Transit":
+        return "bus"
+    default:
+        return "questionmark"
+    }
+}
+
+func formatDate(_ date: Date) -> String {
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateFormat = "MM/dd" // Customize the format as needed
+    return dateFormatter.string(from: date)
+}
+
+func formatTime(_ date: Date) -> String {
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateFormat = "h:mm a" // Customize the format as needed
+    return dateFormatter.string(from: date)
+}
+
 
 
 struct ItineraryView: View {
-    
-    // test events --> will load from database in future
-//    let events = [
-//        Event(name: "Tim's Kitchen", location: "123 Main St"),
-//        Event(name: "Fancy Shopping Mall", location: "453 Second St"),
-//        Event(name: "Music Concert", location: "City Arena"),
-//        Event(name: "UC Davis", location: "Davis")
-//    ]
     
     @StateObject var itineraryModel = ItineraryViewModel()
     @State var searchText: String = ""
@@ -66,18 +82,28 @@ struct ItineraryView: View {
                     RoundedRectangle(cornerRadius: 5)
                         .stroke(Color.gray, lineWidth: 1)
                 )
-                
-                Spacer() // Pushes everything to the left and the button to the right
-                
-                Button(action: {
-                    // Handle edit button action
-                }) {
-                    Image(systemName: "square.and.pencil")
-                        .foregroundColor(.indigo)
-                }
-                .frame(minWidth: 40, minHeight: 40)
             }
             .padding()
+            Button(action: {
+                showAddEventSheet.toggle()
+            }) {
+                HStack {
+                    Image(systemName: "plus.circle.fill")
+                        .resizable()
+                        .frame(width: 20, height: 20)
+                    Text("Add an Event")
+                        .font(.subheadline)
+                }
+                .foregroundColor(.white)
+                .padding()
+                .background(Color.indigo)
+                .cornerRadius(10)
+            }
+            .padding(.bottom, 5)
+            .sheet(isPresented: $showAddEventSheet) {
+                AddPlaceView()
+                    .environmentObject(itineraryModel)
+            }
             
             if itineraryModel.events.isEmpty {
                 Text("No events planned yet!")
@@ -86,44 +112,65 @@ struct ItineraryView: View {
                     .padding()
             } else {
                 ScrollView {
-                    ForEach(itineraryModel.events) { event in
-                        VStack {
-                            Text(event.name)
-                                .font(.headline)
-                            Text(event.location)
-                                .font(.subheadline)
+                    ForEach(["10/20", "10/21", "10/22", "10/23", "10/24", "10/25"], id: \.self) { day in
+                        
+                        HStack {
+                            Spacer()
+                            Text(day)
+                                .font(.title)
+                                .foregroundStyle(Color.indigo)
+                            Spacer()
                         }
-                        .padding()
                         .background(Color.gray.opacity(0.2))
-                        .cornerRadius(10)
-                        .padding(.vertical, 5)
+                        .cornerRadius(20)
+                        .frame(maxWidth: .infinity)
+                        VStack {
+                            ForEach(itineraryModel.events.filter { formatDate($0.date) == day }.sorted { $0.time < $1.time }) { event in
+                                HStack(spacing: 10) {
+                                    // Image for the event's category
+                                    Image(systemName: getCategoryImageName(category: event.category))
+                                        .resizable()
+                                        .frame(width: 30, height: 30)
+                                        .foregroundColor(.indigo)
+                                    
+                                    Divider()
+                                        .frame(width: 2)
+                                        .background(Color.indigo)
+                                    
+                                    // Event details
+                                    VStack(alignment: .leading) {
+                                        Text(event.name)
+                                            .font(.headline)
+                                        Text(formatTime(event.time))
+                                            .font(.subheadline)
+                                        Text(event.location)
+                                            .font(.subheadline)
+                                    }
+                                    .padding()
+                                    Spacer()
+                                    
+                                    Button(action: {
+                                        // Handle menu button action
+                                    }) {
+                                        Image(systemName: "line.3.horizontal")
+                                            .resizable()
+                                            .frame(width: 30, height: 30)
+                                            .foregroundColor(.indigo)
+                                    }
+                                }
+                                .padding(20)
+                            }
+                        }
+                        .padding(.bottom, 10)
                     }
                 }
+                .frame(maxWidth: .infinity)
             }
-            Button(action: {
-                showAddEventSheet.toggle()
-            }) {
-                HStack {
-                    Image(systemName: "plus.circle.fill")
-                        .resizable()
-                        .frame(width: 20, height: 20)
-                    Text("Add a Place/Event")
-                }
-                .foregroundColor(.white)
-                .padding()
-                .background(Color.indigo)
-                .cornerRadius(10)
-            }
-            .padding(.top, 20)
-            .sheet(isPresented: $showAddEventSheet) {
-                AddPlaceView()
-                    .environmentObject(itineraryModel)
-            }
-
             Spacer()
         }
     }
 }
+
 
 
 #Preview {
