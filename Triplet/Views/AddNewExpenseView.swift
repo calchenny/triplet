@@ -12,7 +12,8 @@ struct AddNewExpenseView: View {
     @Binding var expenses: [Expense]
     @Environment(\.dismiss) var dismiss
     @State private var name: String = ""
-    @State private var cost: String = ""
+    @State private var cost: Double = 0
+    @State private var costInput: String = ""
     @State private var selection: String = "Select One"
     @State var date: Date = Date()
     @State private var error: Bool = false
@@ -57,7 +58,7 @@ struct AddNewExpenseView: View {
                     .bold()
                     .foregroundColor(.gray)
                     .padding(.leading, 5)
-                TextField("0.00", text: $cost)
+                TextField("0.00", text: $costInput)
                     .keyboardType(.decimalPad)
                     .padding(8)
                     .cornerRadius(10)
@@ -125,12 +126,15 @@ struct AddNewExpenseView: View {
             Spacer()
             Button() {
                 print("button pressed")
-                if (name == "" || cost == "" || selection == "Select One") {
+                if (name == "" || costInput == "" || selection == "Select One") {
                     error = true
                 }
                 else {
                     print("creating new expense...")
-                    let newExpense = Expense(expenseName: name, cost: cost, date: date, category: selection)
+                    if let cost = Double(costInput) {
+                        print("Can't convert cost to Double")
+                    }
+                    let newExpense = Expense(name: name, date: date, category: selection, cost: cost)
                     expenses.append(newExpense)
                     dismiss()
                 }
