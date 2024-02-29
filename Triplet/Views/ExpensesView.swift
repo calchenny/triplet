@@ -66,7 +66,7 @@ struct ExpensesView: View {
             if !expenses.isEmpty {
                 
                 ScrollView {
-                    ForEach(expenses, id: \.expenseName) { expense in
+                    ForEach(expenses, id: \.name) { expense in
                         
                         HStack {
                             if (expense.category == "Housing") {
@@ -91,7 +91,7 @@ struct ExpensesView: View {
                             }
                             VStack {
                                     HStack{
-                                        Text("\(expense.expenseName)")
+                                        Text("\(expense.name)")
                                             .bold()
                                         Spacer()
                                         Text("-$\(expense.cost)")

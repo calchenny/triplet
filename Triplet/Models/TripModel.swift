@@ -52,7 +52,7 @@ struct Event: Identifiable, Codable {
 struct Expense: Identifiable, Codable {
     var id: String?
     var name: String
-    var date: Date?
-    var category: String?
+    var date: Date
+    var category: String
     var cost: Double
 }

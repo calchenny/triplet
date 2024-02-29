@@ -132,10 +132,12 @@ struct AddNewExpenseView: View {
                 else {
                     print("creating new expense...")
                     if let cost = Double(costInput) {
-                        print("Can't convert cost to Double")
+                        let newExpense = Expense(name: name, date: date, category: selection, cost: cost)
+                        expenses.append(newExpense)
                     }
-                    let newExpense = Expense(name: name, date: date, category: selection, cost: cost)
-                    expenses.append(newExpense)
+                    else {
+                        print("can't convert cost to double -> no expense struct created")
+                    }
                     dismiss()
                 }
                 
