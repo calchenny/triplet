@@ -8,15 +8,6 @@
 import SwiftUI
 import EventKit
 
-struct Event: Identifiable {
-    let id = UUID()
-    let name: String
-    let location: String
-    let date: Date
-    let time: Date
-    let category: String?
-}
-
 class ItineraryViewModel: ObservableObject {
     @Published var events: [Event] = []
     

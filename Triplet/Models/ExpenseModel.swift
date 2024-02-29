@@ -7,10 +7,3 @@
 
 import Foundation
 
-struct Expense {
-    var id = UUID()
-    var expenseName: String
-    var cost: String
-    var date: Date
-    var category: String
-}

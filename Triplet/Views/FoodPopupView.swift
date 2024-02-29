@@ -7,12 +7,6 @@
 
 import SwiftUI
 
-enum FoodCategory: String, CaseIterable {
-    case breakfast = "Breakfast/Brunch"
-    case lunch = "Lunch"
-    case dinner = "Dinner"
-}
-
 struct FoodPopupView: View {
     @EnvironmentObject var overviewViewModel: OverviewViewModel
     @State var selection: FoodCategory = .breakfast
