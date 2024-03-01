@@ -14,8 +14,9 @@ struct RootView: View {
     var body: some View {
         // will probably need a switch statement here
         NavigationStack {
-            LoginView()
+            OverviewView()
         }
+        .tint(Color("Dark Blue"))
         .environmentObject(userModel)
     }
 }

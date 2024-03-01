@@ -17,12 +17,13 @@ struct NoteView: View {
         VStack {
             TextField("Note Title", text: $title)
                 .padding([.leading, .trailing], 40)
-                .font(.system(size: 30, weight: .bold))
-                .foregroundStyle(.indigo)
+                .font(.custom("Poppins-Bold", size: 30))
+                .foregroundStyle(Color("Dark Blue"))
             Spacer()
                 .frame(maxHeight: 20)
             TextEditor(text: $content)
                 .padding([.leading, .trailing, .bottom], 40)
+                .font(.custom("Poppins-Regular", size: 16))
         }
         .onAppear {
             title = note.title

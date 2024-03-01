@@ -1,15 +1,14 @@
 //
-//  FoodPopupView.swift
+//  HousingPopupView.swift
 //  Triplet
 //
-//  Created by Derek Ma on 2/27/24.
+//  Created by Derek Ma on 2/28/24.
 //
 
 import SwiftUI
 
-struct FoodPopupView: View {
+struct HousingPopupView: View {
     @EnvironmentObject var overviewViewModel: OverviewViewModel
-    @State var selection: FoodCategory = .breakfast
     
     var body: some View {
         RoundedRectangle(cornerRadius: 15)
@@ -19,7 +18,7 @@ struct FoodPopupView: View {
                     HStack {
                         Spacer()
                         Button {
-                            overviewViewModel.showFoodPopup.toggle()
+                            overviewViewModel.showHousingPopup.toggle()
                         } label: {
                             Circle()
                                 .frame(maxWidth: 30)
@@ -30,37 +29,9 @@ struct FoodPopupView: View {
                                 }
                         }
                     }
-                    Text("New Food Spot")
+                    Text("New Hotel/Lodging")
                         .font(.custom("Poppins-Bold", size: 30))
                         .foregroundStyle(Color("Dark Blue"))
-                    Spacer()
-                    HStack {
-                        VStack(alignment: .leading) {
-                            Text("Category")
-                                .font(.custom("Poppins-Medium", size: 16))
-                            Menu {
-                                Picker("", selection: $selection) {
-                                    ForEach(FoodCategory.allCases, id: \.self) { category in
-                                        Text(category.rawValue)
-                                    }
-                                }
-                            } label: {
-                                HStack {
-                                    Text(selection.rawValue)
-                                        .font(.custom("Poppins-Regular", size: 16))
-                                        .frame(minWidth: 150)
-                                    Image(systemName: "chevron.down")
-                                        .foregroundStyle(Color("Darker Gray"))
-                                }
-                            }
-                            .frame(maxWidth: 200, maxHeight: 30)
-                            .tint(Color("Dark Blue"))
-                            .padding(5)
-                            .overlay(RoundedRectangle(cornerRadius: 5).stroke(Color("Darker Gray")))
-                        }
-                        Spacer()
-                    }
-                    .padding()
                     Spacer()
                     Button {
                         
@@ -71,7 +42,7 @@ struct FoodPopupView: View {
                             .overlay(
                                 HStack {
                                     Image(systemName: "plus")
-                                    Text("Add food")
+                                    Text("Add lodging")
                                         .font(.custom("Poppins-Medium", size: 16))
                                 }
                                 .tint(.white)
@@ -87,6 +58,6 @@ struct FoodPopupView: View {
 }
 
 #Preview {
-    FoodPopupView()
+    HousingPopupView()
         .environmentObject(OverviewViewModel())
 }
