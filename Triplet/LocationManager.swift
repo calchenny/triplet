@@ -10,10 +10,10 @@ import Foundation
 import MapKit
 
 class LocationManager: NSObject, ObservableObject {
-    
     private let locationManager = CLLocationManager()
-    var location: CLLocation? = nil
-    
+    @Published var currentLocation: CLLocation? = nil
+    @Published var authorizationStatus: CLAuthorizationStatus? = nil
+
     override init() {
         
         super.init()
@@ -23,19 +23,32 @@ class LocationManager: NSObject, ObservableObject {
         self.locationManager.requestWhenInUseAuthorization()
         self.locationManager.startUpdatingLocation()
         
+        self.authorizationStatus = locationManager.authorizationStatus
     }
     
+    func startUpdatingLocation() {
+        locationManager.startUpdatingLocation()
+    }
     
+    func requestPermissions() {
+        locationManager.requestWhenInUseAuthorization()
+    }
 }
 
 extension LocationManager: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-        print(status)
-    }
+        self.authorizationStatus = manager.authorizationStatus
+        
+        switch authorizationStatus {
+        case .authorizedWhenInUse, .authorizedAlways:
+            self.startUpdatingLocation()
+        default:
+            self.requestPermissions()
+        }    }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        guard let location = locations.last else {
-            return
+        if let location = locations.first {
+            self.currentLocation = location
         }
         
     }
