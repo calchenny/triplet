@@ -73,22 +73,20 @@ struct OverviewView: View {
                     .padding(25)
                 DisclosureGroup(isExpanded: $viewModel.toggleStates.notes) {
                     VStack {
-                        if let notes = viewModel.notes {
-                            ForEach(notes, id: \.id) { note in
-                                NavigationLink {
-                                    NoteView(note: note)
-                                } label: {
-                                    HStack {
-                                        Text(note.title)
-                                        Spacer()
-                                        Image(systemName: "chevron.right")
-                                            .foregroundStyle(.tertiary)
-                                    }
-                                    .padding([.leading, .trailing])
+                        ForEach(viewModel.notes, id: \.id) { note in
+                            NavigationLink {
+                                NoteView(note: note)
+                            } label: {
+                                HStack {
+                                    Text(note.title)
+                                    Spacer()
+                                    Image(systemName: "chevron.right")
+                                        .foregroundStyle(.tertiary)
                                 }
-                                .frame(maxWidth: .infinity)
-                                .padding(.top)
+                                .padding([.leading, .trailing])
                             }
+                            .frame(maxWidth: .infinity)
+                            .padding(.top)
                         }
                         Button {
                             viewModel.showAlert.toggle()

@@ -10,7 +10,7 @@ import SwiftUI
 
 class UserModel: ObservableObject {
     @Published var uid: String?
-    @Published var trips: [Trip]?
+    @Published var trips: [Trip] = []
     private var db = Firestore.firestore()
     private var listenerRegistration: ListenerRegistration?
     
@@ -19,10 +19,10 @@ class UserModel: ObservableObject {
     }
     
     func unsubscribe() {
-      if listenerRegistration != nil {
-        listenerRegistration?.remove()
-        listenerRegistration = nil
-      }
+        if listenerRegistration != nil {
+            listenerRegistration?.remove()
+            listenerRegistration = nil
+        }
     }
     
     func subscribe() {
@@ -31,7 +31,7 @@ class UserModel: ObservableObject {
                 print("Missing uid")
                 return
             }
-            let tripQuery = db.collection("Trips").whereField("owner", isEqualTo: uid)
+            let tripQuery = db.collection("trips").whereField("owner", isEqualTo: uid)
             listenerRegistration = tripQuery.addSnapshotListener { (querySnapshot, error) in
                 guard let documents = querySnapshot?.documents else {
                     print("No documents")
