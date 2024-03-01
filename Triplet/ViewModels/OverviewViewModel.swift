@@ -5,6 +5,7 @@
 //  Created by Derek Ma on 2/22/24.
 //
 
+import FirebaseFirestore
 import SwiftUI
 import MapKit
 
@@ -27,9 +28,11 @@ class OverviewViewModel: ObservableObject {
             print("Note name must be non-empty")
             return
         }
-        withAnimation {
-            notes.append(Note(title: newNoteTitle))
+        do {
+            try Firestore.firestore().collection("Trips/\("sds")/notes").addDocument(from: Note(title: newNoteTitle))
             newNoteTitle = ""
+        } catch {
+            print(error)
         }
     }
 }
