@@ -11,25 +11,35 @@ import SwiftUI
 class UserModel: ObservableObject {
     @Published var uid: String?
     @Published var trips: [Trip]?
+    private var db = Firestore.firestore()
+    private var listenerRegistration: ListenerRegistration?
     
     func setUid(uid: String) {
         self.uid = uid
     }
     
-    func fetchTrips() {
-        guard let uid else {
-            print("Missing uid")
-            return
-        }
-        let tripsRef = Firestore.firestore().collection("Trips")
-        let tripQuery = tripsRef.whereField("owner", isEqualTo: uid)
-        tripQuery.addSnapshotListener { (querySnapshot, error) in
-            guard let documents = querySnapshot?.documents else {
-                print("No documents")
+    func unsubscribe() {
+      if listenerRegistration != nil {
+        listenerRegistration?.remove()
+        listenerRegistration = nil
+      }
+    }
+    
+    func subscribe() {
+        if listenerRegistration == nil {
+            guard let uid else {
+                print("Missing uid")
                 return
             }
-            self.trips = documents.compactMap { queryDocumentSnapshot -> Trip? in
-                return try? queryDocumentSnapshot.data(as: Trip.self)
+            let tripQuery = db.collection("Trips").whereField("owner", isEqualTo: uid)
+            listenerRegistration = tripQuery.addSnapshotListener { (querySnapshot, error) in
+                guard let documents = querySnapshot?.documents else {
+                    print("No documents")
+                    return
+                }
+                self.trips = documents.compactMap { queryDocumentSnapshot in
+                    try? queryDocumentSnapshot.data(as: Trip.self)
+                }
             }
         }
     }
