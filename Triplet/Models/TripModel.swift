@@ -22,7 +22,7 @@ struct Trip: Identifiable, Codable {
 }
 
 struct Note: Identifiable, Codable {
-    var id: String?
+    @DocumentID var id: String?
     var title: String = "Untitled Note"
     var content: String = ""
 }
@@ -40,7 +40,7 @@ enum FoodCategory: String, Codable, CaseIterable {
 }
 
 struct Event: Identifiable, Codable {
-    var id: String?
+    @DocumentID var id: String?
     var name: String
     var location: GeoPoint
     var type: EventType
@@ -50,7 +50,7 @@ struct Event: Identifiable, Codable {
 }
 
 struct Expense: Identifiable, Codable {
-    var id: String?
+    @DocumentID var id: String?
     var name: String
     var date: Date
     var category: String
