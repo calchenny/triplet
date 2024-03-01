@@ -7,6 +7,8 @@
 
 import SwiftUI
 import EventKit
+import ScalingHeaderScrollView
+import MapKit
 
 struct Event: Identifiable {
     let id = UUID()
@@ -19,6 +21,13 @@ struct Event: Identifiable {
 
 class ItineraryViewModel: ObservableObject {
     @Published var events: [Event] = []
+    
+    @Published var cameraPosition = MapCameraPosition.region(MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 47.608013, longitude: -122.335167), span: MKCoordinateSpan(latitudeDelta: 0.5, longitudeDelta: 0.5)))
+    
+    @Published var collapseProgress: CGFloat = 0
+    
+    let minHeight: CGFloat = 100.0
+    let maxHeight: CGFloat = 250.0
     
     var sortedEvents: [Event] {
         return events.sorted { (event1, event2) -> Bool in

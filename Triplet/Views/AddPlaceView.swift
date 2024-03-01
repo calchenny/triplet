@@ -9,15 +9,14 @@ import SwiftUI
 import MapKit
 
 enum PlaceCategory: String, CaseIterable {
-    case restaurant = "Restaurant"
+    case food = "Food"
     case attraction = "Attraction"
     case hotel = "Hotel"
     case transit = "Transit"
 }
 
 struct AddPlaceView: View {
-//    @Binding var startDate: Date
-//    @Binding var endDate: Date
+
     @EnvironmentObject var itineraryModel: ItineraryViewModel
     @State private var startDate = Date.now
     @State private var startTime: Date = Date()
@@ -57,14 +56,19 @@ struct AddPlaceView: View {
     var body: some View {
         VStack {
             Text("Add a Place")
-                .font(.title)
+                .font(.custom("Poppins-Regular", size: 40))
                 .fontWeight(.bold)
                 .padding(.bottom, 30)
+                .foregroundStyle(Color.darkBlue)
             DatePicker(selection: $startDate, in: dateRange, displayedComponents: .date) {
                 Text("Date")
+                    .font(.custom("Poppins-Regular", size: 20))
+                    .foregroundStyle(Color.darkBlue)
             }
             DatePicker(selection: $startTime, displayedComponents: .hourAndMinute) {
                 Text("Time")
+                    .font(.custom("Poppins-Regular", size: 20))
+                    .foregroundStyle(Color.darkBlue)
             }
             
             DropDownPicker(
@@ -140,19 +144,19 @@ struct DropDownPicker: View {
                 
                 HStack {
                     Text(selection.isEmpty ? "Category" : selection)
-                        .foregroundColor(selection.isEmpty ? .gray : .black)
+                        .foregroundColor(selection.isEmpty ? .white : .white)
                     
                     
                     Spacer(minLength: 0)
                     
                     Image(systemName: state == .top ? "chevron.up" : "chevron.down")
                         .font(.title3)
-                        .foregroundColor(.gray)
+                        .foregroundColor(.white)
                         .rotationEffect(.degrees((showDropdown ? -180 : 0)))
                 }
                 .padding(.horizontal, 15)
                 .frame(width: maxWidth, height: 50)
-                .background(.white)
+                .background(.darkBlue)
                 .contentShape(.rect)
                 .onTapGesture {
                     index += 1
@@ -168,7 +172,7 @@ struct DropDownPicker: View {
                 }
             }
             .clipped()
-            .background(.white)
+            .background(.evenLighterBlue)
             .cornerRadius(10)
             .overlay {
                 RoundedRectangle(cornerRadius: 10)
