@@ -56,18 +56,17 @@ struct AddPlaceView: View {
     var body: some View {
         VStack {
             Text("Add a Place")
-                .font(.custom("Poppins-Regular", size: 40))
-                .fontWeight(.bold)
+                .font(.custom("Poppins-Bold", size: 40))
                 .padding(.bottom, 30)
                 .foregroundStyle(Color.darkBlue)
             DatePicker(selection: $startDate, in: dateRange, displayedComponents: .date) {
                 Text("Date")
-                    .font(.custom("Poppins-Regular", size: 20))
+                    .font(.custom("Poppins-Medium", size: 20))
                     .foregroundStyle(Color.darkBlue)
             }
             DatePicker(selection: $startTime, displayedComponents: .hourAndMinute) {
                 Text("Time")
-                    .font(.custom("Poppins-Regular", size: 20))
+                    .font(.custom("Poppins-Medium", size: 20))
                     .foregroundStyle(Color.darkBlue)
             }
             
@@ -83,6 +82,8 @@ struct AddPlaceView: View {
                 }.textFieldStyle(RoundedBorderTextFieldStyle())
                     .padding()
                     .cornerRadius(10)
+                    .font(.custom("Poppins-Medium", size: 20))
+                    
                     
                 List {
                     ForEach(self.landmarks, id: \.id) { landmark in
@@ -145,6 +146,7 @@ struct DropDownPicker: View {
                 HStack {
                     Text(selection.isEmpty ? "Category" : selection)
                         .foregroundColor(selection.isEmpty ? .white : .white)
+                        .font(.custom("Poppins-Medium", size: 20))
                     
                     
                     Spacer(minLength: 0)

@@ -10,7 +10,7 @@ import EventKit
 import ScalingHeaderScrollView
 import MapKit
 
-struct Event: Identifiable {
+struct Events: Identifiable {
     let id = UUID()
     let name: String
     let location: String
@@ -20,7 +20,7 @@ struct Event: Identifiable {
 }
 
 class ItineraryViewModel: ObservableObject {
-    @Published var events: [Event] = []
+    @Published var events: [Events] = []
     
     @Published var cameraPosition = MapCameraPosition.region(MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 47.608013, longitude: -122.335167), span: MKCoordinateSpan(latitudeDelta: 0.5, longitudeDelta: 0.5)))
     
@@ -29,7 +29,7 @@ class ItineraryViewModel: ObservableObject {
     let minHeight: CGFloat = 100.0
     let maxHeight: CGFloat = 250.0
     
-    var sortedEvents: [Event] {
+    var sortedEvents: [Events] {
         return events.sorted { (event1, event2) -> Bool in
             // Compare dates and times for sorting
             if event1.date != event2.date {
@@ -41,7 +41,7 @@ class ItineraryViewModel: ObservableObject {
     }
 
     func addEvent(name: String, location: String, date: Date, time: Date, category: String) {
-        let newEvent = Event(name: name, location: location, date: date, time: time, category: category)
+        let newEvent = Events(name: name, location: location, date: date, time: time, category: category)
         print(formatDate(newEvent.date))
         events.append(newEvent)
     }

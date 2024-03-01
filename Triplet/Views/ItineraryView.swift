@@ -81,7 +81,7 @@ struct ItineraryView: View {
                             .overlay(
                                 VStack {
                                     Text("Most Amazing Trip")
-                                        .font(.custom("Poppins-Regular", size: getHeaderTitleSize()))
+                                        .font(.custom("Poppins-Bold", size: getHeaderTitleSize()))
                                         .foregroundStyle(Color.darkBlue)
                                     Text("Seattle, WA | 10/20 - 10/25")
                                         .font(.custom("Poppins-Regular", size: 15))
@@ -94,7 +94,7 @@ struct ItineraryView: View {
                 .frame(maxWidth: .infinity)
             } content: {
                 Text("Itinerary")
-                    .font(.custom("Poppins-Regular", size:30))
+                    .font(.custom("Poppins-Bold", size:30))
                     .foregroundStyle(Color.darkBlue)
                     .padding(10)
                 Button(action: {
@@ -131,7 +131,7 @@ struct ItineraryView: View {
                             HStack {
                                 Spacer()
                                 Text(day)
-                                    .font(.custom("Poppins-Regular", size:20))
+                                    .font(.custom("Poppins-Bold", size:20))
                                     .foregroundStyle(Color.darkBlue)
                                 Spacer()
                             }
