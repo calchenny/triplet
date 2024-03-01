@@ -184,7 +184,6 @@ struct OverviewView: View {
                     Text("Food Spots")
                         .font(.custom("Poppins-Bold", size: 24))
                 }
-<<<<<<< HEAD
                 .frame(maxWidth: UIScreen.main.bounds.width * 0.85)
                 .padding()
                 .background(Color(.secondarySystemBackground))
@@ -221,21 +220,6 @@ struct OverviewView: View {
                     .closeOnTapOutside(false)
                     .useKeyboardSafeArea(true)
                     .backgroundColor(.black.opacity(0.25))
-=======
-                .popup(isPresented: $viewModel.showHousingPopup) {
-                    HousingPopupView()
-                        .environmentObject(viewModel)
-                } customize: { popup in
-                    popup
-                        .type(.floater())
-                        .position(.center)
-                        .animation(.spring())
-                        .closeOnTap(false)
-                        .closeOnTapOutside(false)
-                        .useKeyboardSafeArea(true)
-                        .backgroundColor(.black.opacity(0.25))
-                }
->>>>>>> 5dba621 (Create housing popup)
             }
         }
     }
