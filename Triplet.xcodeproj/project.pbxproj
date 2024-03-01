@@ -44,6 +44,7 @@
 		8935A4262B7F496200F62185 /* TripletApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8935A4252B7F496200F62185 /* TripletApp.swift */; };
 		8935A42A2B7F496300F62185 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8935A4292B7F496300F62185 /* Assets.xcassets */; };
 		8935A42D2B7F496300F62185 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8935A42C2B7F496300F62185 /* Preview Assets.xcassets */; };
+		89621B062B915053006C0848 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89621B052B915053006C0848 /* UserModel.swift */; };
 		89B3F3A02B8FA44400D79E5D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 89B3F39F2B8FA44400D79E5D /* GoogleService-Info.plist */; };
 		89B3F3BA2B8FA7C600D79E5D /* Poppins-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 89B3F3AB2B8FA70100D79E5D /* Poppins-Regular.ttf */; };
 		89BDCE442B8FAE8E00C69895 /* TripModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BDCE432B8FAE8E00C69895 /* TripModel.swift */; };
@@ -86,6 +87,7 @@
 		8935A4252B7F496200F62185 /* TripletApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripletApp.swift; sourceTree = "<group>"; };
 		8935A4292B7F496300F62185 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8935A42C2B7F496300F62185 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		89621B052B915053006C0848 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		89B3F39F2B8FA44400D79E5D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		89B3F3AB2B8FA70100D79E5D /* Poppins-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Regular.ttf"; sourceTree = "<group>"; };
 		89BDCE432B8FAE8E00C69895 /* TripModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripModel.swift; sourceTree = "<group>"; };
@@ -256,6 +258,7 @@
 			children = (
 				89BDCE432B8FAE8E00C69895 /* TripModel.swift */,
 				89BDCE632B8FB2AA00C69895 /* ExpenseModel.swift */,
+				89621B052B915053006C0848 /* UserModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -398,6 +401,7 @@
 				89BDCE702B8FB45600C69895 /* LocationManager.swift in Sources */,
 				128284302B81FC9900E3E084 /* LoginView.swift in Sources */,
 				89BDCE6A2B8FB3C800C69895 /* LandmarkViewModel.swift in Sources */,
+				89621B062B915053006C0848 /* UserModel.swift in Sources */,
 				89BDCE4C2B8FAEE800C69895 /* OverviewView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
