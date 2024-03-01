@@ -10,7 +10,7 @@ import SwiftUI
 
 class UserModel: ObservableObject {
     @Published var uid: String?
-    @Published var trips: [Trip] = []
+    @Published var trips: [Trip]?
     
     func setUid(uid: String) {
         self.uid = uid
