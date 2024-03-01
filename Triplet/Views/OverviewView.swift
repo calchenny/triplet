@@ -33,189 +33,193 @@ struct OverviewView: View {
 
     var body: some View {
         NavigationStack {
-            GeometryReader { geometry in
-                ScalingHeaderScrollView {
-                    ZStack(alignment: .topLeading) {
-                        ZStack(alignment: .bottom) {
-                            Map(position: $viewModel.cameraPosition)
-                            RoundedRectangle(cornerRadius: 15)
-                                .frame(width: getHeaderWidth(screenWidth: geometry.size.width), height: getHeaderHeight())
-                                .foregroundStyle(.white)
-                                .overlay(
-                                    VStack {
-                                        Text("Most Amazing Trip")
-                                            .font(.system(size: getHeaderTitleSize(), weight: .bold))
-                                            .foregroundStyle(.indigo)
-                                        Text("Seattle, WA | 10/20 - 10/25")
-                                            .font(.caption)
-                                            .foregroundStyle(.indigo)
-                                    }
-                                )
-                                .padding(.bottom, 30)
-                        }
-                        Button {
-                        } label: {
-                            Image(systemName: "chevron.left")
-                                .font(.title2)
-                                .padding()
-                                .background(.indigo)
-                                .foregroundStyle(.white)
-                                .clipShape(Circle())
-                        }
-                        .padding(.top, 60)
-                        .padding(.leading)
-                        .tint(.primary)
-                    }
-                    .frame(maxWidth: .infinity)
-                } content: {
-                    Text("Overview")
-                        .font(.title)
-                        .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
-                        .foregroundStyle(.indigo)
-                        .padding(25)
-                    DisclosureGroup(isExpanded: $viewModel.toggleStates.notes) {
-                        VStack {
-                            ForEach(viewModel.notes, id: \.id) { note in
-                                NavigationLink {
-                                    NoteView(note: note)
-                                } label: {
-                                    HStack {
-                                        Text(note.title)
-                                        Spacer()
-                                        Image(systemName: "chevron.right")
-                                            .foregroundStyle(.tertiary)
-                                    }
-                                    .padding([.leading, .trailing])
+            ScalingHeaderScrollView {
+                ZStack(alignment: .topLeading) {
+                    ZStack(alignment: .bottom) {
+                        Map(position: $viewModel.cameraPosition)
+                        RoundedRectangle(cornerRadius: 15)
+                            .frame(width: getHeaderWidth(screenWidth: UIScreen.main.bounds.width), height: getHeaderHeight())
+                            .foregroundStyle(Color("Even Lighter Blue"))
+                            .overlay(
+                                VStack {
+                                    Text("Most Amazing Trip")
+                                        .font(.custom("Poppins-Bold", size: getHeaderTitleSize()))
+                                        .foregroundStyle(Color("Dark Blue"))
+                                    Text("Seattle, WA | 10/20 - 10/25")
+                                        .font(.custom("Poppins-Medium", size: 13))
+                                        .foregroundStyle(Color("Dark Blue"))
                                 }
-                                .frame(maxWidth: .infinity)
-                                .padding(.top)
-                            }
-                            Button {
-                                viewModel.showAlert.toggle()
+                            )
+                            .padding(.bottom, 30)
+                    }
+                    Button {
+                    } label: {
+                        Image(systemName: "chevron.left")
+                            .font(.title2)
+                            .padding()
+                            .background(Color("Dark Blue"))
+                            .foregroundStyle(.white)
+                            .clipShape(Circle())
+                    }
+                    .padding(.top, 60)
+                    .padding(.leading)
+                    .tint(.primary)
+                }
+                .frame(maxWidth: .infinity)
+            } content: {
+                Text("Overview")
+                    .font(.custom("Poppins-Bold", size: 30))
+                    .foregroundStyle(Color("Dark Blue"))
+                    .padding(25)
+                DisclosureGroup(isExpanded: $viewModel.toggleStates.notes) {
+                    VStack {
+                        ForEach(viewModel.notes, id: \.id) { note in
+                            NavigationLink {
+                                NoteView(note: note)
                             } label: {
                                 HStack {
-                                    Image(systemName: "plus")
-                                    Text("Add notes")
-                                        .fontWeight(.medium)
+                                    Text(note.title)
                                     Spacer()
+                                    Image(systemName: "chevron.right")
+                                        .foregroundStyle(.tertiary)
                                 }
-                                .padding(.bottom, 5)
-                                .tint(.gray)
+                                .padding([.leading, .trailing])
                             }
+                            .frame(maxWidth: .infinity)
                             .padding(.top)
-                            .alert("Add New Note", isPresented: $viewModel.showAlert) {
-                                TextField("Enter note title", text: $viewModel.newNoteTitle)
-                                Button("Add", action: viewModel.addNote)
-                                Button("Cancel", role: .cancel) { }
-                            } message: {
-                                Text("Please enter a title for the new note")
-                            }
                         }
-                    } label: {
-                        Text("Notes")
-                            .font(.title2)
-                            .fontWeight(.bold)
-                    }
-                    .frame(maxWidth: geometry.size.width * 0.85)
-                    .padding()
-                    .background(Color(.secondarySystemBackground))
-                    .clipShape(RoundedRectangle(cornerRadius: 15))
-                    .tint(.indigo)
-                    Spacer()
-                        .frame(height: 15)
-                    DisclosureGroup(isExpanded: $viewModel.toggleStates.housing) {
                         Button {
-                            
+                            viewModel.showAlert.toggle()
                         } label: {
                             HStack {
                                 Image(systemName: "plus")
-                                Text("Add another lodging")
-                                    .fontWeight(.medium)
+                                Text("Add notes")
+                                    .font(.custom("Poppins-Medium", size: 16))
                                 Spacer()
                             }
                             .padding(.bottom, 5)
                             .tint(.gray)
                         }
                         .padding(.top)
-                    } label: {
-                        Text("Hotel & Lodging")
-                            .font(.title2)
-                            .fontWeight(.bold)
+                        .alert("Add New Note", isPresented: $viewModel.showAlert) {
+                            TextField("Enter note title", text: $viewModel.newNoteTitle)
+                            Button("Add", action: viewModel.addNote)
+                            Button("Cancel", role: .cancel) { }
+                        } message: {
+                            Text("Please enter a title for the new note")
+                        }
                     }
-                    .frame(maxWidth: geometry.size.width * 0.85)
-                    .padding()
-                    .background(Color(.secondarySystemBackground))
-                    .clipShape(RoundedRectangle(cornerRadius: 15))
-                    .tint(.indigo)
-                    Spacer()
-                        .frame(height: 15)
-                    DisclosureGroup(isExpanded: $viewModel.toggleStates.food.all) {
-                        Button {
-                            viewModel.showFoodPopup.toggle()
-                        } label: {
-                            HStack {
-                                Image(systemName: "plus")
-                                Text("Add another food spot")
-                                    .fontWeight(.medium)
-                                Spacer()
-                            }
-                            .padding(.bottom, 5)
-                            .tint(.gray)
-                        }
-                        .padding(.top)
-                        DisclosureGroup(isExpanded: $viewModel.toggleStates.food.breakfast) {
-                            
-                        } label: {
-                            Text("Breakfast/Brunch")
-                                .font(.title3)
-                                .fontWeight(.bold)
-                        }
-                        .padding([.top, .leading, .trailing])
-                        DisclosureGroup(isExpanded: $viewModel.toggleStates.food.lunch) {
-                            
-                        } label: {
-                            Text("Lunch")
-                                .font(.title3)
-                                .fontWeight(.bold)
-                        }
-                        .padding([.top, .leading, .trailing])
-                        DisclosureGroup(isExpanded: $viewModel.toggleStates.food.dinner) {
-                            
-                        } label: {
-                            Text("Dinner")
-                                .font(.title3)
-                                .fontWeight(.bold)
-                        }
-                        .padding([.top, .leading, .trailing, .bottom])
+                } label: {
+                    Text("Notes")
+                        .font(.custom("Poppins-Bold", size: 24))
+                }
+                .frame(maxWidth: UIScreen.main.bounds.width * 0.85)
+                .padding()
+                .background(Color(.secondarySystemBackground))
+                .clipShape(RoundedRectangle(cornerRadius: 15))
+                .tint(Color("Dark Blue"))
+                Spacer()
+                    .frame(height: 15)
+                DisclosureGroup(isExpanded: $viewModel.toggleStates.housing) {
+                    Button {
+                        viewModel.showHousingPopup.toggle()
                     } label: {
-                        Text("Food Spots")
-                            .font(.title2)
-                            .fontWeight(.bold)
+                        HStack {
+                            Image(systemName: "plus")
+                            Text("Add another lodging")
+                                .font(.custom("Poppins-Medium", size: 16))
+                            Spacer()
+                        }
+                        .padding(.bottom, 5)
+                        .tint(.gray)
                     }
-                    .frame(maxWidth: geometry.size.width * 0.85)
-                    .padding()
-                    .background(Color(.secondarySystemBackground))
-                    .clipShape(RoundedRectangle(cornerRadius: 15))
-                    .tint(.indigo)
+                    .padding(.top)
+                } label: {
+                    Text("Hotel & Lodging")
+                        .font(.custom("Poppins-Bold", size: 24))
                 }
-                .height(min: viewModel.minHeight, max: viewModel.maxHeight)
-                .allowsHeaderCollapse()
-                .collapseProgress($viewModel.collapseProgress)
-                .setHeaderSnapMode(.immediately)
-                .ignoresSafeArea()
-                .popup(isPresented: $viewModel.showFoodPopup) {
-                    FoodPopupView()
-                        .environmentObject(viewModel)
-                } customize: { popup in
-                    popup
-                        .type(.floater())
-                        .position(.center)
-                        .animation(.spring())
-                        .closeOnTap(false)
-                        .closeOnTapOutside(false)
-                        .useKeyboardSafeArea(true)
-                        .backgroundColor(.black.opacity(0.25))
+                .frame(maxWidth: UIScreen.main.bounds.width * 0.85)
+                .padding()
+                .background(Color(.secondarySystemBackground))
+                .clipShape(RoundedRectangle(cornerRadius: 15))
+                .tint(Color("Dark Blue"))
+                Spacer()
+                    .frame(height: 15)
+                DisclosureGroup(isExpanded: $viewModel.toggleStates.food.all) {
+                    Button {
+                        viewModel.showFoodPopup.toggle()
+                    } label: {
+                        HStack {
+                            Image(systemName: "plus")
+                            Text("Add another food spot")
+                                .font(.custom("Poppins-Medium", size: 16))
+                            Spacer()
+                        }
+                        .padding(.bottom, 5)
+                        .tint(.gray)
+                    }
+                    .padding(.top)
+                    DisclosureGroup(isExpanded: $viewModel.toggleStates.food.breakfast) {
+                        
+                    } label: {
+                        Text("Breakfast/Brunch")
+                            .font(.custom("Poppins-Bold", size: 20))
+                    }
+                    .padding([.top, .leading, .trailing])
+                    DisclosureGroup(isExpanded: $viewModel.toggleStates.food.lunch) {
+                        
+                    } label: {
+                        Text("Lunch")
+                            .font(.custom("Poppins-Bold", size: 20))
+                    }
+                    .padding([.top, .leading, .trailing])
+                    DisclosureGroup(isExpanded: $viewModel.toggleStates.food.dinner) {
+                        
+                    } label: {
+                        Text("Dinner")
+                            .font(.custom("Poppins-Bold", size: 20))
+                    }
+                    .padding([.top, .leading, .trailing, .bottom])
+                } label: {
+                    Text("Food Spots")
+                        .font(.custom("Poppins-Bold", size: 24))
                 }
+                .frame(maxWidth: UIScreen.main.bounds.width * 0.85)
+                .padding()
+                .background(Color(.secondarySystemBackground))
+                .clipShape(RoundedRectangle(cornerRadius: 15))
+                .tint(Color("Dark Blue"))
+            }
+            .height(min: viewModel.minHeight, max: viewModel.maxHeight)
+            .allowsHeaderCollapse()
+            .collapseProgress($viewModel.collapseProgress)
+            .setHeaderSnapMode(.immediately)
+            .ignoresSafeArea()
+            .popup(isPresented: $viewModel.showFoodPopup) {
+                FoodPopupView()
+                    .environmentObject(viewModel)
+            } customize: { popup in
+                popup
+                    .type(.floater())
+                    .position(.center)
+                    .animation(.spring())
+                    .closeOnTap(false)
+                    .closeOnTapOutside(false)
+                    .useKeyboardSafeArea(true)
+                    .backgroundColor(.black.opacity(0.25))
+            }
+            .popup(isPresented: $viewModel.showHousingPopup) {
+                HousingPopupView()
+                    .environmentObject(viewModel)
+            } customize: { popup in
+                popup
+                    .type(.floater())
+                    .position(.center)
+                    .animation(.spring())
+                    .closeOnTap(false)
+                    .closeOnTapOutside(false)
+                    .useKeyboardSafeArea(true)
+                    .backgroundColor(.black.opacity(0.25))
             }
         }
     }

@@ -32,6 +32,31 @@ struct MyTripsView: View {
 }
 
 
+struct NoTripPlanned: View {
+    var body: some View {
+        ZStack {
+            RoundedRectangle(cornerRadius: 20)
+                .fill(Color.gray.opacity(0.2))
+                .frame(width: UIScreen.main.bounds.width * 0.8, height: 200)
+            VStack {
+                Text("No trip planned")
+                    .padding(.bottom, 20)
+                Button {
+                    
+                } label: {
+                    Text("Create a trip to get started")
+                }
+                .padding(15)
+                .background(.blue)
+                .foregroundColor(.white)
+                .cornerRadius(25)
+            }
+            .padding(25)
+            .frame(width: UIScreen.main.bounds.width * 0.8, height: 200)
+        }
+    }
+}
+
 struct CurrentTripsView: View {
     @State var currentTrips: [String] = ["New York", "Seattle", "Big Sur"]
 //    @State var currentTrips: [String] = []
@@ -40,31 +65,48 @@ struct CurrentTripsView: View {
     var body: some View {
         VStack {
             if currentTrips.count == 0 {
-                Text("You have no past trips yet. Go on some adventures today! :)")
-                
+                NoTripPlanned()
             }
             ForEach(0..<currentTrips.count, id: \.self) { index in
-                HStack{
-                    Image(systemName: "bicycle")
-                        .resizable()
-                        .frame(width: 100, height: 100)
-                        .clipShape(Rectangle())
-                        .overlay(Rectangle().stroke(Color.white, lineWidth: 3))
-                        .border(Color.black)
-                    Spacer()
-                    VStack (alignment: .leading) {
-                        Text(self.tripNames[index])
-                            .bold()
-                        Text("Trip to \(self.currentTrips[index])")
-                            .padding(.bottom, 20)
-                        Text(self.tripDates[index])
+                ZStack{
+                    RoundedRectangle(cornerRadius: 20)
+                        .fill(Color.gray.opacity(0.2))
+                        .frame(width: UIScreen.main.bounds.width * 0.8, height: 120)
+                        .shadow(color: .black, radius:2, x: 0, y: 3)  // << no offset by x
+                    HStack{
+                        Image(systemName: "bicycle")
+                            .resizable()
+                            .frame(width: 60, height: 60)
+                            .clipShape(Circle())
+                            .overlay(Circle().stroke(Color.black, lineWidth: 1))
+                            
+                        Spacer()
+                        VStack (alignment: .leading) {
+                            Text("Trip to \(self.currentTrips[index])")
+                            Text(self.tripDates[index])
+                        }
+                        .frame(width: UIScreen.main.bounds.width * 0.45)
+                        ZStack{
+                            Circle()
+                                .fill(Color.gray.opacity(0.3))
+                                .frame(width: 35, height: 35)
+                            Button{
+                                
+                            } label: {
+                                Text(">")
+                            }
+                        }
+                        
                     }
-                    .frame(width: UIScreen.main.bounds.width * 0.5)
+                    .padding(35)
+                    .frame(width: UIScreen.main.bounds.width * 0.8, height: 120)
+                    .background(Color.white)
+                    .cornerRadius(20)
+                    .opacity(1)
                 }
-                .frame(width: UIScreen.main.bounds.width * 0.7)
-                .padding(.bottom, 40)
-                .padding(.top, 40)
-                Divider()
+                .padding(.bottom, 20)
+                
+
             }
 
         }
@@ -78,17 +120,7 @@ struct PastTripsView: View {
     var body: some View {
         VStack {
             if pastTrips.count == 0 {
-                Text("You have no past trips yet. Go on some adventures today! :)")
-                    .padding(.bottom, 20)
-                Button {
-                    
-                } label: {
-                    Text("Plan your dream trip today!")
-                }
-                .padding()
-                .background(.blue)
-                .foregroundColor(.white)
-                .cornerRadius(24)
+                NoTripPlanned()
             }
             ForEach(0..<pastTrips.count, id: \.self) { index in
                 HStack{

@@ -8,7 +8,7 @@
 import SwiftUI
 
 
-struct Login: View {
+struct LoginView: View {
     @EnvironmentObject var login: LoginViewModel
     @State var navigateToVerify: Bool = false
     
@@ -113,6 +113,6 @@ struct Login: View {
 }
 
 #Preview {
-    Login()
+    LoginView()
         .environmentObject(LoginViewModel())
 }
