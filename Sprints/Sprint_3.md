@@ -37,6 +37,7 @@ Triplet is an application aimed to minimize disruptions during trips. Our applic
 
   - **Done:**
     - [Link to Commit 1](https://github.com/calchenny/triplet/pull/3/commits/8b026e253e3cc98ce96fa81e57e15c087bef0e2e) - Search feature in the new trip view
+    - Map view with Police/Hospitals in the area
 
   - **To Do:**
     - Build the interactive map view 
@@ -47,8 +48,8 @@ Triplet is an application aimed to minimize disruptions during trips. Our applic
 
 - **[Xiaolin Ma]:**
   - **Done:**
-    - [Link to Commit 1] - Formats the front-end to match the design
-    - [Link to Commit 2] - [Task Description 2]
+    - [Link to Commit 1](https://github.com/calchenny/triplet/commit/354e8864e6584452f2f6d05bfd0c2eeff6500625) - Formats the front-end to match the design
+    - Test endpoint for Walk Score, Transit Score, Bike Score
   - **To Do:**
     - Logging out feature on Setting View
     - Look into notifications in settings
