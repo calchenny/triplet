@@ -7,15 +7,18 @@
 
 import SwiftUI
 import MapKit
+import CoreLocation
 
 
 struct MapView: View {
     @ObservedObject var locationManager = LocationManager()
     @State private var mapSelection: String?
+    @State private var selectedMarkerName: String?
     @State private var selectedMarker: MKMapItem = MKMapItem()
     @State private var showDetails: Bool = false
     @State private var searchResults: [PointOfInterestResult] = []
     @State private var position = MapCameraPosition.userLocation(followsHeading: true, fallback: .automatic)
+    
     
     // Hospitals, Police Station, Embassy, Hotels
     struct PointOfInterestResult: Hashable, Identifiable {
@@ -26,11 +29,19 @@ struct MapView: View {
         var longitude: Double
     }
         
-    // Marker selection
-    struct MarkerModel: Identifiable {
-        var id: String = UUID().uuidString
-        var location: CLLocationCoordinate2D
-        var title: String
+    func reverseGeocoding(latitude: Double, longitude: Double, completion: @escaping (CLPlacemark?) -> Void) {
+        let geocoder = CLGeocoder()
+        let location = CLLocation(latitude: latitude, longitude: longitude)
+
+        // Look up the location and retrieve address
+        geocoder.reverseGeocodeLocation(location) { placemarks, error in
+            guard error == nil, let placemark = placemarks?.first else {
+                print("Failed to retrieve address:", error?.localizedDescription ?? "Unknown error")
+                completion(nil)
+                return
+            }
+            completion(placemark)
+        }
     }
     
     func queryLocations() {
@@ -128,10 +139,20 @@ struct MapView: View {
                 if let selectedMarkerID = newValue {
                     // Find the selected Marker in the searchResults array using its ID
                     if let marker = searchResults.first(where: { $0.id == selectedMarkerID }) {
-                        // Extract the coordinates of the selected Marker
-                        let coordinates = CLLocationCoordinate2D(latitude: marker.latitude, longitude: marker.longitude)
-                        selectedMarker = MKMapItem(placemark: MKPlacemark(coordinate: coordinates))
+                        // Extract name from selected Marker
+                        selectedMarkerName = marker.name
                         
+                        reverseGeocoding(latitude: marker.latitude, longitude: marker.longitude) { placemark in
+                            if let placemark = placemark {
+                                // Handle the retrieved placemark
+                                let marker = MKPlacemark(placemark: placemark)
+                                selectedMarker = MKMapItem(placemark: marker)
+
+                            } else {
+                                // Handle the case where no placemark is found
+                                print("No Matching Address Found")
+                            }
+                        }
                     }
                 }
                 
@@ -141,10 +162,16 @@ struct MapView: View {
                 VStack {
                     HStack {
                         VStack(alignment: .leading) {
-                            Text(selectedMarker.name ?? "")
-                                .font(.custom("Poppins-Medium", size: 32))
+                            Text(selectedMarkerName ?? "")
+                                .font(.custom("Poppins-Bold", size: 18))
+                            
+                            Text(selectedMarker.placemark.title ?? "")
+                                .font(.custom("Poppins-Regular", size: 12))
+                                .foregroundStyle(.darkerGray)
 
                         }
+                        .padding(.horizontal)
+
                         
                         Spacer()
                         
@@ -156,22 +183,26 @@ struct MapView: View {
                                 .frame(width: 24, height: 24)
                                 .foregroundStyle(.darkerGray, Color(.systemGray6))
                         }
+                        .padding()
                     }
                     HStack(spacing: 24) {
                         Button {
                             selectedMarker.openInMaps()
                         } label: {
                             Text("Open in Maps")
-                                .font(.custom("Poppins-Regular", size: 24))
-                                .frame(width: 170, height: 48)
+                                .font(.custom("Poppins-Regular", size: 18))
+                                .frame(width: 170, height: 36)
                                 .cornerRadius(10)
                         }
+                        .buttonStyle(.borderedProminent)
+                        .tint(.darkBlue)
 
                     }
+                    .padding(.vertical)
                 }
-                    .presentationDetents([.height(340)])
-                    .presentationCornerRadius(12)
-                    .presentationBackgroundInteraction(.enabled(upThrough: .height(340)))
+                .presentationDetents([.height(250)])
+                .presentationCornerRadius(15)
+                .presentationBackgroundInteraction(.enabled(upThrough: .height(250)))
             })
             .mapControls {
                 // Adds UI functionality to the map
