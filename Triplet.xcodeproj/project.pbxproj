@@ -15,8 +15,8 @@
 		128284342B81FCCD00E3E084 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 128284332B81FCCD00E3E084 /* LoginViewModel.swift */; };
 		12A5B5932B82D81400BF1220 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12A5B5922B82D81400BF1220 /* RootView.swift */; };
 		241FD9302B914CB6006B64D8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 241FD92F2B914CB6006B64D8 /* GoogleService-Info.plist */; };
+		246124032B945DC400A64DC8 /* LocationDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 246124022B945DC400A64DC8 /* LocationDetailsView.swift */; };
 		24A793F82B914EAF00AFBE7B /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A793F72B914EAF00AFBE7B /* MapView.swift */; };
-		24A793FA2B91508400AFBE7B /* UserLocationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A793F92B91508400AFBE7B /* UserLocationViewModel.swift */; };
 		89031F222B7FFCE200282C88 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 89031F212B7FFCE200282C88 /* FirebaseAnalytics */; };
 		89031F242B7FFCE200282C88 /* FirebaseAnalyticsOnDeviceConversion in Frameworks */ = {isa = PBXBuildFile; productRef = 89031F232B7FFCE200282C88 /* FirebaseAnalyticsOnDeviceConversion */; };
 		89031F262B7FFCE200282C88 /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 89031F252B7FFCE200282C88 /* FirebaseAnalyticsSwift */; };
@@ -84,8 +84,8 @@
 		128284332B81FCCD00E3E084 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		12A5B5922B82D81400BF1220 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		241FD92F2B914CB6006B64D8 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		246124022B945DC400A64DC8 /* LocationDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationDetailsView.swift; sourceTree = "<group>"; };
 		24A793F72B914EAF00AFBE7B /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
-		24A793F92B91508400AFBE7B /* UserLocationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserLocationViewModel.swift; sourceTree = "<group>"; };
 		89031F572B80012800282C88 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		8935A4222B7F496200F62185 /* Triplet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Triplet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8935A4252B7F496200F62185 /* TripletApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripletApp.swift; sourceTree = "<group>"; };
@@ -179,6 +179,7 @@
 				89BDCE6B2B8FB3DC00C69895 /* AddPlaceView.swift */,
 				89BDCE6D2B8FB43300C69895 /* ItineraryView.swift */,
 				24A793F72B914EAF00AFBE7B /* MapView.swift */,
+				246124022B945DC400A64DC8 /* LocationDetailsView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -192,7 +193,6 @@
 				89BDCE552B8FAFF500C69895 /* LocationSearchModel.swift */,
 				89BDCE672B8FB37600C69895 /* ItineraryViewModel.swift */,
 				89BDCE692B8FB3C800C69895 /* LandmarkViewModel.swift */,
-				24A793F92B91508400AFBE7B /* UserLocationViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -390,6 +390,7 @@
 				89BDCE5E2B8FB0EE00C69895 /* MyTripsView.swift in Sources */,
 				89BDCE642B8FB2AA00C69895 /* ExpenseModel.swift in Sources */,
 				89BDCE542B8FAFCF00C69895 /* DestinationViewModel.swift in Sources */,
+				246124032B945DC400A64DC8 /* LocationDetailsView.swift in Sources */,
 				89BDCE5A2B8FB03D00C69895 /* DestinationSearchView.swift in Sources */,
 				89BDCE622B8FB23C00C69895 /* AddNewExpenseView.swift in Sources */,
 				8935A4262B7F496200F62185 /* TripletApp.swift in Sources */,
@@ -404,7 +405,6 @@
 				1282842C2B81FC6400E3E084 /* VerificationView.swift in Sources */,
 				89BDCE702B8FB45600C69895 /* LocationManager.swift in Sources */,
 				128284302B81FC9900E3E084 /* LoginView.swift in Sources */,
-				24A793FA2B91508400AFBE7B /* UserLocationViewModel.swift in Sources */,
 				89BDCE6A2B8FB3C800C69895 /* LandmarkViewModel.swift in Sources */,
 				89BDCE4C2B8FAEE800C69895 /* OverviewView.swift in Sources */,
 			);
