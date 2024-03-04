@@ -18,7 +18,9 @@ struct MapView: View {
     @State private var showDetails: Bool = false
     @State private var searchResults: [PointOfInterestResult] = []
     @State private var position = MapCameraPosition.userLocation(followsHeading: true, fallback: .automatic)
-    
+    @State private var route: MKRoute?
+    @State private var travelTime: String?
+    @State private var distanceToMarker: Double?
     
     // Hospitals, Police Station, Embassy, Hotels
     struct PointOfInterestResult: Hashable, Identifiable {
@@ -81,6 +83,35 @@ struct MapView: View {
         
     }
     
+    func fetchRouteFrom(destination: CLLocationCoordinate2D) {
+        if let currentLocation = locationManager.currentLocation {
+            let request = MKDirections.Request()
+            request.source = MKMapItem(placemark: MKPlacemark(coordinate: currentLocation.coordinate))
+            request.destination = MKMapItem(placemark: MKPlacemark(coordinate: destination))
+            request.transportType = .automobile
+
+            Task {
+                let result = try? await MKDirections(request: request).calculate()
+                route = result?.routes.first
+                let distance = route?.distance
+                if let magnitude = distance?.magnitude {
+                    distanceToMarker = magnitude / 1609
+                }
+//                getTravelTime()
+            }
+        } else {
+            print("Unable to get route")
+        }
+    }
+
+    func getTravelTime() {
+        guard let route else { return }
+        let formatter = DateComponentsFormatter()
+        formatter.unitsStyle = .abbreviated
+        formatter.allowedUnits = [.hour, .minute]
+        travelTime = formatter.string(from: route.expectedTravelTime)
+    }
+    
     var body: some View {
         VStack {
             Map(position: $position, selection: $mapSelection) {
@@ -139,9 +170,13 @@ struct MapView: View {
                 if let selectedMarkerID = newValue {
                     // Find the selected Marker in the searchResults array using its ID
                     if let marker = searchResults.first(where: { $0.id == selectedMarkerID }) {
+                        // Fetching distance from user to marker
+                        fetchRouteFrom(destination: CLLocationCoordinate2D(latitude: marker.latitude, longitude: marker.longitude))
+                        
                         // Extract name from selected Marker
                         selectedMarkerName = marker.name
                         
+                        // Extract address from coordinates
                         reverseGeocoding(latitude: marker.latitude, longitude: marker.longitude) { placemark in
                             if let placemark = placemark {
                                 // Handle the retrieved placemark
@@ -161,36 +196,44 @@ struct MapView: View {
             .sheet(isPresented: $showDetails, content: {
                 VStack {
                     HStack {
-                        VStack(alignment: .leading) {
-                            Text(selectedMarkerName ?? "")
-                                .font(.custom("Poppins-Bold", size: 18))
-                            
-                            Text(selectedMarker.placemark.title ?? "")
-                                .font(.custom("Poppins-Regular", size: 12))
-                                .foregroundStyle(.darkerGray)
+                        VStack {
+                            HStack {
+                                Text(selectedMarkerName ?? "")
+                                    .font(.custom("Poppins-Bold", size: 18))
+                                
+                                Spacer()
+                                
+                                if let distance = distanceToMarker {
+                                    // Converting meters to miles
+                                    Text("\(String(format: "%.2f", distance)) mi")
+                                        .font(.custom("Poppins-Regular", size: 12))
+                                        .foregroundStyle(.darkerGray)
+                                        .padding(.trailing)
+                                        .multilineTextAlignment(.trailing)
+                                    
+                                }
+                            }
+                            .padding(.bottom, 5)
+
+                            HStack {
+                                Text(selectedMarker.placemark.title ?? "")
+                                    .font(.custom("Poppins-Regular", size: 12))
+                                    .foregroundStyle(.darkerGray)
+                                Spacer()
+                            }
 
                         }
-                        .padding(.horizontal)
-
+                        .padding(.horizontal, 30)
                         
                         Spacer()
-                        
-                        Button {
-                            mapSelection = nil
-                        } label: {
-                            Image(systemName: "xmark.circle.fill")
-                                .resizable()
-                                .frame(width: 24, height: 24)
-                                .foregroundStyle(.darkerGray, Color(.systemGray6))
-                        }
-                        .padding()
                     }
+                    
                     HStack(spacing: 24) {
                         Button {
                             selectedMarker.openInMaps()
                         } label: {
                             Text("Open in Maps")
-                                .font(.custom("Poppins-Regular", size: 18))
+                                .font(.custom("Poppins-Bold", size: 18))
                                 .frame(width: 170, height: 36)
                                 .cornerRadius(10)
                         }
@@ -200,7 +243,7 @@ struct MapView: View {
                     }
                     .padding(.vertical)
                 }
-                .presentationDetents([.height(250)])
+                .presentationDragIndicator(.visible)                .presentationDetents([.height(250)])
                 .presentationCornerRadius(15)
                 .presentationBackgroundInteraction(.enabled(upThrough: .height(250)))
             })
