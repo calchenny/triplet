@@ -31,7 +31,7 @@ struct NewTripView: View {
                     Image(systemName: "arrowshape.backward.fill")
                         .font(.headline)
                         .padding(12)
-                        .background(.gray)
+                        .background(.darkBlue)
                         .foregroundColor(.white)
                         .clipShape(Circle())
                         .shadow(radius: 4, x: 0, y: 4)
@@ -41,23 +41,23 @@ struct NewTripView: View {
             .padding(5)
             
             Text("Plan a new trip")
-                .font(.title)
-                .fontWeight(.heavy)
+                .font(.custom("Poppins-Bold", size: 32))
+                .padding(.bottom, 5)
             
             Text("Build an itinerary and map out your upcoming travel plans")
-                .font(.headline)
-                .frame(maxWidth: UIScreen.main.bounds.width/1.5, alignment: .leading)
+                .font(.custom("Poppins-Regular", size: 16))
+                .frame(maxWidth: UIScreen.main.bounds.width/1.5, alignment: .center)
                 .multilineTextAlignment(.center)
-                .padding(.vertical)
 
             Text("Where to?")
-                .font(.headline)
+                .font(.custom("Poppins-Bold", size: 16))
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.top)
             
             if let city = destinationViewModel.city {
                 if let state = destinationViewModel.state {
                     Text("\(city), \(state)")
+                        .font(.custom("Poppins-Regular", size: 16))
                         .frame(maxWidth: 270, alignment: .leading)
                         .padding(8)
                         .overlay(
@@ -77,6 +77,7 @@ struct NewTripView: View {
                 
             } else {
                 Text("e.g, Davis, New York, Seattle")
+                    .font(.custom("Poppins-Regular", size: 16))
                     .frame(maxWidth: 270, alignment: .leading)
                     .foregroundStyle(.placeholder)
                     .padding(8)
@@ -96,7 +97,7 @@ struct NewTripView: View {
             }
             
             Text("Dates (optional)")
-                .font(.headline)
+                .font(.custom("Poppins-Bold", size: 16))
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.top)
             
@@ -105,10 +106,12 @@ struct NewTripView: View {
                 
                 if (startDate ==  Date.distantPast) {
                     Text("Start Date")
+                        .font(.custom("Poppins-Regular", size: 16))
                         .frame(width: 150)
                         .foregroundStyle(.placeholder)
                 } else {
                     Text(startDate, style: .date)
+                        .font(.custom("Poppins-Regular", size: 16))
                         .frame(width: 150)
 
                 }
@@ -120,23 +123,25 @@ struct NewTripView: View {
                     .stroke(.gray)
             )
             .padding(.horizontal, 10)
-            .padding(.top, 10)
             .overlay{
                 DatePicker("",selection: $startDate, in: Date.now..., displayedComponents: .date)
                     .datePickerStyle(.compact)
                     .labelsHidden()
                     .blendMode(.destinationOver)
                     .padding(.horizontal, 10)
+                    .tint(.darkBlue)
             }
             
             HStack {
                 Image(systemName: "calendar")
                 if (endDate ==  Date.distantPast || startDate > endDate) {
                     Text("End Date")
+                        .font(.custom("Poppins-Regular", size: 16))
                         .frame(width: 150)
                         .foregroundStyle(.placeholder)
                 } else{
                     Text(endDate, style: .date)
+                        .font(.custom("Poppins-Regular", size: 16))
                         .frame(width: 150)
 
                 }
@@ -155,22 +160,23 @@ struct NewTripView: View {
                     .labelsHidden()
                     .blendMode(.destinationOver)
                     .padding(.horizontal, 10)
+                    .tint(.darkBlue)
             }
-                
             
             HStack {
                 VStack {
                     Text("How many guests?")
-                        .font(.headline)
+                        .font(.custom("Poppins-Bold", size: 16))
                         .padding(.trailing)
                     Text("(Including yourself)")
-                        .font(.caption)
+                        .font(.custom("Poppins-Regular", size: 11))
                         .foregroundStyle(.placeholder)
                         .padding(.trailing)
                 }
-
+                
                 Stepper {
                     Text("\(guests)")
+                        .font(.custom("Poppins-Regular", size: 16))
                         .foregroundStyle(.black)
                     
                 } onIncrement: {
@@ -191,16 +197,15 @@ struct NewTripView: View {
                         .stroke(.gray)
                 )
                 .padding(.top, 10)
-                
+
             }
             .padding(.top)
 
             
             Text("Trip Name")
-                .font(.headline)
+                .font(.custom("Poppins-Bold", size: 16))
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.top)
-
             
             TextField("e.g, Most Amazing Trip Ever", text: $tripName)
                 .onChange(of: tripName) {
@@ -208,6 +213,7 @@ struct NewTripView: View {
                         tripName = String(tripName.prefix(30))
                     }
                 }
+                .font(.custom("Poppins-Regular", size: 16))
                 .keyboardType(.alphabet)
                 .padding(8)
                 .overlay(
@@ -218,18 +224,17 @@ struct NewTripView: View {
                         )
                 )
                 .padding(.horizontal, 20)
-                .padding(.top, 10)
 
             Button(action: startPlan) {
                 Text("Start Planning")
-                    .fontWeight(.heavy)
+                    .font(.custom("Poppins-Bold", size: 16))
                     .padding(5)
                     .frame(width: UIScreen.main.bounds.width/1.5, alignment: .center)
             }
             .cornerRadius(15)
             .buttonStyle(.borderedProminent)
             .padding(.vertical)
-            .tint(.gray)
+            .tint(.darkBlue)
 
         }
         .padding()
