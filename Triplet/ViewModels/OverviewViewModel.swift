@@ -5,10 +5,12 @@
 //  Created by Derek Ma on 2/22/24.
 //
 
+import FirebaseFirestore
 import SwiftUI
 import MapKit
 
 class OverviewViewModel: ObservableObject {
+    var tripId: String = "Placeholder tripId"
     @Published var toggleStates = ToggleStates()
     @Published var cameraPosition = MapCameraPosition.region(MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 47.608013, longitude: -122.335167), span: MKCoordinateSpan(latitudeDelta: 0.5, longitudeDelta: 0.5)))
     @Published var notes: [Note] = []
@@ -17,6 +19,10 @@ class OverviewViewModel: ObservableObject {
     @Published var validationError: String = ""
     @Published var collapseProgress: CGFloat = 0
     @Published var showFoodPopup: Bool = false
+    @Published var showHousingPopup: Bool = false
+    
+    private var db = Firestore.firestore()
+    private var listenerRegistrations: [ListenerRegistration] = []
     
     let minHeight: CGFloat = 150.0
     let maxHeight: CGFloat = 300.0
@@ -26,9 +32,26 @@ class OverviewViewModel: ObservableObject {
             print("Note name must be non-empty")
             return
         }
-        withAnimation {
-            notes.append(Note(title: newNoteTitle))
+        do {
+            try Firestore.firestore().collection("trips/\(tripId)/notes").addDocument(from: Note(title: newNoteTitle))
             newNoteTitle = ""
+        } catch {
+            print(error)
+        }
+    }
+    
+    func unsubscribe() {
+        if !listenerRegistrations.isEmpty {
+            listenerRegistrations.forEach({ listenerRegistration in
+                listenerRegistration.remove()
+            })
+            listenerRegistrations = []
+        }
+    }
+    
+    func subscribe() {
+        if listenerRegistrations.isEmpty {
+            let notesQuery = db.collection("trips/\(tripId)/notes")
         }
     }
 }
