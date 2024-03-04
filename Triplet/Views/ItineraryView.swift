@@ -90,6 +90,18 @@ struct ItineraryView: View {
                             )
                             .padding(.bottom, 30)
                     }
+                    Button {
+                    } label: {
+                        Image(systemName: "house")
+                            .font(.title2)
+                            .padding()
+                            .background(Color("Dark Blue"))
+                            .foregroundStyle(.white)
+                            .clipShape(Circle())
+                    }
+                    .padding(.top, 60)
+                    .padding(.leading)
+                    .tint(.primary)
                 }
                 .frame(maxWidth: .infinity)
             } content: {
@@ -163,14 +175,15 @@ struct ItineraryView: View {
                                         .padding()
                                         Spacer()
                                         
-                                        Button(action: {
-                                            // Handle menu button action
-                                        }) {
-                                            Image(systemName: "line.3.horizontal")
-                                                .resizable()
-                                                .frame(width: 30, height: 30)
-                                                .foregroundColor(.darkBlue)
-                                        }
+                                        //Save for later
+//                                        Button(action: {
+//                                            // Handle menu button action
+//                                        }) {
+//                                            Image(systemName: "line.3.horizontal")
+//                                                .resizable()
+//                                                .frame(width: 30, height: 30)
+//                                                .foregroundColor(.darkBlue)
+//                                        }
                                     }
                                     .padding(20)
                                 }

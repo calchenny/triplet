@@ -31,6 +31,7 @@ enum EventType: String, Codable {
     case housing = "Housing"
     case food = "Food"
     case attraction = "Attraction"
+    case transit = "Transit"
 }
 
 enum FoodCategory: String, Codable, CaseIterable {
