@@ -75,7 +75,7 @@ struct VerificationView: View {
                     }
                 }
                 .navigationDestination(isPresented: $navigateToHome) {
-                    ContentView()
+                    HomeView()
                         .navigationBarBackButtonHidden(true)
                 }
                 .frame(height: UIScreen.main.bounds.height / 1.8)
