@@ -1,3 +1,4 @@
+
 //
 //  SettingView.swift
 //  Triplet
@@ -15,25 +16,35 @@ struct SettingView: View {
                     .resizable()
                     .frame(width: 100, height: 100)
                     .clipShape(Circle())
-                    .overlay(Circle().stroke(Color.white, lineWidth: 3))
-                    .shadow(radius: 4)
+                    .overlay(Circle().stroke(Color.black, lineWidth: 1))
                 Text("Billy Bobby Brown")
+                    .font(.custom("Poppins-Regular", size: 18))
             }
             .padding()
-            VStack {
+            ZStack {
                 Form {
                     Section(header: Text("Account Settings")) {
-                        Text("Edit profile")
-                        Text("Change password")
                         Toggle("Push Notifications", isOn: .constant(false))
-                        Toggle("Dark Mode", isOn: .constant(false))
+                            .font(.custom("Poppins-Regular", size: 15))
+                        Text("About Us")
+                            .font(.custom("Poppins-Regular", size: 15))
+                        Text("Privacy Policy")
+                            .font(.custom("Poppins-Regular", size: 15))
+                        Text("Terms and conditions")
+                            .font(.custom("Poppins-Regular", size: 15))
                         
                     }
-                    
-                    Section(header: Text("More")){
-                        Text("About Us")
-                        Text("Privacy Policy")
-                        Text("Terms and conditions")
+                    Button{
+                        
+                    } label: {
+                        ZStack{
+                            RoundedRectangle(cornerRadius: 12)
+                                .fill(Color.darkBlue)
+                            Text("Logout")
+                                .font(.custom("Poppins-Regular", size: 18))
+                                .foregroundColor(.white)
+                        }
+                        
                     }
                     
                 }
@@ -41,9 +52,9 @@ struct SettingView: View {
                 .background(Color.white)
                 .cornerRadius(10)
                 .padding(30)
-                
-                
+                .scrollContentBackground(.hidden)
             }
+            
         }
     }
 }

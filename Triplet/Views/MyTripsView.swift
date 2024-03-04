@@ -12,14 +12,29 @@ struct MyTripsView: View {
 
     var body: some View {
         VStack(alignment: .leading){
-            Text("My Trips")
-            Picker("", selection: $tabSelection) {
-                Text("Current Trips")
-                    .tag(0)
-                Text("Past Trips")
-                    .tag(1)
+            HStack {
+                Spacer()
+                Image(.fullIcon)
+                Spacer()
             }
+            
+            Text("My Trips")
+                .font(.custom("Poppins-Medium", size: 20))
+            Picker("", selection: $tabSelection) {
+                Text("Upcoming Trips")
+                    .font(.custom("Poppins-Regular", size: 15))
+                    .foregroundColor(.darkBlue)
+                    .tag(0)
+                    
+                Text("Past Trips")
+                    .font(.custom("Poppins-Regular", size: 15))
+                    .foregroundColor(.darkBlue)
+                    .tag(1)
+                    
+            }
+            .background(Color.evenLighterBlue)
             .pickerStyle(.segmented)
+            .frame(width: UIScreen.main.bounds.width * 0.65)
             if tabSelection == 0 {
                 CurrentTripsView()
             } else {
@@ -36,18 +51,21 @@ struct NoTripPlanned: View {
     var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 20)
-                .fill(Color.gray.opacity(0.2))
+                .fill(Color.evenLighterBlue)
                 .frame(width: UIScreen.main.bounds.width * 0.8, height: 200)
             VStack {
                 Text("No trip planned")
                     .padding(.bottom, 20)
+                    .foregroundColor(.darkBlue)
+                    .font(.custom("Poppins-Bold", size: 22))
                 Button {
                     
                 } label: {
                     Text("Create a trip to get started")
+                        .font(.custom("Poppins-Regular", size: 12))
                 }
                 .padding(15)
-                .background(.blue)
+                .background(.darkBlue)
                 .foregroundColor(.white)
                 .cornerRadius(25)
             }
@@ -58,7 +76,7 @@ struct NoTripPlanned: View {
 }
 
 struct CurrentTripsView: View {
-    @State var currentTrips: [String] = ["New York", "Seattle", "Big Sur"]
+    @State var currentTrips: [String] = ["New York, NY", "Seattle, WA", "Big Sur"]
 //    @State var currentTrips: [String] = []
     @State var tripNames: [String] = ["Concrete Jungle", "Space Needle Here We Go", "Big Sir"]
     @State var tripDates: [String] = ["11/10/24 - 11/20/24", "11/20/24 - 11/25/24", "12/10/24 - 12/20/24"]
@@ -82,19 +100,25 @@ struct CurrentTripsView: View {
                             
                         Spacer()
                         VStack (alignment: .leading) {
-                            Text("Trip to \(self.currentTrips[index])")
+                            Text(self.tripNames[index])
+                                .font(.custom("Poppins-Bold", size: 12))
+                            Text(self.currentTrips[index])
+                                .font(.custom("Poppins-Regular", size: 12))
+                                .padding(.bottom, 5)
                             Text(self.tripDates[index])
+                                .font(.custom("Poppins-Regular", size: 12))
                         }
-                        .frame(width: UIScreen.main.bounds.width * 0.45)
-                        ZStack{
-                            Circle()
-                                .fill(Color.gray.opacity(0.3))
-                                .frame(width: 35, height: 35)
-                            Button{
-                                
-                            } label: {
-                                Text(">")
-                            }
+                        .padding(10)
+                        .frame(maxWidth: UIScreen.main.bounds.width * 0.60)
+                        Button{
+                            
+                        } label: {
+                            Image(systemName: "chevron.right")
+                                .font(.title2)
+                                .padding(10)
+                                .background(Color("Dark Blue"))
+                                .foregroundStyle(.white)
+                                .clipShape(Circle())
                         }
                         
                     }
