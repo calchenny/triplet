@@ -17,6 +17,7 @@ struct RootView: View {
             OverviewView()
         }
         .tint(Color("Dark Blue"))
+        .preferredColorScheme(.light)
         .environmentObject(userModel)
     }
 }

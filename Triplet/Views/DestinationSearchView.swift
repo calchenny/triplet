@@ -35,7 +35,7 @@ struct DestinationSearchView: View {
                     Image(systemName: "xmark")
                         .font(.title3.weight(.semibold))
                         .padding(7)
-                        .background(.gray)
+                        .background(.darkBlue)
                         .foregroundColor(.white)
                         .clipShape(Circle())
                         .shadow(radius: 4, x: 0, y: 4)
@@ -45,9 +45,11 @@ struct DestinationSearchView: View {
             .padding()
             
                 Form {
-                    Section(header: Text("Location Search")) {
+                    Section(header: Text("Location Search")
+                        .font(.custom("Poppins-Regular", size: 14))) {
                         ZStack(alignment: .trailing) {
                             TextField("Search", text: $locationSearch.searchQuery)
+                                .font(.custom("Poppins-Regular", size: 16))
                             // Displays an icon during an active search
                             if locationSearch.status == .isSearching {
                                 Image(systemName: "clock")
@@ -57,7 +59,8 @@ struct DestinationSearchView: View {
                     }
                     .listRowBackground(Color(UIColor.systemGray6))
                     
-                    Section(header: Text("Results")) {
+                    Section(header: Text("Results")
+                        .font(.custom("Poppins-Regular", size: 14))) {
                         List(locationSearch.searchResults, id: \.self) { result in
                             Button(action: {
                                 Task {
@@ -66,6 +69,7 @@ struct DestinationSearchView: View {
                             }) {
                                 HStack {
                                     Text("\(result.city), \(result.state), \(result.country)")
+                                        .font(.custom("Poppins-Regular", size: 16))
                                         .foregroundStyle(.black)
                                 }
                             }
