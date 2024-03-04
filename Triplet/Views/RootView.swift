@@ -8,9 +8,8 @@
 import SwiftUI
 
 struct RootView: View {
-    @StateObject var userModel = LoginViewModel()
+    @StateObject var loginViewModel = LoginViewModel()
     
-    // still need to work on signed-in user logging back on
     var body: some View {
         // will probably need a switch statement here
         NavigationStack {
@@ -18,8 +17,44 @@ struct RootView: View {
         }
         .tint(Color("Dark Blue"))
         .preferredColorScheme(.light)
-        .environmentObject(userModel)
+        .environmentObject(loginViewModel)
     }
+    
+//    @StateObject var userViewModel = UserModel()
+//    @State var loggedIn: Bool = false
+//    func isLoggedIn() {
+//        if let _ = UserDefaults.standard.string(forKey: "UserAuthToken") {
+//            loggedIn = true
+//            print("loggedIn")
+//        } else {
+//            loggedIn = false
+//            print("logged out")
+//        }
+//        
+//    }
+//    // still need to work on signed-in user logging back on
+//    var body: some View {
+//        switch (loginViewModel.authToken) {
+//            
+//        case (.none):
+//            NavigationStack {
+//                LoginView()
+//            }
+//            .tint(Color("Dark Blue"))
+//            .preferredColorScheme(.light)
+//            .environmentObject(loginViewModel)
+//            .onAppear {
+//                isLoggedIn()
+//            }
+//        
+//        
+//        case (.some(let authToken)):
+//            NavigationStack {
+//                HomeView()
+//            }
+//            .environmentObject(userViewModel)
+//        }
+//    }
 }
 
 
