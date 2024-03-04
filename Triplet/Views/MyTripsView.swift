@@ -11,30 +11,31 @@ struct MyTripsView: View {
     @State var tabSelection = 0
 
     var body: some View {
-        VStack(alignment: .leading){
-            HStack {
-                Spacer()
-                Image(.fullIcon)
-                Spacer()
+        VStack {
+            Image(.fullIcon)
+                .resizable()
+                .scaledToFit()
+                .frame(width: UIScreen.main.bounds.width * 0.30, alignment: .center)
+            VStack(alignment: .leading) {
+                Text("My Trips")
+                    .font(.custom("Poppins-Medium", size: 20))
+                Picker("", selection: $tabSelection) {
+                    Text("Upcoming Trips")
+                        .font(.custom("Poppins-Regular", size: 15))
+                        .foregroundColor(.darkBlue)
+                        .tag(0)
+                        
+                    Text("Past Trips")
+                        .font(.custom("Poppins-Regular", size: 15))
+                        .foregroundColor(.darkBlue)
+                        .tag(1)
+                        
+                }
+                .background(Color.evenLighterBlue)
+                .pickerStyle(.segmented)
+                .frame(width: UIScreen.main.bounds.width * 0.80)
             }
             
-            Text("My Trips")
-                .font(.custom("Poppins-Medium", size: 20))
-            Picker("", selection: $tabSelection) {
-                Text("Upcoming Trips")
-                    .font(.custom("Poppins-Regular", size: 15))
-                    .foregroundColor(.darkBlue)
-                    .tag(0)
-                    
-                Text("Past Trips")
-                    .font(.custom("Poppins-Regular", size: 15))
-                    .foregroundColor(.darkBlue)
-                    .tag(1)
-                    
-            }
-            .background(Color.evenLighterBlue)
-            .pickerStyle(.segmented)
-            .frame(width: UIScreen.main.bounds.width * 0.65)
             if tabSelection == 0 {
                 CurrentTripsView()
             } else {
