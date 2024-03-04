@@ -15,6 +15,7 @@ struct NewTripView: View {
     @State var endDate: Date = Date.distantPast
     @State var tripName: String = ""
     @State var showDestinationSheet: Bool = false
+    @State var navigateToOverview: Bool = false
     
     func startPlan() {
         print("submit data")
@@ -226,11 +227,17 @@ struct NewTripView: View {
                 )
                 .padding(.horizontal, 20)
 
-            Button(action: startPlan) {
+            Button {
+                navigateToOverview = true
+            } label: {
                 Text("Start Planning")
                     .font(.custom("Poppins-Bold", size: 16))
                     .padding(5)
                     .frame(width: UIScreen.main.bounds.width/1.5, alignment: .center)
+            }
+            .navigationDestination(isPresented: $navigateToOverview) {
+                OverviewView()
+                    .navigationBarBackButtonHidden(true)
             }
             .cornerRadius(15)
             .buttonStyle(.borderedProminent)
