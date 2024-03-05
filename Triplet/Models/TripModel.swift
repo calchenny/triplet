@@ -27,8 +27,8 @@ struct Note: Identifiable, Codable {
     var content: String = ""
 }
 
-enum EventType: String, Codable {
-    case housing = "Housing"
+enum EventType: String, Codable, CaseIterable{
+    case housing = "Hotel"
     case food = "Food"
     case attraction = "Attraction"
     case transit = "Transit"
@@ -46,8 +46,8 @@ struct Event: Identifiable, Codable {
     var location: GeoPoint
     var type: EventType
     var category: FoodCategory?
-    var start: Date?
-    var end: Date?
+    var start: Date
+    var time: Date
 }
 
 struct Expense: Identifiable, Codable {

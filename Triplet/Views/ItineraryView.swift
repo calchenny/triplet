@@ -11,36 +11,8 @@ import SwiftUI
 import EventKit
 import ScalingHeaderScrollView
 import MapKit
-
-
-func getCategoryImageName(category: String) -> String {
-
-    switch category {
-    case "Food":
-        return "fork.knife.circle"
-    case "Attraction":
-        return "star"
-    case "Hotel":
-        return "house"
-    case "Transit":
-        return "bus"
-    default:
-        return "questionmark"
-    }
-}
-
-func formatDate(_ date: Date) -> String {
-    let dateFormatter = DateFormatter()
-    dateFormatter.dateFormat = "MM/dd" // Customize the format as needed
-    return dateFormatter.string(from: date)
-}
-
-func formatTime(_ date: Date) -> String {
-    let dateFormatter = DateFormatter()
-    dateFormatter.dateFormat = "h:mm a" // Customize the format as needed
-    return dateFormatter.string(from: date)
-}
-
+import CoreLocation
+import FirebaseFirestore
 
 
 struct ItineraryView: View {
@@ -69,6 +41,72 @@ struct ItineraryView: View {
         return max((1 - itineraryModel.collapseProgress + 0.5 * itineraryModel.collapseProgress) * maxSize, minSize)
     }
     
+    
+    func getCategoryImageName(category: String) -> String {
+
+        switch category {
+        case "Food":
+            return "fork.knife.circle"
+        case "Attraction":
+            return "star"
+        case "Hotel":
+            return "house"
+        case "Transit":
+            return "bus"
+        default:
+            return "questionmark"
+        }
+    }
+
+    func formatDate(_ date: Date) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MM/dd" // Customize the format as needed
+        return dateFormatter.string(from: date)
+    }
+
+    func formatTime(_ date: Date) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "h:mm a" // Customize the format as needed
+        return dateFormatter.string(from: date)
+    }
+
+    func reverseGeocode(geoPoint: GeoPoint, completion: @escaping (String?) -> Void) {
+        let location = CLLocation(latitude: geoPoint.latitude, longitude: geoPoint.longitude)
+        
+        CLGeocoder().reverseGeocodeLocation(location) { placemarks, error in
+            guard let placemark = placemarks?.first, error == nil else {
+                print("Reverse geocoding error: \(error?.localizedDescription ?? "Unknown error")")
+                completion(nil)
+                return
+            }
+            
+            // Extracting the address components
+            var addressComponents: [String] = []
+            
+            if let name = placemark.name {
+                addressComponents.append(name)
+            }
+            
+            if let locality = placemark.locality {
+                addressComponents.append(locality)
+            }
+            
+            if let administrativeArea = placemark.administrativeArea {
+                addressComponents.append(administrativeArea)
+            }
+            
+            if let country = placemark.country {
+                addressComponents.append(country)
+            }
+            
+            // Joining the components to form the full address
+            let fullAddress = addressComponents.joined(separator: ", ")
+            
+            completion(fullAddress)
+        }
+    }
+    
+        
     var body: some View {
         GeometryReader { geometry in
             ScalingHeaderScrollView {
@@ -151,10 +189,10 @@ struct ItineraryView: View {
                             .cornerRadius(20)
                             .frame(maxWidth: .infinity)
                             VStack {
-                                ForEach(itineraryModel.events.filter { formatDate($0.date) == day }.sorted { $0.time < $1.time }) { event in
+                                ForEach(itineraryModel.events.filter { formatDate($0.start) == day }) { event in
                                     HStack(spacing: 10) {
                                         // Image for the event's category
-                                        Image(systemName: getCategoryImageName(category: event.category))
+                                        Image(systemName: getCategoryImageName(category: event.type.rawValue))
                                             .resizable()
                                             .frame(width: 30, height: 30)
                                             .foregroundColor(.darkBlue)
@@ -169,26 +207,14 @@ struct ItineraryView: View {
                                                 .font(.headline)
                                             Text(formatTime(event.time))
                                                 .font(.subheadline)
-                                            Text(event.location)
-                                                .font(.subheadline)
                                         }
                                         .padding()
                                         Spacer()
-                                        
-                                        //Save for later
-//                                        Button(action: {
-//                                            // Handle menu button action
-//                                        }) {
-//                                            Image(systemName: "line.3.horizontal")
-//                                                .resizable()
-//                                                .frame(width: 30, height: 30)
-//                                                .foregroundColor(.darkBlue)
-//                                        }
                                     }
                                     .padding(20)
                                 }
                             }
-                            .padding(.bottom, 10)
+                            .padding(.bottom, 20)
                         }
                     }
                     .frame(maxWidth: .infinity)

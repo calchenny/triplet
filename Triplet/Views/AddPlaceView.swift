@@ -7,20 +7,14 @@
 
 import SwiftUI
 import MapKit
-
-enum PlaceCategory: String, CaseIterable {
-    case food = "Food"
-    case attraction = "Attraction"
-    case hotel = "Hotel"
-    case transit = "Transit"
-}
+import FirebaseFirestore
 
 struct AddPlaceView: View {
 
     @EnvironmentObject var itineraryModel: ItineraryViewModel
     @State private var startDate = Date.now
     @State private var startTime: Date = Date()
-    @State private var category: String = ""
+    @State private var category: EventType = .attraction
     @State private var selectedLandmark: LandmarkViewModel?
     @Environment(\.presentationMode) var presentationMode
     
@@ -42,6 +36,11 @@ struct AddPlaceView: View {
                 }
             }
         }
+    }
+    
+    // Function to convert a string to EventType
+    func eventTypeFromString(_ category: String) -> EventType? {
+        return EventType(rawValue: category)
     }
     
     let dateRange: ClosedRange<Date> = {
@@ -72,7 +71,7 @@ struct AddPlaceView: View {
             
             DropDownPicker(
                 selection: $category,
-                options: PlaceCategory.allCases.map { $0.rawValue }
+                options: EventType.allCases.map { $0.rawValue }
             )
             .padding(30)
             
@@ -93,11 +92,15 @@ struct AddPlaceView: View {
                             Text(landmark.title)
                         }
                         .onTapGesture {
+                            print("Start date: \(startDate)")
+                            print("Start time: \(startTime)")
                             selectedLandmark = landmark
                             guard let checkLandMark = selectedLandmark else {
                                 return
                             }
-                            itineraryModel.addEvent(name: checkLandMark.name, location: checkLandMark.title, date: startDate, time: startTime, category: category)
+                             
+                            itineraryModel.addEvent(name: checkLandMark.name, location: GeoPoint(latitude: checkLandMark.coordinate.latitude, longitude: checkLandMark.coordinate.longitude), type: category, category: nil, start: startDate, time: startTime)
+                            itineraryModel.fetchEvents()
                             self.presentationMode.wrappedValue.dismiss()
                         }
                     }
@@ -121,7 +124,7 @@ enum DropDownPickerState {
 
 struct DropDownPicker: View {
     
-    @Binding var selection: String
+    @Binding var selection: EventType
     var state: DropDownPickerState = .bottom
     var options: [String]
     var maxWidth: CGFloat = 180
@@ -144,8 +147,8 @@ struct DropDownPicker: View {
                 }
                 
                 HStack {
-                    Text(selection.isEmpty ? "Category" : selection)
-                        .foregroundColor(selection.isEmpty ? .white : .white)
+                    Text(selection.rawValue)
+                        .foregroundStyle(Color.white)
                         .font(.custom("Poppins-Medium", size: 20))
                     
                     
@@ -190,22 +193,22 @@ struct DropDownPicker: View {
     
     func OptionsView() -> some View {
         VStack(spacing: 0) {
-            ForEach(PlaceCategory.allCases, id: \.self) { category in
+            ForEach(EventType.allCases, id: \.self) { category in
                 HStack {
                     Text(category.rawValue)
                         .foregroundStyle(Color.black)
                     Spacer()
                     Image(systemName: "checkmark")
-                        .opacity(selection == category.rawValue ? 1 : 0)
+                        .opacity(selection == category ? 1 : 0)
                 }
-                .foregroundStyle(selection == category.rawValue ? Color.primary : Color.gray)
+                .foregroundStyle(selection == category ? Color.primary : Color.gray)
                 .animation(.none, value: selection)
                 .frame(height: 40)
                 .contentShape(.rect)
                 .padding(.horizontal, 15)
                 .onTapGesture {
                     withAnimation(.snappy) {
-                        selection = category.rawValue
+                        selection = category
                         showDropdown.toggle()
                     }
                 }
