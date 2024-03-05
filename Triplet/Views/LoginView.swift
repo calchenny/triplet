@@ -32,25 +32,23 @@ struct LoginView: View {
         ZStack {
             VStack{
                 VStack {
-                    Text("Get Started with Phone Number")
-                        .font(.custom("Poppins-Regular", size: 32))
-                        .fontWeight(.thin)
-//                        .font(.title2)
-//                        .fontWeight(.bold)
-//                        .foregroundStyle(Color.black)
-//                        .padding()
-                    
+                    Spacer()
                     // add our logo image here
-                    Image("")
+                    Image(.fullIcon)
                         .resizable()
-                        .aspectRatio(contentMode:.fit)
-                        .padding()
+                        .scaledToFit()
+                        .frame(width: UIScreen.main.bounds.width * 0.30, alignment: .center)
+                    Spacer()
+                    Text("Get Started with Phone Number")
+                        .font(.custom("Poppins-Regular", size: 20))
+                        .fontWeight(.thin)
                     
-                    Text("You'll receive a code\n to verify.")
-                        .font(.title2)
+
+                    Text("You'll receive a code to verify.")
+                        .font(.custom("Poppins-Regular", size: 15))
                         .foregroundStyle(Color.gray)
-                        .multilineTextAlignment(.center)
-                        .padding()
+                        .padding(.bottom, 100)
+                        
                     
                     
                     //Handles the phone number text view; could maybe do a state variable here instead for the
