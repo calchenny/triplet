@@ -79,27 +79,27 @@ struct ItineraryView: View {
             }
             .padding()
             
-            if itineraryModel.events.isEmpty {
-                Text("No events planned yet!")
-                    .font(.headline)
-                    .foregroundColor(.gray)
-                    .padding()
-            } else {
-                ScrollView {
-                    ForEach(itineraryModel.events) { event in
-                        VStack {
-                            Text(event.name)
-                                .font(.headline)
-                            Text(event.location)
-                                .font(.subheadline)
-                        }
-                        .padding()
-                        .background(Color.gray.opacity(0.2))
-                        .cornerRadius(10)
-                        .padding(.vertical, 5)
-                    }
-                }
-            }
+//            if itineraryModel.events.isEmpty {
+//                Text("No events planned yet!")
+//                    .font(.headline)
+//                    .foregroundColor(.gray)
+//                    .padding()
+//            } else {
+//                ScrollView {
+//                    ForEach(itineraryModel.events) { event in
+//                        VStack {
+//                            Text(event.name)
+//                                .font(.headline)
+//                            Text(event.location)
+//                                .font(.subheadline)
+//                        }
+//                        .padding()
+//                        .background(Color.gray.opacity(0.2))
+//                        .cornerRadius(10)
+//                        .padding(.vertical, 5)
+//                    }
+//                }
+//            }
             Button(action: {
                 showAddEventSheet.toggle()
             }) {

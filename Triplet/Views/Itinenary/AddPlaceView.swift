@@ -89,7 +89,7 @@ struct AddPlaceView: View {
                             guard let checkLandMark = selectedLandmark else {
                                 return
                             }
-                            itineraryModel.addEvent(name: checkLandMark.name, location: checkLandMark.title, date: startDate, time: startTime, category: category)
+//                            itineraryModel.addEvent(name: checkLandMark.name, location: checkLandMark.title, date: startDate, time: startTime, category: category)
                             self.presentationMode.wrappedValue.dismiss()
                         }
                     }

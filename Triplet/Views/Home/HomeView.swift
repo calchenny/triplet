@@ -18,7 +18,6 @@ struct HomeView: View {
                 .tabItem {
                     Label("New Trip", systemImage: "square.and.pencil")
                 }
-            
             SettingView()
                 .tabItem {
                     Label("Settings", systemImage: "gearshape.fill")
