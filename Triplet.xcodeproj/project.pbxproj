@@ -66,7 +66,6 @@
 		89BDCE522B8FAF6D00C69895 /* ScalingHeaderScrollView in Frameworks */ = {isa = PBXBuildFile; productRef = 89BDCE512B8FAF6D00C69895 /* ScalingHeaderScrollView */; };
 		89BDCE542B8FAFCF00C69895 /* DestinationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BDCE532B8FAFCF00C69895 /* DestinationViewModel.swift */; };
 		89BDCE562B8FAFF500C69895 /* LocationSearchModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BDCE552B8FAFF500C69895 /* LocationSearchModel.swift */; };
-		89BDCE642B8FB2AA00C69895 /* ExpenseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BDCE632B8FB2AA00C69895 /* ExpenseModel.swift */; };
 		89BDCE682B8FB37600C69895 /* ItineraryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BDCE672B8FB37600C69895 /* ItineraryViewModel.swift */; };
 		89BDCE6A2B8FB3C800C69895 /* LandmarkViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BDCE692B8FB3C800C69895 /* LandmarkViewModel.swift */; };
 		89BDCE702B8FB45600C69895 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BDCE6F2B8FB45600C69895 /* LocationManager.swift */; };
@@ -108,7 +107,6 @@
 		89BDCE452B8FAEB100C69895 /* OverviewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverviewViewModel.swift; sourceTree = "<group>"; };
 		89BDCE532B8FAFCF00C69895 /* DestinationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DestinationViewModel.swift; sourceTree = "<group>"; };
 		89BDCE552B8FAFF500C69895 /* LocationSearchModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSearchModel.swift; sourceTree = "<group>"; };
-		89BDCE632B8FB2AA00C69895 /* ExpenseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseModel.swift; sourceTree = "<group>"; };
 		89BDCE672B8FB37600C69895 /* ItineraryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItineraryViewModel.swift; sourceTree = "<group>"; };
 		89BDCE692B8FB3C800C69895 /* LandmarkViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandmarkViewModel.swift; sourceTree = "<group>"; };
 		89BDCE6F2B8FB45600C69895 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
@@ -300,7 +298,6 @@
 			isa = PBXGroup;
 			children = (
 				89BDCE432B8FAE8E00C69895 /* TripModel.swift */,
-				89BDCE632B8FB2AA00C69895 /* ExpenseModel.swift */,
 				89621B052B915053006C0848 /* UserModel.swift */,
 			);
 			path = Models;
@@ -429,7 +426,6 @@
 				89BDCE462B8FAEB100C69895 /* OverviewViewModel.swift in Sources */,
 				24246BE82B97ED690028DAAF /* ItineraryView.swift in Sources */,
 				24246BF12B97ED690028DAAF /* HomeView.swift in Sources */,
-				89BDCE642B8FB2AA00C69895 /* ExpenseModel.swift in Sources */,
 				89BDCE542B8FAFCF00C69895 /* DestinationViewModel.swift in Sources */,
 				24246BF82B97ED690028DAAF /* AlertView.swift in Sources */,
 				8935A4262B7F496200F62185 /* TripletApp.swift in Sources */,
