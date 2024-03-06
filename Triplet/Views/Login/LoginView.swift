@@ -39,7 +39,7 @@ struct LoginView: View {
                     .resizable()
                     .scaledToFit()
                     .padding(.vertical, 100)
-                    .frame(width: UIScreen.main.bounds.width * 0.35, alignment: .center)
+                    .frame(width: UIScreen.main.bounds.width * 0.4, alignment: .center)
                     
                 //Handles the phone number text view; could maybe do a state variable here instead for the
                 // phone number
@@ -113,13 +113,14 @@ struct LoginView: View {
                 Spacer()
 
             }
-            .onTapGesture {
-                isTextFieldFocused = false
-            }
 
             if login.error {
                 AlertView(msg: login.errorMsg, show: $login.error)
             }
+        }
+        .background(.white)
+        .onTapGesture {
+            isTextFieldFocused = false
         }
     }
 
