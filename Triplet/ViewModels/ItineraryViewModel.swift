@@ -31,7 +31,7 @@ class ItineraryViewModel: ObservableObject {
                 return false
             }
             
-            return event1.time < event2.time
+            return event1.end < event2.end
         }
     }
     
@@ -45,7 +45,7 @@ class ItineraryViewModel: ObservableObject {
     }
 
     // Function to add an event to both Firestore and the local events array
-    func addEvent(name: String, location: GeoPoint, type: EventType, category: FoodCategory?, start: Date, time: Date) {
+    func addEvent(name: String, location: GeoPoint, type: EventType, category: FoodCategory?, start: Date, end: Date) {
         // Create a new Event instance
         let newEvent = Event(
             id: nil,
@@ -54,7 +54,7 @@ class ItineraryViewModel: ObservableObject {
             type: type,
             category: nil,
             start: start,
-            time: time
+            end: end
         )
 
         // Add the new event to Firestore

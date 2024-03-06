@@ -27,7 +27,7 @@ struct Note: Identifiable, Codable {
     var content: String = ""
 }
 
-enum EventType: String, Codable {
+enum EventType: String, Codable, CaseIterable{
     case housing = "House"
     case food = "Food"
     case attraction = "Attraction"

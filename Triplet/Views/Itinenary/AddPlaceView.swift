@@ -99,7 +99,7 @@ struct AddPlaceView: View {
                                 return
                             }
                              
-                            itineraryModel.addEvent(name: checkLandMark.name, location: GeoPoint(latitude: checkLandMark.coordinate.latitude, longitude: checkLandMark.coordinate.longitude), type: category, category: nil, start: startDate, time: startTime)
+                            itineraryModel.addEvent(name: checkLandMark.name, location: GeoPoint(latitude: checkLandMark.coordinate.latitude, longitude: checkLandMark.coordinate.longitude), type: category, category: nil, start: startDate, end: startTime)
                             itineraryModel.fetchEvents()
                             self.presentationMode.wrappedValue.dismiss()
                         }

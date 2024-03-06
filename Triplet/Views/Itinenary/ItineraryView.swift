@@ -165,6 +165,7 @@ struct ItineraryView: View {
                             .background(Color.evenLighterBlue)
                             .cornerRadius(20)
                             .frame(maxWidth: .infinity)
+                            
                             VStack {
                                 ForEach(itineraryModel.events.filter { formatDate($0.start) == day }) { event in
                                     HStack(spacing: 10) {
@@ -182,7 +183,7 @@ struct ItineraryView: View {
                                         VStack(alignment: .leading) {
                                             Text(event.name)
                                                 .font(.headline)
-                                            Text(formatTime(event.time))
+                                            Text(formatTime(event.end))
                                                 .font(.subheadline)
                                         }
                                         .padding()
