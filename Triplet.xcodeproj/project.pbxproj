@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		120793312B97F5410089B032 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 120793302B97F5410089B032 /* GoogleService-Info.plist */; };
 		128284342B81FCCD00E3E084 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 128284332B81FCCD00E3E084 /* LoginViewModel.swift */; };
 		24246BE82B97ED690028DAAF /* ItineraryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24246BD32B97ED690028DAAF /* ItineraryView.swift */; };
 		24246BE92B97ED690028DAAF /* AddPlaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24246BD42B97ED690028DAAF /* AddPlaceView.swift */; };
@@ -24,10 +23,11 @@
 		24246BF42B97ED690028DAAF /* MyTripsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24246BE22B97ED690028DAAF /* MyTripsView.swift */; };
 		24246BF52B97ED690028DAAF /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24246BE42B97ED690028DAAF /* LoginView.swift */; };
 		24246BF62B97ED690028DAAF /* VerificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24246BE52B97ED690028DAAF /* VerificationView.swift */; };
-		24246BF72B97ED690028DAAF /* CustomNumPad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24246BE62B97ED690028DAAF /* CustomNumPad.swift */; };
 		24246BF82B97ED690028DAAF /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24246BE72B97ED690028DAAF /* AlertView.swift */; };
 		24246BFB2B97EE290028DAAF /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24246BF92B97EE290028DAAF /* MapView.swift */; };
 		24246BFC2B97EE290028DAAF /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24246BFA2B97EE290028DAAF /* RootView.swift */; };
+		247988C12B9828D8000E3193 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 247988C02B9828D7000E3193 /* GoogleService-Info.plist */; };
+		24AD39C42B982C42005223D7 /* PhoneNumberKit in Frameworks */ = {isa = PBXBuildFile; productRef = 24AD39C32B982C42005223D7 /* PhoneNumberKit */; };
 		89031F222B7FFCE200282C88 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 89031F212B7FFCE200282C88 /* FirebaseAnalytics */; };
 		89031F242B7FFCE200282C88 /* FirebaseAnalyticsOnDeviceConversion in Frameworks */ = {isa = PBXBuildFile; productRef = 89031F232B7FFCE200282C88 /* FirebaseAnalyticsOnDeviceConversion */; };
 		89031F262B7FFCE200282C88 /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 89031F252B7FFCE200282C88 /* FirebaseAnalyticsSwift */; };
@@ -75,7 +75,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		120793302B97F5410089B032 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		128284332B81FCCD00E3E084 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		24246BD32B97ED690028DAAF /* ItineraryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItineraryView.swift; sourceTree = "<group>"; };
 		24246BD42B97ED690028DAAF /* AddPlaceView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddPlaceView.swift; sourceTree = "<group>"; };
@@ -92,10 +91,10 @@
 		24246BE22B97ED690028DAAF /* MyTripsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyTripsView.swift; sourceTree = "<group>"; };
 		24246BE42B97ED690028DAAF /* LoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		24246BE52B97ED690028DAAF /* VerificationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VerificationView.swift; sourceTree = "<group>"; };
-		24246BE62B97ED690028DAAF /* CustomNumPad.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomNumPad.swift; sourceTree = "<group>"; };
 		24246BE72B97ED690028DAAF /* AlertView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
 		24246BF92B97EE290028DAAF /* MapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		24246BFA2B97EE290028DAAF /* RootView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
+		247988C02B9828D7000E3193 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		89031F572B80012800282C88 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		8935A4222B7F496200F62185 /* Triplet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Triplet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8935A4252B7F496200F62185 /* TripletApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripletApp.swift; sourceTree = "<group>"; };
@@ -141,6 +140,7 @@
 				89031F562B7FFCE200282C88 /* FirebaseStorageCombine-Community in Frameworks */,
 				89031F502B7FFCE200282C88 /* FirebaseRemoteConfig in Frameworks */,
 				89031F2C2B7FFCE200282C88 /* FirebaseAppDistribution-Beta in Frameworks */,
+				24AD39C42B982C42005223D7 /* PhoneNumberKit in Frameworks */,
 				89031F302B7FFCE200282C88 /* FirebaseAuthCombine-Community in Frameworks */,
 				89031F4E2B7FFCE200282C88 /* FirebasePerformance in Frameworks */,
 				89031F462B7FFCE200282C88 /* FirebaseInAppMessagingSwift-Beta in Frameworks */,
@@ -228,10 +228,16 @@
 			children = (
 				24246BE42B97ED690028DAAF /* LoginView.swift */,
 				24246BE52B97ED690028DAAF /* VerificationView.swift */,
-				24246BE62B97ED690028DAAF /* CustomNumPad.swift */,
 				24246BE72B97ED690028DAAF /* AlertView.swift */,
 			);
 			path = Login;
+			sourceTree = "<group>";
+		};
+		24AD39C22B982C42005223D7 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		8935A4192B7F496200F62185 = {
@@ -239,6 +245,7 @@
 			children = (
 				8935A4242B7F496200F62185 /* Triplet */,
 				8935A4232B7F496200F62185 /* Products */,
+				24AD39C22B982C42005223D7 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -259,7 +266,7 @@
 				128284132B81FADE00E3E084 /* Views */,
 				8935A4252B7F496200F62185 /* TripletApp.swift */,
 				89031F572B80012800282C88 /* Info.plist */,
-				120793302B97F5410089B032 /* GoogleService-Info.plist */,
+				247988C02B9828D7000E3193 /* GoogleService-Info.plist */,
 				8935A4292B7F496300F62185 /* Assets.xcassets */,
 				8935A42B2B7F496300F62185 /* Preview Content */,
 				89BDCE6F2B8FB45600C69895 /* LocationManager.swift */,
@@ -349,6 +356,7 @@
 				89031F552B7FFCE200282C88 /* FirebaseStorageCombine-Community */,
 				89BDCE4E2B8FAF1500C69895 /* PopupView */,
 				89BDCE512B8FAF6D00C69895 /* ScalingHeaderScrollView */,
+				24AD39C32B982C42005223D7 /* PhoneNumberKit */,
 			);
 			productName = Triplet;
 			productReference = 8935A4222B7F496200F62185 /* Triplet.app */;
@@ -382,6 +390,7 @@
 				89031F202B7FFCE200282C88 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				89BDCE4D2B8FAF1500C69895 /* XCRemoteSwiftPackageReference "PopupView" */,
 				89BDCE502B8FAF6D00C69895 /* XCRemoteSwiftPackageReference "ScalingHeaderScrollView" */,
+				24C780952B982B3A00552B57 /* XCRemoteSwiftPackageReference "PhoneNumberKit" */,
 			);
 			productRefGroup = 8935A4232B7F496200F62185 /* Products */;
 			projectDirPath = "";
@@ -402,7 +411,7 @@
 				8935A42D2B7F496300F62185 /* Preview Assets.xcassets in Resources */,
 				89B3F3BA2B8FA7C600D79E5D /* Poppins-Regular.ttf in Resources */,
 				8935A42A2B7F496300F62185 /* Assets.xcassets in Resources */,
-				120793312B97F5410089B032 /* GoogleService-Info.plist in Resources */,
+				247988C12B9828D8000E3193 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -420,7 +429,6 @@
 				24246BF02B97ED690028DAAF /* SettingsView.swift in Sources */,
 				24246BF22B97ED690028DAAF /* DestinationSearchView.swift in Sources */,
 				24246BEC2B97ED690028DAAF /* OverviewView.swift in Sources */,
-				24246BF72B97ED690028DAAF /* CustomNumPad.swift in Sources */,
 				24246BF62B97ED690028DAAF /* VerificationView.swift in Sources */,
 				89BDCE442B8FAE8E00C69895 /* TripModel.swift in Sources */,
 				89BDCE462B8FAEB100C69895 /* OverviewViewModel.swift in Sources */,
@@ -656,6 +664,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		24C780952B982B3A00552B57 /* XCRemoteSwiftPackageReference "PhoneNumberKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/marmelroy/PhoneNumberKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.7.9;
+			};
+		};
 		89031F202B7FFCE200282C88 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
@@ -683,6 +699,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		24AD39C32B982C42005223D7 /* PhoneNumberKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 24C780952B982B3A00552B57 /* XCRemoteSwiftPackageReference "PhoneNumberKit" */;
+			productName = PhoneNumberKit;
+		};
 		89031F212B7FFCE200282C88 /* FirebaseAnalytics */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 89031F202B7FFCE200282C88 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;

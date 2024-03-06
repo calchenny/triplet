@@ -17,19 +17,18 @@ struct AlertView: View {
         VStack(alignment: .leading, spacing: 15, content: {
             Text("Message")
                 .fontWeight(.bold)
-                .foregroundStyle(Color.gray)
+                .foregroundStyle(.darkBlue)
             
             Text(msg)
-                .foregroundStyle(Color.gray)
             
             Button(action: {
                 show.toggle()
             }, label: {
                 Text("Close")
-                    .foregroundStyle(Color.black)
+                    .foregroundStyle(.white)
                     .padding(.vertical)
                     .frame(width: UIScreen.main.bounds.width - 100)
-                    .background(Color.gray)
+                    .background(.darkBlue)
                     .cornerRadius(15)
             })
             .frame(alignment: .center)

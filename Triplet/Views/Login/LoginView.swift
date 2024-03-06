@@ -6,12 +6,17 @@
 //
 
 import SwiftUI
-
+import PhoneNumberKit
 
 struct LoginView: View {
     @EnvironmentObject var login: LoginViewModel
     @State var navigateToVerify: Bool = false
+    @FocusState private var isTextFieldFocused: Bool
     
+    private let partialFormatter = PartialFormatter(
+        phoneNumberKit: PhoneNumberKit(),
+        defaultRegion: "US",
+        maxDigits: 10)
     
     // function to send code to phone
     func continueClick() {
@@ -20,88 +25,94 @@ struct LoginView: View {
                 let _ = try await login.sendCode()
                 navigateToVerify = true
                 print("Successfully sent code")
-            }catch {
+            } catch {
                 navigateToVerify = false
-                print("Some error when sending code")
+                print("Error sending code or verifying")
             }
         }
-        print("nextclick done")
     }
     
     var body: some View {
         ZStack {
             VStack{
-                VStack {
-                    Spacer()
-                    // add our logo image here
-                    Image(.fullIcon)
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: UIScreen.main.bounds.width * 0.30, alignment: .center)
-                    Spacer()
-                    Text("Get Started with Phone Number")
-                        .font(.custom("Poppins-Regular", size: 20))
-                        .fontWeight(.thin)
+                Image(.fullIcon)
+                    .resizable()
+                    .scaledToFit()
+                    .padding(.vertical, 100)
+                    .frame(width: UIScreen.main.bounds.width * 0.35, alignment: .center)
                     
-
-                    Text("You'll receive a code to verify.")
-                        .font(.custom("Poppins-Regular", size: 15))
-                        .foregroundStyle(Color.gray)
-                        .padding(.bottom, 100)
-                        
-                    
-                    
-                    //Handles the phone number text view; could maybe do a state variable here instead for the
-                    // phone number
+                //Handles the phone number text view; could maybe do a state variable here instead for the
+                // phone number
+                HStack {
                     HStack {
-                        VStack(alignment: .leading, spacing: 6) {
-                            Text("Enter Your Number")
-                                .font(.caption)
-                                .foregroundStyle(Color.gray)
-                            Text("+1 \(login.phoneNumber)")
-                                .font(.title2)
-                                .fontWeight(.bold)
-                                .foregroundStyle(Color.black)
-                        }
-                        .frame(maxWidth: .infinity)
-                        Spacer(minLength: 0)
+                        Text("🇺🇸 +1") // Hardcoded country code
+                            .font(.custom("Poppins-Regular", size: 16))
                         
-                        
-                        // Call function from usermodel to send code
-                        Button{
-                            continueClick()
-                        }label: {
-                            Text("Continue")
-                                .foregroundStyle(Color.black)
-                                .padding(.vertical, 18)
-                                .padding(.horizontal, 28)
-                                .background(Color.gray)
-                                .cornerRadius(15)
-                        }
-                        .disabled(login.phoneNumber == "" ? true : false)
+                        TextField("(201) 555-0123", text: $login.phoneNumber)
+                            .font(.custom("Poppins-Regular", size: 16))
+                            .onChange(of: login.phoneNumber) {
+                                // Limit the character count to 14
+                                // Phone number is 14 characters long including dash & parentheses
+                                if (login.phoneNumber.count > 14) {
+                                    login.phoneNumber = String(login.phoneNumber.prefix(14))
+                                }
+                                // Formatting the phone number into the correct format
+                                let partialFormattedNumber = partialFormatter.formatPartial(login.phoneNumber)
+                                login.phoneNumber = partialFormattedNumber
+                            }
+                            .keyboardType(.numberPad)
+                            .focused($isTextFieldFocused)
+                            .onTapGesture {
+                                isTextFieldFocused = true
+                            }
+
                     }
-                    .padding()
-                    .background(Color.white)
-                    .cornerRadius(15)
-                    .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: -5)
-                
+                    .frame(width: UIScreen.main.bounds.width/1.4, height: UIScreen.main.bounds.height/25)
+                    .padding(5)
+                    .background(Color(.systemGray6))
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 10)
+                            .stroke(
+                                login.phoneNumber == "" ?
+                                Color(.systemGray6) :
+                                login.phoneNumber.count == 14 ?
+                                Color.green :
+                                Color.red
+                                , lineWidth: 2.0)
+                    )
+                    .cornerRadius(10)
+                    
                 }
-                
-                // track when to send to verificationview
+                .padding()
+                .background(Color.white)
                 .navigationDestination(isPresented: $navigateToVerify) {
                     VerificationView()
                 }
-                .frame(height: UIScreen.main.bounds.height / 1.8)
-                .background(Color.white)
-                .cornerRadius(20)
                 
-                // custom number pad
-                CustomNumPad(value: $login.phoneNumber, isVerify: false)
-                
+                Text("Enter your phone number to receive a OTP")
+                    .font(.custom("Poppins-Regular", size: 12))
+                    .foregroundStyle(Color.gray)
+                    .padding(.bottom, 30)
+                            
+                // Call function from usermodel to send code
+                Button {
+                    continueClick()
+                } label: {
+                    Text("Login")
+                        .font(.custom("Poppins-Bold", size: 14))
+                        .padding(.vertical, 20)
+                        .padding(.horizontal, 30)
+                        .foregroundStyle(.white)
+                        .frame(width: 200, height: 50)
+                        .background(login.phoneNumber.count < 14 ? Color.gray.opacity(0.5) : login.phoneNumber.count == 14 ? Color(.darkBlue) : Color.red.opacity(0.5))
+                        .cornerRadius(15)
+                }
+                .disabled(login.phoneNumber.count != 14)
+
+                Spacer()
+
             }
-            .background(Color.white.ignoresSafeArea(.all, edges: .bottom))
-            
-            
+
             if login.error {
                 AlertView(msg: login.errorMsg, show: $login.error)
             }
