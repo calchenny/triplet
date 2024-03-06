@@ -7,14 +7,14 @@
 
 import SwiftUI
 import MapKit
+import FirebaseFirestore
 
 struct AddPlaceView: View {
-//    @Binding var startDate: Date
-//    @Binding var endDate: Date
+
     @EnvironmentObject var itineraryModel: ItineraryViewModel
     @State private var startDate = Date.now
-    @State private var startTime = Date.now
-    @State private var category: String = ""
+    @State private var startTime: Date = Date()
+    @State private var category: EventType = .attraction
     @State private var selectedLandmark: LandmarkViewModel?
     @Environment(\.presentationMode) var presentationMode
     
@@ -38,6 +38,11 @@ struct AddPlaceView: View {
         }
     }
     
+    // Function to convert a string to EventType
+    func eventTypeFromString(_ category: String) -> EventType? {
+        return EventType(rawValue: category)
+    }
+    
     let dateRange: ClosedRange<Date> = {
         let calendar = Calendar.current
         let startComponents = DateComponents(year: 2024, month: 10, day: 20)
@@ -50,24 +55,23 @@ struct AddPlaceView: View {
     var body: some View {
         VStack {
             Text("Add a Place")
-                .font(.title)
-                .fontWeight(.bold)
+                .font(.custom("Poppins-Bold", size: 40))
                 .padding(.bottom, 30)
+                .foregroundStyle(Color.darkBlue)
             DatePicker(selection: $startDate, in: dateRange, displayedComponents: .date) {
                 Text("Date")
+                    .font(.custom("Poppins-Medium", size: 20))
+                    .foregroundStyle(Color.darkBlue)
             }
-            DatePicker(selection: $startTime, in: ...Date.now, displayedComponents: .hourAndMinute) {
+            DatePicker(selection: $startTime, displayedComponents: .hourAndMinute) {
                 Text("Time")
+                    .font(.custom("Poppins-Medium", size: 20))
+                    .foregroundStyle(Color.darkBlue)
             }
             
             DropDownPicker(
                 selection: $category,
-                options: [
-                    "Restaurant",
-                    "Attraction",
-                    "Hotel",
-                    "Transit",
-                ]
+                options: EventType.allCases.map { $0.rawValue }
             )
             .padding(30)
             
@@ -76,6 +80,9 @@ struct AddPlaceView: View {
                     self.getNearByLandmarks()
                 }.textFieldStyle(RoundedBorderTextFieldStyle())
                     .padding()
+                    .cornerRadius(10)
+                    .font(.custom("Poppins-Medium", size: 20))
+                    
                     
                 List {
                     ForEach(self.landmarks, id: \.id) { landmark in
@@ -85,11 +92,15 @@ struct AddPlaceView: View {
                             Text(landmark.title)
                         }
                         .onTapGesture {
+                            print("Start date: \(startDate)")
+                            print("Start time: \(startTime)")
                             selectedLandmark = landmark
                             guard let checkLandMark = selectedLandmark else {
                                 return
                             }
-//                            itineraryModel.addEvent(name: checkLandMark.name, location: checkLandMark.title, date: startDate, time: startTime, category: category)
+                             
+                            itineraryModel.addEvent(name: checkLandMark.name, location: GeoPoint(latitude: checkLandMark.coordinate.latitude, longitude: checkLandMark.coordinate.longitude), type: category, category: nil, start: startDate, time: startTime)
+                            itineraryModel.fetchEvents()
                             self.presentationMode.wrappedValue.dismiss()
                         }
                     }
@@ -113,7 +124,7 @@ enum DropDownPickerState {
 
 struct DropDownPicker: View {
     
-    @Binding var selection: String
+    @Binding var selection: EventType
     var state: DropDownPickerState = .bottom
     var options: [String]
     var maxWidth: CGFloat = 180
@@ -136,20 +147,21 @@ struct DropDownPicker: View {
                 }
                 
                 HStack {
-                    Text(selection.isEmpty ? "Category" : selection)
-                        .foregroundColor(selection.isEmpty ? .gray : .black)
+                    Text(selection.rawValue)
+                        .foregroundStyle(Color.white)
+                        .font(.custom("Poppins-Medium", size: 20))
                     
                     
                     Spacer(minLength: 0)
                     
                     Image(systemName: state == .top ? "chevron.up" : "chevron.down")
                         .font(.title3)
-                        .foregroundColor(.gray)
+                        .foregroundColor(.white)
                         .rotationEffect(.degrees((showDropdown ? -180 : 0)))
                 }
                 .padding(.horizontal, 15)
                 .frame(width: maxWidth, height: 50)
-                .background(.white)
+                .background(.darkBlue)
                 .contentShape(.rect)
                 .onTapGesture {
                     index += 1
@@ -165,7 +177,7 @@ struct DropDownPicker: View {
                 }
             }
             .clipped()
-            .background(.white)
+            .background(.evenLighterBlue)
             .cornerRadius(10)
             .overlay {
                 RoundedRectangle(cornerRadius: 10)
@@ -181,22 +193,22 @@ struct DropDownPicker: View {
     
     func OptionsView() -> some View {
         VStack(spacing: 0) {
-            ForEach(options, id: \.self) { option in
+            ForEach(EventType.allCases, id: \.self) { category in
                 HStack {
-                    Text(option)
+                    Text(category.rawValue)
                         .foregroundStyle(Color.black)
                     Spacer()
                     Image(systemName: "checkmark")
-                        .opacity(selection == option ? 1 : 0)
+                        .opacity(selection == category ? 1 : 0)
                 }
-                .foregroundStyle(selection == option ? Color.primary : Color.gray)
+                .foregroundStyle(selection == category ? Color.primary : Color.gray)
                 .animation(.none, value: selection)
                 .frame(height: 40)
                 .contentShape(.rect)
                 .padding(.horizontal, 15)
                 .onTapGesture {
                     withAnimation(.snappy) {
-                        selection = option
+                        selection = category
                         showDropdown.toggle()
                     }
                 }
