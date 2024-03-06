@@ -12,6 +12,7 @@ import CoreLocation
 
 struct MapView: View {
     @ObservedObject var locationManager = LocationManager()
+    @Environment(\.presentationMode) var present
     @State private var mapSelection: String?
     @State private var selectedMarkerName: String?
     @State private var selectedMarker: MKMapItem = MKMapItem()
@@ -125,131 +126,157 @@ struct MapView: View {
     }
     
     var body: some View {
-        VStack {
-            Map(position: $position, selection: $mapSelection) {
-                // Make an always viewable pin of the user's location
-                if let userLocation = locationManager.currentLocation {
-                    Annotation("My location", coordinate: userLocation.coordinate) {
-                        ZStack {
-                            Circle()
-                                .frame(width: 32, height: 32)
-                                .foregroundColor(/*@START_MENU_TOKEN@*/.blue/*@END_MENU_TOKEN@*/.opacity(0.25))
-                            
-                            Circle()
-                                .frame(width: 20, height: 20)
-                                .foregroundColor(.white)
-                            
-                            Circle()
-                                .frame(width: 12, height: 12)
-                                .foregroundColor(/*@START_MENU_TOKEN@*/.blue/*@END_MENU_TOKEN@*/)
-                        }
-                    }
-                }
+        ZStack {
+            VStack {
+                Map(position: $position, selection: $mapSelection) {
+                    // Make an always viewable pin of the user's location
+                    if let userLocation = locationManager.currentLocation {
+                        Annotation("My location", coordinate: userLocation.coordinate) {
+                            ZStack {
+                                Circle()
+                                    .frame(width: 32, height: 32)
+                                    .foregroundColor(/*@START_MENU_TOKEN@*/.blue/*@END_MENU_TOKEN@*/.opacity(0.25))
                                 
-                ForEach(searchResults, id: \.id) { result in
-                    let categoryData = getCategoryData(category: result.category)
-                    
-                    Marker(result.name, systemImage: categoryData.image, coordinate: CLLocationCoordinate2D(latitude: result.latitude, longitude: result.longitude))
-                        .tint(Color(categoryData.color))
-                }
-            }
-            .onChange(of: mapSelection, { oldValue, newValue in
-                
-                if let selectedMarkerID = newValue {
-                    // Find the selected Marker in the searchResults array using its ID
-                    if let marker = searchResults.first(where: { $0.id == selectedMarkerID }) {
-                        // Fetching distance from user to marker
-                        fetchRouteFrom(destination: CLLocationCoordinate2D(latitude: marker.latitude, longitude: marker.longitude))
-                        
-                        // Extract name from selected Marker
-                        selectedMarkerName = marker.name
-                        
-                        // Extract address from coordinates
-                        reverseGeocoding(latitude: marker.latitude, longitude: marker.longitude) { placemark in
-                            if let placemark = placemark {
-                                // Handle the retrieved placemark
-                                let marker = MKPlacemark(placemark: placemark)
-                                selectedMarker = MKMapItem(placemark: marker)
-
-                            } else {
-                                // Handle the case where no placemark is found
-                                print("No Matching Address Found")
+                                Circle()
+                                    .frame(width: 20, height: 20)
+                                    .foregroundColor(.white)
+                                
+                                Circle()
+                                    .frame(width: 12, height: 12)
+                                    .foregroundColor(/*@START_MENU_TOKEN@*/.blue/*@END_MENU_TOKEN@*/)
                             }
                         }
                     }
-                }
-                
-                showDetails = newValue != nil
-            })
-            .sheet(isPresented: $showDetails, content: {
-                VStack {
-                    HStack {
-                        VStack {
-                            HStack {
-                                Text(selectedMarkerName ?? "")
-                                    .font(.custom("Poppins-Bold", size: 18))
-                                
-                                Spacer()
-                                
-                                if let distance = distanceToMarker {
-                                    Text("\(String(format: "%.2f", distance)) mi.")
-                                        .font(.custom("Poppins-Regular", size: 12))
-                                        .foregroundStyle(.darkerGray)
-                                        .padding(.trailing)
-                                        .multilineTextAlignment(.trailing)
                                     
+                    ForEach(searchResults, id: \.id) { result in
+                        let categoryData = getCategoryData(category: result.category)
+                        
+                        Marker(result.name, systemImage: categoryData.image, coordinate: CLLocationCoordinate2D(latitude: result.latitude, longitude: result.longitude))
+                            .tint(Color(categoryData.color))
+                    }
+                }
+                .onChange(of: mapSelection, { oldValue, newValue in
+                    
+                    if let selectedMarkerID = newValue {
+                        // Find the selected Marker in the searchResults array using its ID
+                        if let marker = searchResults.first(where: { $0.id == selectedMarkerID }) {
+                            // Fetching distance from user to marker
+                            fetchRouteFrom(destination: CLLocationCoordinate2D(latitude: marker.latitude, longitude: marker.longitude))
+                            
+                            // Extract name from selected Marker
+                            selectedMarkerName = marker.name
+                            
+                            // Extract address from coordinates
+                            reverseGeocoding(latitude: marker.latitude, longitude: marker.longitude) { placemark in
+                                if let placemark = placemark {
+                                    // Handle the retrieved placemark
+                                    let marker = MKPlacemark(placemark: placemark)
+                                    selectedMarker = MKMapItem(placemark: marker)
+
+                                } else {
+                                    // Handle the case where no placemark is found
+                                    print("No Matching Address Found")
                                 }
                             }
-                            .padding(.bottom, 5)
-
-                            HStack {
-                                Text(selectedMarker.placemark.title ?? "")
-                                    .font(.custom("Poppins-Regular", size: 12))
-                                    .foregroundStyle(.darkerGray)
-                                Spacer()
-                            }
-
                         }
-                        .padding(.horizontal, 30)
-                        
-                        Spacer()
                     }
                     
-                    HStack(spacing: 24) {
-                        Button {
-                            selectedMarker.openInMaps()
-                        } label: {
-                            Text("Open in Maps")
-                                .font(.custom("Poppins-Bold", size: 16))
-                                .frame(width: 170, height: 36)
-                                .cornerRadius(10)
+                    showDetails = newValue != nil
+                })
+                .sheet(isPresented: $showDetails, content: {
+                    VStack {
+                        HStack {
+                            VStack {
+                                HStack {
+                                    Text(selectedMarkerName ?? "")
+                                        .font(.custom("Poppins-Bold", size: 18))
+                                    
+                                    Spacer()
+                                    
+                                    if let distance = distanceToMarker {
+                                        Text("\(String(format: "%.2f", distance)) mi.")
+                                            .font(.custom("Poppins-Regular", size: 12))
+                                            .foregroundStyle(.darkerGray)
+                                            .padding(.trailing)
+                                            .multilineTextAlignment(.trailing)
+                                        
+                                    }
+                                }
+                                .padding(.bottom, 5)
+
+                                HStack {
+                                    Text(selectedMarker.placemark.title ?? "")
+                                        .font(.custom("Poppins-Regular", size: 12))
+                                        .foregroundStyle(.darkerGray)
+                                    Spacer()
+                                }
+
+                            }
+                            .padding(.horizontal, 30)
+                            
+                            Spacer()
                         }
-                        .buttonStyle(.borderedProminent)
-                        .tint(.darkBlue)
+                        
+                        HStack(spacing: 24) {
+                            Button {
+                                selectedMarker.openInMaps()
+                            } label: {
+                                Text("Open in Maps")
+                                    .font(.custom("Poppins-Bold", size: 16))
+                                    .frame(width: 170, height: 36)
+                                    .cornerRadius(10)
+                            }
+                            .buttonStyle(.borderedProminent)
+                            .tint(.darkBlue)
 
+                        }
+                        .padding(.vertical)
                     }
-                    .padding(.vertical)
+                    .presentationDragIndicator(.visible)
+                    .presentationDetents([.height(250)])
+                    .presentationCornerRadius(15)
+                    .presentationBackgroundInteraction(.enabled(upThrough: .height(250)))
+                })
+                .mapControls {
+                    // Adds UI functionality to the map
+                    MapCompass()
+                    MapPitchToggle()
+                    MapUserLocationButton()
+                    MapScaleView()
                 }
-                .presentationDragIndicator(.visible)
-                .presentationDetents([.height(250)])
-                .presentationCornerRadius(15)
-                .presentationBackgroundInteraction(.enabled(upThrough: .height(250)))
-            })
-            .mapControls {
-                // Adds UI functionality to the map
-                MapCompass()
-                MapPitchToggle()
-                MapUserLocationButton()
-                MapScaleView()
-            }
-            .mapStyle(.standard(showsTraffic: true))
+                .mapStyle(.standard(showsTraffic: true))
 
-        }
-        .onAppear(perform: {
-            Task {
-                queryLocations()
             }
-        })
+            .onAppear(perform: {
+                Task {
+                    queryLocations()
+                }
+            })
+            
+            VStack {
+                HStack {
+                    Button(action: {
+                        present.wrappedValue.dismiss()
+                    }, label: {
+                        Image(systemName: "arrowshape.backward.fill")
+                            .font(.headline)
+                            .padding(12)
+                            .background(.darkBlue)
+                            .foregroundColor(.white)
+                            .clipShape(Circle())
+                            .shadow(radius: 4, x: 0, y: 4)
+                    })
+                    
+                    Spacer()
+                }
+                .padding(.leading, 20)
+                
+                Spacer()
+            }
+            .padding(.top, 60)
+            
+        }
+
 
     }
 }
