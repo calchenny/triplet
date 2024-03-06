@@ -17,6 +17,8 @@ struct MapView: View {
     @State private var selectedMarkerName: String?
     @State private var selectedMarker: MKMapItem = MKMapItem()
     @State private var showDetails: Bool = false
+    @State private var alertMsg: String = ""
+    @State var showError: Bool = false
     @State private var searchResults: [PointOfInterestResult] = []
     @State private var position = MapCameraPosition.userLocation(followsHeading: true, fallback: .automatic)
     @State private var route: MKRoute?
@@ -43,7 +45,6 @@ struct MapView: View {
         }
     }
     
-    // Hospitals, Police Station, Embassy, Hotels
     struct PointOfInterestResult: Hashable, Identifiable {
         var id: String = UUID().uuidString
         var name: String
@@ -51,7 +52,8 @@ struct MapView: View {
         var latitude: Double
         var longitude: Double
     }
-        
+    
+    // Converts coordinates into an address
     func reverseGeocoding(latitude: Double, longitude: Double, completion: @escaping (CLPlacemark?) -> Void) {
         let geocoder = CLGeocoder()
         let location = CLLocation(latitude: latitude, longitude: longitude)
@@ -59,7 +61,9 @@ struct MapView: View {
         // Look up the location and retrieve address
         geocoder.reverseGeocodeLocation(location) { placemarks, error in
             guard error == nil, let placemark = placemarks?.first else {
-                print("Failed to retrieve address:", error?.localizedDescription ?? "Unknown error")
+                alertMsg = "Failed to retrieve address: \(error?.localizedDescription ?? "Unknown error")"
+                showError = true
+                
                 completion(nil)
                 return
             }
@@ -67,6 +71,7 @@ struct MapView: View {
         }
     }
     
+    // Search the area around the user for important point of interests
     func queryLocations() {
         let categories = ["Hospitals", "Police Stations", "Airport", 
                           "Hotels", "ATM", "Car Rental", "Public Transport"]
@@ -82,6 +87,12 @@ struct MapView: View {
                         
             let search = MKLocalSearch(request: request)
             search.start {(response, error) in
+                if let error = error {
+                    alertMsg = "Error in query for category \(category): \(error.localizedDescription)"
+                    showError = true
+                    
+                    return
+                }
                 if let response = response {
                     for item in response.mapItems {
                         if let location = item.placemark.location {
@@ -106,6 +117,7 @@ struct MapView: View {
     
     func fetchRouteFrom(destination: CLLocationCoordinate2D) {
         if let currentLocation = locationManager.currentLocation {
+
             let request = MKDirections.Request()
             request.source = MKMapItem(placemark: MKPlacemark(coordinate: currentLocation.coordinate))
             request.destination = MKMapItem(placemark: MKPlacemark(coordinate: destination))
@@ -121,7 +133,8 @@ struct MapView: View {
                 }
             }
         } else {
-            print("Unable to get route")
+            alertMsg = "Unable to get route"
+            showError = true
         }
     }
     
@@ -274,6 +287,10 @@ struct MapView: View {
                 Spacer()
             }
             .padding(.top, 60)
+            
+            if showError {
+                AlertView(msg: alertMsg, show: $showError)
+            }
             
         }
 
