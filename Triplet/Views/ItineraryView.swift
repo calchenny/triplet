@@ -70,39 +70,18 @@ struct ItineraryView: View {
         return dateFormatter.string(from: date)
     }
 
-    func reverseGeocode(geoPoint: GeoPoint, completion: @escaping (String?) -> Void) {
-        let location = CLLocation(latitude: geoPoint.latitude, longitude: geoPoint.longitude)
-        
-        CLGeocoder().reverseGeocodeLocation(location) { placemarks, error in
-            guard let placemark = placemarks?.first, error == nil else {
-                print("Reverse geocoding error: \(error?.localizedDescription ?? "Unknown error")")
+    func reverseGeocoding(latitude: Double, longitude: Double, completion: @escaping (CLPlacemark?) -> Void) {
+        let geocoder = CLGeocoder()
+        let location = CLLocation(latitude: latitude, longitude: longitude)
+
+        // Look up the location and retrieve address
+        geocoder.reverseGeocodeLocation(location) { placemarks, error in
+            guard error == nil, let placemark = placemarks?.first else {
+                print("Failed to retrieve address:", error?.localizedDescription ?? "Unknown error")
                 completion(nil)
                 return
             }
-            
-            // Extracting the address components
-            var addressComponents: [String] = []
-            
-            if let name = placemark.name {
-                addressComponents.append(name)
-            }
-            
-            if let locality = placemark.locality {
-                addressComponents.append(locality)
-            }
-            
-            if let administrativeArea = placemark.administrativeArea {
-                addressComponents.append(administrativeArea)
-            }
-            
-            if let country = placemark.country {
-                addressComponents.append(country)
-            }
-            
-            // Joining the components to form the full address
-            let fullAddress = addressComponents.joined(separator: ", ")
-            
-            completion(fullAddress)
+            completion(placemark)
         }
     }
     
