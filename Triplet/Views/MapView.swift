@@ -19,8 +19,28 @@ struct MapView: View {
     @State private var searchResults: [PointOfInterestResult] = []
     @State private var position = MapCameraPosition.userLocation(followsHeading: true, fallback: .automatic)
     @State private var route: MKRoute?
-    @State private var travelTime: String?
     @State private var distanceToMarker: Double?
+    
+    func getCategoryData(category: String) -> (image: String, color: Color) {
+        switch category {
+        case "Hospitals":
+            return ("drop.fill", .red)
+        case "Police Stations":
+            return ("shield.lefthalf.filled", .blue)
+        case "Airport":
+            return ("airplane", .mint)
+        case "Hotels":
+            return ("house", .brown)
+        case "ATM":
+            return ("creditcard", .green)
+        case "Car Rental":
+            return ("car", .orange)
+        case "Public Transport":
+            return ("bus", .gray)
+        default:
+            return ("questionmark", .darkerGray)
+        }
+    }
     
     // Hospitals, Police Station, Embassy, Hotels
     struct PointOfInterestResult: Hashable, Identifiable {
@@ -48,7 +68,7 @@ struct MapView: View {
     
     func queryLocations() {
         let categories = ["Hospitals", "Police Stations", "Airport", 
-                          "Hotel", "ATM", "Car Rental", "Public Transport"]
+                          "Hotels", "ATM", "Car Rental", "Public Transport"]
         
         for category in categories {
             let request = MKLocalSearch.Request()
@@ -94,48 +114,19 @@ struct MapView: View {
                 let result = try? await MKDirections(request: request).calculate()
                 route = result?.routes.first
                 let distance = route?.distance
+                
                 if let magnitude = distance?.magnitude {
-                    distanceToMarker = magnitude / 1609
+                    distanceToMarker = magnitude / 1609 // Conversion from meters to miles
                 }
-//                getTravelTime()
             }
         } else {
             print("Unable to get route")
         }
     }
-
-    func getTravelTime() {
-        guard let route else { return }
-        let formatter = DateComponentsFormatter()
-        formatter.unitsStyle = .abbreviated
-        formatter.allowedUnits = [.hour, .minute]
-        travelTime = formatter.string(from: route.expectedTravelTime)
-    }
     
     var body: some View {
         VStack {
             Map(position: $position, selection: $mapSelection) {
-                let markerImages: [String: String] = [
-                    "Hospitals": "drop.fill",
-                    "Police Stations": "shield.lefthalf.filled",
-                    "Airport": "airplane",
-                    "Hotels": "house",
-                    "ATM": "creditcard",
-                    "Car Rental": "car",
-                    "Public Transport": "bus"
-                    
-                ]
-                
-                let markerColors: [String: Color] = [
-                    "Hospitals": .red,
-                    "Police Stations": .blue,
-                    "Airport": .mint,
-                    "Hotels": .brown,
-                    "ATM": .green,
-                    "Car Rental": .orange,
-                    "Public Transport": .gray
-                ]
-                
                 // Make an always viewable pin of the user's location
                 if let userLocation = locationManager.currentLocation {
                     Annotation("My location", coordinate: userLocation.coordinate) {
@@ -156,13 +147,10 @@ struct MapView: View {
                 }
                                 
                 ForEach(searchResults, id: \.id) { result in
+                    let categoryData = getCategoryData(category: result.category)
                     
-                    let category = markerImages[result.category] ?? "house"
-                    
-                    let markerColor = markerColors[result.category] ?? .blue
-                    
-                    Marker(result.name, systemImage: category, coordinate: CLLocationCoordinate2D(latitude: result.latitude, longitude: result.longitude))
-                        .tint(Color(markerColor))
+                    Marker(result.name, systemImage: categoryData.image, coordinate: CLLocationCoordinate2D(latitude: result.latitude, longitude: result.longitude))
+                        .tint(Color(categoryData.color))
                 }
             }
             .onChange(of: mapSelection, { oldValue, newValue in
@@ -204,8 +192,7 @@ struct MapView: View {
                                 Spacer()
                                 
                                 if let distance = distanceToMarker {
-                                    // Converting meters to miles
-                                    Text("\(String(format: "%.2f", distance)) mi")
+                                    Text("\(String(format: "%.2f", distance)) mi.")
                                         .font(.custom("Poppins-Regular", size: 12))
                                         .foregroundStyle(.darkerGray)
                                         .padding(.trailing)
@@ -233,7 +220,7 @@ struct MapView: View {
                             selectedMarker.openInMaps()
                         } label: {
                             Text("Open in Maps")
-                                .font(.custom("Poppins-Bold", size: 18))
+                                .font(.custom("Poppins-Bold", size: 16))
                                 .frame(width: 170, height: 36)
                                 .cornerRadius(10)
                         }
@@ -243,7 +230,8 @@ struct MapView: View {
                     }
                     .padding(.vertical)
                 }
-                .presentationDragIndicator(.visible)                .presentationDetents([.height(250)])
+                .presentationDragIndicator(.visible)
+                .presentationDetents([.height(250)])
                 .presentationCornerRadius(15)
                 .presentationBackgroundInteraction(.enabled(upThrough: .height(250)))
             })
