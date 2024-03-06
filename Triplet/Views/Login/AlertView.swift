@@ -26,7 +26,7 @@ struct AlertView: View {
             }, label: {
                 Text("Close")
                     .foregroundStyle(.white)
-                    .padding(.vertical)
+                    .padding()
                     .frame(width: UIScreen.main.bounds.width - 100)
                     .background(.darkBlue)
                     .cornerRadius(15)

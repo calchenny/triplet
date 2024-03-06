@@ -11,95 +11,19 @@ struct VerificationView: View {
     @EnvironmentObject var login : LoginViewModel
     @Environment(\.presentationMode) var present
     @State var navigateToHome: Bool = false
-    
-    var body: some View {
-        ZStack {
-            VStack {
-                VStack{
-                    HStack {
-                        Button(action: {present.wrappedValue.dismiss()}) {
-                            Image(systemName: "arrow.left")
-                                .font(.title2)
-                                .foregroundStyle(Color.black)
-                        }
-                        
-                        Spacer()
-                        
-                        Text("Verify Phone")
-                            .font(.title2)
-                            .fontWeight(.bold)
-                            .foregroundStyle(Color.black)
-                        
-                        Spacer()
-                        
-                        if login.loading{ProgressView()}
-                    }
-                    .padding()
-                    
-                    Text("Code sent to \(login.phoneNumber)")
-                        .foregroundStyle(Color.gray)
-                        .padding(.bottom)
-                    Spacer(minLength: 0)
-                    
-                    HStack(spacing: 15) {
-                        ForEach(0..<6, id: \.self){index in
-                            CodeView(code: getCodeAtIndex(index: index))
-                        }
-                    }
-                    .padding(.horizontal, 20)
-                    
-                    Spacer(minLength: 0)
-                    
-                    HStack(spacing: 6) {
-                        Text("Didn't receive code?")
-                            .foregroundStyle(Color.gray)
-                        
-                        Button {
-                            resendCode()
-                        }label: {
-                            Text("Request Again")
-                                .fontWeight(.bold)
-                                .foregroundStyle(Color.black)
-                        }
-                    }
-                    
-                    Button{
-                        verifyAndCreateAccount()
-                    } label: {
-                        Text("Verify and Create Account")
-                            .foregroundStyle(Color.black)
-                            .padding(.vertical)
-                            .frame(width:UIScreen.main.bounds.width - 30)
-                            .background(Color.gray)
-                            .cornerRadius(15)
-                    }
-                }
-                .navigationDestination(isPresented: $navigateToHome) {
-                    HomeView()
-                        .navigationBarBackButtonHidden(true)
-                }
-                .frame(height: UIScreen.main.bounds.height / 1.8)
-                .background(Color.white)
-                .cornerRadius(20)
-                
-                CustomNumPad(value: $login.code, isVerify: true)
-            }
-            .background(Color("bg").ignoresSafeArea(.all, edges: .bottom))
-            
-            if login.error{
-                AlertView(msg: login.errorMsg, show: $login.error)
-            }
-        }
-        .navigationBarBackButtonHidden(true)
+    @State var pinList: [String] = ["", " ", " ", " ", " ", " "]
+    @FocusState private var pinFocusState: Int?
+
+    enum FocusPin {
+        case  pinOne, pinTwo, pinThree, pinFour, pinFive, pinSix
     }
-    
-    
+        
     //function to resend code
     func resendCode() {
             Task {
                 do {
                     try await login.requestCode()
-                }catch {
+                } catch {
                     print("An unexpected error occurred: \(error)")
                 }
             }
@@ -119,36 +43,139 @@ struct VerificationView: View {
         }
     }
     
-    // this function handles code view
-    func getCodeAtIndex(index: Int) -> String {
-        if login.code.count > index {
-            let start = login.code.startIndex
-            
-            let current = login.code.index(start, offsetBy: index)
-            
-            return String(login.code[current])
+    var body: some View {
+        ZStack {
+            VStack {
+                HStack {
+                    Button(action: {
+                        present.wrappedValue.dismiss()
+                    }, label: {
+                        Image(systemName: "arrowshape.backward.fill")
+                            .font(.headline)
+                            .padding(12)
+                            .background(.darkBlue)
+                            .foregroundColor(.white)
+                            .clipShape(Circle())
+                            .shadow(radius: 4, x: 0, y: 4)
+                    })
+                    Spacer()
+                }
+                .padding(.top, 60)
+                .padding(.leading, 15)
+                
+                Spacer()
+                
+                HStack {
+                    Spacer()
+                    
+                    Text("Verify Phone Number")
+                        .font(.custom("Poppins-Bold", size: 24))
+                        .fontWeight(.bold)
+                        .foregroundStyle(Color.black)
+                    
+                    Spacer()
+                    
+                    if login.loading{ProgressView()}
+                }
+                .padding()
+                
+                Text("Enter in the 6-digit OTP we just sent to \(login.phoneNumber)")
+                    .font(.custom("Poppins-Regular", size: 14))
+                    .multilineTextAlignment(.center)
+                    .padding(.bottom)
+                
+                HStack {
+                    // Loop to generate the TextFields
+                    ForEach($pinList.indices, id: \.self) { pin in
+                        let binding = Binding<String>(
+                            get: { pinList[pin] },
+                            set: { pinList[pin] = $0 }
+                        )
+                        TextField("", text: binding)
+                        .onChange(of:binding.wrappedValue) {
+                            let currentBoxCode = pinList[pin].trimmingCharacters(in: .whitespaces)
+                            login.code = pinList.joined(separator: "").filter { !$0.isWhitespace }
+                            
+                            // When the OTP is filled out, verify the code
+                            if (login.code.count == 6) {
+                                verifyAndCreateAccount()
+                            }
+                            if (currentBoxCode.count >= 1) { // When a number is inputted, focus the next field
+                                if (pin == 0) {
+                                    pinList[pin] = String(pinList[pin].prefix(1))
+                                } else {
+                                    pinList[pin] = String(pinList[pin].prefix(2))
+                                }
+                                pinFocusState = pin + 1
+                                
+                            } else {
+                                if (currentBoxCode.count == 0) { // When a number is deleted, go to previous field
+                                    if (!(pin == 0)) {
+                                        pinList[pin] = " " // Add the buffer space back
+                                    }
+                                    pinFocusState = pin - 1
+                                }
+                            }
+                        }
+                        .keyboardType(.numberPad)
+                        .allowsHitTesting(false) // Prevent taps for a view
+                        .textContentType(.oneTimeCode) // Enables one time code autofill
+                        .padding(.vertical, 10)
+                        .frame(width: 50, height: 50)
+                        .cornerRadius(10)
+                        .focused($pinFocusState, equals: pin) // Each field has its distinct focus state
+                        .multilineTextAlignment(.center)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 10)
+                                .stroke(
+                                    pinList[pin].trimmingCharacters(in: .whitespaces) == "" ?
+                                    Color(.systemGray6) :
+                                    pinList[pin].trimmingCharacters(in: .whitespaces).count == 1 ?
+                                    Color.green :
+                                    Color.red
+                                    , lineWidth: 5.0)
+                        )
+                        .cornerRadius(10)
+
+                    }
+                }
+                .padding()
+                
+                Button{
+                    resendCode()
+                } label: {
+                    Text("Resend Code")
+                        .font(.custom("Poppins-Bold", size: 16))
+                        .foregroundStyle(.white)
+                        .padding(.vertical)
+                        .frame(width:UIScreen.main.bounds.width * 0.6)
+                        .background(.darkBlue)
+                        .cornerRadius(15)
+                }
+                .padding(.top, 20)
+                
+                Spacer()
+
+            }
+            .navigationDestination(isPresented: $navigateToHome) {
+                HomeView()
+                    .navigationBarBackButtonHidden(true)
+            }
+            .background(Color.white)
+            .cornerRadius(20)
+                            
+            if login.error{
+                AlertView(msg: login.errorMsg, show: $login.error)
+            }
         }
-        return ""
+        .onAppear() {
+            pinFocusState = 0 // The first TextField is the first one to be focused
+        }
     }
+
 }
 
-struct CodeView: View {
-    var code: String
-    
-    var body: some View {
-        VStack(spacing: 10) {
-            Text(code)
-                .foregroundStyle(Color.black)
-                .fontWeight(.bold)
-                .font(.title2)
-                .frame(height:45)
-            
-            Capsule()
-                .fill(Color.gray.opacity(0.5))
-                .frame(height:4)
-        }
-    }
-}
 #Preview {
     VerificationView()
+        .environmentObject(LoginViewModel())
 }

@@ -87,6 +87,7 @@ struct LoginView: View {
                 .background(Color.white)
                 .navigationDestination(isPresented: $navigateToVerify) {
                     VerificationView()
+                        .navigationBarBackButtonHidden(true)
                 }
                 
                 Text("Enter your phone number to receive a OTP")
@@ -99,7 +100,7 @@ struct LoginView: View {
                     continueClick()
                 } label: {
                     Text("Login")
-                        .font(.custom("Poppins-Bold", size: 14))
+                        .font(.custom("Poppins-Bold", size: 16))
                         .padding(.vertical, 20)
                         .padding(.horizontal, 30)
                         .foregroundStyle(.white)
@@ -111,6 +112,9 @@ struct LoginView: View {
 
                 Spacer()
 
+            }
+            .onTapGesture {
+                isTextFieldFocused = false
             }
 
             if login.error {
