@@ -11,7 +11,11 @@ import ScalingHeaderScrollView
 import PopupView
 
 struct OverviewView: View {
-    @StateObject var viewModel = OverviewViewModel()
+    @StateObject var viewModel: OverviewViewModel
+    
+    init(viewModel: OverviewViewModel) {
+        _viewModel = StateObject(wrappedValue: viewModel)
+    }
     
     func getHeaderWidth(screenWidth: CGFloat) -> CGFloat {
         let maxWidth = screenWidth * 0.9
@@ -30,6 +34,15 @@ struct OverviewView: View {
         let minSize = CGFloat(16)
         return max((1 - viewModel.collapseProgress + 0.5 * viewModel.collapseProgress) * maxSize, minSize)
     }
+    
+    func getDateString(date: Date?) -> String {
+        guard let date else {
+            return ""
+        }
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MM/dd"
+        return dateFormatter.string(from: date)
+    }
 
     var body: some View {
         NavigationStack {
@@ -42,10 +55,10 @@ struct OverviewView: View {
                             .foregroundStyle(Color("Even Lighter Blue"))
                             .overlay(
                                 VStack {
-                                    Text("Most Amazing Trip")
+                                    Text(viewModel.trip.name)
                                         .font(.custom("Poppins-Bold", size: getHeaderTitleSize()))
                                         .foregroundStyle(Color("Dark Blue"))
-                                    Text("Seattle, WA | 10/20 - 10/25")
+                                    Text("Seattle, WA | \(getDateString(date: viewModel.trip.start)) - \(getDateString(date: viewModel.trip.end))")
                                         .font(.custom("Poppins-Medium", size: 13))
                                         .foregroundStyle(Color("Dark Blue"))
                                 }
@@ -221,10 +234,12 @@ struct OverviewView: View {
                     .useKeyboardSafeArea(true)
                     .backgroundColor(.black.opacity(0.25))
             }
+            .onAppear {
+                viewModel.subscribe()
+            }
+            .onDisappear {
+                viewModel.unsubscribe()
+            }
         }
     }
-}
-
-#Preview {
-    OverviewView()
 }
