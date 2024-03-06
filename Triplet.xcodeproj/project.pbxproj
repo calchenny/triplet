@@ -160,6 +160,8 @@
 		128284132B81FADE00E3E084 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				24A793F72B914EAF00AFBE7B /* MapView.swift */,
+				12A5B5922B82D81400BF1220 /* RootView.swift */,
 				24246BDA2B97ED690028DAAF /* Expenses */,
 				24246BDD2B97ED690028DAAF /* Home */,
 				24246BD22B97ED690028DAAF /* Itinenary */,
@@ -258,8 +260,6 @@
 				128284142B81FAE500E3E084 /* ViewModels */,
 				128284132B81FADE00E3E084 /* Views */,
 				8935A4252B7F496200F62185 /* TripletApp.swift */,
-				24A793F72B914EAF00AFBE7B /* MapView.swift */,
-				12A5B5922B82D81400BF1220 /* RootView.swift */,
 				241FD92F2B914CB6006B64D8 /* GoogleService-Info.plist */,
 				89031F572B80012800282C88 /* Info.plist */,
 				8935A4292B7F496300F62185 /* Assets.xcassets */,
