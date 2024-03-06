@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		128284342B81FCCD00E3E084 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 128284332B81FCCD00E3E084 /* LoginViewModel.swift */; };
 		12A5B5932B82D81400BF1220 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12A5B5922B82D81400BF1220 /* RootView.swift */; };
-		241FD9302B914CB6006B64D8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 241FD92F2B914CB6006B64D8 /* GoogleService-Info.plist */; };
 		24246BE82B97ED690028DAAF /* ItineraryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24246BD32B97ED690028DAAF /* ItineraryView.swift */; };
 		24246BE92B97ED690028DAAF /* AddPlaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24246BD42B97ED690028DAAF /* AddPlaceView.swift */; };
 		24246BEA2B97ED690028DAAF /* NoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24246BD62B97ED690028DAAF /* NoteView.swift */; };
@@ -73,12 +72,12 @@
 		89BDCE722B8FB46800C69895 /* LocationSearchViewData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BDCE712B8FB46800C69895 /* LocationSearchViewData.swift */; };
 		89C1396D2B8FF0CB00DEE0CD /* Poppins-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 89BDCE742B8FE28A00C69895 /* Poppins-Medium.ttf */; };
 		89C1396E2B8FF0CB00DEE0CD /* Poppins-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 89BDCE732B8FE26500C69895 /* Poppins-Bold.ttf */; };
+		89E5CFB12B97EDD8001B2CC1 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 89E5CFB02B97EDD8001B2CC1 /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		128284332B81FCCD00E3E084 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		12A5B5922B82D81400BF1220 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
-		241FD92F2B914CB6006B64D8 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		24246BD32B97ED690028DAAF /* ItineraryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItineraryView.swift; sourceTree = "<group>"; };
 		24246BD42B97ED690028DAAF /* AddPlaceView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddPlaceView.swift; sourceTree = "<group>"; };
 		24246BD62B97ED690028DAAF /* NoteView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoteView.swift; sourceTree = "<group>"; };
@@ -115,6 +114,7 @@
 		89BDCE712B8FB46800C69895 /* LocationSearchViewData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSearchViewData.swift; sourceTree = "<group>"; };
 		89BDCE732B8FE26500C69895 /* Poppins-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Bold.ttf"; sourceTree = "<group>"; };
 		89BDCE742B8FE28A00C69895 /* Poppins-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Medium.ttf"; sourceTree = "<group>"; };
+		89E5CFB02B97EDD8001B2CC1 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -261,6 +261,9 @@
 				128284132B81FADE00E3E084 /* Views */,
 				8935A4252B7F496200F62185 /* TripletApp.swift */,
 				241FD92F2B914CB6006B64D8 /* GoogleService-Info.plist */,
+				24A793F72B914EAF00AFBE7B /* MapView.swift */,
+				12A5B5922B82D81400BF1220 /* RootView.swift */,
+				89E5CFB02B97EDD8001B2CC1 /* GoogleService-Info.plist */,
 				89031F572B80012800282C88 /* Info.plist */,
 				8935A4292B7F496300F62185 /* Assets.xcassets */,
 				8935A42B2B7F496300F62185 /* Preview Content */,
@@ -405,7 +408,7 @@
 				8935A42D2B7F496300F62185 /* Preview Assets.xcassets in Resources */,
 				89B3F3BA2B8FA7C600D79E5D /* Poppins-Regular.ttf in Resources */,
 				8935A42A2B7F496300F62185 /* Assets.xcassets in Resources */,
-				241FD9302B914CB6006B64D8 /* GoogleService-Info.plist in Resources */,
+				89E5CFB12B97EDD8001B2CC1 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
