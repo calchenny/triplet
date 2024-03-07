@@ -94,6 +94,9 @@ struct NewTripView: View {
                     .sheet(isPresented: $showDestinationSheet) {
                         DestinationSearchView(locationSearch: LocationSearch())
                             .environmentObject(destinationViewModel)
+                            .presentationDragIndicator(.visible)
+                            .presentationCornerRadius(25)
+
                     }
                 
             }
