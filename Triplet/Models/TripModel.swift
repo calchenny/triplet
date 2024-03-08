@@ -8,6 +8,7 @@
 import Foundation
 import FirebaseFirestore
 
+
 struct Trip: Identifiable, Codable {
     @DocumentID var id: String?
     var owner: String
@@ -16,9 +17,9 @@ struct Trip: Identifiable, Codable {
     var end: Date?
     var destination: GeoPoint
     var numGuests: Int?
-    var notes: [Note]
-    var events: [Event]
-    var expenses: [Expense]
+    var notes: [Note]?
+    var events: [Event]?
+    var expenses: [Expense]?
 }
 
 struct Note: Identifiable, Codable {
