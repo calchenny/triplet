@@ -24,16 +24,18 @@ Triplet is an application aimed to minimize disruptions during trips. Our applic
 - Build interactive maps to display key locations
 
 **Issues that we are facing:**
-- Figure out the MapKit and interactive map view
+- Many XCode issues: merge, revert, packages
+
 
 ### **Individual Notes:**
 
 - **[Calvin Chen]:**
 
   - **Done:**
-    - [Link to Commit 1] - Map View with user location
-    - [Link to Commit 2] - Location markers for important locations: police, hospitals, bus stops, ATMs, car rental, airport, transport
+    - [Link to Commit 1](https://github.com/calchenny/triplet/commit/8969fbfa5626ac6d0e0ce3218fbd779751b34cf5) - Map View with user location
+    - [Link to Commit 2]() - Location markers for important locations: police, hospitals, bus stops, ATMs, car rental, airport, transport
     - [Link to Commit 3] - Implemented distance between user and marker
+    - [Link to Commit 4](https://github.com/calchenny/triplet/commit/22805894ebcf1970527793d93dc1ee22efb049d2) - Changed the 
 
   - **To Do:**
     - Integrate map view into current trip view
@@ -46,11 +48,12 @@ Triplet is an application aimed to minimize disruptions during trips. Our applic
   - **Done:**
     - [Link to Commit 1] - Launch screen
     - [Link to Commit 2] - Merge screens
+    - Added a firebase user model to keep track of current user
   - **To Do:**
-    - 
+    - Implement sign-out feature 
     - 
   - **Blockers:**
-    - 
+    - Resolving issues with the verification view
 - **[Derek Ma]:**
   - **Done:**
     - [Link to Commit 1] - Need to figure out the popup view
