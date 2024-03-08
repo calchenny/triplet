@@ -1,7 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "Group 55 (2).png",
+      "filename" : "FullIcon.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
@@ -10,7 +10,6 @@
       "scale" : "2x"
     },
     {
-      "filename" : "Group 55 (2) 1.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
