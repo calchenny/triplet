@@ -239,8 +239,8 @@ struct NewTripView: View {
                     .frame(width: UIScreen.main.bounds.width/1.5, alignment: .center)
             }
             .navigationDestination(isPresented: $navigateToOverview) {
-                OverviewView()
-                    .navigationBarBackButtonHidden(true)
+//                OverviewView()
+//                    .navigationBarBackButtonHidden(true)
             }
             .cornerRadius(15)
             .buttonStyle(.borderedProminent)

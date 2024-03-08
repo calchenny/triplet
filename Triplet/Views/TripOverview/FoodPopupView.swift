@@ -86,7 +86,7 @@ struct FoodPopupView: View {
     }
 }
 
-#Preview {
-    FoodPopupView()
-        .environmentObject(OverviewViewModel())
-}
+//#Preview {
+//    FoodPopupView()
+//        .environmentObject(OverviewViewModel())
+//}

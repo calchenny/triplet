@@ -57,7 +57,7 @@ struct HousingPopupView: View {
     }
 }
 
-#Preview {
-    HousingPopupView()
-        .environmentObject(OverviewViewModel())
-}
+//#Preview {
+//    HousingPopupView()
+//        .environmentObject(OverviewViewModel())
+//}
