@@ -47,7 +47,8 @@ struct Event: Identifiable, Codable {
     var type: EventType
     var category: FoodCategory?
     var start: Date
-    var end: Date
+    var time: Date
+    var end: Date?
 }
 
 struct Expense: Identifiable, Codable {
