@@ -64,7 +64,8 @@ struct MyTripsView: View {
         }
         .onAppear() {
             print("trip of the user")
-            print(userModel.trips)
+            print(userModel.trips.count)
+            
         }
         .padding(40)
     }
@@ -105,6 +106,16 @@ struct CurrentTripsView: View  {
     @State var tripNames: [String] = ["Concrete Jungle", "Space Needle Here We Go", "Big Sir"]
     @State var tripDates: [String] = ["11/10/24 - 11/20/24", "11/20/24 - 11/25/24", "12/10/24 - 12/20/24"]
     
+    func getDateString(date: Date?) -> String {
+        guard let date else {
+            return ""
+        }
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MM/dd"
+        return dateFormatter.string(from: date)
+    }
+    
+    
     var body: some View {
         VStack {
             if userModel.trips.count == 0 {
@@ -112,7 +123,8 @@ struct CurrentTripsView: View  {
             }
             
             ForEach(0..<userModel.trips.count, id: \.self) { index in
-        
+                
+                
                 ZStack{
                     RoundedRectangle(cornerRadius: 20)
                         .fill(Color.gray.opacity(0.2))
@@ -133,8 +145,8 @@ struct CurrentTripsView: View  {
                                 .font(.custom("Poppins-Regular", size: 12))
                                 .padding(.bottom, 5)
                             
-//                            Text(String(userModel.trips[index].start))
-//                                .font(.custom("Poppins-Regular", size: 12))
+                            Text("\(getDateString(date: userModel.trips[index].start)) - \(getDateString(date: userModel.trips[index].end))")
+                                .font(.custom("Poppins-Regular", size: 12))
                         }
                         .padding(10)
                         .frame(maxWidth: UIScreen.main.bounds.width * 0.60)

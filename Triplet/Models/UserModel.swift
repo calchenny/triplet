@@ -14,7 +14,7 @@ class UserModel: ObservableObject {
     @Published var trips: [Trip] = []
     private var db = Firestore.firestore()
     private var listenerRegistration: ListenerRegistration?
-    
+    private var tripIDs: Set<String> = []
     func setUid(uid: String) {
         self.uid = uid
     }
@@ -25,7 +25,10 @@ class UserModel: ObservableObject {
           switch result {
           case .success(let trip):
             // A trip value was successfully initialized from the DocumentSnapshot.
-              self.trips.append(trip)
+              if !self.tripIDs.contains(documentId) {
+                  self.trips.append(trip)
+                  self.tripIDs.insert(documentId)
+              }
           case .failure(let error):
             // A Trip value could not be initialized from the DocumentSnapshot.
             print("Error decoding document: \(error.localizedDescription)")
