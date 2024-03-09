@@ -20,6 +20,8 @@ struct ItineraryView: View {
     
     @State var showAddEventSheet: Bool = false
     
+    @State private var reverseGeocodedAddress: String = ""
+    
     
     func getHeaderWidth(screenWidth: CGFloat) -> CGFloat {
         let maxWidth = screenWidth * 0.9
@@ -181,9 +183,12 @@ struct ItineraryView: View {
                                         // Event details
                                         VStack(alignment: .leading) {
                                             Text(event.name)
-                                                .font(.headline)
-                                            Text(formatTime(event.time))
-                                                .font(.subheadline)
+                                                .font(.custom("Poppins-Bold", size: 20))
+                                                .foregroundStyle(Color.darkBlue)
+                                            Text(formatTime(event.start))
+                                                .font(.custom("Poppins-Bold", size: 15))
+                                            Text(event.address)
+                                                .font(.custom("Poppins-Regular", size: 13))
                                         }
                                         .padding()
                                         Spacer()

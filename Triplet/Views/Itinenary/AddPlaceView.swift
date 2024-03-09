@@ -13,12 +13,13 @@ struct AddPlaceView: View {
 
     @EnvironmentObject var itineraryModel: ItineraryViewModel
     @State private var startDate = Date.now
-    @State private var startTime: Date = Date()
+    @State private var endDate = Date.now
     @State private var category: EventType = .attraction
     @State private var selectedLandmark: LandmarkViewModel?
     @Environment(\.presentationMode) var presentationMode
     
     @State private var search:String = ""
+    
     @State private var landmarks: [LandmarkViewModel] = [LandmarkViewModel]()
     
     @ObservedObject var locationManager = LocationManager()
@@ -58,17 +59,17 @@ struct AddPlaceView: View {
                 .font(.custom("Poppins-Bold", size: 40))
                 .padding(.bottom, 30)
                 .foregroundStyle(Color.darkBlue)
-            DatePicker(selection: $startDate, in: dateRange, displayedComponents: .date) {
-                Text("Date")
+            DatePicker(selection: $startDate, in: dateRange, displayedComponents: [.date, .hourAndMinute]) {
+                Text("Start:")
                     .font(.custom("Poppins-Medium", size: 20))
                     .foregroundStyle(Color.darkBlue)
             }
-            DatePicker(selection: $startTime, displayedComponents: .hourAndMinute) {
-                Text("Time")
+            DatePicker(selection: $endDate, in: dateRange, displayedComponents: [.date, .hourAndMinute]) {
+                Text("End:")
                     .font(.custom("Poppins-Medium", size: 20))
                     .foregroundStyle(Color.darkBlue)
             }
-            
+
             DropDownPicker(
                 selection: $category,
                 options: EventType.allCases.map { $0.rawValue }
@@ -93,13 +94,12 @@ struct AddPlaceView: View {
                         }
                         .onTapGesture {
                             print("Start date: \(startDate)")
-                            print("Start time: \(startTime)")
                             selectedLandmark = landmark
                             guard let checkLandMark = selectedLandmark else {
                                 return
                             }
                              
-                            itineraryModel.addEvent(name: checkLandMark.name, location: GeoPoint(latitude: checkLandMark.coordinate.latitude, longitude: checkLandMark.coordinate.longitude), type: category, category: nil, start: startDate, time: startTime, end: nil)
+                            itineraryModel.addEvent(name: checkLandMark.name, location: GeoPoint(latitude: checkLandMark.coordinate.latitude, longitude: checkLandMark.coordinate.longitude),type: category, category: nil, start: startDate, address: checkLandMark.title, end: endDate)
                             itineraryModel.fetchEvents()
                             self.presentationMode.wrappedValue.dismiss()
                         }
