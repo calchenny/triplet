@@ -29,8 +29,6 @@ struct LoadingView: View {
             do {
                 print("Loading user data")
                 try await userModel.setUid(uid: loginViewModel.fetchUserUID())
-
-                userModel.subscribe()
                 // Once user data is loaded, navigate to the home view
                 await userModel.loadingUserData()
                 self.isUserLoaded = true

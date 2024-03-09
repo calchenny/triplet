@@ -6,11 +6,15 @@
 //
 
 import SwiftUI
+import CoreLocation
 
 struct MyTripsView: View {
     @State var tabSelection = 0
     @EnvironmentObject var userModel: UserModel
     @EnvironmentObject var loginViewModel: LoginViewModel
+    @State var tripCities: [String] = []
+    @State var tripStates: [String] = []
+    
     var body: some View {
         VStack {
             Image(.fullIcon)
@@ -38,7 +42,8 @@ struct MyTripsView: View {
             }
             
             if tabSelection == 0 {
-                CurrentTripsView(trips: userModel.trips)
+                CurrentTripsView()
+                    .environmentObject(userModel)
             } else {
                 PastTripsView()
             }
@@ -49,7 +54,7 @@ struct MyTripsView: View {
                 do {
                     print("Loading user data")
                     try await userModel.setUid(uid: loginViewModel.fetchUserUID())
-                    userModel.subscribe()
+//                    userModel.subscribe()
                     // Once user data is loaded, navigate to the home view
                     await userModel.loadingUserData()
                 } catch {
@@ -96,15 +101,18 @@ struct NoTripPlanned: View {
 
 struct CurrentTripsView: View  {
     @State var currentTrips: [String] = ["New York, NY", "Seattle, WA", "Big Sur"]
-    @State var trips: [Trip]
+    @EnvironmentObject var userModel: UserModel
     @State var tripNames: [String] = ["Concrete Jungle", "Space Needle Here We Go", "Big Sir"]
     @State var tripDates: [String] = ["11/10/24 - 11/20/24", "11/20/24 - 11/25/24", "12/10/24 - 12/20/24"]
+    
     var body: some View {
         VStack {
-            if trips.count == 0 {
+            if userModel.trips.count == 0 {
                 NoTripPlanned()
             }
-            ForEach(0..<trips.count, id: \.self) { index in
+            
+            ForEach(0..<userModel.trips.count, id: \.self) { index in
+        
                 ZStack{
                     RoundedRectangle(cornerRadius: 20)
                         .fill(Color.gray.opacity(0.2))
@@ -119,16 +127,18 @@ struct CurrentTripsView: View  {
                             
                         Spacer()
                         VStack (alignment: .leading) {
-                            Text(trips[index].name)
+                            Text(userModel.trips[index].name)
                                 .font(.custom("Poppins-Bold", size: 12))
-                            Text("destination")
+                            Text("\(userModel.trips[index].city), \(userModel.trips[index].state)")
                                 .font(.custom("Poppins-Regular", size: 12))
                                 .padding(.bottom, 5)
-//                            Text(trips[index].numGuests)
+                            
+//                            Text(String(userModel.trips[index].start))
 //                                .font(.custom("Poppins-Regular", size: 12))
                         }
                         .padding(10)
                         .frame(maxWidth: UIScreen.main.bounds.width * 0.60)
+
                         Button{
                             
                         } label: {
@@ -148,8 +158,6 @@ struct CurrentTripsView: View  {
                     .opacity(1)
                 }
                 .padding(.bottom, 20)
-                
-
             }
 
         }

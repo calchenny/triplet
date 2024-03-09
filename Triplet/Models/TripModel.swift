@@ -20,6 +20,8 @@ struct Trip: Identifiable, Codable {
     var notes: [Note]?
     var events: [Event]?
     var expenses: [Expense]?
+    var city: String
+    var state: String
 }
 
 struct Note: Identifiable, Codable {
@@ -49,6 +51,7 @@ struct Event: Identifiable, Codable {
     var category: FoodCategory?
     var start: Date
     var end: Date
+//    var address: String
 }
 
 struct Expense: Identifiable, Codable {
