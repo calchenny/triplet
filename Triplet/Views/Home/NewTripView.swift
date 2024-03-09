@@ -6,10 +6,21 @@
 //
 
 import SwiftUI
+import Firebase
+import FirebaseFirestore
 
 struct NewTripView: View {
     @Environment(\.dismiss) var dismiss
     @StateObject var destinationViewModel = DestinationViewModel()
+    @State var trip: Trip = Trip(owner: "user",
+                                name: "",
+                                start: Date(),
+                                end: Date(),
+                                destination: GeoPoint.init(latitude: 0, longitude: 0),
+                                numGuests: 0,
+                                notes: [],
+                                events: [],
+                                expenses: [])
     @State var guests: Int = 0
     @State var startDate: Date = Date.distantPast
     @State var endDate: Date = Date.distantPast
@@ -17,30 +28,40 @@ struct NewTripView: View {
     @State var showDestinationSheet: Bool = false
     @State var navigateToOverview: Bool = false
     
-    func startPlan() {
-        print("submit data")
-        print(startDate)
-        print(endDate)
+    func createTrip() {
+        
+        guard let latitude = destinationViewModel.latitude else {
+            return
+        }
+        
+        guard let longitude = destinationViewModel.longitude else {
+            return
+        }
+        
+        trip = Trip(owner: "user",
+                    name: tripName,
+                    start: startDate,
+                    end: endDate,
+                    destination: GeoPoint.init(latitude: latitude, longitude: longitude),
+                    numGuests: guests,
+                    notes: [],
+                    events: [],
+                    expenses: [])
+        do {
+            let ref = try Firestore.firestore().collection("trips").addDocument(from: trip)
+            print("Added to Firestore")
+            print("Trip ID: ", ref.documentID)
+
+            navigateToOverview = true
+        } catch {
+            print("Error: ",error)
+        }
+        
+        print("Created Trip: \(trip)")
     }
     
     var body: some View {
         VStack {
-            HStack {
-                Button(action: {
-                    dismiss()
-                }, label: {
-                    Image(systemName: "arrowshape.backward.fill")
-                        .font(.headline)
-                        .padding(12)
-                        .background(.darkBlue)
-                        .foregroundColor(.white)
-                        .clipShape(Circle())
-                        .shadow(radius: 4, x: 0, y: 4)
-                })
-                Spacer()
-            }
-            .padding(5)
-            
             Text("Plan a new trip")
                 .font(.custom("Poppins-Bold", size: 32))
                 .padding(.bottom, 5)
@@ -57,7 +78,9 @@ struct NewTripView: View {
                 .padding(.top)
             
             if let city = destinationViewModel.city {
+                // Store city into user model
                 if let state = destinationViewModel.state {
+                    // Store state into user model
                     Text("\(city), \(state)")
                         .font(.custom("Poppins-Regular", size: 16))
                         .frame(maxWidth: 270, alignment: .leading)
@@ -231,21 +254,22 @@ struct NewTripView: View {
                 .padding(.horizontal, 20)
 
             Button {
-                navigateToOverview = true
+                createTrip()
             } label: {
                 Text("Start Planning")
                     .font(.custom("Poppins-Bold", size: 16))
                     .padding(5)
                     .frame(width: UIScreen.main.bounds.width/1.5, alignment: .center)
             }
-            .navigationDestination(isPresented: $navigateToOverview) {
-//                OverviewView()
-//                    .navigationBarBackButtonHidden(true)
-            }
             .cornerRadius(15)
             .buttonStyle(.borderedProminent)
             .padding(.vertical)
             .tint(.darkBlue)
+            .navigationDestination(isPresented: $navigateToOverview) {
+                OverviewView()
+                    .environmentObject(viewModel)
+                    .navigationBarBackButtonHidden(true)
+            }
 
         }
         .padding()
@@ -254,7 +278,6 @@ struct NewTripView: View {
     }
 }
 
-#Preview {
-    NewTripView()
-        .environmentObject(DestinationViewModel())
-}
+//#Preview {
+//    NewTripView()
+//}

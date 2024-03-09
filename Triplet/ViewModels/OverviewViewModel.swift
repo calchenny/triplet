@@ -44,7 +44,7 @@ class OverviewViewModel: ObservableObject {
             return
         }
         do {
-            try Firestore.firestore().collection("Trips/\(tripId)/notes").addDocument(from: Note(title: newNoteTitle))
+            try Firestore.firestore().collection("trips/\(tripId)/notes").addDocument(from: Note(title: newNoteTitle))
             newNoteTitle = ""
         } catch {
             print(error)
