@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct HomeView: View {
+    @EnvironmentObject var userModel: UserModel
+    @EnvironmentObject var loginViewModel: LoginViewModel
     var body: some View {
         TabView {
             MyTripsView()

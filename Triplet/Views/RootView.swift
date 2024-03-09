@@ -8,53 +8,23 @@
 import SwiftUI
 
 struct RootView: View {
-    @StateObject var loginViewModel = LoginViewModel()
-    
+    @EnvironmentObject var loginViewModel: LoginViewModel
+    @EnvironmentObject var userModel: UserModel
     var body: some View {
-        // will probably need a switch statement here
-        NavigationStack {
-            LoginView()
+        Group {
+            if loginViewModel.userSession != nil {
+                NavigationStack {
+                    LoadingView()
+                }
+                
+            } else {
+                NavigationStack {
+                    LoginView()
+                }
+                
+            }
         }
-        .tint(Color("Dark Blue"))
-        .preferredColorScheme(.light)
-        .environmentObject(loginViewModel)
     }
-    
-//    @StateObject var userViewModel = UserModel()
-//    @State var loggedIn: Bool = false
-//    func isLoggedIn() {
-//        if let _ = UserDefaults.standard.string(forKey: "UserAuthToken") {
-//            loggedIn = true
-//            print("loggedIn")
-//        } else {
-//            loggedIn = false
-//            print("logged out")
-//        }
-//        
-//    }
-//    // still need to work on signed-in user logging back on
-//    var body: some View {
-//        switch (loginViewModel.authToken) {
-//            
-//        case (.none):
-//            NavigationStack {
-//                LoginView()
-//            }
-//            .tint(Color("Dark Blue"))
-//            .preferredColorScheme(.light)
-//            .environmentObject(loginViewModel)
-//            .onAppear {
-//                isLoggedIn()
-//            }
-//        
-//        
-//        case (.some(let authToken)):
-//            NavigationStack {
-//                HomeView()
-//            }
-//            .environmentObject(userViewModel)
-//        }
-//    }
 }
 
 

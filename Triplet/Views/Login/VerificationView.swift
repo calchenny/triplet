@@ -9,6 +9,7 @@ import SwiftUI
 
 struct VerificationView: View {
     @EnvironmentObject var login : LoginViewModel
+    @EnvironmentObject var userModel : UserModel
     @Environment(\.presentationMode) var present
     @State var navigateToHome: Bool = false
     @State var pinList: [String] = ["", " ", " ", " ", " ", " "]
@@ -17,7 +18,8 @@ struct VerificationView: View {
     enum FocusPin {
         case  pinOne, pinTwo, pinThree, pinFour, pinFive, pinSix
     }
-        
+    
+
     //function to resend code
     func resendCode() {
             Task {
@@ -170,6 +172,9 @@ struct VerificationView: View {
         }
         .onAppear() {
             pinFocusState = 0 // The first TextField is the first one to be focused
+            Task {
+                print("hi from verification view")
+            }
         }
     }
 

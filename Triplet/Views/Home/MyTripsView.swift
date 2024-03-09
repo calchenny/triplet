@@ -6,10 +6,15 @@
 //
 
 import SwiftUI
+import CoreLocation
 
 struct MyTripsView: View {
     @State var tabSelection = 0
-
+    @EnvironmentObject var userModel: UserModel
+    @EnvironmentObject var loginViewModel: LoginViewModel
+    @State var tripCities: [String] = []
+    @State var tripStates: [String] = []
+    
     var body: some View {
         VStack {
             Image(.fullIcon)
@@ -38,10 +43,29 @@ struct MyTripsView: View {
             
             if tabSelection == 0 {
                 CurrentTripsView()
+                    .environmentObject(userModel)
             } else {
                 PastTripsView()
             }
             Spacer()
+        }
+        .task {
+            if userModel.trips.isEmpty {
+                do {
+                    print("Loading user data")
+                    try await userModel.setUid(uid: loginViewModel.fetchUserUID())
+//                    userModel.subscribe()
+                    // Once user data is loaded, navigate to the home view
+                    await userModel.loadingUserData()
+                } catch {
+                    print("No user data found")
+                }
+            }
+        }
+        .onAppear() {
+            print("trip of the user")
+            print(userModel.trips.count)
+            
         }
         .padding(40)
     }
@@ -76,17 +100,31 @@ struct NoTripPlanned: View {
     }
 }
 
-struct CurrentTripsView: View {
+struct CurrentTripsView: View  {
     @State var currentTrips: [String] = ["New York, NY", "Seattle, WA", "Big Sur"]
-//    @State var currentTrips: [String] = []
+    @EnvironmentObject var userModel: UserModel
     @State var tripNames: [String] = ["Concrete Jungle", "Space Needle Here We Go", "Big Sir"]
     @State var tripDates: [String] = ["11/10/24 - 11/20/24", "11/20/24 - 11/25/24", "12/10/24 - 12/20/24"]
+    
+    func getDateString(date: Date?) -> String {
+        guard let date else {
+            return ""
+        }
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MM/dd"
+        return dateFormatter.string(from: date)
+    }
+    
+    
     var body: some View {
         VStack {
-            if currentTrips.count == 0 {
+            if userModel.trips.count == 0 {
                 NoTripPlanned()
             }
-            ForEach(0..<currentTrips.count, id: \.self) { index in
+            
+            ForEach(0..<userModel.trips.count, id: \.self) { index in
+                
+                
                 ZStack{
                     RoundedRectangle(cornerRadius: 20)
                         .fill(Color.gray.opacity(0.2))
@@ -101,16 +139,18 @@ struct CurrentTripsView: View {
                             
                         Spacer()
                         VStack (alignment: .leading) {
-                            Text(self.tripNames[index])
+                            Text(userModel.trips[index].name)
                                 .font(.custom("Poppins-Bold", size: 12))
-                            Text(self.currentTrips[index])
+                            Text("\(userModel.trips[index].city), \(userModel.trips[index].state)")
                                 .font(.custom("Poppins-Regular", size: 12))
                                 .padding(.bottom, 5)
-                            Text(self.tripDates[index])
+                            
+                            Text("\(getDateString(date: userModel.trips[index].start)) - \(getDateString(date: userModel.trips[index].end))")
                                 .font(.custom("Poppins-Regular", size: 12))
                         }
                         .padding(10)
                         .frame(maxWidth: UIScreen.main.bounds.width * 0.60)
+
                         Button{
                             
                         } label: {
@@ -130,8 +170,6 @@ struct CurrentTripsView: View {
                     .opacity(1)
                 }
                 .padding(.bottom, 20)
-                
-
             }
 
         }

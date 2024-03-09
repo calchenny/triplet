@@ -73,6 +73,8 @@
 		89BDCE722B8FB46800C69895 /* LocationSearchViewData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BDCE712B8FB46800C69895 /* LocationSearchViewData.swift */; };
 		89C1396D2B8FF0CB00DEE0CD /* Poppins-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 89BDCE742B8FE28A00C69895 /* Poppins-Medium.ttf */; };
 		89C1396E2B8FF0CB00DEE0CD /* Poppins-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 89BDCE732B8FE26500C69895 /* Poppins-Bold.ttf */; };
+		92B3F97D2B9B10A600819D0E /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B3F97C2B9B10A600819D0E /* LoadingView.swift */; };
+		92B4156B2B9ADA0B007491EF /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 92B4156A2B9ADA0B007491EF /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -114,6 +116,9 @@
 		89BDCE712B8FB46800C69895 /* LocationSearchViewData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSearchViewData.swift; sourceTree = "<group>"; };
 		89BDCE732B8FE26500C69895 /* Poppins-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Bold.ttf"; sourceTree = "<group>"; };
 		89BDCE742B8FE28A00C69895 /* Poppins-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Medium.ttf"; sourceTree = "<group>"; };
+		92B3F97C2B9B10A600819D0E /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
+		92B415692B9AD5AA007491EF /* Triplet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Triplet.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		92B4156A2B9ADA0B007491EF /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -221,6 +226,7 @@
 				24246BE02B97ED690028DAAF /* DestinationSearchView.swift */,
 				24246BE12B97ED690028DAAF /* NewTripView.swift */,
 				24246BE22B97ED690028DAAF /* MyTripsView.swift */,
+				92B3F97C2B9B10A600819D0E /* LoadingView.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -239,7 +245,7 @@
 			isa = PBXGroup;
 			children = (
 				8935A4242B7F496200F62185 /* Triplet */,
-				129457DB2B9D1A0E005EFA4D /* Triplet.app */,
+				92B415692B9AD5AA007491EF /* Triplet.app */,
 			);
 			sourceTree = "<group>";
 		};
@@ -346,7 +352,7 @@
 				89B9FFFC2B9ABFA3005C530A /* FirebaseStorageCombine-Community */,
 			);
 			productName = Triplet;
-			productReference = 129457DB2B9D1A0E005EFA4D /* Triplet.app */;
+			productReference = 92B415692B9AD5AA007491EF /* Triplet.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -394,6 +400,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				89C1396D2B8FF0CB00DEE0CD /* Poppins-Medium.ttf in Resources */,
+				92B4156B2B9ADA0B007491EF /* GoogleService-Info.plist in Resources */,
 				89C1396E2B8FF0CB00DEE0CD /* Poppins-Bold.ttf in Resources */,
 				8935A42D2B7F496300F62185 /* Preview Assets.xcassets in Resources */,
 				89B3F3BA2B8FA7C600D79E5D /* Poppins-Regular.ttf in Resources */,
@@ -433,6 +440,7 @@
 				128284342B81FCCD00E3E084 /* LoginViewModel.swift in Sources */,
 				24246BF42B97ED690028DAAF /* MyTripsView.swift in Sources */,
 				24246BEA2B97ED690028DAAF /* NoteView.swift in Sources */,
+				92B3F97D2B9B10A600819D0E /* LoadingView.swift in Sources */,
 				24246BEB2B97ED690028DAAF /* FoodPopupView.swift in Sources */,
 				89BDCE702B8FB45600C69895 /* LocationManager.swift in Sources */,
 				24246BED2B97ED690028DAAF /* HousingPopupView.swift in Sources */,
@@ -572,7 +580,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Triplet/Preview Content\"";
-				DEVELOPMENT_TEAM = 2P8FAYUBDM;
+				DEVELOPMENT_TEAM = JF766DDY34;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Triplet/Info.plist;
@@ -605,7 +613,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Triplet/Preview Content\"";
-				DEVELOPMENT_TEAM = 2P8FAYUBDM;
+				DEVELOPMENT_TEAM = JF766DDY34;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Triplet/Info.plist;

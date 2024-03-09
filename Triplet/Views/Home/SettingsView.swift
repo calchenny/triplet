@@ -9,6 +9,9 @@
 import SwiftUI
 
 struct SettingView: View {
+    @EnvironmentObject var loginViewModel: LoginViewModel
+    @EnvironmentObject var userModel: UserModel
+    @State var signedOut = false
     var body: some View {
         VStack {
             VStack{
@@ -35,7 +38,11 @@ struct SettingView: View {
                         
                     }
                     Button{
-                        
+                        Task {
+                            await loginViewModel.signOut()
+                            userModel.unsubscribe()
+                            signedOut = true
+                        }
                     } label: {
                         ZStack{
                             RoundedRectangle(cornerRadius: 12)
@@ -47,6 +54,10 @@ struct SettingView: View {
                         
                     }
                     
+                }
+                .navigationDestination(isPresented: $signedOut) {
+                    LoginView()
+                        .navigationBarBackButtonHidden(true)
                 }
                 .scrollDisabled(true)
                 .background(Color.white)

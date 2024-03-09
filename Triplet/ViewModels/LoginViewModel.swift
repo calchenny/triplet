@@ -16,6 +16,7 @@ enum AuthenticationError: Error {
     case authTokenNotFound
     case signInFailed(String)
     case unknownError
+    case failedLoading
 }
 
 // initialize each error with an error string
@@ -32,31 +33,48 @@ extension AuthenticationError: LocalizedError {
             return NSLocalizedString("Sign-in failed: \(message)", comment: "")
         case .unknownError:
             return NSLocalizedString("An unknown error occurred", comment: "")
+        case .failedLoading:
+            return NSLocalizedString("Failed to load user", comment: "")
         }
     }
 }
 
-
+@MainActor
 class LoginViewModel: ObservableObject {
     @Published var phoneNumber:String = ""
-    
     @Published var code:String = ""
-    
     @Published var errorMsg:String = ""
     @Published var error:Bool = false
-    
-    
     @Published var authToken: String?
+    @Published var userSession: FirebaseAuth.User?
     
     init() {
         authToken = UserDefaults.standard.string(forKey: "authToken")
+        self.userSession = Auth.auth().currentUser
     }
     
     
     //Loading View
-    
     @Published var loading = false
     
+    
+    // function to fetch the user id
+    func fetchUserUID() async throws -> String {
+        guard let uid = Auth.auth().currentUser?.uid else {
+            throw AuthenticationError.failedLoading
+        }
+        return uid
+    }
+    
+    // function to sign out on firebase & reset userSession/current user
+    func signOut() async {
+        do {
+            try Auth.auth().signOut()
+            self.userSession = nil
+        } catch {
+            print("Failed to sign out with error")
+        }
+    }
     
     // function to send code to user following phone number request
     // used PhoneAuthProvider api calls
