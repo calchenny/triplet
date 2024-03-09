@@ -50,8 +50,9 @@ struct Event: Identifiable, Codable {
     var type: EventType
     var category: FoodCategory?
     var start: Date
+    var address: String
     var end: Date
-//    var address: String
+
 }
 
 struct Expense: Identifiable, Codable {

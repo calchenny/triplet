@@ -165,7 +165,6 @@ struct ItineraryView: View {
                             .background(Color.evenLighterBlue)
                             .cornerRadius(20)
                             .frame(maxWidth: .infinity)
-                            
                             VStack {
                                 ForEach(itineraryModel.events.filter { formatDate($0.start) == day }) { event in
                                     HStack(spacing: 10) {
@@ -183,11 +182,22 @@ struct ItineraryView: View {
                                         VStack(alignment: .leading) {
                                             Text(event.name)
                                                 .font(.headline)
-                                            Text(formatTime(event.end))
+                                            Text(formatTime(event.time))
                                                 .font(.subheadline)
                                         }
                                         .padding()
                                         Spacer()
+                                        Button {
+                                        } label: {
+                                            Image(systemName: "trash")
+                                                .font(.title2)
+                                                .padding()
+                                                .background(Color("Dark Blue"))
+                                                .foregroundStyle(.white)
+                                                .clipShape(Circle())
+                                        }
+                                        .padding(.leading)
+                                        .tint(.primary)
                                     }
                                     .padding(20)
                                 }
@@ -203,6 +213,9 @@ struct ItineraryView: View {
             .collapseProgress($itineraryModel.collapseProgress)
             .setHeaderSnapMode(.immediately)
             .ignoresSafeArea()
+            .onAppear {
+                itineraryModel.fetchEvents()
+            }
         }
     }
 }

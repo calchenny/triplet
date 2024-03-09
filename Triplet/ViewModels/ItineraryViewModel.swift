@@ -14,6 +14,7 @@ import FirebaseFirestore
 class ItineraryViewModel: ObservableObject {
     var tripId: String = "Placeholder tripId"
     @Published var events: [Event] = []
+//    @Published var trip: Trip
     
     @Published var cameraPosition = MapCameraPosition.region(MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 47.608013, longitude: -122.335167), span: MKCoordinateSpan(latitudeDelta: 0.5, longitudeDelta: 0.5)))
     
@@ -31,7 +32,7 @@ class ItineraryViewModel: ObservableObject {
                 return false
             }
             
-            return event1.end < event2.end
+            return event1.time < event2.time
         }
     }
     
@@ -45,7 +46,7 @@ class ItineraryViewModel: ObservableObject {
     }
 
     // Function to add an event to both Firestore and the local events array
-    func addEvent(name: String, location: GeoPoint, type: EventType, category: FoodCategory?, start: Date, end: Date) {
+    func addEvent(name: String, location: GeoPoint, type: EventType, category: FoodCategory?, start: Date, time: Date, end: Date?) {
         // Create a new Event instance
         let newEvent = Event(
             id: nil,
@@ -54,14 +55,12 @@ class ItineraryViewModel: ObservableObject {
             type: type,
             category: nil,
             start: start,
-            end: end
+            time: time,
+            end: nil
         )
 
         // Add the new event to Firestore
         addEventToFirestore(newEvent)
-
-        // Add the new event to the local events array
-        events.append(newEvent)
     }
     
     func fetchEvents() {
