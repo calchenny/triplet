@@ -55,10 +55,15 @@ struct Event: Identifiable, Codable {
 
 }
 
-struct Expense: Identifiable, Codable {
-    @DocumentID var id: String?
+struct Expense: Identifiable, Codable, Equatable {
+    var id: String?
     var name: String
     var date: Date
     var category: String
     var cost: Double
+    
+    // Implement Equatable conformance
+    static func == (lhs: Expense, rhs: Expense) -> Bool {
+        return lhs.id == rhs.id
+    }
 }

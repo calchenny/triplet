@@ -28,6 +28,7 @@
 		24246BFB2B97EE290028DAAF /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24246BF92B97EE290028DAAF /* MapView.swift */; };
 		24246BFC2B97EE290028DAAF /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24246BFA2B97EE290028DAAF /* RootView.swift */; };
 		24AD39C42B982C42005223D7 /* PhoneNumberKit in Frameworks */ = {isa = PBXBuildFile; productRef = 24AD39C32B982C42005223D7 /* PhoneNumberKit */; };
+		3CE48FD12B9D324900710CCA /* ExpensesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CE48FD02B9D324900710CCA /* ExpensesViewModel.swift */; };
 		8935A4262B7F496200F62185 /* TripletApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8935A4252B7F496200F62185 /* TripletApp.swift */; };
 		8935A42A2B7F496300F62185 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8935A4292B7F496300F62185 /* Assets.xcassets */; };
 		8935A42D2B7F496300F62185 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8935A42C2B7F496300F62185 /* Preview Assets.xcassets */; };
@@ -78,7 +79,7 @@
 
 /* Begin PBXFileReference section */
 		128284332B81FCCD00E3E084 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
-		129457DC2B9D1A1E005EFA4D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		129457DC2B9D1A1E005EFA4D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		24246BD32B97ED690028DAAF /* ItineraryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItineraryView.swift; sourceTree = "<group>"; };
 		24246BD42B97ED690028DAAF /* AddPlaceView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddPlaceView.swift; sourceTree = "<group>"; };
 		24246BD62B97ED690028DAAF /* NoteView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoteView.swift; sourceTree = "<group>"; };
@@ -97,6 +98,7 @@
 		24246BE72B97ED690028DAAF /* AlertView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
 		24246BF92B97EE290028DAAF /* MapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		24246BFA2B97EE290028DAAF /* RootView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
+		3CE48FD02B9D324900710CCA /* ExpensesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpensesViewModel.swift; sourceTree = "<group>"; };
 		89031F572B80012800282C88 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		8935A4252B7F496200F62185 /* TripletApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripletApp.swift; sourceTree = "<group>"; };
 		8935A4292B7F496300F62185 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -182,6 +184,7 @@
 				89BDCE552B8FAFF500C69895 /* LocationSearchModel.swift */,
 				89BDCE672B8FB37600C69895 /* ItineraryViewModel.swift */,
 				89BDCE692B8FB3C800C69895 /* LandmarkViewModel.swift */,
+				3CE48FD02B9D324900710CCA /* ExpensesViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -427,6 +430,7 @@
 				24246BF12B97ED690028DAAF /* HomeView.swift in Sources */,
 				89BDCE542B8FAFCF00C69895 /* DestinationViewModel.swift in Sources */,
 				24246BF82B97ED690028DAAF /* AlertView.swift in Sources */,
+				3CE48FD12B9D324900710CCA /* ExpensesViewModel.swift in Sources */,
 				8935A4262B7F496200F62185 /* TripletApp.swift in Sources */,
 				24246BF32B97ED690028DAAF /* NewTripView.swift in Sources */,
 				89BDCE682B8FB37600C69895 /* ItineraryViewModel.swift in Sources */,

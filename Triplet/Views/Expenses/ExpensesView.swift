@@ -6,154 +6,206 @@
 //
 
 import SwiftUI
+import EventKit
+import ScalingHeaderScrollView
+import MapKit
+import CoreLocation
+import FirebaseFirestore
 
 struct ExpensesView: View {
     @State var expenses: [Expense] = []
-    @State private var budget: Float = 10000.00
-    @State private var currentTotal: Float = 8400.00
-    @State private var percentage: Float = 0
+    @State private var budget: Double = 10000.00
+    @State private var currentTotal: Double = 0.00
+    @State private var percentage: Double = 0
     @State private var showNewExpenseSheet: Bool = false
-    
-//    func calculateTotal (total: Float) {
-//        ForEach($expenses, id: \.cost) { expense in
-//            if let newCost = Double(expense.cost) {
-//                total = total + newCost
-//            }
-//
-//
-//        }
-//
-//    }
-    
-    var body: some View {
-        VStack {
-            Text("**Most Amazing Trip**\n10/20 - 10/25")
-                .padding()
-                .multilineTextAlignment(.center)
-                .foregroundColor(.indigo)
-                
-                .overlay(
-                    RoundedRectangle(cornerRadius: 20)
-                        .fill(Color.indigo.opacity(0.15))
-                )
-                .padding()
-                //.background(.indigo)
-            Text("Expenses")
-                .font(.title)
-                .bold()
-                .foregroundColor(.indigo)
-                .padding()
-            Text("$\(currentTotal, specifier: "%.2f")")
-                .foregroundColor(.black.opacity(0.8))
-                .bold()
-                .font(.largeTitle)
-            ProgressView(value: percentage)
-                .tint(.indigo)
-                .frame(minWidth: 0, maxWidth: 200)
-                
-            Text("Budget: $\(budget, specifier: "%.2f")")
-                .foregroundColor(.indigo)
-                .padding(.bottom, 15)
-            
-            
-        } // VStack closing bracket
-        .onAppear() {
-            percentage = currentTotal / budget
+
+    @StateObject var expenseModel = ExpensesViewModel()
+
+    func calculateTotal (expenses: [Expense]) -> Double {
+        print("inside calculateTotal")
+        return expenses.reduce(0.0) { $0 + $1.cost }
         }
-        
-        VStack {
+    func calculatePercentage (budget: Double, currentTotal: Double) -> Double {
+        print("inside calculatePercentage")
+        return currentTotal/budget
+    }
 
-            if !expenses.isEmpty {
-                
-                ScrollView {
-                    ForEach(expenses, id: \.name) { expense in
-                        
-                        HStack {
-                            if (expense.category == "Housing") {
-                                Image(systemName: "house.fill")
-                                    .font(.title3)
-                                    .padding([.leading, .trailing], 10)
-                            }
-                            else if (expense.category == "Transportation") {
-                                Image(systemName: "car.side.fill")
-                                    .font(.title3)
-                                    .padding([.leading, .trailing], 10)
-                            }
-                            else if (expense.category == "Food") {
-                                Image(systemName: "fork.knife")
-                                    .font(.title3)
-                                    .padding([.leading, .trailing], 10)
-                            }
-                            else {
-                                Image(systemName: "dollarsign")
-                                    .font(.title3)
-                                    .padding([.leading, .trailing], 10)
-                            }
-                            VStack {
-                                    HStack{
-                                        Text("\(expense.name)")
-                                            .bold()
-                                        Spacer()
-                                        Text("-$\(expense.cost)")
-                                            .bold()
-                                            .foregroundColor(.red)
+    func getHeaderWidth(screenWidth: CGFloat) -> CGFloat {
+        let maxWidth = screenWidth * 0.9
+        let minWidth = screenWidth * 0.5
+        return max((1 - expenseModel.collapseProgress + 0.5 * expenseModel.collapseProgress) * maxWidth, minWidth)
+    }
+
+    func getHeaderHeight() -> CGFloat {
+        let maxHeight = CGFloat(80)
+        let minHeight = CGFloat(30)
+        return max((1 - expenseModel.collapseProgress + 0.5 * expenseModel.collapseProgress) * maxHeight, minHeight)
+    }
+
+    func getHeaderTitleSize() -> CGFloat {
+        let maxSize = CGFloat(30)
+        let minSize = CGFloat(16)
+        return max((1 - expenseModel.collapseProgress + 0.5 * expenseModel.collapseProgress) * maxSize, minSize)
+    }
+
+    var body: some View {
+        GeometryReader { geometry in
+            ScalingHeaderScrollView {
+                ZStack(alignment: .topLeading) {
+                    ZStack(alignment: .bottom) {
+                        Map(position: $expenseModel.cameraPosition)
+                        RoundedRectangle(cornerRadius: 15)
+                            .frame(width: getHeaderWidth(screenWidth: geometry.size.width), height: getHeaderHeight())
+                            .foregroundStyle(.evenLighterBlue)
+                            .overlay(
+                                VStack {
+                                    Text("Most Amazing Trip")
+                                        .font(.custom("Poppins-Bold", size: getHeaderTitleSize()))
+                                        .foregroundStyle(Color.darkBlue)
+                                    Text("Seattle, WA | 10/20 - 10/25")
+                                        .font(.custom("Poppins-Regular", size: 15))
+                                        .foregroundStyle(.darkBlue)
+                                }
+                            )
+                            .padding(.bottom, 30)
+                    }
+                    Button {
+                    } label: {
+                        Image(systemName: "house")
+                            .font(.title2)
+                            .padding()
+                            .background(Color("Dark Blue"))
+                            .foregroundStyle(.white)
+                            .clipShape(Circle())
+                    }
+                    .padding(.top, 60)
+                    .padding(.leading)
+                    .tint(.primary)
+
+                }
+                .frame(maxWidth: .infinity)
+            } content: {
+                VStack {
+                    Text("Expenses")
+                        .font(.title)
+                        .bold()
+                        .foregroundColor(.indigo)
+                    .padding()
+                    Text("$\(currentTotal, specifier: "%.2f")")
+                        .foregroundColor(.black.opacity(0.8))
+                        .bold()
+                        .font(.largeTitle)
+                    ProgressView(value: percentage)
+                        .tint(.indigo)
+                        .frame(minWidth: 0, maxWidth: 200)
+
+                    Text("Budget: $\(budget, specifier: "%.2f")")
+                        .foregroundColor(.indigo)
+                        .padding(.bottom, 15)
+                }
+                .onChange(of: expenses) {
+                    currentTotal = calculateTotal(expenses: expenses)
+                    percentage = calculatePercentage(budget: budget, currentTotal: currentTotal)
+                    print("currentTotal: \(currentTotal)")
+                    print("percentage: \(percentage)")
+                }
+
+                VStack {
+
+                    if !expenses.isEmpty {
+
+                        ScrollView {
+                            ForEach(expenses, id: \.name) { expense in
+
+                                HStack {
+                                    if (expense.category == "Housing") {
+                                        Image(systemName: "house.fill")
+                                            .font(.title3)
+                                            .padding([.leading, .trailing], 10)
+                                    }
+                                    else if (expense.category == "Transportation") {
+                                        Image(systemName: "car.side.fill")
+                                            .font(.title3)
+                                            .padding([.leading, .trailing], 10)
+                                    }
+                                    else if (expense.category == "Food") {
+                                        Image(systemName: "fork.knife")
+                                            .font(.title3)
+                                            .padding([.leading, .trailing], 10)
+                                    }
+                                    else {
+                                        Image(systemName: "dollarsign")
+                                            .font(.title3)
+                                            .padding([.leading, .trailing], 10)
+                                    }
+                                    VStack {
+                                            HStack{
+                                                Text("\(expense.name)")
+                                                    .bold()
+                                                Spacer()
+                                                Text("-$\(expense.cost, specifier: "%.2f")")
+                                                    .bold()
+                                                    .foregroundColor(.red)
+
+                                            }
+                                            .padding([.top, .leading, .trailing], 10)
+                                            .onAppear {
+
+                                            }
+                                            HStack {
+                                                Text("\(expense.category)")
+                                                    .font(.caption)
+                                                Spacer()
+                                                Text(expense.date, format: .dateTime.day().month())
+                                                    .font(.caption)
+                                            }
+                                            .padding([.bottom, .leading, .trailing], 10)
 
                                     }
-                                    .padding([.top, .leading, .trailing], 10)
-                                    HStack {
-                                        Text("\(expense.category)")
-                                            .font(.caption)
-                                        Spacer()
-                                        Text(expense.date, format: .dateTime.day().month())
-                                            .font(.caption)
-                                    }
-                                    .padding([.bottom, .leading, .trailing], 10)
-                                    
+                                }
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 20)
+                                        .fill(Color.gray.opacity(0.15))
+                                )
                             }
                         }
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 20)
-                                .fill(Color.gray.opacity(0.15))
-                        )
-                    }
-                }
-                Spacer()
-                    .onAppear {
-                        //calculateTotal(total: currentTotal)
-                    }
-            }
-            else {
-                Spacer()
-                Text("No expenses added yet.")
-                    .font(.title3)
-                    .bold()
-                    .foregroundColor(.indigo)
-                Spacer()
-            }
-            Button() {
-                print("button pressed")
-                showNewExpenseSheet.toggle()
-            } label: {
-                Text("+ Add Expense")
-                    .padding(.horizontal, 50)
-                    .padding(.vertical, 15)
-                    .foregroundColor(.white)
-                    .background(.indigo)
-                    .cornerRadius(100)
-                    .bold()
-                    
-            }
-            .sheet(isPresented: $showNewExpenseSheet) {
-                AddNewExpenseView(expenses: $expenses)
-            }
-        } // VStack closing bracket
-        .frame(maxWidth: .infinity)
-        .padding(.vertical, 20)
-//        .overlay( /// apply a rounded border
-//            RoundedRectangle(cornerRadius: 20)
-//                .fill(Color.gray.opacity(0.15))
-//        )
+                        Spacer()
 
+                    }
+                    else {
+                        Spacer()
+                        Text("No expenses added yet.")
+                            .font(.title3)
+                            .bold()
+                            .foregroundColor(.indigo)
+                        Spacer()
+                    }
+                    Button() {
+                        print("button pressed")
+                        showNewExpenseSheet.toggle()
+                    } label: {
+                        Text("+ Add Expense")
+                            .padding(.horizontal, 50)
+                            .padding(.vertical, 15)
+                            .foregroundColor(.white)
+                            .background(.indigo)
+                            .cornerRadius(100)
+                            .bold()
+
+                    }
+                    .sheet(isPresented: $showNewExpenseSheet) {
+                        AddNewExpenseView(expenses: $expenses)
+                    }
+                } // VStack closing bracket
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 20)
+            }
+            .height(min: expenseModel.minHeight, max: expenseModel.maxHeight)
+            .allowsHeaderCollapse()
+            .collapseProgress($expenseModel.collapseProgress)
+            .setHeaderSnapMode(.immediately)
+            .ignoresSafeArea()
+        }
     } // body closing bracket
 } // view closing bracket
 
