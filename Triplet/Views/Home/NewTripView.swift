@@ -11,6 +11,7 @@ import FirebaseFirestore
 
 struct NewTripView: View {
     @Environment(\.dismiss) var dismiss
+    @EnvironmentObject var userModel: UserModel
     @StateObject var destinationViewModel = DestinationViewModel()
     @State var trip: Trip = Trip(owner: "user",
                                 name: "",
@@ -47,8 +48,12 @@ struct NewTripView: View {
         guard let state = destinationViewModel.state else {
             return
         }
-        
-        trip = Trip(owner: "user",
+        guard let uid = userModel.uid else {
+            
+            return
+        }
+        print("uid", uid)
+        trip = Trip(owner: uid,
                     name: tripName,
                     start: startDate,
                     end: endDate,
