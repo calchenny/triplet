@@ -50,16 +50,14 @@ struct MyTripsView: View {
             Spacer()
         }
         .task {
-            if userModel.trips.isEmpty {
-                do {
-                    print("Loading user data")
-                    try await userModel.setUid(uid: loginViewModel.fetchUserUID())
-//                    userModel.subscribe()
-                    // Once user data is loaded, navigate to the home view
-                    await userModel.loadingUserData()
-                } catch {
-                    print("No user data found")
-                }
+            do {
+                print("Loading user data")
+                try await userModel.setUid(uid: loginViewModel.fetchUserUID())
+    //                    userModel.subscribe()
+                // Once user data is loaded, navigate to the home view
+                await userModel.loadingUserData()
+            } catch {
+                print("No user data found")
             }
         }
         .onAppear() {
@@ -121,55 +119,57 @@ struct CurrentTripsView: View  {
             if userModel.trips.count == 0 {
                 NoTripPlanned()
             }
-            
-            ForEach(0..<userModel.trips.count, id: \.self) { index in
-                
-                
-                ZStack{
-                    RoundedRectangle(cornerRadius: 20)
-                        .fill(Color.gray.opacity(0.2))
-                        .frame(width: UIScreen.main.bounds.width * 0.8, height: 120)
-                        .shadow(color: .black, radius:2, x: 0, y: 3)  // << no offset by x
-                    HStack{
-                        Image(systemName: "bicycle")
-                            .resizable()
-                            .frame(width: 60, height: 60)
-                            .clipShape(Circle())
-                            .overlay(Circle().stroke(Color.black, lineWidth: 1))
-                            
-                        Spacer()
-                        VStack (alignment: .leading) {
-                            Text(userModel.trips[index].name)
-                                .font(.custom("Poppins-Bold", size: 12))
-                            Text("\(userModel.trips[index].city), \(userModel.trips[index].state)")
-                                .font(.custom("Poppins-Regular", size: 12))
-                                .padding(.bottom, 5)
-                            
-                            Text("\(getDateString(date: userModel.trips[index].start)) - \(getDateString(date: userModel.trips[index].end))")
-                                .font(.custom("Poppins-Regular", size: 12))
-                        }
-                        .padding(10)
-                        .frame(maxWidth: UIScreen.main.bounds.width * 0.60)
-
-                        Button{
-                            
-                        } label: {
-                            Image(systemName: "chevron.right")
-                                .font(.title2)
-                                .padding(10)
-                                .background(Color("Dark Blue"))
-                                .foregroundStyle(.white)
+            ScrollView {
+                ForEach(0..<userModel.trips.count, id: \.self) { index in
+                    
+                    
+                    ZStack{
+                        RoundedRectangle(cornerRadius: 20)
+                            .fill(Color.gray.opacity(0.2))
+                            .frame(width: UIScreen.main.bounds.width * 0.8, height: 120)
+                            .shadow(color: .black, radius:2, x: 0, y: 3)  // << no offset by x
+                        HStack{
+                            Image(systemName: "bicycle")
+                                .resizable()
+                                .frame(width: 60, height: 60)
                                 .clipShape(Circle())
+                                .overlay(Circle().stroke(Color.black, lineWidth: 1))
+                                
+                            Spacer()
+                            VStack (alignment: .leading) {
+                                Text(userModel.trips[index].name)
+                                    .font(.custom("Poppins-Bold", size: 12))
+                                Text("\(userModel.trips[index].city), \(userModel.trips[index].state)")
+                                    .font(.custom("Poppins-Regular", size: 12))
+                                    .padding(.bottom, 5)
+                                
+                                Text("\(getDateString(date: userModel.trips[index].start)) - \(getDateString(date: userModel.trips[index].end))")
+                                    .font(.custom("Poppins-Regular", size: 12))
+                            }
+                            .padding(10)
+                            .frame(maxWidth: UIScreen.main.bounds.width * 0.60)
+
+                            Button{
+                                
+                            } label: {
+                                Image(systemName: "chevron.right")
+                                    .font(.title2)
+                                    .padding(10)
+                                    .background(Color("Dark Blue"))
+                                    .foregroundStyle(.white)
+                                    .clipShape(Circle())
+                            }
+                            
                         }
-                        
+                        .padding(35)
+                        .frame(width: UIScreen.main.bounds.width * 0.8, height: 120)
+                        .background(Color.white)
+                        .cornerRadius(20)
+                        .opacity(1)
                     }
-                    .padding(35)
-                    .frame(width: UIScreen.main.bounds.width * 0.8, height: 120)
-                    .background(Color.white)
-                    .cornerRadius(20)
-                    .opacity(1)
+                    .padding(.bottom, 20)
+                    
                 }
-                .padding(.bottom, 20)
             }
 
         }
