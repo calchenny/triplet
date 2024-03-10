@@ -49,7 +49,7 @@ struct ItineraryView: View {
             return "fork.knife.circle"
         case "Attraction":
             return "star"
-        case "Hotel":
+        case "House":
             return "house"
         case "Transit":
             return "bus"
