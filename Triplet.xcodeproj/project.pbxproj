@@ -117,7 +117,7 @@
 		89BDCE732B8FE26500C69895 /* Poppins-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Bold.ttf"; sourceTree = "<group>"; };
 		89BDCE742B8FE28A00C69895 /* Poppins-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Medium.ttf"; sourceTree = "<group>"; };
 		92B3F97C2B9B10A600819D0E /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
-		92B415692B9AD5AA007491EF /* Triplet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Triplet.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		92B415692B9AD5AA007491EF /* Triplet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = Triplet.app; path = "/Users/danderekma/Documents/ECS 189E/triplet/build/Debug-iphoneos/Triplet.app"; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -245,7 +245,6 @@
 			isa = PBXGroup;
 			children = (
 				8935A4242B7F496200F62185 /* Triplet */,
-				92B415692B9AD5AA007491EF /* Triplet.app */,
 			);
 			sourceTree = "<group>";
 		};
@@ -257,8 +256,8 @@
 				128284142B81FAE500E3E084 /* ViewModels */,
 				128284132B81FADE00E3E084 /* Views */,
 				8935A4252B7F496200F62185 /* TripletApp.swift */,
-				89031F572B80012800282C88 /* Info.plist */,
 				129457DC2B9D1A1E005EFA4D /* GoogleService-Info.plist */,
+				89031F572B80012800282C88 /* Info.plist */,
 				8935A4292B7F496300F62185 /* Assets.xcassets */,
 				89B9FFC52B9ABF4D005C530A /* Launch Screen.storyboard */,
 				8935A42B2B7F496300F62185 /* Preview Content */,
