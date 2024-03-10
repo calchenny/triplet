@@ -20,7 +20,9 @@ struct NewTripView: View {
                                 numGuests: 0,
                                 notes: [],
                                 events: [],
-                                expenses: [])
+                                expenses: [],
+                                city: "",
+                                state: "")
     @State var guests: Int = 0
     @State var startDate: Date = Date.distantPast
     @State var endDate: Date = Date.distantPast
@@ -38,6 +40,14 @@ struct NewTripView: View {
             return
         }
         
+        guard let city = destinationViewModel.city else {
+            return
+        }
+        
+        guard let state = destinationViewModel.state else {
+            return
+        }
+        
         trip = Trip(owner: "user",
                     name: tripName,
                     start: startDate,
@@ -46,7 +56,9 @@ struct NewTripView: View {
                     numGuests: guests,
                     notes: [],
                     events: [],
-                    expenses: [])
+                    expenses: [],
+                    city: city,
+                    state: state)
         do {
             let ref = try Firestore.firestore().collection("trips").addDocument(from: trip)
             print("Added to Firestore")
@@ -266,9 +278,9 @@ struct NewTripView: View {
             .padding(.vertical)
             .tint(.darkBlue)
             .navigationDestination(isPresented: $navigateToOverview) {
-                OverviewView()
-                    .environmentObject(viewModel)
-                    .navigationBarBackButtonHidden(true)
+//                OverviewView()
+//                    .environmentObject(viewModel)
+//                    .navigationBarBackButtonHidden(true)
             }
 
         }
