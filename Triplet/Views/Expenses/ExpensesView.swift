@@ -89,7 +89,7 @@ struct ExpensesView: View {
                     Text("Expenses")
                         .font(.title)
                         .bold()
-                        .foregroundColor(.indigo)
+                        .foregroundColor(Color.darkBlue)
                     .padding()
                     Text("$\(currentTotal, specifier: "%.2f")")
                         .foregroundColor(.black.opacity(0.8))
@@ -100,7 +100,7 @@ struct ExpensesView: View {
                         .frame(minWidth: 0, maxWidth: 200)
 
                     Text("Budget: $\(budget, specifier: "%.2f")")
-                        .foregroundColor(.indigo)
+                        .foregroundColor(Color.darkBlue)
                         .padding(.bottom, 15)
                 }
                 .onChange(of: expenses) {
@@ -177,25 +177,11 @@ struct ExpensesView: View {
                         Text("No expenses added yet.")
                             .font(.title3)
                             .bold()
-                            .foregroundColor(.indigo)
+                            .foregroundColor(Color.darkBlue)
                         Spacer()
                     }
-                    Button() {
-                        print("button pressed")
-                        showNewExpenseSheet.toggle()
-                    } label: {
-                        Text("+ Add Expense")
-                            .padding(.horizontal, 50)
-                            .padding(.vertical, 15)
-                            .foregroundColor(.white)
-                            .background(.indigo)
-                            .cornerRadius(100)
-                            .bold()
+                    
 
-                    }
-                    .sheet(isPresented: $showNewExpenseSheet) {
-                        AddNewExpenseView(expenses: $expenses)
-                    }
                 } // VStack closing bracket
                 .frame(maxWidth: .infinity)
                 .padding(.vertical, 20)
@@ -205,6 +191,22 @@ struct ExpensesView: View {
             .collapseProgress($expenseModel.collapseProgress)
             .setHeaderSnapMode(.immediately)
             .ignoresSafeArea()
+        }
+        Button() {
+            print("button pressed")
+            showNewExpenseSheet.toggle()
+        } label: {
+            Text("+ Add Expense")
+                .padding(.horizontal, 50)
+                .padding(.vertical, 15)
+                .foregroundColor(.white)
+                .background(Color.darkBlue)
+                .cornerRadius(100)
+                .bold()
+
+        }
+        .sheet(isPresented: $showNewExpenseSheet) {
+            AddNewExpenseView(expenses: $expenses)
         }
     } // body closing bracket
 } // view closing bracket

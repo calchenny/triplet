@@ -31,12 +31,12 @@ struct AddNewExpenseView: View {
             Text("New Expense")
                 .font(.largeTitle)
                 .bold()
-                .foregroundColor(.indigo)
+                .foregroundColor(Color.darkBlue)
                 .padding(.top, 30)
             
             Text("Expense Name")
                 .bold()
-                .foregroundColor(.indigo)
+                .foregroundColor(Color.darkBlue)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding()
             TextField("Hotel, Uber, Dinner, Etc.", text: $name)
@@ -50,7 +50,7 @@ struct AddNewExpenseView: View {
                 .padding(.horizontal, 20)
             Text("Cost")
                 .bold()
-                .foregroundColor(.indigo)
+                .foregroundColor(Color.darkBlue)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding()
             HStack {
@@ -72,7 +72,7 @@ struct AddNewExpenseView: View {
             .padding(.leading, 20)
             Text("Category")
                 .bold()
-                .foregroundColor(.indigo)
+                .foregroundColor(Color.darkBlue)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding()
             HStack {
@@ -93,7 +93,7 @@ struct AddNewExpenseView: View {
 
             Text("Date")
                 .bold()
-                .foregroundColor(.indigo)
+                .foregroundColor(Color.darkBlue)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding()
             
@@ -146,16 +146,13 @@ struct AddNewExpenseView: View {
                     .padding(.horizontal, 50)
                     .padding(.vertical, 15)
                     .foregroundColor(.white)
-                    .background(.indigo)
+                    .background(Color.darkBlue)
                     .cornerRadius(100)
                     .bold()
                 
             }
             
         } // VStack closing
-        .onTapGesture {
-            self.hideKeyboard() // hidekeyboard when the user taps anywhere on the Vstack if it is open
-            }
     }
 }
 

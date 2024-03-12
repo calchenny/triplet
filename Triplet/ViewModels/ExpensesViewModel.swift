@@ -21,5 +21,28 @@ class ExpensesViewModel: ObservableObject {
 
     let minHeight: CGFloat = 100.0
     let maxHeight: CGFloat = 250.0
+    
+    func addExpenseToFirestore(_ expense: Expense) {
+        do {
+            let eventReference = try Firestore.firestore().collection("trips").document(tripId).collection("expenses").addDocument(from: expense)
+            print("Event added to Firestore with ID: \(eventReference.documentID)")
+        } catch {
+            print("Error adding event to Firestore: \(error.localizedDescription)")
+        }
+    }
+    
+    func addExpense(name: String, date: Date, category: String, cost: Double) {
+        let newExpense = Expense(
+            id: nil,
+            name: name,
+            date: date,
+            category: category,
+            cost: cost
+            )
+        
+        // Add the new event to Firestore
+        addExpenseToFirestore(newExpense)
+        
+    }
 
 }
