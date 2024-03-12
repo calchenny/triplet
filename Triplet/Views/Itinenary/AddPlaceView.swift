@@ -4,7 +4,6 @@
 //
 //  Created by Andy Lam on 2/28/24.
 //
-
 import SwiftUI
 import MapKit
 import FirebaseFirestore
@@ -12,8 +11,8 @@ import FirebaseFirestore
 struct AddPlaceView: View {
 
     @EnvironmentObject var itineraryModel: ItineraryViewModel
-    @State private var startDate = Date.now
-    @State private var endDate = Date.now
+    @State private var startDate: Date = Date()
+    @State private var endDate: Date = Date()
     @State private var category: EventType = .attraction
     @State private var selectedLandmark: LandmarkViewModel?
     @Environment(\.presentationMode) var presentationMode
@@ -21,8 +20,6 @@ struct AddPlaceView: View {
     @State private var search:String = ""
     
     @State private var landmarks: [LandmarkViewModel] = [LandmarkViewModel]()
-    
-    @ObservedObject var locationManager = LocationManager()
     
     private func getNearByLandmarks() {
         let request = MKLocalSearch.Request()
@@ -100,7 +97,6 @@ struct AddPlaceView: View {
                             }
                              
                             itineraryModel.addEvent(name: checkLandMark.name, location: GeoPoint(latitude: checkLandMark.coordinate.latitude, longitude: checkLandMark.coordinate.longitude),type: category, category: nil, start: startDate, address: checkLandMark.title, end: endDate)
-                            itineraryModel.fetchEvents()
                             self.presentationMode.wrappedValue.dismiss()
                         }
                     }

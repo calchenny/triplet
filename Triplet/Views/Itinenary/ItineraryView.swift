@@ -16,6 +16,8 @@ import FirebaseFirestore
 struct ItineraryView: View {
     
     @StateObject var itineraryModel = ItineraryViewModel()
+    @EnvironmentObject var userModel: UserModel
+
     @State var searchText: String = ""
     
     @State var showAddEventSheet: Bool = false
@@ -193,6 +195,7 @@ struct ItineraryView: View {
                                         .padding()
                                         Spacer()
                                         Button {
+                                            itineraryModel.deleteEventFromFirestore(eventID: event.id ?? "")
                                         } label: {
                                             Image(systemName: "trash")
                                                 .font(.title2)
@@ -219,7 +222,10 @@ struct ItineraryView: View {
             .setHeaderSnapMode(.immediately)
             .ignoresSafeArea()
             .onAppear {
-                itineraryModel.fetchEvents()
+                itineraryModel.subscribe()
+            }
+            .onDisappear {
+                itineraryModel.unsubscribe()
             }
         }
     }
