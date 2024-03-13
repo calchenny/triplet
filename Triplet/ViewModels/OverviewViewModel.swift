@@ -13,6 +13,7 @@ class OverviewViewModel: ObservableObject {
     @Published var trip: Trip?
     @Published var notes: [Note] = []
     @Published var housing: [Event] = []
+    @Published var food: [Event] = []
     
     @Published var cameraPosition: MapCameraPosition?
     @Published var toggleStates = ToggleStates()
@@ -43,10 +44,29 @@ class OverviewViewModel: ObservableObject {
             return
         }
         do {
-            try Firestore.firestore().collection("trips/\(tripId)/notes").addDocument(from: Note(title: newNoteTitle))
+            try db.collection("trips/\(tripId)/notes").addDocument(from: Note(title: newNoteTitle))
             newNoteTitle = ""
         } catch {
             print(error)
+        }
+    }
+    
+    func updateNote(noteId: String, content: String) {
+        guard let trip else {
+            print("Missing trip")
+            return
+        }
+        guard let tripId = trip.id else {
+            print("Missing tripId")
+            return
+        }
+        let noteRef = db.document("trips/\(tripId)/notes/\(noteId)")
+        noteRef.updateData(["content": content]) { error in
+            if let error {
+                print(error.localizedDescription)
+            } else {
+                print("Updated note")
+            }
         }
     }
 
@@ -82,8 +102,10 @@ class OverviewViewModel: ObservableObject {
                     print("No documents")
                     return
                 }
-                self.notes = documents.compactMap { queryDocumentSnapshot in
-                    try? queryDocumentSnapshot.data(as: Note.self)
+                withAnimation {
+                    self.notes = documents.compactMap { queryDocumentSnapshot in
+                        try? queryDocumentSnapshot.data(as: Note.self)
+                    }
                 }
             })
             
@@ -93,8 +115,23 @@ class OverviewViewModel: ObservableObject {
                     print("No documents")
                     return
                 }
-                self.housing = documents.compactMap { queryDocumentSnapshot in
-                    try? queryDocumentSnapshot.data(as: Event.self)
+                withAnimation {
+                    self.housing = documents.compactMap { queryDocumentSnapshot in
+                        try? queryDocumentSnapshot.data(as: Event.self)
+                    }
+                }
+            })
+            
+            let foodQuery = db.collection("trips/\(tripId)/events").whereField("type", isEqualTo: EventType.food.rawValue)
+            listenerRegistrations.append(foodQuery.addSnapshotListener { (querySnapshot, error) in
+                guard let documents = querySnapshot?.documents else {
+                    print("No documents")
+                    return
+                }
+                withAnimation {
+                    self.food = documents.compactMap { queryDocumentSnapshot in
+                        try? queryDocumentSnapshot.data(as: Event.self)
+                    }
                 }
             })
         }

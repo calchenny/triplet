@@ -37,12 +37,12 @@ struct OverviewView: View {
         return max((1 - viewModel.collapseProgress + 0.5 * viewModel.collapseProgress) * maxSize, minSize)
     }
     
-    func getDateString(date: Date?) -> String {
+    func getDateString(date: Date?, includeTime: Bool = false) -> String {
         guard let date else {
             return ""
         }
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MM/dd"
+        dateFormatter.dateFormat = includeTime ? "MM/dd, h:mm a" : "MM/dd"
         return dateFormatter.string(from: date)
     }
 
@@ -101,9 +101,12 @@ struct OverviewView: View {
                         ForEach(viewModel.notes, id: \.id) { note in
                             NavigationLink {
                                 NoteView(note: note)
+                                    .environmentObject(viewModel)
                             } label: {
                                 HStack {
                                     Text(note.title)
+                                        .font(.custom("Poppins-Regular", size: 16))
+                                        .foregroundStyle(.black)
                                     Spacer()
                                     Image(systemName: "chevron.right")
                                         .foregroundStyle(.tertiary)
@@ -146,19 +149,38 @@ struct OverviewView: View {
                 Spacer()
                     .frame(height: 15)
                 DisclosureGroup(isExpanded: $viewModel.toggleStates.housing) {
-                    Button {
-                        viewModel.showHousingPopup.toggle()
-                    } label: {
-                        HStack {
-                            Image(systemName: "plus")
-                            Text("Add another lodging")
-                                .font(.custom("Poppins-Medium", size: 16))
-                            Spacer()
+                    VStack {
+                        ForEach(viewModel.housing, id: \.id) { housing in
+                            HStack {
+                                Image(systemName: "house")
+                                    .foregroundStyle(Color("Dark Blue"))
+                                    .font(.title2)
+                                Spacer()
+                                    .frame(maxWidth: 20)
+                                VStack(alignment: .leading) {
+                                    Text(housing.name)
+                                        .font(.custom("Poppins-Medium", size: 16))
+                                    Text(housing.address)
+                                        .font(.custom("Poppins-Regular", size: 12))
+                                        .foregroundStyle(.secondary)
+                                }
+                                Spacer()
+                            }
+                            .padding()
                         }
-                        .padding(.bottom, 5)
-                        .tint(.gray)
+                        Button {
+                            viewModel.showHousingPopup.toggle()
+                        } label: {
+                            HStack {
+                                Image(systemName: "plus")
+                                Text("Add another lodging")
+                                    .font(.custom("Poppins-Medium", size: 16))
+                                Spacer()
+                            }
+                            .padding(.bottom, 5)
+                            .tint(.gray)
+                        }
                     }
-                    .padding(.top)
                 } label: {
                     Text("Hotel & Lodging")
                         .font(.custom("Poppins-Bold", size: 24))
@@ -185,6 +207,36 @@ struct OverviewView: View {
                     }
                     .padding(.top)
                     DisclosureGroup(isExpanded: $viewModel.toggleStates.food.breakfast) {
+                        let breakfast = viewModel.food.compactMap { food -> Event? in
+                            guard let category = food.category else {
+                                return nil
+                            }
+                            guard category == FoodCategory.breakfast else {
+                                return nil
+                            }
+                            return food
+                        }
+                        ForEach(breakfast, id: \.id) { event in
+                            HStack {
+                                Image(systemName: "cup.and.saucer")
+                                    .foregroundStyle(Color("Dark Blue"))
+                                    .font(.title2)
+                                Spacer()
+                                    .frame(maxWidth: 20)
+                                VStack(alignment: .leading) {
+                                    Text(event.name)
+                                        .font(.custom("Poppins-Medium", size: 16))
+                                    Text("\(getDateString(date: event.start, includeTime: true)) - \(getDateString(date: event.end, includeTime: true))")
+                                        .font(.custom("Poppins-Regular", size: 12))
+                                        .foregroundStyle(.secondary)
+                                    Text(event.address)
+                                        .font(.custom("Poppins-Regular", size: 12))
+                                        .foregroundStyle(.secondary)
+                                }
+                                Spacer()
+                            }
+                            .padding(.top)
+                        }
                         
                     } label: {
                         Text("Breakfast/Brunch")
@@ -192,14 +244,72 @@ struct OverviewView: View {
                     }
                     .padding([.top, .leading, .trailing])
                     DisclosureGroup(isExpanded: $viewModel.toggleStates.food.lunch) {
-                        
+                        let lunch = viewModel.food.compactMap { food -> Event? in
+                            guard let category = food.category else {
+                                return nil
+                            }
+                            guard category == FoodCategory.lunch else {
+                                return nil
+                            }
+                            return food
+                        }
+                        ForEach(lunch, id: \.id) { event in
+                            HStack {
+                                Image(systemName: "takeoutbag.and.cup.and.straw")
+                                    .foregroundStyle(Color("Dark Blue"))
+                                    .font(.title2)
+                                Spacer()
+                                    .frame(maxWidth: 20)
+                                VStack(alignment: .leading) {
+                                    Text(event.name)
+                                        .font(.custom("Poppins-Medium", size: 16))
+                                    Text("\(getDateString(date: event.start, includeTime: true)) - \(getDateString(date: event.end, includeTime: true))")
+                                        .font(.custom("Poppins-Regular", size: 12))
+                                        .foregroundStyle(.secondary)
+                                    Text(event.address)
+                                        .font(.custom("Poppins-Regular", size: 12))
+                                        .foregroundStyle(.secondary)
+                                }
+                                Spacer()
+                            }
+                            .padding(.top)
+                        }
                     } label: {
                         Text("Lunch")
                             .font(.custom("Poppins-Bold", size: 20))
                     }
                     .padding([.top, .leading, .trailing])
                     DisclosureGroup(isExpanded: $viewModel.toggleStates.food.dinner) {
-                        
+                        let dinner = viewModel.food.compactMap { food -> Event? in
+                            guard let category = food.category else {
+                                return nil
+                            }
+                            guard category == FoodCategory.dinner else {
+                                return nil
+                            }
+                            return food
+                        }
+                        ForEach(dinner, id: \.id) { event in
+                            HStack {
+                                Image(systemName: "wineglass")
+                                    .foregroundStyle(Color("Dark Blue"))
+                                    .font(.title2)
+                                Spacer()
+                                    .frame(maxWidth: 20)
+                                VStack(alignment: .leading) {
+                                    Text(event.name)
+                                        .font(.custom("Poppins-Medium", size: 16))
+                                    Text("\(getDateString(date: event.start, includeTime: true)) - \(getDateString(date: event.end, includeTime: true))")
+                                        .font(.custom("Poppins-Regular", size: 12))
+                                        .foregroundStyle(.secondary)
+                                    Text(event.address)
+                                        .font(.custom("Poppins-Regular", size: 12))
+                                        .foregroundStyle(.secondary)
+                                }
+                                Spacer()
+                            }
+                            .padding(.top)
+                        }
                     } label: {
                         Text("Dinner")
                             .font(.custom("Poppins-Bold", size: 20))
@@ -254,4 +364,8 @@ struct OverviewView: View {
             }
         }
     }
+}
+
+#Preview {
+    OverviewView(tripId: "bXQdm19F9v2DbjS4VPyi")
 }

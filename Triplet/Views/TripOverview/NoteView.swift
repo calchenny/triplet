@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct NoteView: View {
+    @EnvironmentObject var overviewViewModel: OverviewViewModel
     var note: Note
     
     @State var title: String = ""
@@ -32,7 +33,9 @@ struct NoteView: View {
         .toolbar {
             ToolbarItem {
                 Button {
-                    
+                    if let noteId = note.id {
+                        overviewViewModel.updateNote(noteId: noteId, content: content)
+                    }
                 } label: {
                     Text("Save")
                 }
