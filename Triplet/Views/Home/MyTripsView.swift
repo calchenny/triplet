@@ -127,28 +127,23 @@ struct CurrentTripsView: View  {
                 .padding()
             ScrollView {
                 ForEach(0..<userModel.currentTrips.count, id: \.self) { index in
-                    HStack{
-                        Image(systemName: "bicycle")
-                            .resizable()
-                            .frame(width: 60, height: 60)
-                            .clipShape(Circle())
-                            .overlay(Circle().stroke(Color.black, lineWidth: 1))
-                        
-                        Spacer()
-                        VStack (alignment: .leading) {
-                            Text(userModel.currentTrips[index].name)
-                                .font(.custom("Poppins-Bold", size: 12))
-                            Text("\(userModel.currentTrips[index].city), \(userModel.currentTrips[index].state)")
-                                .font(.custom("Poppins-Regular", size: 12))
-                                .padding(.bottom, 5)
+
+                    VStack (alignment: .leading) {
+                        Text(userModel.currentTrips[index].name)
+                            .font(.custom("Poppins-Bold", size: 12))
+                            .frame(maxWidth: .infinity, alignment: .leading)
                             
-                            Text("\(getDateString(date: userModel.currentTrips[index].start)) - \(getDateString(date: userModel.currentTrips[index].end))")
-                                .font(.custom("Poppins-Regular", size: 12))
-                        }
-                        .padding(10)
-                        .frame(maxWidth: UIScreen.main.bounds.width * 0.60)
+                        Text("\(userModel.currentTrips[index].city), \(userModel.currentTrips[index].state)")
+                            .font(.custom("Poppins-Regular", size: 12))
+                            .padding(.bottom, 5)
+                            
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                        Text("\(getDateString(date: userModel.currentTrips[index].start)) - \(getDateString(date: userModel.currentTrips[index].end))")
+                            .font(.custom("Poppins-Regular", size: 12))
+                            .frame(maxWidth: .infinity, alignment: .leading)
                     }
-                    .padding(35)
+                    .padding(25)
+                    .padding(.leading, 25)
                     .frame(width: UIScreen.main.bounds.width * 0.8, height: 120)
                     .background(Color.white)
                     .cornerRadius(20)
@@ -198,13 +193,13 @@ struct PastTripsView: View {
             ScrollView {
                 ForEach(0..<userModel.pastTrips.count, id: \.self) { index in
                     HStack{
-                        Image(systemName: "bicycle")
-                            .resizable()
-                            .frame(width: 60, height: 60)
-                            .clipShape(Circle())
-                            .overlay(Circle().stroke(Color.black, lineWidth: 1))
-                        
-                        Spacer()
+//                        Image(systemName: "bicycle")
+//                            .resizable()
+//                            .frame(width: 60, height: 60)
+//                            .clipShape(Circle())
+//                            .overlay(Circle().stroke(Color.black, lineWidth: 1))
+//                        
+//                        Spacer()
                         VStack (alignment: .leading) {
                             Text(userModel.pastTrips[index].name)
                                 .font(.custom("Poppins-Bold", size: 12))
@@ -215,8 +210,8 @@ struct PastTripsView: View {
                             Text("\(getDateString(date: userModel.pastTrips[index].start)) - \(getDateString(date: userModel.pastTrips[index].end))")
                                 .font(.custom("Poppins-Regular", size: 12))
                         }
-                        .padding(10)
-                        .frame(maxWidth: UIScreen.main.bounds.width * 0.60)
+//                        .padding(10)
+//                        .frame(maxWidth: UIScreen.main.bounds.width * 0.8)
                     }
                     .padding(35)
                     .frame(width: UIScreen.main.bounds.width * 0.8, height: 120)
