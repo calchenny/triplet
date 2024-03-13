@@ -43,8 +43,8 @@ struct AddPlaceView: View {
     
     let dateRange: ClosedRange<Date> = {
         let calendar = Calendar.current
-        let startComponents = DateComponents(year: 2024, month: 10, day: 20)
-        let endComponents = DateComponents(year: 2024, month: 10, day:25)
+        let startComponents = DateComponents(year: 2024, month: 3, day: 13)
+        let endComponents = DateComponents(year: 2024, month: 3, day:17)
         return calendar.date(from:startComponents)!
             ...
             calendar.date(from:endComponents)!

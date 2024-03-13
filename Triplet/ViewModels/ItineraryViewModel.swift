@@ -12,7 +12,7 @@ import MapKit
 import FirebaseFirestore
 
 class ItineraryViewModel: ObservableObject {
-    var tripId: String = "Placeholder tripId"
+    var tripId: String = "Placeholder tripIds"
     @Published var events: [Event] = []
 //    @Published var trip: Trip
     

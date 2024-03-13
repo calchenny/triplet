@@ -25,9 +25,10 @@ struct TripletApp: App {
     
     var body: some Scene {
         WindowGroup {
-            RootView()
-                .environmentObject(LoginViewModel())
-                .environmentObject(UserModel())
+//            RootView()
+//                .environmentObject(LoginViewModel())
+//                .environmentObject(UserModel())
+            ItineraryView()
         }
     }
 }

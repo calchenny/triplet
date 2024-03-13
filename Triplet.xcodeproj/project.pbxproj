@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		128284342B81FCCD00E3E084 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 128284332B81FCCD00E3E084 /* LoginViewModel.swift */; };
 		129457E62BA11B1D005EFA4D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 129457E52BA11B1D005EFA4D /* GoogleService-Info.plist */; };
+		129457E82BA18719005EFA4D /* DayOfView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 129457E72BA18719005EFA4D /* DayOfView.swift */; };
 		24246BE82B97ED690028DAAF /* ItineraryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24246BD32B97ED690028DAAF /* ItineraryView.swift */; };
 		24246BE92B97ED690028DAAF /* AddPlaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24246BD42B97ED690028DAAF /* AddPlaceView.swift */; };
 		24246BEA2B97ED690028DAAF /* NoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24246BD62B97ED690028DAAF /* NoteView.swift */; };
@@ -81,6 +82,7 @@
 		128284332B81FCCD00E3E084 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		129457E42BA11B0A005EFA4D /* Triplet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Triplet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		129457E52BA11B1D005EFA4D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		129457E72BA18719005EFA4D /* DayOfView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayOfView.swift; sourceTree = "<group>"; };
 		24246BD32B97ED690028DAAF /* ItineraryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItineraryView.swift; sourceTree = "<group>"; };
 		24246BD42B97ED690028DAAF /* AddPlaceView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddPlaceView.swift; sourceTree = "<group>"; };
 		24246BD62B97ED690028DAAF /* NoteView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoteView.swift; sourceTree = "<group>"; };
@@ -194,6 +196,7 @@
 			children = (
 				24246BD32B97ED690028DAAF /* ItineraryView.swift */,
 				24246BD42B97ED690028DAAF /* AddPlaceView.swift */,
+				129457E72BA18719005EFA4D /* DayOfView.swift */,
 			);
 			path = Itinenary;
 			sourceTree = "<group>";
@@ -440,6 +443,7 @@
 				128284342B81FCCD00E3E084 /* LoginViewModel.swift in Sources */,
 				24246BF42B97ED690028DAAF /* MyTripsView.swift in Sources */,
 				24246BEA2B97ED690028DAAF /* NoteView.swift in Sources */,
+				129457E82BA18719005EFA4D /* DayOfView.swift in Sources */,
 				92B3F97D2B9B10A600819D0E /* LoadingView.swift in Sources */,
 				24246BEB2B97ED690028DAAF /* FoodPopupView.swift in Sources */,
 				89BDCE702B8FB45600C69895 /* LocationManager.swift in Sources */,
