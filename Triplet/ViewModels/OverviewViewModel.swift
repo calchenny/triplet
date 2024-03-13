@@ -13,6 +13,7 @@ class OverviewViewModel: ObservableObject {
     @Published var trip: Trip?
     @Published var notes: [Note] = []
     @Published var housing: [Event] = []
+    @Published var food: [Event] = []
     
     @Published var cameraPosition: MapCameraPosition?
     @Published var toggleStates = ToggleStates()
@@ -116,6 +117,19 @@ class OverviewViewModel: ObservableObject {
                 }
                 withAnimation {
                     self.housing = documents.compactMap { queryDocumentSnapshot in
+                        try? queryDocumentSnapshot.data(as: Event.self)
+                    }
+                }
+            })
+            
+            let foodQuery = db.collection("trips/\(tripId)/events").whereField("type", isEqualTo: EventType.food.rawValue)
+            listenerRegistrations.append(foodQuery.addSnapshotListener { (querySnapshot, error) in
+                guard let documents = querySnapshot?.documents else {
+                    print("No documents")
+                    return
+                }
+                withAnimation {
+                    self.food = documents.compactMap { queryDocumentSnapshot in
                         try? queryDocumentSnapshot.data(as: Event.self)
                     }
                 }
