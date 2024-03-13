@@ -7,14 +7,16 @@
 
 import SwiftUI
 import MapKit
+import Firebase
 import ScalingHeaderScrollView
 import PopupView
 
 struct OverviewView: View {
-    @StateObject var viewModel: OverviewViewModel
+    @StateObject var viewModel = OverviewViewModel()
+    var tripId: String
     
-    init(viewModel: OverviewViewModel) {
-        _viewModel = StateObject(wrappedValue: viewModel)
+    init(tripId: String) {
+        self.tripId = tripId
     }
     
     func getHeaderWidth(screenWidth: CGFloat) -> CGFloat {
@@ -49,18 +51,28 @@ struct OverviewView: View {
             ScalingHeaderScrollView {
                 ZStack(alignment: .topLeading) {
                     ZStack(alignment: .bottom) {
-                        Map(position: $viewModel.cameraPosition)
+                        Map(position: Binding(
+                            get: {
+                                guard let cameraPosition = viewModel.cameraPosition else {
+                                    return MapCameraPosition.region(MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 47.608013, longitude: -122.335167), span: MKCoordinateSpan(latitudeDelta: 0.5, longitudeDelta: 0.5)))
+                                }
+                                return cameraPosition
+                            },
+                            set: { viewModel.cameraPosition = $0 }
+                        ))
                         RoundedRectangle(cornerRadius: 15)
                             .frame(width: getHeaderWidth(screenWidth: UIScreen.main.bounds.width), height: getHeaderHeight())
                             .foregroundStyle(Color("Even Lighter Blue"))
                             .overlay(
                                 VStack {
-                                    Text(viewModel.trip.name)
-                                        .font(.custom("Poppins-Bold", size: getHeaderTitleSize()))
-                                        .foregroundStyle(Color("Dark Blue"))
-                                    Text("Seattle, WA | \(getDateString(date: viewModel.trip.start)) - \(getDateString(date: viewModel.trip.end))")
-                                        .font(.custom("Poppins-Medium", size: 13))
-                                        .foregroundStyle(Color("Dark Blue"))
+                                    if let trip = viewModel.trip {
+                                        Text(trip.name)
+                                            .font(.custom("Poppins-Bold", size: getHeaderTitleSize()))
+                                            .foregroundStyle(Color("Dark Blue"))
+                                        Text("\(trip.city), \(trip.state) | \(getDateString(date: trip.start)) - \(getDateString(date: trip.end))")
+                                            .font(.custom("Poppins-Medium", size: 13))
+                                            .foregroundStyle(Color("Dark Blue"))
+                                    }
                                 }
                             )
                             .padding(.bottom, 30)
@@ -235,7 +247,7 @@ struct OverviewView: View {
                     .backgroundColor(.black.opacity(0.25))
             }
             .onAppear {
-                viewModel.subscribe()
+                viewModel.subscribe(tripId: tripId)
             }
             .onDisappear {
                 viewModel.unsubscribe()
