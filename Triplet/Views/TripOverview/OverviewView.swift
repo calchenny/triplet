@@ -77,6 +77,8 @@ struct OverviewView: View {
                         .padding(.bottom, 30)
                 }
                 NavigationLink {
+                    HomeView()
+                        .navigationBarBackButtonHidden()
                 } label: {
                     Image(systemName: "house")
                         .font(.title2)
