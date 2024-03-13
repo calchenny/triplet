@@ -48,9 +48,6 @@ struct NewTripView: View {
                     end: endDate,
                     destination: GeoPoint.init(latitude: latitude, longitude: longitude),
                     numGuests: guests,
-                    notes: [],
-                    events: [],
-                    expenses: [],
                     city: city,
                     state: state)
         do {

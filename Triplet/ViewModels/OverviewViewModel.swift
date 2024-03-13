@@ -43,10 +43,29 @@ class OverviewViewModel: ObservableObject {
             return
         }
         do {
-            try Firestore.firestore().collection("trips/\(tripId)/notes").addDocument(from: Note(title: newNoteTitle))
+            try db.collection("trips/\(tripId)/notes").addDocument(from: Note(title: newNoteTitle))
             newNoteTitle = ""
         } catch {
             print(error)
+        }
+    }
+    
+    func updateNote(noteId: String, content: String) {
+        guard let trip else {
+            print("Missing trip")
+            return
+        }
+        guard let tripId = trip.id else {
+            print("Missing tripId")
+            return
+        }
+        let noteRef = db.document("trips/\(tripId)/notes/\(noteId)")
+        noteRef.updateData(["content": content]) { error in
+            if let error {
+                print(error.localizedDescription)
+            } else {
+                print("Updated note")
+            }
         }
     }
 

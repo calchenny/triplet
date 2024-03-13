@@ -101,6 +101,7 @@ struct OverviewView: View {
                         ForEach(viewModel.notes, id: \.id) { note in
                             NavigationLink {
                                 NoteView(note: note)
+                                    .environmentObject(viewModel)
                             } label: {
                                 HStack {
                                     Text(note.title)
@@ -146,19 +147,33 @@ struct OverviewView: View {
                 Spacer()
                     .frame(height: 15)
                 DisclosureGroup(isExpanded: $viewModel.toggleStates.housing) {
-                    Button {
-                        viewModel.showHousingPopup.toggle()
-                    } label: {
-                        HStack {
-                            Image(systemName: "plus")
-                            Text("Add another lodging")
-                                .font(.custom("Poppins-Medium", size: 16))
-                            Spacer()
+                    VStack {
+                        ForEach(viewModel.housing, id: \.id) { housing in
+                            HStack {
+                                Image(systemName: "house")
+                                    .foregroundStyle(.tertiary)
+                                Spacer()
+                                VStack {
+                                    Text(housing.name)
+                                    Text(housing.address)
+                                }
+                            }
+                            .padding([.leading, .trailing])
                         }
-                        .padding(.bottom, 5)
-                        .tint(.gray)
+                        Button {
+                            viewModel.showHousingPopup.toggle()
+                        } label: {
+                            HStack {
+                                Image(systemName: "plus")
+                                Text("Add another lodging")
+                                    .font(.custom("Poppins-Medium", size: 16))
+                                Spacer()
+                            }
+                            .padding(.bottom, 5)
+                            .tint(.gray)
+                        }
+                        .padding(.top)
                     }
-                    .padding(.top)
                 } label: {
                     Text("Hotel & Lodging")
                         .font(.custom("Poppins-Bold", size: 24))
@@ -254,4 +269,8 @@ struct OverviewView: View {
             }
         }
     }
+}
+
+#Preview {
+    OverviewView(tripId: "bXQdm19F9v2DbjS4VPyi")
 }

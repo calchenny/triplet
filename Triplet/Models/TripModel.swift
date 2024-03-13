@@ -52,7 +52,6 @@ struct Event: Identifiable, Codable {
     var start: Date
     var address: String
     var end: Date
-
 }
 
 struct Expense: Identifiable, Codable, Equatable {
