@@ -16,7 +16,6 @@ struct RootView: View {
                 NavigationStack {
                     LoadingView()
                 }
-                
             } else {
                 NavigationStack {
                     LoginView()

@@ -34,6 +34,7 @@
 		8935A42A2B7F496300F62185 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8935A4292B7F496300F62185 /* Assets.xcassets */; };
 		8935A42D2B7F496300F62185 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8935A42C2B7F496300F62185 /* Preview Assets.xcassets */; };
 		89621B062B915053006C0848 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89621B052B915053006C0848 /* UserModel.swift */; };
+		896980902BA223FA00F3BD16 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8969808F2BA223FA00F3BD16 /* GoogleService-Info.plist */; };
 		89B3F3BA2B8FA7C600D79E5D /* Poppins-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 89B3F3AB2B8FA70100D79E5D /* Poppins-Regular.ttf */; };
 		89B9FFC62B9ABF4D005C530A /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 89B9FFC52B9ABF4D005C530A /* Launch Screen.storyboard */; };
 		89B9FFC92B9ABFA3005C530A /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 89B9FFC82B9ABFA3005C530A /* FirebaseAnalytics */; };
@@ -107,6 +108,7 @@
 		8935A4292B7F496300F62185 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8935A42C2B7F496300F62185 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		89621B052B915053006C0848 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
+		8969808F2BA223FA00F3BD16 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		89B3F3AB2B8FA70100D79E5D /* Poppins-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Regular.ttf"; sourceTree = "<group>"; };
 		89B9FFC52B9ABF4D005C530A /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		89BDCE432B8FAE8E00C69895 /* TripModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripModel.swift; sourceTree = "<group>"; };
@@ -119,6 +121,7 @@
 		89BDCE712B8FB46800C69895 /* LocationSearchViewData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSearchViewData.swift; sourceTree = "<group>"; };
 		89BDCE732B8FE26500C69895 /* Poppins-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Bold.ttf"; sourceTree = "<group>"; };
 		89BDCE742B8FE28A00C69895 /* Poppins-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Medium.ttf"; sourceTree = "<group>"; };
+		89F82A9D2BA232240096F2DE /* Triplet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = Triplet.app; path = "/Users/danderekma/Documents/ECS 189E/triplet/build/Debug-iphoneos/Triplet.app"; sourceTree = "<absolute>"; };
 		92B3F97C2B9B10A600819D0E /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -248,7 +251,6 @@
 			isa = PBXGroup;
 			children = (
 				8935A4242B7F496200F62185 /* Triplet */,
-				129457E42BA11B0A005EFA4D /* Triplet.app */,
 			);
 			sourceTree = "<group>";
 		};
@@ -260,8 +262,8 @@
 				128284142B81FAE500E3E084 /* ViewModels */,
 				128284132B81FADE00E3E084 /* Views */,
 				8935A4252B7F496200F62185 /* TripletApp.swift */,
+				8969808F2BA223FA00F3BD16 /* GoogleService-Info.plist */,
 				89031F572B80012800282C88 /* Info.plist */,
-				129457E52BA11B1D005EFA4D /* GoogleService-Info.plist */,
 				8935A4292B7F496300F62185 /* Assets.xcassets */,
 				89B9FFC52B9ABF4D005C530A /* Launch Screen.storyboard */,
 				8935A42B2B7F496300F62185 /* Preview Content */,
@@ -355,7 +357,7 @@
 				89B9FFFC2B9ABFA3005C530A /* FirebaseStorageCombine-Community */,
 			);
 			productName = Triplet;
-			productReference = 129457E42BA11B0A005EFA4D /* Triplet.app */;
+			productReference = 89F82A9D2BA232240096F2DE /* Triplet.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -403,12 +405,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				89C1396D2B8FF0CB00DEE0CD /* Poppins-Medium.ttf in Resources */,
+				896980902BA223FA00F3BD16 /* GoogleService-Info.plist in Resources */,
 				89C1396E2B8FF0CB00DEE0CD /* Poppins-Bold.ttf in Resources */,
 				8935A42D2B7F496300F62185 /* Preview Assets.xcassets in Resources */,
 				89B3F3BA2B8FA7C600D79E5D /* Poppins-Regular.ttf in Resources */,
 				8935A42A2B7F496300F62185 /* Assets.xcassets in Resources */,
 				89B9FFC62B9ABF4D005C530A /* Launch Screen.storyboard in Resources */,
-				129457E62BA11B1D005EFA4D /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

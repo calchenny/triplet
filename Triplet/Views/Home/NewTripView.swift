@@ -13,17 +13,7 @@ struct NewTripView: View {
     @Environment(\.dismiss) var dismiss
     @EnvironmentObject var userModel: UserModel
     @StateObject var destinationViewModel = DestinationViewModel()
-    @State var trip: Trip = Trip(owner: "user",
-                                name: "",
-                                start: Date(),
-                                end: Date(),
-                                destination: GeoPoint.init(latitude: 0, longitude: 0),
-                                numGuests: 0,
-                                notes: [],
-                                events: [],
-                                expenses: [],
-                                city: "",
-                                state: "")
+    @State var tripId: String?
     @State var guests: Int = 0
     @State var startDate: Date = Date.distantPast
     @State var endDate: Date = Date.distantPast
@@ -49,26 +39,22 @@ struct NewTripView: View {
             return
         }
         guard let uid = userModel.uid else {
-            
             return
         }
         print("uid", uid)
-        trip = Trip(owner: uid,
+        let trip = Trip(owner: uid,
                     name: tripName,
                     start: startDate,
                     end: endDate,
                     destination: GeoPoint.init(latitude: latitude, longitude: longitude),
                     numGuests: guests,
-                    notes: [],
-                    events: [],
-                    expenses: [],
                     city: city,
                     state: state)
         do {
             let ref = try Firestore.firestore().collection("trips").addDocument(from: trip)
             print("Added to Firestore")
             print("Trip ID: ", ref.documentID)
-
+            tripId = ref.documentID
             navigateToOverview = true
         } catch {
             print("Error: ",error)
@@ -283,9 +269,10 @@ struct NewTripView: View {
             .padding(.vertical)
             .tint(.darkBlue)
             .navigationDestination(isPresented: $navigateToOverview) {
-//                OverviewView()
-//                    .environmentObject(viewModel)
-//                    .navigationBarBackButtonHidden(true)
+                if let tripId {
+                    OverviewView(tripId: tripId)
+                        .navigationBarBackButtonHidden(true)
+                }
             }
 
         }
