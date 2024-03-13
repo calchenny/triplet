@@ -79,7 +79,6 @@
 
 /* Begin PBXFileReference section */
 		128284332B81FCCD00E3E084 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
-		129457E42BA11B0A005EFA4D /* Triplet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = Triplet.app; path = "/Users/danderekma/Documents/ECS 189E/triplet/build/Debug-iphoneos/Triplet.app"; sourceTree = "<absolute>"; };
 		24246BD32B97ED690028DAAF /* ItineraryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItineraryView.swift; sourceTree = "<group>"; };
 		24246BD42B97ED690028DAAF /* AddPlaceView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddPlaceView.swift; sourceTree = "<group>"; };
 		24246BD62B97ED690028DAAF /* NoteView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoteView.swift; sourceTree = "<group>"; };
@@ -117,6 +116,7 @@
 		89BDCE712B8FB46800C69895 /* LocationSearchViewData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSearchViewData.swift; sourceTree = "<group>"; };
 		89BDCE732B8FE26500C69895 /* Poppins-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Bold.ttf"; sourceTree = "<group>"; };
 		89BDCE742B8FE28A00C69895 /* Poppins-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Medium.ttf"; sourceTree = "<group>"; };
+		89F82A9D2BA232240096F2DE /* Triplet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = Triplet.app; path = "/Users/danderekma/Documents/ECS 189E/triplet/build/Debug-iphoneos/Triplet.app"; sourceTree = "<absolute>"; };
 		92B3F97C2B9B10A600819D0E /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -351,7 +351,7 @@
 				89B9FFFC2B9ABFA3005C530A /* FirebaseStorageCombine-Community */,
 			);
 			productName = Triplet;
-			productReference = 129457E42BA11B0A005EFA4D /* Triplet.app */;
+			productReference = 89F82A9D2BA232240096F2DE /* Triplet.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
