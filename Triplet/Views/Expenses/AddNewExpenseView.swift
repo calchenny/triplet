@@ -9,7 +9,7 @@ import SwiftUI
 
 struct AddNewExpenseView: View {
     
-    @Binding var expenses: [Expense]
+    @EnvironmentObject var expensesModel: ExpensesViewModel
     @Environment(\.dismiss) var dismiss
     @State private var name: String = ""
     @State private var cost: Double = 0
@@ -31,12 +31,12 @@ struct AddNewExpenseView: View {
             Text("New Expense")
                 .font(.largeTitle)
                 .bold()
-                .foregroundColor(.indigo)
+                .foregroundColor(Color.darkBlue)
                 .padding(.top, 30)
             
             Text("Expense Name")
                 .bold()
-                .foregroundColor(.indigo)
+                .foregroundColor(Color.darkBlue)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding()
             TextField("Hotel, Uber, Dinner, Etc.", text: $name)
@@ -50,7 +50,7 @@ struct AddNewExpenseView: View {
                 .padding(.horizontal, 20)
             Text("Cost")
                 .bold()
-                .foregroundColor(.indigo)
+                .foregroundColor(Color.darkBlue)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding()
             HStack {
@@ -72,7 +72,7 @@ struct AddNewExpenseView: View {
             .padding(.leading, 20)
             Text("Category")
                 .bold()
-                .foregroundColor(.indigo)
+                .foregroundColor(Color.darkBlue)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding()
             HStack {
@@ -93,7 +93,7 @@ struct AddNewExpenseView: View {
 
             Text("Date")
                 .bold()
-                .foregroundColor(.indigo)
+                .foregroundColor(Color.darkBlue)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding()
             
@@ -132,8 +132,8 @@ struct AddNewExpenseView: View {
                 else {
                     print("creating new expense...")
                     if let cost = Double(costInput) {
-                        let newExpense = Expense(name: name, date: date, category: selection, cost: cost)
-                        expenses.append(newExpense)
+                        expensesModel.addExpense(name: name, date: date, category: selection, cost: cost)
+                        //expenses.append(newExpense)
                     }
                     else {
                         print("can't convert cost to double -> no expense struct created")
@@ -146,19 +146,16 @@ struct AddNewExpenseView: View {
                     .padding(.horizontal, 50)
                     .padding(.vertical, 15)
                     .foregroundColor(.white)
-                    .background(.indigo)
+                    .background(Color.darkBlue)
                     .cornerRadius(100)
                     .bold()
                 
             }
             
         } // VStack closing
-        .onTapGesture {
-            self.hideKeyboard() // hidekeyboard when the user taps anywhere on the Vstack if it is open
-            }
     }
 }
 
 #Preview {
-    AddNewExpenseView(expenses: .constant([]))
+    AddNewExpenseView()
 }

@@ -13,22 +13,12 @@ import CoreLocation
 import FirebaseFirestore
 
 struct ExpensesView: View {
-    @State var expenses: [Expense] = []
     @State private var budget: Double = 10000.00
     @State private var currentTotal: Double = 0.00
     @State private var percentage: Double = 0
     @State private var showNewExpenseSheet: Bool = false
 
     @StateObject var expenseModel = ExpensesViewModel()
-
-    func calculateTotal (expenses: [Expense]) -> Double {
-        print("inside calculateTotal")
-        return expenses.reduce(0.0) { $0 + $1.cost }
-        }
-    func calculatePercentage (budget: Double, currentTotal: Double) -> Double {
-        print("inside calculatePercentage")
-        return currentTotal/budget
-    }
 
     func getHeaderWidth(screenWidth: CGFloat) -> CGFloat {
         let maxWidth = screenWidth * 0.9
@@ -89,33 +79,33 @@ struct ExpensesView: View {
                     Text("Expenses")
                         .font(.title)
                         .bold()
-                        .foregroundColor(.indigo)
+                        .foregroundColor(Color.darkBlue)
                     .padding()
-                    Text("$\(currentTotal, specifier: "%.2f")")
-                        .foregroundColor(.black.opacity(0.8))
+                    Text("$\(expenseModel.currentTotal, specifier: "%.2f")")
+                        .foregroundColor(Color.darkBlue)
                         .bold()
                         .font(.largeTitle)
-                    ProgressView(value: percentage)
-                        .tint(.indigo)
+                    ProgressView(value: expenseModel.percentage)
+                        .tint(Color.darkBlue)
                         .frame(minWidth: 0, maxWidth: 200)
 
-                    Text("Budget: $\(budget, specifier: "%.2f")")
-                        .foregroundColor(.indigo)
+                    Text("Budget: $\(expenseModel.budget, specifier: "%.2f")")
+                        .foregroundColor(Color.darkBlue)
                         .padding(.bottom, 15)
                 }
-                .onChange(of: expenses) {
-                    currentTotal = calculateTotal(expenses: expenses)
-                    percentage = calculatePercentage(budget: budget, currentTotal: currentTotal)
-                    print("currentTotal: \(currentTotal)")
-                    print("percentage: \(percentage)")
+                .onChange(of: expenseModel.expenses) {
+                    expenseModel.currentTotal = expenseModel.calculateTotal()
+                    expenseModel.percentage = expenseModel.calculatePercentage()
+                    print("currentTotal: \(expenseModel.currentTotal)")
+                    print("percentage: \(expenseModel.percentage)")
                 }
 
                 VStack {
 
-                    if !expenses.isEmpty {
+                    if !expenseModel.expenses.isEmpty {
 
                         ScrollView {
-                            ForEach(expenses, id: \.name) { expense in
+                            ForEach(expenseModel.expenses, id: \.name) { expense in
 
                                 HStack {
                                     if (expense.category == "Housing") {
@@ -177,25 +167,11 @@ struct ExpensesView: View {
                         Text("No expenses added yet.")
                             .font(.title3)
                             .bold()
-                            .foregroundColor(.indigo)
+                            .foregroundColor(Color.darkBlue)
                         Spacer()
                     }
-                    Button() {
-                        print("button pressed")
-                        showNewExpenseSheet.toggle()
-                    } label: {
-                        Text("+ Add Expense")
-                            .padding(.horizontal, 50)
-                            .padding(.vertical, 15)
-                            .foregroundColor(.white)
-                            .background(.indigo)
-                            .cornerRadius(100)
-                            .bold()
+                    
 
-                    }
-                    .sheet(isPresented: $showNewExpenseSheet) {
-                        AddNewExpenseView(expenses: $expenses)
-                    }
                 } // VStack closing bracket
                 .frame(maxWidth: .infinity)
                 .padding(.vertical, 20)
@@ -205,6 +181,29 @@ struct ExpensesView: View {
             .collapseProgress($expenseModel.collapseProgress)
             .setHeaderSnapMode(.immediately)
             .ignoresSafeArea()
+            .onAppear {
+                expenseModel.subscribe()
+            }
+            .onDisappear {
+                expenseModel.unsubscribe()
+            }
+        }
+        Button() {
+            print("button pressed")
+            showNewExpenseSheet.toggle()
+        } label: {
+            Text("+ Add Expense")
+                .padding(.horizontal, 50)
+                .padding(.vertical, 15)
+                .foregroundColor(.white)
+                .background(Color.darkBlue)
+                .cornerRadius(100)
+                .bold()
+
+        }
+        .sheet(isPresented: $showNewExpenseSheet) {
+            AddNewExpenseView()
+                .environmentObject(expenseModel)
         }
     } // body closing bracket
 } // view closing bracket
