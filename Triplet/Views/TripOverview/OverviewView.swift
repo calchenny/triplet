@@ -151,14 +151,20 @@ struct OverviewView: View {
                         ForEach(viewModel.housing, id: \.id) { housing in
                             HStack {
                                 Image(systemName: "house")
-                                    .foregroundStyle(.tertiary)
+                                    .foregroundStyle(Color("Dark Blue"))
+                                    .font(.title2)
                                 Spacer()
-                                VStack {
+                                    .frame(maxWidth: 20)
+                                VStack(alignment: .leading) {
                                     Text(housing.name)
+                                        .font(.custom("Poppins-Medium", size: 16))
                                     Text(housing.address)
+                                        .font(.custom("Poppins-Regular", size: 12))
+                                        .foregroundStyle(.secondary)
                                 }
+                                Spacer()
                             }
-                            .padding([.leading, .trailing])
+                            .padding()
                         }
                         Button {
                             viewModel.showHousingPopup.toggle()
@@ -172,7 +178,6 @@ struct OverviewView: View {
                             .padding(.bottom, 5)
                             .tint(.gray)
                         }
-                        .padding(.top)
                     }
                 } label: {
                     Text("Hotel & Lodging")

@@ -101,8 +101,10 @@ class OverviewViewModel: ObservableObject {
                     print("No documents")
                     return
                 }
-                self.notes = documents.compactMap { queryDocumentSnapshot in
-                    try? queryDocumentSnapshot.data(as: Note.self)
+                withAnimation {
+                    self.notes = documents.compactMap { queryDocumentSnapshot in
+                        try? queryDocumentSnapshot.data(as: Note.self)
+                    }
                 }
             })
             
@@ -112,8 +114,10 @@ class OverviewViewModel: ObservableObject {
                     print("No documents")
                     return
                 }
-                self.housing = documents.compactMap { queryDocumentSnapshot in
-                    try? queryDocumentSnapshot.data(as: Event.self)
+                withAnimation {
+                    self.housing = documents.compactMap { queryDocumentSnapshot in
+                        try? queryDocumentSnapshot.data(as: Event.self)
+                    }
                 }
             })
         }

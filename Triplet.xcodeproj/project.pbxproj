@@ -106,6 +106,7 @@
 		8969808F2BA223FA00F3BD16 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		89B3F3AB2B8FA70100D79E5D /* Poppins-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Regular.ttf"; sourceTree = "<group>"; };
 		89B9FFC52B9ABF4D005C530A /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
+		89BAE3462BA23315009A710B /* Triplet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = Triplet.app; path = "/Users/danderekma/Documents/ECS 189E/triplet/build/Debug-iphoneos/Triplet.app"; sourceTree = "<absolute>"; };
 		89BDCE432B8FAE8E00C69895 /* TripModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripModel.swift; sourceTree = "<group>"; };
 		89BDCE452B8FAEB100C69895 /* OverviewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverviewViewModel.swift; sourceTree = "<group>"; };
 		89BDCE532B8FAFCF00C69895 /* DestinationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DestinationViewModel.swift; sourceTree = "<group>"; };
@@ -116,7 +117,6 @@
 		89BDCE712B8FB46800C69895 /* LocationSearchViewData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSearchViewData.swift; sourceTree = "<group>"; };
 		89BDCE732B8FE26500C69895 /* Poppins-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Bold.ttf"; sourceTree = "<group>"; };
 		89BDCE742B8FE28A00C69895 /* Poppins-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Medium.ttf"; sourceTree = "<group>"; };
-		89F82A9D2BA232240096F2DE /* Triplet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = Triplet.app; path = "/Users/danderekma/Documents/ECS 189E/triplet/build/Debug-iphoneos/Triplet.app"; sourceTree = "<absolute>"; };
 		92B3F97C2B9B10A600819D0E /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -351,7 +351,7 @@
 				89B9FFFC2B9ABFA3005C530A /* FirebaseStorageCombine-Community */,
 			);
 			productName = Triplet;
-			productReference = 89F82A9D2BA232240096F2DE /* Triplet.app */;
+			productReference = 89BAE3462BA23315009A710B /* Triplet.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
