@@ -63,6 +63,7 @@
 		89B9FFF92B9ABFA3005C530A /* FirebaseRemoteConfigSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 89B9FFF82B9ABFA3005C530A /* FirebaseRemoteConfigSwift */; };
 		89B9FFFB2B9ABFA3005C530A /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 89B9FFFA2B9ABFA3005C530A /* FirebaseStorage */; };
 		89B9FFFD2B9ABFA3005C530A /* FirebaseStorageCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = 89B9FFFC2B9ABFA3005C530A /* FirebaseStorageCombine-Community */; };
+		89BAE34C2BA25876009A710B /* TripView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BAE34B2BA25876009A710B /* TripView.swift */; };
 		89BDCE442B8FAE8E00C69895 /* TripModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BDCE432B8FAE8E00C69895 /* TripModel.swift */; };
 		89BDCE462B8FAEB100C69895 /* OverviewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BDCE452B8FAEB100C69895 /* OverviewViewModel.swift */; };
 		89BDCE4F2B8FAF1500C69895 /* PopupView in Frameworks */ = {isa = PBXBuildFile; productRef = 89BDCE4E2B8FAF1500C69895 /* PopupView */; };
@@ -109,6 +110,7 @@
 		89B3F3AB2B8FA70100D79E5D /* Poppins-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Regular.ttf"; sourceTree = "<group>"; };
 		89B9FFC52B9ABF4D005C530A /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		89BAE34A2BA24FD9009A710B /* Triplet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = Triplet.app; path = "/Users/danderekma/Documents/ECS 189E/triplet/build/Debug-iphoneos/Triplet.app"; sourceTree = "<absolute>"; };
+		89BAE34B2BA25876009A710B /* TripView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripView.swift; sourceTree = "<group>"; };
 		89BDCE432B8FAE8E00C69895 /* TripModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripModel.swift; sourceTree = "<group>"; };
 		89BDCE452B8FAEB100C69895 /* OverviewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverviewViewModel.swift; sourceTree = "<group>"; };
 		89BDCE532B8FAFCF00C69895 /* DestinationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DestinationViewModel.swift; sourceTree = "<group>"; };
@@ -168,6 +170,7 @@
 			children = (
 				24246BF92B97EE290028DAAF /* MapView.swift */,
 				24246BFA2B97EE290028DAAF /* RootView.swift */,
+				89BAE34B2BA25876009A710B /* TripView.swift */,
 				24246BDA2B97ED690028DAAF /* Expenses */,
 				24246BDD2B97ED690028DAAF /* Home */,
 				24246BD22B97ED690028DAAF /* Itinenary */,
@@ -436,6 +439,7 @@
 				8935A4262B7F496200F62185 /* TripletApp.swift in Sources */,
 				24246BF32B97ED690028DAAF /* NewTripView.swift in Sources */,
 				89BDCE682B8FB37600C69895 /* ItineraryViewModel.swift in Sources */,
+				89BAE34C2BA25876009A710B /* TripView.swift in Sources */,
 				24246BEF2B97ED690028DAAF /* AddNewExpenseView.swift in Sources */,
 				89BDCE562B8FAFF500C69895 /* LocationSearchModel.swift in Sources */,
 				24246BEE2B97ED690028DAAF /* ExpensesView.swift in Sources */,

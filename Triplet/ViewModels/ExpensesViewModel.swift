@@ -22,8 +22,8 @@ class ExpensesViewModel: ObservableObject {
 
     @Published var collapseProgress: CGFloat = 0
 
-    let minHeight: CGFloat = 100.0
-    let maxHeight: CGFloat = 250.0
+    let minHeight: CGFloat = 150.0
+    let maxHeight: CGFloat = 300.0
     
     private var db = Firestore.firestore()
     private var listenerRegistrations: [ListenerRegistration] = []

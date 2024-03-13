@@ -25,8 +25,6 @@ struct ItineraryView: View {
     @State private var reverseGeocodedAddress: String = ""
     
     
-    
-    
     func getHeaderWidth(screenWidth: CGFloat) -> CGFloat {
         let maxWidth = screenWidth * 0.9
         let minWidth = screenWidth * 0.5
@@ -34,8 +32,8 @@ struct ItineraryView: View {
     }
     
     func getHeaderHeight() -> CGFloat {
-        let maxHeight = CGFloat(80)
-        let minHeight = CGFloat(30)
+        let maxHeight = CGFloat(100)
+        let minHeight = CGFloat(60)
         return max((1 - itineraryModel.collapseProgress + 0.5 * itineraryModel.collapseProgress) * maxHeight, minHeight)
     }
     
@@ -91,155 +89,151 @@ struct ItineraryView: View {
     
         
     var body: some View {
-        NavigationView{
-            GeometryReader { geometry in
-                ScalingHeaderScrollView {
-                    ZStack(alignment: .topLeading) {
-                        ZStack(alignment: .bottom) {
-                            Map(position: $itineraryModel.cameraPosition)
-                            RoundedRectangle(cornerRadius: 15)
-                                .frame(width: getHeaderWidth(screenWidth: geometry.size.width), height: getHeaderHeight())
-                                .foregroundStyle(.evenLighterBlue)
-                                .overlay(
-                                    VStack {
-                                        Text("Most Amazing Trip") // CHANGE THIS
-                                            .font(.custom("Poppins-Bold", size: getHeaderTitleSize()))
-                                            .foregroundStyle(Color.darkBlue)
-                                        Text("Seattle, WA | 03/12 - 03/17") // CHANGE THIS
-                                            .font(.custom("Poppins-Regular", size: 15))
-                                            .foregroundStyle(.darkBlue)
-                                    }
-                                )
-                                .padding(.bottom, 30)
-                        }
-                        NavigationLink(destination: DayOfView().navigationBarBackButtonHidden(true), isActive: $goToDayView) {
-                            Button {
-                                goToDayView = true
-                            } label: {
-                                Image(systemName: "house")
-                                    .font(.title2)
-                                    .padding()
-                                    .background(Color("Dark Blue"))
-                                    .foregroundStyle(.white)
-                                    .clipShape(Circle())
+        ScalingHeaderScrollView {
+            ZStack(alignment: .topLeading) {
+                ZStack(alignment: .bottom) {
+                    Map(position: $itineraryModel.cameraPosition)
+                    RoundedRectangle(cornerRadius: 15)
+                        .frame(width: getHeaderWidth(screenWidth: UIScreen.main.bounds.width), height: getHeaderHeight())
+                        .foregroundStyle(.evenLighterBlue)
+                        .overlay(
+                            VStack {
+                                Text("Most Amazing Trip") // CHANGE THIS
+                                    .font(.custom("Poppins-Bold", size: getHeaderTitleSize()))
+                                    .foregroundStyle(Color.darkBlue)
+                                Text("Seattle, WA | 03/12 - 03/17") // CHANGE THIS
+                                    .font(.custom("Poppins-Regular", size: 13))
+                                    .foregroundStyle(.darkBlue)
                             }
-                            .padding(.top, 60)
-                            .padding(.leading)
-                            .tint(.primary)
-                        }
-                    }
-                    .frame(maxWidth: .infinity)
-                } content: {
-                    Text("Itinerary")
-                        .font(.custom("Poppins-Bold", size:30))
-                        .foregroundStyle(Color.darkBlue)
-                        .padding(10)
-                    Button(action: {
-                        showAddEventSheet.toggle()
-                    }) {
-                        HStack {
-                            Image(systemName: "plus.circle.fill")
-                                .resizable()
-                                .frame(width: 20, height: 20)
-                            Text("Add an Event")
-                                .font(.custom("Poppins-Regular", size:15))
-                        }
-                        .foregroundColor(.white)
-                        .padding()
-                        .background(Color.darkBlue)
-                        .cornerRadius(10)
-                    }
-                    .padding(.bottom, 5)
-                    .padding(.top, 10)
-                    .sheet(isPresented: $showAddEventSheet) {
-                        AddPlaceView()
-                            .environmentObject(itineraryModel)
-                    }
-                    
-                    if itineraryModel.events.isEmpty {
-                        Text("No events planned yet!")
-                            .font(.headline)
-                            .foregroundColor(.gray)
+                        )
+                        .padding(.bottom, 30)
+                }
+                NavigationLink(destination: DayOfView().navigationBarBackButtonHidden(true), isActive: $goToDayView) {
+                    Button {
+                        goToDayView = true
+                    } label: {
+                        Image(systemName: "house")
+                            .font(.title2)
                             .padding()
-                    } else {
-                        ScrollView {
-                            
-                            ForEach(["03/13", "03/14", "03/15", "03/16", "03/17"], id: \.self) { day in // CHANGE THIS
-                                
-                                HStack {
-                                    Spacer()
-                                    Text(day)
-                                        .font(.custom("Poppins-Bold", size:20))
-                                        .foregroundStyle(Color.darkBlue)
-                                    Spacer()
-                                }
-                                .background(Color.evenLighterBlue)
-                                .cornerRadius(20)
-                                .frame(maxWidth: .infinity)
-                                VStack {
-                                    if itineraryModel.events.filter({formatDate($0.start) == day}).isEmpty {
-                                        Text("No events planned.")
-                                            .font(.custom("Poppins-Regular", size: 13))
-                                    } else {
-                                        ForEach(itineraryModel.events.filter({formatDate($0.start) == day})) { event in
-                                            HStack(spacing: 10) {
-                                                // Image for the event's category
-                                                Image(systemName: getCategoryImageName(category: event.type.rawValue))
-                                                    .resizable()
-                                                    .frame(width: 30, height: 30)
-                                                    .foregroundColor(.darkBlue)
-                                                
-                                                Divider()
-                                                    .frame(width: 2)
-                                                    .background(Color.darkBlue)
-                                                
-                                                // Event details
-                                                VStack(alignment: .leading) {
-                                                    Text(event.name)
-                                                        .font(.custom("Poppins-Bold", size: 20))
-                                                        .foregroundStyle(Color.darkBlue)
-                                                    Text("\(formatTime(event.start)) - \(formatTime(event.end))")
-                                                        .font(.custom("Poppins-Bold", size: 15))
-                                                    Text(event.address)
-                                                        .font(.custom("Poppins-Regular", size: 13))
-                                                }
-                                                .padding()
-                                                Spacer()
-                                                Button {
-                                                    itineraryModel.deleteEventFromFirestore(eventID: event.id ?? "")
-                                                } label: {
-                                                    Image(systemName: "trash")
-                                                        .font(.title2)
-                                                        .padding()
-                                                        .background(Color("Dark Blue"))
-                                                        .foregroundStyle(.white)
-                                                        .clipShape(Circle())
-                                                }
-                                                .padding(.leading)
-                                                .tint(.primary)
-                                            }
-                                            .padding(20)
-                                        }
-                                    }
-                                }
-                                .padding(.bottom, 20)
-                            }
-                        }
-                        .frame(maxWidth: .infinity)
+                            .background(Color("Dark Blue"))
+                            .foregroundStyle(.white)
+                            .clipShape(Circle())
                     }
-                }
-                .height(min: itineraryModel.minHeight, max: itineraryModel.maxHeight)
-                .allowsHeaderCollapse()
-                .collapseProgress($itineraryModel.collapseProgress)
-                .setHeaderSnapMode(.immediately)
-                .ignoresSafeArea()
-                .onAppear {
-                    itineraryModel.subscribe()
-                }
-                .onDisappear {
-                    itineraryModel.unsubscribe()
+                    .padding(.top, 60)
+                    .padding(.leading)
+                    .tint(.primary)
                 }
             }
+            .frame(maxWidth: .infinity)
+        } content: {
+            Text("Itinerary")
+                .font(.custom("Poppins-Bold", size:30))
+                .foregroundStyle(Color.darkBlue)
+                .padding(10)
+            Button(action: {
+                showAddEventSheet.toggle()
+            }) {
+                HStack {
+                    Image(systemName: "plus.circle.fill")
+                        .resizable()
+                        .frame(width: 20, height: 20)
+                    Text("Add an Event")
+                        .font(.custom("Poppins-Regular", size:15))
+                }
+                .foregroundColor(.white)
+                .padding()
+                .background(Color.darkBlue)
+                .cornerRadius(10)
+            }
+            .padding(.bottom, 5)
+            .padding(.top, 10)
+            .sheet(isPresented: $showAddEventSheet) {
+                AddPlaceView()
+                    .environmentObject(itineraryModel)
+            }
+            
+            if itineraryModel.events.isEmpty {
+                Text("No events planned yet!")
+                    .font(.headline)
+                    .foregroundColor(.gray)
+                    .padding()
+            } else {
+                ScrollView {
+                    
+                    ForEach(["03/13", "03/14", "03/15", "03/16", "03/17"], id: \.self) { day in // CHANGE THIS
+                        
+                        HStack {
+                            Spacer()
+                            Text(day)
+                                .font(.custom("Poppins-Bold", size:20))
+                                .foregroundStyle(Color.darkBlue)
+                            Spacer()
+                        }
+                        .background(Color.evenLighterBlue)
+                        .cornerRadius(20)
+                        .frame(maxWidth: .infinity)
+                        VStack {
+                            if itineraryModel.events.filter({formatDate($0.start) == day}).isEmpty {
+                                Text("No events planned.")
+                                    .font(.custom("Poppins-Regular", size: 13))
+                            } else {
+                                ForEach(itineraryModel.events.filter({formatDate($0.start) == day})) { event in
+                                    HStack(spacing: 10) {
+                                        // Image for the event's category
+                                        Image(systemName: getCategoryImageName(category: event.type.rawValue))
+                                            .resizable()
+                                            .frame(width: 30, height: 30)
+                                            .foregroundColor(.darkBlue)
+                                        
+                                        Divider()
+                                            .frame(width: 2)
+                                            .background(Color.darkBlue)
+                                        
+                                        // Event details
+                                        VStack(alignment: .leading) {
+                                            Text(event.name)
+                                                .font(.custom("Poppins-Bold", size: 20))
+                                                .foregroundStyle(Color.darkBlue)
+                                            Text("\(formatTime(event.start)) - \(formatTime(event.end))")
+                                                .font(.custom("Poppins-Bold", size: 15))
+                                            Text(event.address)
+                                                .font(.custom("Poppins-Regular", size: 13))
+                                        }
+                                        .padding()
+                                        Spacer()
+                                        Button {
+                                            itineraryModel.deleteEventFromFirestore(eventID: event.id ?? "")
+                                        } label: {
+                                            Image(systemName: "trash")
+                                                .font(.title2)
+                                                .padding()
+                                                .background(Color("Dark Blue"))
+                                                .foregroundStyle(.white)
+                                                .clipShape(Circle())
+                                        }
+                                        .padding(.leading)
+                                        .tint(.primary)
+                                    }
+                                    .padding(20)
+                                }
+                            }
+                        }
+                        .padding(.bottom, 20)
+                    }
+                }
+                .frame(maxWidth: .infinity)
+            }
+        }
+        .height(min: itineraryModel.minHeight, max: itineraryModel.maxHeight)
+        .allowsHeaderCollapse()
+        .collapseProgress($itineraryModel.collapseProgress)
+        .setHeaderSnapMode(.immediately)
+        .ignoresSafeArea()
+        .onAppear {
+            itineraryModel.subscribe()
+        }
+        .onDisappear {
+            itineraryModel.unsubscribe()
         }
     }
 }

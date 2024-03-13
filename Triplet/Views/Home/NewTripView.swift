@@ -270,7 +270,7 @@ struct NewTripView: View {
             .tint(.darkBlue)
             .navigationDestination(isPresented: $navigateToOverview) {
                 if let tripId {
-                    OverviewView(tripId: tripId)
+                    TripView(tripId: tripId)
                         .navigationBarBackButtonHidden(true)
                 }
             }
