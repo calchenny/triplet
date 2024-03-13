@@ -12,12 +12,12 @@ import MapKit
 import CoreLocation
 import FirebaseFirestore
 
-
 struct ItineraryView: View {
     
     @StateObject var itineraryModel = ItineraryViewModel()
     @EnvironmentObject var userModel: UserModel
-
+    
+    @State var isExpanded = false
     @State var searchText: String = ""
     
     @State var showAddEventSheet: Bool = false
@@ -99,10 +99,10 @@ struct ItineraryView: View {
                             .foregroundStyle(.evenLighterBlue)
                             .overlay(
                                 VStack {
-                                    Text("Most Amazing Trip")
+                                    Text("Most Amazing Trip") // CHANGE THIS
                                         .font(.custom("Poppins-Bold", size: getHeaderTitleSize()))
                                         .foregroundStyle(Color.darkBlue)
-                                    Text("Seattle, WA | 10/20 - 10/25")
+                                    Text("Seattle, WA | 10/20 - 10/25") // CHANGE THIS
                                         .font(.custom("Poppins-Regular", size: 15))
                                         .foregroundStyle(.darkBlue)
                                 }
@@ -157,7 +157,8 @@ struct ItineraryView: View {
                         .padding()
                 } else {
                     ScrollView {
-                        ForEach(["10/20", "10/21", "10/22", "10/23", "10/24", "10/25"], id: \.self) { day in
+                        
+                        ForEach(["10/20", "10/21", "10/22", "10/23", "10/24", "10/25"], id: \.self) { day in // CHANGE THIS
                             
                             HStack {
                                 Spacer()
@@ -170,44 +171,49 @@ struct ItineraryView: View {
                             .cornerRadius(20)
                             .frame(maxWidth: .infinity)
                             VStack {
-                                ForEach(itineraryModel.events.filter { formatDate($0.start) == day }) { event in
-                                    HStack(spacing: 10) {
-                                        // Image for the event's category
-                                        Image(systemName: getCategoryImageName(category: event.type.rawValue))
-                                            .resizable()
-                                            .frame(width: 30, height: 30)
-                                            .foregroundColor(.darkBlue)
-                                        
-                                        Divider()
-                                            .frame(width: 2)
-                                            .background(Color.darkBlue)
-                                        
-                                        // Event details
-                                        VStack(alignment: .leading) {
-                                            Text(event.name)
-                                                .font(.custom("Poppins-Bold", size: 20))
-                                                .foregroundStyle(Color.darkBlue)
-                                            Text(formatTime(event.start))
-                                                .font(.custom("Poppins-Bold", size: 15))
-                                            Text(event.address)
-                                                .font(.custom("Poppins-Regular", size: 13))
+                                if itineraryModel.events.filter({formatDate($0.start) == day}).isEmpty {
+                                    Text("No events planned.")
+                                        .font(.custom("Poppins-Regular", size: 13))
+                                } else {
+                                    ForEach(itineraryModel.events.filter({formatDate($0.start) == day})) { event in
+                                        HStack(spacing: 10) {
+                                            // Image for the event's category
+                                            Image(systemName: getCategoryImageName(category: event.type.rawValue))
+                                                .resizable()
+                                                .frame(width: 30, height: 30)
+                                                .foregroundColor(.darkBlue)
+                                            
+                                            Divider()
+                                                .frame(width: 2)
+                                                .background(Color.darkBlue)
+                                            
+                                            // Event details
+                                            VStack(alignment: .leading) {
+                                                Text(event.name)
+                                                    .font(.custom("Poppins-Bold", size: 20))
+                                                    .foregroundStyle(Color.darkBlue)
+                                                Text("\(formatTime(event.start)) - \(formatTime(event.end))")
+                                                    .font(.custom("Poppins-Bold", size: 15))
+                                                Text(event.address)
+                                                    .font(.custom("Poppins-Regular", size: 13))
+                                            }
+                                            .padding()
+                                            Spacer()
+                                            Button {
+                                                itineraryModel.deleteEventFromFirestore(eventID: event.id ?? "")
+                                            } label: {
+                                                Image(systemName: "trash")
+                                                    .font(.title2)
+                                                    .padding()
+                                                    .background(Color("Dark Blue"))
+                                                    .foregroundStyle(.white)
+                                                    .clipShape(Circle())
+                                            }
+                                            .padding(.leading)
+                                            .tint(.primary)
                                         }
-                                        .padding()
-                                        Spacer()
-                                        Button {
-                                            itineraryModel.deleteEventFromFirestore(eventID: event.id ?? "")
-                                        } label: {
-                                            Image(systemName: "trash")
-                                                .font(.title2)
-                                                .padding()
-                                                .background(Color("Dark Blue"))
-                                                .foregroundStyle(.white)
-                                                .clipShape(Circle())
-                                        }
-                                        .padding(.leading)
-                                        .tint(.primary)
+                                        .padding(20)
                                     }
-                                    .padding(20)
                                 }
                             }
                             .padding(.bottom, 20)
