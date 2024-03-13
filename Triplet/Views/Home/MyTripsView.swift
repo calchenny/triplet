@@ -23,7 +23,8 @@ struct MyTripsView: View {
                 .frame(width: UIScreen.main.bounds.width * 0.30, alignment: .center)
             VStack(alignment: .leading) {
                 Text("My Trips")
-                    .font(.custom("Poppins-Medium", size: 20))
+                    .font(.custom("Poppins-Bold", size: 20))
+                    .foregroundStyle(.darkBlue)
                 Picker("", selection: $tabSelection) {
                     Text("Upcoming Trips")
                         .font(.custom("Poppins-Regular", size: 15))
@@ -108,132 +109,159 @@ func getDateString(date: Date?) -> String {
     return dateFormatter.string(from: date)
 }
 
+func getTripDuration(start: Date?, end: Date?) -> Int {
+    guard let start else {
+        return 0
+    }
+    guard let end else {
+        return 0
+    }
+    
+    let calendar = Calendar.current
+    let components = calendar.dateComponents([.day], from: start, to: end)
+    return components.day ?? 0
+    
+}
 
 struct CurrentTripsView: View  {
     @EnvironmentObject var userModel: UserModel
     @State private var navigateToOverview: Bool = false
-    @State private var currentTrips: [Trip] = []
-
-    
 
     var body: some View {
         VStack {
-            if userModel.currentTrips.count == 0 {
-                NoTripPlanned()
-            }
+            
             Text(" You have \(userModel.currentTrips.count) trips planned.")
                 .font(.custom("Poppins-Regular", size: 13))
                 .frame(width: UIScreen.main.bounds.width * 0.8, alignment: .leading)
                 .padding()
+            if userModel.currentTrips.count == 0 {
+                NoTripPlanned()
+            }
             ScrollView {
                 ForEach(0..<userModel.currentTrips.count, id: \.self) { index in
-
-                    VStack (alignment: .leading) {
-                        Text(userModel.currentTrips[index].name)
-                            .font(.custom("Poppins-Bold", size: 12))
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            
-                        Text("\(userModel.currentTrips[index].city), \(userModel.currentTrips[index].state)")
-                            .font(.custom("Poppins-Regular", size: 12))
-                            .padding(.bottom, 5)
-                            
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                        Text("\(getDateString(date: userModel.currentTrips[index].start)) - \(getDateString(date: userModel.currentTrips[index].end))")
-                            .font(.custom("Poppins-Regular", size: 12))
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                    }
-                    .padding(25)
-                    .padding(.leading, 25)
-                    .frame(width: UIScreen.main.bounds.width * 0.8, height: 120)
-                    .background(Color.white)
-                    .cornerRadius(20)
-                    .opacity(1)
-                    .background(
-                        RoundedRectangle(cornerRadius: 25)
+                    ZStack {
+                        RoundedRectangle(cornerRadius: 20)
                             .fill(Color.white)
-                            .shadow(color: .gray, radius: 2, x: 0, y: 2)
-                    )
-                    .onTapGesture {
-                        guard let tripID = userModel.currentTrips[index].id else {
-                            print("can't get tripID")
-                            return
+                            .shadow(color: .gray, radius: 5, x: 0, y: 3)
+                            .frame(width: UIScreen.main.bounds.width * 0.8, height:120)
+                            .padding(.top, 10)
+                        HStack {
+                            VStack (alignment: .leading) {
+                                Text(userModel.currentTrips[index].name)
+                                    .font(.custom("Poppins-Bold", size: 15))
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                    .foregroundStyle(.darkBlue)
+                                Text("\(userModel.currentTrips[index].city), \(userModel.currentTrips[index].state)")
+                                    .font(.custom("Poppins-Regular", size: 12))
+                                    .padding(.bottom, 5)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                HStack {
+                                    Text("\(getDateString(date: userModel.currentTrips[index].start)) - \(getDateString(date: userModel.currentTrips[index].end))")
+                                        .font(.custom("Poppins-Regular", size: 12))
+                                        
+                                     Text("(\(getTripDuration(start: userModel.currentTrips[index].start, end: userModel.currentTrips[index].end)) days)")
+                                        .font(.custom("Poppins-Regular", size: 12))
+                                        .foregroundStyle(Color.gray)
+                                }
+                            }
+                            Image(systemName: "chevron.right")
+                                .foregroundStyle(.darkBlue)
+                                .padding(.trailing, 10)
                         }
-                        print("tripID", tripID)
-                        // navigate to overview page
-                        navigateToOverview = true
+                        
+                        .padding(20)
+                        .padding(.leading, 15)
+                        .onTapGesture {
+                            guard let tripID = userModel.currentTrips[index].id else {
+                                print("can't get tripID")
+                                return
+                            }
+                            print("tripID", tripID)
+                            // navigate to overview page
+                            navigateToOverview = true
+                        }
+                        .navigationDestination(isPresented: $navigateToOverview) {
+    //                            OverviewView()
+    //                                .environmentObject(userModel)
+    //                                .environmentObject(viewModel)
+                        }
                     }
-                    .navigationDestination(isPresented: $navigateToOverview) {
-//                            OverviewView()
-//                                .environmentObject(userModel)
-//                                .environmentObject(viewModel)
-                    }
-                    .padding(.bottom, 20)
+                    .padding(.bottom, 15)
+
                 }
             }
-
+            .frame(width: UIScreen.main.bounds.width * 0.85)
+            
         }
     }
 }
 
 struct PastTripsView: View {
-//    @State var pastTrips: [String] = ["New York", "Seattle", "Big Sur"]
     @EnvironmentObject var userModel: UserModel
-    
-
-
+    @State private var navigateToOverview: Bool = false
     var body: some View {
         VStack {
-            if userModel.pastTrips.count == 0 {
-                NoTripPlanned()
-            }
+            
             Text("You had \(userModel.pastTrips.count) past trips.")
                 .font(.custom("Poppins-Regular", size: 13))
                 .frame(width: UIScreen.main.bounds.width * 0.8, alignment: .leading)
                 .padding()
+            if userModel.pastTrips.count == 0 {
+                NoTripPlanned()
+            }
             ScrollView {
                 ForEach(0..<userModel.pastTrips.count, id: \.self) { index in
-                    HStack{
-//                        Image(systemName: "bicycle")
-//                            .resizable()
-//                            .frame(width: 60, height: 60)
-//                            .clipShape(Circle())
-//                            .overlay(Circle().stroke(Color.black, lineWidth: 1))
-//                        
-//                        Spacer()
-                        VStack (alignment: .leading) {
-                            Text(userModel.pastTrips[index].name)
-                                .font(.custom("Poppins-Bold", size: 12))
-                            Text("\(userModel.pastTrips[index].city), \(userModel.pastTrips[index].state)")
-                                .font(.custom("Poppins-Regular", size: 12))
-                                .padding(.bottom, 5)
-                            
-                            Text("\(getDateString(date: userModel.pastTrips[index].start)) - \(getDateString(date: userModel.pastTrips[index].end))")
-                                .font(.custom("Poppins-Regular", size: 12))
-                        }
-//                        .padding(10)
-//                        .frame(maxWidth: UIScreen.main.bounds.width * 0.8)
-                    }
-                    .padding(35)
-                    .frame(width: UIScreen.main.bounds.width * 0.8, height: 120)
-                    .background(Color.white)
-                    .cornerRadius(20)
-                    .opacity(1)
-                    .background(
-                        RoundedRectangle(cornerRadius: 25)
+                    ZStack {
+                        RoundedRectangle(cornerRadius: 20)
                             .fill(Color.white)
-                            .shadow(color: .gray, radius: 2, x: 0, y: 2)
-                    )
-                    .onTapGesture {
-                        guard let tripID = userModel.pastTrips[index].id else {
-                            print("can't get tripID")
-                            return
+                            .shadow(color: .gray, radius: 5, x: 0, y: 3)
+                            .frame(width: UIScreen.main.bounds.width * 0.8, height:120)
+                            .padding(.top, 10)
+                        HStack {
+                            VStack (alignment: .leading) {
+                                Text(userModel.pastTrips[index].name)
+                                    .font(.custom("Poppins-Bold", size: 15))
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                    .foregroundStyle(.darkBlue)
+                                Text("\(userModel.pastTrips[index].city), \(userModel.pastTrips[index].state)")
+                                    .font(.custom("Poppins-Regular", size: 12))
+                                    .padding(.bottom, 5)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                HStack {
+                                    Text("\(getDateString(date: userModel.pastTrips[index].start)) - \(getDateString(date: userModel.pastTrips[index].end))")
+                                        .font(.custom("Poppins-Regular", size: 12))
+                                        
+                                     Text("(\(getTripDuration(start: userModel.pastTrips[index].start, end: userModel.pastTrips[index].end)) days)")
+                                        .font(.custom("Poppins-Regular", size: 12))
+                                        .foregroundStyle(Color.gray)
+                                }
+                            }
+                            
                         }
-                        print("tripID", tripID)
+                        
+                        .padding(20)
+                        .padding(.leading, 15)
+                        .onTapGesture {
+                            guard let tripID = userModel.pastTrips[index].id else {
+                                print("can't get tripID")
+                                return
+                            }
+                            print("tripID", tripID)
+                            // navigate to overview page
+                            navigateToOverview = true
+                        }
+                        .navigationDestination(isPresented: $navigateToOverview) {
+    //                            OverviewView()
+    //                                .environmentObject(userModel)
+    //                                .environmentObject(viewModel)
+                        }
                     }
-                    .padding(.bottom, 20)
-                    }
-                }
+                    .padding(.bottom, 15)
 
+                }
+            }
+            .frame(width: UIScreen.main.bounds.width * 0.85)
+            
         }
         .padding(.bottom, 40)
     }
