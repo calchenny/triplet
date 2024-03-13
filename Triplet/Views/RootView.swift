@@ -11,20 +11,19 @@ struct RootView: View {
     @EnvironmentObject var loginViewModel: LoginViewModel
     @EnvironmentObject var userModel: UserModel
     var body: some View {
-        ExpensesView()
-//        Group {
-//            if loginViewModel.userSession != nil {
-//                NavigationStack {
-//                    LoadingView()
-//                }
-//                
-//            } else {
-//                NavigationStack {
-//                    LoginView()
-//                }
-//                
-//            }
-//        }
+        Group {
+            if loginViewModel.userSession != nil {
+                NavigationStack {
+                    LoadingView()
+                }
+                
+            } else {
+                NavigationStack {
+                    LoginView()
+                }
+                
+            }
+        }
     }
 }
 

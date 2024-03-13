@@ -46,6 +46,7 @@ struct MyTripsView: View {
                     .environmentObject(userModel)
             } else {
                 PastTripsView()
+                    .environmentObject(userModel)
             }
             Spacer()
         }
@@ -98,77 +99,80 @@ struct NoTripPlanned: View {
     }
 }
 
-struct CurrentTripsView: View  {
-    @State var currentTrips: [String] = ["New York, NY", "Seattle, WA", "Big Sur"]
-    @EnvironmentObject var userModel: UserModel
-    @State var tripNames: [String] = ["Concrete Jungle", "Space Needle Here We Go", "Big Sir"]
-    @State var tripDates: [String] = ["11/10/24 - 11/20/24", "11/20/24 - 11/25/24", "12/10/24 - 12/20/24"]
-    
-    func getDateString(date: Date?) -> String {
-        guard let date else {
-            return ""
-        }
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MM/dd"
-        return dateFormatter.string(from: date)
+func getDateString(date: Date?) -> String {
+    guard let date else {
+        return ""
     }
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateFormat = "MM/dd"
+    return dateFormatter.string(from: date)
+}
+
+
+struct CurrentTripsView: View  {
+    @EnvironmentObject var userModel: UserModel
+    @State private var navigateToOverview: Bool = false
+    @State private var currentTrips: [Trip] = []
+
     
-    
+
     var body: some View {
         VStack {
-            if userModel.trips.count == 0 {
+            if userModel.currentTrips.count == 0 {
                 NoTripPlanned()
             }
+            Text(" You have \(userModel.currentTrips.count) trips planned.")
+                .font(.custom("Poppins-Regular", size: 13))
+                .frame(width: UIScreen.main.bounds.width * 0.8, alignment: .leading)
+                .padding()
             ScrollView {
-                ForEach(0..<userModel.trips.count, id: \.self) { index in
-                    
-                    
-                    ZStack{
-                        RoundedRectangle(cornerRadius: 20)
-                            .fill(Color.gray.opacity(0.2))
-                            .frame(width: UIScreen.main.bounds.width * 0.8, height: 120)
-                            .shadow(color: .black, radius:2, x: 0, y: 3)  // << no offset by x
-                        HStack{
-                            Image(systemName: "bicycle")
-                                .resizable()
-                                .frame(width: 60, height: 60)
-                                .clipShape(Circle())
-                                .overlay(Circle().stroke(Color.black, lineWidth: 1))
-                                
-                            Spacer()
-                            VStack (alignment: .leading) {
-                                Text(userModel.trips[index].name)
-                                    .font(.custom("Poppins-Bold", size: 12))
-                                Text("\(userModel.trips[index].city), \(userModel.trips[index].state)")
-                                    .font(.custom("Poppins-Regular", size: 12))
-                                    .padding(.bottom, 5)
-                                
-                                Text("\(getDateString(date: userModel.trips[index].start)) - \(getDateString(date: userModel.trips[index].end))")
-                                    .font(.custom("Poppins-Regular", size: 12))
-                            }
-                            .padding(10)
-                            .frame(maxWidth: UIScreen.main.bounds.width * 0.60)
-
-                            Button{
-                                
-                            } label: {
-                                Image(systemName: "chevron.right")
-                                    .font(.title2)
-                                    .padding(10)
-                                    .background(Color("Dark Blue"))
-                                    .foregroundStyle(.white)
-                                    .clipShape(Circle())
-                            }
+                ForEach(0..<userModel.currentTrips.count, id: \.self) { index in
+                    HStack{
+                        Image(systemName: "bicycle")
+                            .resizable()
+                            .frame(width: 60, height: 60)
+                            .clipShape(Circle())
+                            .overlay(Circle().stroke(Color.black, lineWidth: 1))
+                        
+                        Spacer()
+                        VStack (alignment: .leading) {
+                            Text(userModel.currentTrips[index].name)
+                                .font(.custom("Poppins-Bold", size: 12))
+                            Text("\(userModel.currentTrips[index].city), \(userModel.currentTrips[index].state)")
+                                .font(.custom("Poppins-Regular", size: 12))
+                                .padding(.bottom, 5)
                             
+                            Text("\(getDateString(date: userModel.currentTrips[index].start)) - \(getDateString(date: userModel.currentTrips[index].end))")
+                                .font(.custom("Poppins-Regular", size: 12))
                         }
-                        .padding(35)
-                        .frame(width: UIScreen.main.bounds.width * 0.8, height: 120)
-                        .background(Color.white)
-                        .cornerRadius(20)
-                        .opacity(1)
+                        .padding(10)
+                        .frame(maxWidth: UIScreen.main.bounds.width * 0.60)
+                    }
+                    .padding(35)
+                    .frame(width: UIScreen.main.bounds.width * 0.8, height: 120)
+                    .background(Color.white)
+                    .cornerRadius(20)
+                    .opacity(1)
+                    .background(
+                        RoundedRectangle(cornerRadius: 25)
+                            .fill(Color.white)
+                            .shadow(color: .gray, radius: 2, x: 0, y: 2)
+                    )
+                    .onTapGesture {
+                        guard let tripID = userModel.currentTrips[index].id else {
+                            print("can't get tripID")
+                            return
+                        }
+                        print("tripID", tripID)
+                        // navigate to overview page
+                        navigateToOverview = true
+                    }
+                    .navigationDestination(isPresented: $navigateToOverview) {
+//                            OverviewView()
+//                                .environmentObject(userModel)
+//                                .environmentObject(viewModel)
                     }
                     .padding(.bottom, 20)
-                    
                 }
             }
 
@@ -178,27 +182,65 @@ struct CurrentTripsView: View  {
 
 struct PastTripsView: View {
 //    @State var pastTrips: [String] = ["New York", "Seattle", "Big Sur"]
-    @State var pastTrips: [String] = []
-    @State var tripDates: [String] = ["11/10/24 - 11/20/24", "11/20/24 - 11/25/24", "12/10/24 - 12/20/24"]
+    @EnvironmentObject var userModel: UserModel
+    
+
+
     var body: some View {
         VStack {
-            if pastTrips.count == 0 {
+            if userModel.pastTrips.count == 0 {
                 NoTripPlanned()
             }
-            ForEach(0..<pastTrips.count, id: \.self) { index in
-                HStack{
-                    Image(systemName: "bicycle")
-                    VStack (alignment: .leading) {
-                        Text("Trip to \(self.pastTrips[index])")
-                        Text("Dates: \(self.pastTrips[index])")
+            Text("You had \(userModel.pastTrips.count) past trips.")
+                .font(.custom("Poppins-Regular", size: 13))
+                .frame(width: UIScreen.main.bounds.width * 0.8, alignment: .leading)
+                .padding()
+            ScrollView {
+                ForEach(0..<userModel.pastTrips.count, id: \.self) { index in
+                    HStack{
+                        Image(systemName: "bicycle")
+                            .resizable()
+                            .frame(width: 60, height: 60)
+                            .clipShape(Circle())
+                            .overlay(Circle().stroke(Color.black, lineWidth: 1))
+                        
+                        Spacer()
+                        VStack (alignment: .leading) {
+                            Text(userModel.pastTrips[index].name)
+                                .font(.custom("Poppins-Bold", size: 12))
+                            Text("\(userModel.pastTrips[index].city), \(userModel.pastTrips[index].state)")
+                                .font(.custom("Poppins-Regular", size: 12))
+                                .padding(.bottom, 5)
+                            
+                            Text("\(getDateString(date: userModel.pastTrips[index].start)) - \(getDateString(date: userModel.pastTrips[index].end))")
+                                .font(.custom("Poppins-Regular", size: 12))
+                        }
+                        .padding(10)
+                        .frame(maxWidth: UIScreen.main.bounds.width * 0.60)
                     }
-                    .padding(20)
+                    .padding(35)
+                    .frame(width: UIScreen.main.bounds.width * 0.8, height: 120)
+                    .background(Color.white)
+                    .cornerRadius(20)
+                    .opacity(1)
+                    .background(
+                        RoundedRectangle(cornerRadius: 25)
+                            .fill(Color.white)
+                            .shadow(color: .gray, radius: 2, x: 0, y: 2)
+                    )
+                    .onTapGesture {
+                        guard let tripID = userModel.pastTrips[index].id else {
+                            print("can't get tripID")
+                            return
+                        }
+                        print("tripID", tripID)
+                    }
+                    .padding(.bottom, 20)
+                    }
                 }
-                
-            }
+
         }
         .padding(.bottom, 40)
-        .padding(.top, 40)
     }
 }
 

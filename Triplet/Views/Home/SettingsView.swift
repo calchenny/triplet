@@ -14,13 +14,9 @@ struct SettingView: View {
     @State var signedOut = false
     var body: some View {
         VStack {
+            Spacer()
             VStack{
-                Image(systemName: "bicycle")
-                    .resizable()
-                    .frame(width: 100, height: 100)
-                    .clipShape(Circle())
-                    .overlay(Circle().stroke(Color.black, lineWidth: 1))
-                Text("Billy Bobby Brown")
+                Text("Setting")
                     .font(.custom("Poppins-Regular", size: 18))
             }
             .padding()
