@@ -24,16 +24,46 @@ struct AddPlaceView: View {
     private func getNearByLandmarks() {
         let request = MKLocalSearch.Request()
         request.naturalLanguageQuery = search
+                
+        let lat = itineraryModel.trip?.destination.latitude ?? 47.608013
+        let lon = itineraryModel.trip?.destination.latitude ?? -122.335167
+        
+        var region = MKCoordinateRegion(
+            center: CLLocationCoordinate2D(latitude: lat, longitude: lon),
+            span: MKCoordinateSpan(latitudeDelta: 0.5, longitudeDelta: 0.5)
+        )
+        
+        // Limiting the search for events to around the destination
+        request.region = region
+        request.pointOfInterestFilter = .includingAll // Include all types of points of interest
         
         let search = MKLocalSearch(request: request)
+        
         search.start {(response, error) in
             if let response = response {
-                let mapItems = response.mapItems
-                self.landmarks = mapItems.map {
-                    LandmarkViewModel(placemark: $0.placemark)
+                var newLandmarks: [LandmarkViewModel] = [] // Create a new array to store filtered landmarks
+
+                for item in response.mapItems {
+                    if let eventLocation = item.placemark.location {
+                        
+                        if let tripLocation = itineraryModel.trip?.destination {
+                            
+                            let coord = CLLocation(latitude: tripLocation.latitude, longitude: tripLocation.longitude)
+                            
+                            let distance = coord.distance(from: eventLocation)
+                            
+                            // Only return locations that are within 20 mile radius (approx. 32000 meters)
+                            if distance <= 32000 {
+                                newLandmarks.append(LandmarkViewModel(placemark: item.placemark))
+                            }
+                        }
+                    }
                 }
+                // Update the landmarks array outside the loop to avoid multiple updates
+                self.landmarks = newLandmarks
             }
         }
+        
     }
     
     // Function to convert a string to EventType
@@ -41,30 +71,25 @@ struct AddPlaceView: View {
         return EventType(rawValue: category)
     }
     
-    let dateRange: ClosedRange<Date> = {
-        let calendar = Calendar.current
-        let startComponents = DateComponents(year: 2024, month: 3, day: 13)
-        let endComponents = DateComponents(year: 2024, month: 3, day:17)
-        return calendar.date(from:startComponents)!
-            ...
-            calendar.date(from:endComponents)!
-    }()
-    
     var body: some View {
         VStack {
             Text("Add a Place")
                 .font(.custom("Poppins-Bold", size: 40))
                 .padding(.bottom, 30)
                 .foregroundStyle(Color.darkBlue)
-            DatePicker(selection: $startDate, in: dateRange, displayedComponents: [.date, .hourAndMinute]) {
-                Text("Start:")
-                    .font(.custom("Poppins-Medium", size: 20))
-                    .foregroundStyle(Color.darkBlue)
-            }
-            DatePicker(selection: $endDate, in: dateRange, displayedComponents: [.date, .hourAndMinute]) {
-                Text("End:")
-                    .font(.custom("Poppins-Medium", size: 20))
-                    .foregroundStyle(Color.darkBlue)
+            if let trip = itineraryModel.trip,
+                let start = trip.start,
+                let end = trip.end {
+                DatePicker(selection: $startDate, in: start...end, displayedComponents: [.date, .hourAndMinute]) {
+                    Text("Start:")
+                        .font(.custom("Poppins-Medium", size: 20))
+                        .foregroundStyle(Color.darkBlue)
+                }
+                DatePicker(selection: $endDate, in: start...end, displayedComponents: [.date, .hourAndMinute]) {
+                    Text("End:")
+                        .font(.custom("Poppins-Medium", size: 20))
+                        .foregroundStyle(Color.darkBlue)
+                }
             }
 
             DropDownPicker(

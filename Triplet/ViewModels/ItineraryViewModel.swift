@@ -12,12 +12,10 @@ import MapKit
 import FirebaseFirestore
 
 class ItineraryViewModel: ObservableObject {
-    var tripId: String = "Placeholder tripIds"
+    @Published var trip: Trip?
     @Published var events: [Event] = []
-//    @Published var trip: Trip
-    
-    @Published var cameraPosition = MapCameraPosition.region(MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 47.608013, longitude: -122.335167), span: MKCoordinateSpan(latitudeDelta: 0.5, longitudeDelta: 0.5)))
-    
+    @Published var cameraPosition: MapCameraPosition?
+
     @Published var collapseProgress: CGFloat = 0
     
     let minHeight: CGFloat = 150.0
@@ -32,6 +30,14 @@ class ItineraryViewModel: ObservableObject {
     }
     
     func addEventToFirestore(_ event: Event) {
+        guard let trip else {
+            print("Missing trip")
+            return
+        }
+        guard let tripId = trip.id else {
+            print("Missing tripId")
+            return
+        }
         do {
             let eventReference = try Firestore.firestore().collection("trips").document(tripId).collection("events").addDocument(from: event)
             print("Event added to Firestore with ID: \(eventReference.documentID)")
@@ -60,6 +66,15 @@ class ItineraryViewModel: ObservableObject {
     
     
     func deleteEventFromFirestore(eventID: String) {
+        guard let trip else {
+            print("Missing trip")
+            return
+        }
+        guard let tripId = trip.id else {
+            print("Missing tripId")
+            return
+        }
+        
         let eventReference = db.collection("trips").document(tripId).collection("events").document(eventID)
         
         eventReference.delete { error in
@@ -71,7 +86,7 @@ class ItineraryViewModel: ObservableObject {
         }
     }
     
-    func subscribe() {
+    func subscribe(tripId: String) {
             if listenerRegistrations.isEmpty {
                 guard !tripId.isEmpty else {
                     print("Missing tripId")
@@ -98,7 +113,24 @@ class ItineraryViewModel: ObservableObject {
                     self.events = fetchedEvents
                     self.sortEvents()
                 })
+                
+                let tripQuery = db.document("trips/\(tripId)")
+                listenerRegistrations.append(tripQuery.addSnapshotListener { documentSnapshot, error in
+                    guard let document = documentSnapshot else {
+                      print("Error fetching document: \(error!)")
+                      return
+                    }
+                    do {
+                        let trip = try document.data(as: Trip.self)
+                        self.trip = trip
+                        self.cameraPosition = MapCameraPosition.region(MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: trip.destination.latitude, longitude: trip.destination.longitude), span: MKCoordinateSpan(latitudeDelta: 0.5, longitudeDelta: 0.5)))
+                    } catch {
+                        print(error)
+                    }
+                })
             }
+        
+        
         }
     
     func unsubscribe() {

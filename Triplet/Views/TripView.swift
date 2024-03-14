@@ -19,7 +19,7 @@ struct TripView: View {
                 Image(systemName: "text.book.closed")
             }
             NavigationStack {
-                ItineraryView()
+                ItineraryView(tripId: tripId)
             }
             .tabItem {
                 Image(systemName: "calendar")

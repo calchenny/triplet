@@ -8,6 +8,7 @@
 import SwiftUI
 import EventKit
 import ScalingHeaderScrollView
+import PopupView
 import MapKit
 import CoreLocation
 import FirebaseFirestore
@@ -19,11 +20,16 @@ struct ItineraryView: View {
     
     @State var goToDayView = false
     @State var searchText: String = ""
-    
+    @State var showMapView: Bool = false
     @State var showAddEventSheet: Bool = false
     
     @State private var reverseGeocodedAddress: String = ""
     
+    var tripId: String
+    
+    init(tripId: String) {
+        self.tripId = tripId
+    }
     
     func getHeaderWidth(screenWidth: CGFloat) -> CGFloat {
         let maxWidth = screenWidth * 0.9
@@ -72,6 +78,20 @@ struct ItineraryView: View {
         return dateFormatter.string(from: date)
     }
 
+    func datesInRange(from startDate: Date, to endDate: Date) -> [Date] {
+        var dates: [Date] = []
+        var currentDate = startDate
+        
+        let calendar = Calendar.current
+        
+        while currentDate <= endDate {
+            dates.append(currentDate)
+            currentDate = calendar.date(byAdding: .day, value: 1, to: currentDate)!
+        }
+        
+        return dates
+    }
+    
     func reverseGeocoding(latitude: Double, longitude: Double, completion: @escaping (CLPlacemark?) -> Void) {
         let geocoder = CLGeocoder()
         let location = CLLocation(latitude: latitude, longitude: longitude)
@@ -92,18 +112,31 @@ struct ItineraryView: View {
         ScalingHeaderScrollView {
             ZStack(alignment: .topLeading) {
                 ZStack(alignment: .bottom) {
-                    Map(position: $itineraryModel.cameraPosition)
+                    Map(position: Binding(
+                        get: {
+                            guard let cameraPosition = itineraryModel.cameraPosition else {
+                                return MapCameraPosition.region(MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 47.608013, longitude: -122.335167), span: MKCoordinateSpan(latitudeDelta: 0.5, longitudeDelta: 0.5)))
+                            }
+                            return cameraPosition
+                        },
+                        set: { itineraryModel.cameraPosition = $0 }
+                    ), interactionModes: [])
+                    .onTapGesture {
+                            showMapView = true
+                    }
                     RoundedRectangle(cornerRadius: 15)
                         .frame(width: getHeaderWidth(screenWidth: UIScreen.main.bounds.width), height: getHeaderHeight())
                         .foregroundStyle(.evenLighterBlue)
                         .overlay(
                             VStack {
-                                Text("Most Amazing Trip") // CHANGE THIS
-                                    .font(.custom("Poppins-Bold", size: getHeaderTitleSize()))
-                                    .foregroundStyle(Color.darkBlue)
-                                Text("Seattle, WA | 03/12 - 03/17") // CHANGE THIS
-                                    .font(.custom("Poppins-Regular", size: 13))
-                                    .foregroundStyle(.darkBlue)
+                                if let trip = itineraryModel.trip {
+                                    Text(trip.name)
+                                        .font(.custom("Poppins-Bold", size: getHeaderTitleSize()))
+                                        .foregroundStyle(Color("Dark Blue"))
+                                    Text("\(trip.city), \(trip.state) | \(getDateString(date: trip.start)) - \(getDateString(date: trip.end))")
+                                        .font(.custom("Poppins-Medium", size: 13))
+                                        .foregroundStyle(Color("Dark Blue"))
+                                }
                             }
                         )
                         .padding(.bottom, 30)
@@ -129,7 +162,7 @@ struct ItineraryView: View {
             Text("Itinerary")
                 .font(.custom("Poppins-Bold", size:30))
                 .foregroundStyle(Color.darkBlue)
-                .padding(10)
+                .padding(25)
             Button(action: {
                 showAddEventSheet.toggle()
             }) {
@@ -145,7 +178,7 @@ struct ItineraryView: View {
                 .background(Color.darkBlue)
                 .cornerRadius(10)
             }
-            .padding(.bottom, 5)
+            .padding(.bottom, 15)
             .padding(.top, 10)
             .sheet(isPresented: $showAddEventSheet) {
                 AddPlaceView()
@@ -159,67 +192,134 @@ struct ItineraryView: View {
                     .padding()
             } else {
                 ScrollView {
-                    
-                    ForEach(["03/13", "03/14", "03/15", "03/16", "03/17"], id: \.self) { day in // CHANGE THIS
+                    if let trip = itineraryModel.trip,
+                       let start = trip.start,
+                       let end = trip.end {
                         
-                        HStack {
-                            Spacer()
-                            Text(day)
-                                .font(.custom("Poppins-Bold", size:20))
-                                .foregroundStyle(Color.darkBlue)
-                            Spacer()
-                        }
-                        .background(Color.evenLighterBlue)
-                        .cornerRadius(20)
-                        .frame(maxWidth: .infinity)
-                        VStack {
-                            if itineraryModel.events.filter({formatDate($0.start) == day}).isEmpty {
-                                Text("No events planned.")
-                                    .font(.custom("Poppins-Regular", size: 13))
-                            } else {
-                                ForEach(itineraryModel.events.filter({formatDate($0.start) == day})) { event in
-                                    HStack(spacing: 10) {
-                                        // Image for the event's category
-                                        Image(systemName: getCategoryImageName(category: event.type.rawValue))
-                                            .resizable()
-                                            .frame(width: 30, height: 30)
-                                            .foregroundColor(.darkBlue)
-                                        
-                                        Divider()
-                                            .frame(width: 2)
-                                            .background(Color.darkBlue)
-                                        
-                                        // Event details
-                                        VStack(alignment: .leading) {
-                                            Text(event.name)
-                                                .font(.custom("Poppins-Bold", size: 20))
-                                                .foregroundStyle(Color.darkBlue)
-                                            Text("\(formatTime(event.start)) - \(formatTime(event.end))")
-                                                .font(.custom("Poppins-Bold", size: 15))
-                                            Text(event.address)
-                                                .font(.custom("Poppins-Regular", size: 13))
+                        let rangeOfDates = datesInRange(from: start, to: end)
+                        
+                        ForEach(rangeOfDates, id: \.self) { day in
+                            HStack {
+                                Spacer()
+                                Text(formatDate(day)) // Convert Date to String
+                                    .font(.custom("Poppins-Bold", size:20))
+                                    .foregroundStyle(Color.darkBlue)
+                                Spacer()
+                            }
+                            .background(Color.evenLighterBlue)
+                            .cornerRadius(20)
+                            .frame(maxWidth: .infinity)
+                            
+                            VStack {
+                                if itineraryModel.events.filter({formatDate($0.start) == formatDate(day)}).isEmpty {
+                                    Text("No events planned.")
+                                        .font(.custom("Poppins-Regular", size: 13))
+                                } else {
+                                    ForEach(itineraryModel.events.filter({formatDate($0.start) == formatDate(day)})) { event in
+                                        HStack(spacing: 10) {
+                                            // Image for the event's category
+                                            Image(systemName: getCategoryImageName(category: event.type.rawValue))
+                                                .resizable()
+                                                .frame(width: 30, height: 30)
+                                                .foregroundColor(.darkBlue)
+                                            
+                                            Divider()
+                                                .frame(width: 2)
+                                                .background(Color.darkBlue)
+                                            
+                                            // Event details
+                                            VStack(alignment: .leading) {
+                                                Text(event.name)
+                                                    .font(.custom("Poppins-Bold", size: 20))
+                                                    .foregroundStyle(Color.darkBlue)
+                                                Text("\(formatTime(event.start)) - \(formatTime(event.end))")
+                                                    .font(.custom("Poppins-Bold", size: 15))
+                                                Text(event.address)
+                                                    .font(.custom("Poppins-Regular", size: 13))
+                                            }
+                                            .padding()
+                                            Spacer()
+                                            Button {
+                                                itineraryModel.deleteEventFromFirestore(eventID: event.id ?? "")
+                                            } label: {
+                                                Image(systemName: "trash")
+                                                    .font(.title2)
+                                                    .padding()
+                                                    .background(Color("Dark Blue"))
+                                                    .foregroundStyle(.white)
+                                                    .clipShape(Circle())
+                                            }
+                                            .padding(.leading)
+                                            .tint(.primary)
                                         }
-                                        .padding()
-                                        Spacer()
-                                        Button {
-                                            itineraryModel.deleteEventFromFirestore(eventID: event.id ?? "")
-                                        } label: {
-                                            Image(systemName: "trash")
-                                                .font(.title2)
-                                                .padding()
-                                                .background(Color("Dark Blue"))
-                                                .foregroundStyle(.white)
-                                                .clipShape(Circle())
-                                        }
-                                        .padding(.leading)
-                                        .tint(.primary)
+                                        .padding(20)
                                     }
-                                    .padding(20)
                                 }
                             }
+                            .padding(.bottom, 20)
                         }
-                        .padding(.bottom, 20)
                     }
+                    
+//                    ForEach(["03/13", "03/14", "03/15", "03/16", "03/17"], id: \.self) { day in // CHANGE THIS
+//                        
+//                        HStack {
+//                            Spacer()
+//                            Text(day)
+//                                .font(.custom("Poppins-Bold", size:20))
+//                                .foregroundStyle(Color.darkBlue)
+//                            Spacer()
+//                        }
+//                        .background(Color.evenLighterBlue)
+//                        .cornerRadius(20)
+//                        .frame(maxWidth: .infinity)
+//                        VStack {
+//                            if itineraryModel.events.filter({formatDate($0.start) == day}).isEmpty {
+//                                Text("No events planned.")
+//                                    .font(.custom("Poppins-Regular", size: 13))
+//                            } else {
+//                                ForEach(itineraryModel.events.filter({formatDate($0.start) == day})) { event in
+//                                    HStack(spacing: 10) {
+//                                        // Image for the event's category
+//                                        Image(systemName: getCategoryImageName(category: event.type.rawValue))
+//                                            .resizable()
+//                                            .frame(width: 30, height: 30)
+//                                            .foregroundColor(.darkBlue)
+//                                        
+//                                        Divider()
+//                                            .frame(width: 2)
+//                                            .background(Color.darkBlue)
+//                                        
+//                                        // Event details
+//                                        VStack(alignment: .leading) {
+//                                            Text(event.name)
+//                                                .font(.custom("Poppins-Bold", size: 20))
+//                                                .foregroundStyle(Color.darkBlue)
+//                                            Text("\(formatTime(event.start)) - \(formatTime(event.end))")
+//                                                .font(.custom("Poppins-Bold", size: 15))
+//                                            Text(event.address)
+//                                                .font(.custom("Poppins-Regular", size: 13))
+//                                        }
+//                                        .padding()
+//                                        Spacer()
+//                                        Button {
+//                                            itineraryModel.deleteEventFromFirestore(eventID: event.id ?? "")
+//                                        } label: {
+//                                            Image(systemName: "trash")
+//                                                .font(.title2)
+//                                                .padding()
+//                                                .background(Color("Dark Blue"))
+//                                                .foregroundStyle(.white)
+//                                                .clipShape(Circle())
+//                                        }
+//                                        .padding(.leading)
+//                                        .tint(.primary)
+//                                    }
+//                                    .padding(20)
+//                                }
+//                            }
+//                        }
+//                        .padding(.bottom, 20)
+//                    }
                 }
                 .frame(maxWidth: .infinity)
             }
@@ -229,8 +329,23 @@ struct ItineraryView: View {
         .collapseProgress($itineraryModel.collapseProgress)
         .setHeaderSnapMode(.immediately)
         .ignoresSafeArea()
+        .popup(isPresented: $showMapView) {
+            MapView(showMapView: $showMapView)
+                .navigationBarBackButtonHidden(true)
+        } customize: { popup in
+            popup
+                .appearFrom(.top)
+                .type(.default)
+                .position(.center)
+                .animation(.easeIn)
+                .closeOnTap(false)
+                .closeOnTapOutside(false)
+                .useKeyboardSafeArea(true)
+                .isOpaque(true)
+                .backgroundColor(.black.opacity(0.25))
+        }
         .onAppear {
-            itineraryModel.subscribe()
+            itineraryModel.subscribe(tripId: tripId)
         }
         .onDisappear {
             itineraryModel.unsubscribe()
@@ -241,5 +356,5 @@ struct ItineraryView: View {
 
 
 #Preview {
-    ItineraryView()
+    ItineraryView(tripId: "bXQdm19F9v2DbjS4VPyi")
 }

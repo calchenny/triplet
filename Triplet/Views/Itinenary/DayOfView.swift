@@ -21,6 +21,7 @@ struct DayOfView: View {
     @State private var checkedEvents: Set<String> = []
     @State var isChecked = false
     @State var currentDate: Date = Date.now
+    @State var showMapView: Bool = false
     @State var showAddEventSheet: Bool = false
     
     @State private var reverseGeocodedAddress: String = ""
@@ -114,7 +115,18 @@ struct DayOfView: View {
             ScalingHeaderScrollView {
                 ZStack(alignment: .topLeading) {
                     ZStack(alignment: .bottom) {
-                        Map(position: $itineraryModel.cameraPosition)
+                        Map(position: Binding(
+                            get: {
+                                guard let cameraPosition = itineraryModel.cameraPosition else {
+                                    return MapCameraPosition.region(MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 47.608013, longitude: -122.335167), span: MKCoordinateSpan(latitudeDelta: 0.5, longitudeDelta: 0.5)))
+                                }
+                                return cameraPosition
+                            },
+                            set: { itineraryModel.cameraPosition = $0 }
+                        ), interactionModes: [])
+                        .onTapGesture {
+                                showMapView = true
+                        }
                         RoundedRectangle(cornerRadius: 15)
                             .frame(width: getHeaderWidth(screenWidth: geometry.size.width), height: getHeaderHeight())
                             .foregroundStyle(.evenLighterBlue)
@@ -202,7 +214,7 @@ struct DayOfView: View {
             .setHeaderSnapMode(.immediately)
             .ignoresSafeArea()
             .onAppear {
-                itineraryModel.subscribe()
+                itineraryModel.subscribe(tripId: "bXQdm19F9v2DbjS4VPyi")
             }
             .onDisappear {
                 itineraryModel.unsubscribe()
