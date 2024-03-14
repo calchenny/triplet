@@ -12,7 +12,6 @@ import CoreLocation
 
 struct MapView: View {
     @ObservedObject var locationManager = LocationManager()
-    @Environment(\.presentationMode) var present
     @State private var mapSelection: String?
     @State private var selectedMarkerName: String?
     @State private var selectedMarker: MKMapItem = MKMapItem()
@@ -23,7 +22,8 @@ struct MapView: View {
     @State private var position = MapCameraPosition.userLocation(followsHeading: true, fallback: .automatic)
     @State private var route: MKRoute?
     @State private var distanceToMarker: Double?
-    
+    @Binding var showMapView: Bool
+
     func getCategoryData(category: String) -> (image: String, color: Color) {
         switch category {
         case "Hospitals":
@@ -73,7 +73,7 @@ struct MapView: View {
     
     // Search the area around the user for important point of interests
     func queryLocations() {
-        let categories = ["Hospitals", "Police Stations", "Airport", 
+        let categories = ["Hospitals", "Police Stations", "Airport",
                           "Hotels", "ATM", "Car Rental", "Public Transport"]
         
         for category in categories {
@@ -269,11 +269,11 @@ struct MapView: View {
             VStack {
                 HStack {
                     Button(action: {
-                        present.wrappedValue.dismiss()
+                        showMapView.toggle()
                     }, label: {
                         Image(systemName: "arrowshape.backward.fill")
-                            .font(.headline)
-                            .padding(12)
+                            .font(.title3)
+                            .padding(15)
                             .background(.darkBlue)
                             .foregroundColor(.white)
                             .clipShape(Circle())
@@ -286,7 +286,7 @@ struct MapView: View {
                 
                 Spacer()
             }
-            .padding(.top, 60)
+            .padding(.top, 40)
             
             if showError {
                 AlertView(msg: alertMsg, show: $showError)
@@ -298,7 +298,7 @@ struct MapView: View {
     }
 }
 
-
-#Preview {
-    MapView()
-}
+//
+//#Preview {
+//    MapView()
+//}

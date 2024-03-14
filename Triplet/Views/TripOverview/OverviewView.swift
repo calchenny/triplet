@@ -13,6 +13,8 @@ import PopupView
 
 struct OverviewView: View {
     @StateObject var viewModel = OverviewViewModel()
+    @State var showMapView: Bool = false
+
     var tripId: String
     
     init(tripId: String) {
@@ -58,7 +60,10 @@ struct OverviewView: View {
                             return cameraPosition
                         },
                         set: { viewModel.cameraPosition = $0 }
-                    ))
+                    ), interactionModes: [])
+                    .onTapGesture {
+                            showMapView = true
+                    }   
                     RoundedRectangle(cornerRadius: 15)
                         .frame(width: getHeaderWidth(screenWidth: UIScreen.main.bounds.width), height: getHeaderHeight())
                         .foregroundStyle(Color("Even Lighter Blue"))
@@ -355,6 +360,21 @@ struct OverviewView: View {
                 .closeOnTap(false)
                 .closeOnTapOutside(false)
                 .useKeyboardSafeArea(true)
+                .backgroundColor(.black.opacity(0.25))
+        }
+        .popup(isPresented: $showMapView) {
+            MapView(showMapView: $showMapView)
+                .navigationBarBackButtonHidden(true)
+        } customize: { popup in
+            popup
+                .appearFrom(.top)
+                .type(.default)
+                .position(.center)
+                .animation(.easeIn)
+                .closeOnTap(false)
+                .closeOnTapOutside(false)
+                .useKeyboardSafeArea(true)
+                .isOpaque(true)
                 .backgroundColor(.black.opacity(0.25))
         }
         .onAppear {
