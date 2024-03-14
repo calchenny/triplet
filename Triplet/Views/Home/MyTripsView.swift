@@ -158,7 +158,7 @@ struct CurrentTripsView: View  {
     @EnvironmentObject var userModel: UserModel
     @State private var navigateToOverview: Bool = false
     @State private var tripID: String = ""
-    
+    @State private var isActive: Bool = false
     var body: some View {
         VStack {
             Text(" You have \(userModel.currentTrips.count) trips planned.")
@@ -227,15 +227,16 @@ struct CurrentTripsView: View  {
                             return
                         }
                         self.tripID = tripID
-                        
+                        self.isActive = (getDaysUntilTrip(start: userModel.currentTrips[index].start) == 0)
                         print("tripID", self.tripID)
                         // navigate to overview page
                         navigateToOverview = true
+                        
                     }
                     .navigationDestination(isPresented: $navigateToOverview) {
                         if self.tripID != "" {
                             NavigationStack {
-                                TripView(tripId: self.tripID)
+                                TripView(tripId: self.tripID, isActive: $isActive)
                             }
                             .navigationBarBackButtonHidden(true)
 
@@ -253,6 +254,7 @@ struct PastTripsView: View {
     @EnvironmentObject var userModel: UserModel
     @State private var navigateToOverview: Bool = false
     @State private var tripID: String = ""
+    @State private var isActive: Bool = false
     var body: some View {
         VStack {
             
@@ -316,7 +318,7 @@ struct PastTripsView: View {
                     .navigationDestination(isPresented: $navigateToOverview) {
                         if self.tripID != "" {
                             NavigationStack {
-                                TripView(tripId: self.tripID)
+                                TripView(tripId: self.tripID, isActive: $isActive)
                             }
                             .navigationBarBackButtonHidden(true)
 

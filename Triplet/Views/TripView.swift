@@ -9,9 +9,18 @@ import SwiftUI
 
 struct TripView: View {
     var tripId: String
-    
+    @Binding var isActive:Bool
     var body: some View {
         TabView {
+            if isActive {
+                NavigationStack {
+                    DayOfView()
+                }
+                .tabItem {
+                    Image(systemName: "star.fill")
+                }
+            }
+            
             NavigationStack {
                 OverviewView(tripId: tripId)
             }
@@ -35,6 +44,6 @@ struct TripView: View {
     }
 }
 
-#Preview {
-    TripView(tripId: "bXQdm19F9v2DbjS4VPyi")
-}
+//#Preview {
+//    TripView(tripId: "bXQdm19F9v2DbjS4VPyi", isActive: 0)
+//}

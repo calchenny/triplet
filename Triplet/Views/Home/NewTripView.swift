@@ -20,7 +20,7 @@ struct NewTripView: View {
     @State var tripName: String = ""
     @State var showDestinationSheet: Bool = false
     @State var navigateToOverview: Bool = false
-    
+    @State var isActive: Bool = false
     func createTrip() {
         
         guard let latitude = destinationViewModel.latitude else {
@@ -270,7 +270,7 @@ struct NewTripView: View {
             .tint(.darkBlue)
             .navigationDestination(isPresented: $navigateToOverview) {
                 if let tripId {
-                    TripView(tripId: tripId)
+                    TripView(tripId: tripId, isActive: $isActive)
                         .navigationBarBackButtonHidden(true)
                 }
             }
