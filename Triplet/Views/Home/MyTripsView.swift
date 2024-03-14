@@ -20,10 +20,10 @@ struct MyTripsView: View {
             Image(.fullIcon)
                 .resizable()
                 .scaledToFit()
-                .frame(width: UIScreen.main.bounds.width * 0.30, alignment: .center)
+                .frame(width: UIScreen.main.bounds.width * 0.40, alignment: .center)
             VStack(alignment: .leading) {
                 Text("My Trips")
-                    .font(.custom("Poppins-Bold", size: 20))
+                    .font(.custom("Poppins-Bold", size: 24))
                     .foregroundStyle(.darkBlue)
                 Picker("", selection: $tabSelection) {
                     Text("Upcoming Trips")
@@ -46,7 +46,7 @@ struct MyTripsView: View {
                 NavigationStack {
                     CurrentTripsView()
                 }
-                    .environmentObject(userModel)
+                .environmentObject(userModel)
             } else {
                 PastTripsView()
                     .environmentObject(userModel)
@@ -84,7 +84,7 @@ struct NoTripPlanned: View {
                 Text("No trip planned")
                     .padding(.bottom, 20)
                     .foregroundColor(.darkBlue)
-                    .font(.custom("Poppins-Bold", size: 22))
+                    .font(.custom("Poppins-Bold", size: 24))
                 Button {
                     
                 } label: {
@@ -162,7 +162,7 @@ struct CurrentTripsView: View  {
     var body: some View {
         VStack {
             Text(" You have \(userModel.currentTrips.count) trips planned.")
-                .font(.custom("Poppins-Regular", size: 13))
+                .font(.custom("Poppins-Regular", size: 16))
                 .frame(width: UIScreen.main.bounds.width * 0.8, alignment: .leading)
                 .padding()
             if userModel.currentTrips.count == 0 {
@@ -214,12 +214,10 @@ struct CurrentTripsView: View  {
                                              Color.white : .darkBlue)
                                 .padding(.trailing, 10)
                         }
-                        
-                        .padding(20)
+                        .padding(15)
                         .padding(.leading, 15)
-                       
                     }
-                    .padding(.bottom, 15)
+                    .padding(.bottom)
                     .background(Color.white)
                     .onTapGesture {
                         guard let tripID = userModel.currentTrips[index].id else {
@@ -244,7 +242,6 @@ struct CurrentTripsView: View  {
                 }
             }
             .frame(width: UIScreen.main.bounds.width * 0.85)
-            
         }
     }
 }
@@ -257,7 +254,7 @@ struct PastTripsView: View {
         VStack {
             
             Text("You had \(userModel.pastTrips.count) past trips.")
-                .font(.custom("Poppins-Regular", size: 13))
+                .font(.custom("Poppins-Regular", size: 16))
                 .frame(width: UIScreen.main.bounds.width * 0.8, alignment: .leading)
                 .padding()
             if userModel.pastTrips.count == 0 {
@@ -272,7 +269,6 @@ struct PastTripsView: View {
                             .fill(Color.white)
                             .shadow(color: .gray, radius: 5, x: 0, y: 3)
                             .frame(width: UIScreen.main.bounds.width * 0.8, height:120)
-                            .padding(.top, 10)
                         HStack {
                             VStack (alignment: .leading) {
                                 Text(userModel.pastTrips[index].name)
@@ -296,12 +292,10 @@ struct PastTripsView: View {
                                 .foregroundStyle(.darkBlue)
                                 .padding(.trailing, 10)
                         }
-                        
-                        .padding(20)
+                        .padding(15)
                         .padding(.leading, 15)
-                       
                     }
-                    .padding(.bottom, 15)
+                    .padding(.bottom)
                     .background(Color.white)
                     .onTapGesture {
                         guard let tripID = userModel.pastTrips[index].id else {
@@ -332,4 +326,6 @@ struct PastTripsView: View {
 
 #Preview {
     MyTripsView()
+        .environmentObject(UserModel())
+        .environmentObject(LoginViewModel())
 }
