@@ -128,7 +128,7 @@ struct OverviewView: View {
                         HStack {
                             Image(systemName: "plus")
                             Text("Add notes")
-                                .font(.custom("Poppins-Medium", size: 16))
+                                .font(.custom("Poppins-Regular", size: 16))
                             Spacer()
                         }
                         .padding(.bottom, 5)
@@ -145,7 +145,7 @@ struct OverviewView: View {
                 }
             } label: {
                 Text("Notes")
-                    .font(.custom("Poppins-Bold", size: 24))
+                    .font(.custom("Poppins-Bold", size: 20))
             }
             .frame(maxWidth: UIScreen.main.bounds.width * 0.85)
             .padding()
@@ -180,7 +180,7 @@ struct OverviewView: View {
                         HStack {
                             Image(systemName: "plus")
                             Text("Add another lodging")
-                                .font(.custom("Poppins-Medium", size: 16))
+                                .font(.custom("Poppins-Regular", size: 16))
                             Spacer()
                         }
                         .padding(.top)
@@ -190,7 +190,7 @@ struct OverviewView: View {
                 }
             } label: {
                 Text("Hotel & Lodging")
-                    .font(.custom("Poppins-Bold", size: 24))
+                    .font(.custom("Poppins-Bold", size: 20))
             }
             .frame(maxWidth: UIScreen.main.bounds.width * 0.85)
             .padding()
@@ -206,7 +206,7 @@ struct OverviewView: View {
                     HStack {
                         Image(systemName: "plus")
                         Text("Add another food spot")
-                            .font(.custom("Poppins-Medium", size: 16))
+                            .font(.custom("Poppins-Regular", size: 16))
                         Spacer()
                     }
                     .padding(.bottom, 5)
@@ -324,7 +324,7 @@ struct OverviewView: View {
                 .padding([.top, .leading, .trailing, .bottom])
             } label: {
                 Text("Food Spots")
-                    .font(.custom("Poppins-Bold", size: 24))
+                    .font(.custom("Poppins-Bold", size: 20))
             }
             .frame(maxWidth: UIScreen.main.bounds.width * 0.85)
             .padding()

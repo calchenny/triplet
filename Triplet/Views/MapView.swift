@@ -139,7 +139,7 @@ struct MapView: View {
     }
     
     var body: some View {
-        ZStack {
+        ZStack(alignment: .topLeading) {
             VStack {
                 Map(position: $position, selection: $mapSelection) {
                     // Make an always viewable pin of the user's location
@@ -266,35 +266,24 @@ struct MapView: View {
                 }
             })
             
-            VStack {
-                HStack {
-                    Button(action: {
-                        showMapView.toggle()
-                    }, label: {
-                        Image(systemName: "arrowshape.backward.fill")
-                            .font(.title3)
-                            .padding(15)
-                            .background(.darkTeal)
-                            .foregroundColor(.white)
-                            .clipShape(Circle())
-                            .shadow(radius: 4, x: 0, y: 4)
-                    })
-                    
-                    Spacer()
-                }
-                .padding(.leading, 20)
-                
-                Spacer()
+            Button {
+                showMapView.toggle()
+            } label: {
+                Image(systemName: "arrowshape.backward.fill")
+                    .font(.title2)
+                    .padding()
+                    .background(.darkTeal)
+                    .foregroundColor(.white)
+                    .clipShape(Circle())
             }
-            .padding(.top, 40)
-            
+            .padding(.top, 60)
+            .padding(.leading)
+            .tint(.primary)
             if showError {
                 AlertView(msg: alertMsg, show: $showError)
             }
-            
         }
-
-
+        .ignoresSafeArea()
     }
 }
 
