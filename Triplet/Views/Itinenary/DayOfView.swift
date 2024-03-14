@@ -23,7 +23,7 @@ struct DayOfView: View {
     @State var currentDate: Date = Date.now
     @State var showMapView: Bool = false
     @State var showAddEventSheet: Bool = false
-    
+    @State var navigateToHome: Bool = false
     @State private var reverseGeocodedAddress: String = ""
     private let timer = Timer.publish(every: 60, on: .main, in: .default).autoconnect()
     
@@ -158,6 +158,7 @@ struct DayOfView: View {
                             .padding(.bottom, 30)
                     }
                     Button {
+                        navigateToHome = true
                     } label: {
                         Image(systemName: "house")
                             .font(.title2)
@@ -279,6 +280,12 @@ struct DayOfView: View {
             .onDisappear {
                 itineraryModel.unsubscribe()
             }
+        }
+        .navigationDestination(isPresented: $navigateToHome) {
+            NavigationStack{
+                HomeView()
+            }
+            .navigationBarBackButtonHidden(true)
         }
         .onReceive(timer) { _ in
             
