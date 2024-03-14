@@ -21,34 +21,27 @@ struct NewTripView: View {
     @State var showDestinationSheet: Bool = false
     @State var navigateToOverview: Bool = false
     @State var isActive: Bool = false
+    
     func createTrip() {
-        guard let latitude = destinationViewModel.latitude else {
-            return
+        guard let latitude = destinationViewModel.latitude,
+              let longitude = destinationViewModel.longitude,
+              let city = destinationViewModel.city,
+              let state = destinationViewModel.state,
+              let uid = userModel.uid,
+              let start = Calendar.current.date(bySettingHour: 0, minute: 0, second: 0, of: startDate),
+              let end = Calendar.current.date(bySettingHour: 23, minute: 59, second: 59, of: endDate) else {
+                return
         }
-        
-        guard let longitude = destinationViewModel.longitude else {
-            return
-        }
-        
-        guard let city = destinationViewModel.city else {
-            return
-        }
-        
-        guard let state = destinationViewModel.state else {
-            return
-        }
-        guard let uid = userModel.uid else {
-            return
-        }
-        print("uid", uid)
+
         let trip = Trip(owner: uid,
-                    name: tripName,
-                    start: startDate,
-                    end: endDate,
-                    destination: GeoPoint.init(latitude: latitude, longitude: longitude),
-                    numGuests: guests,
-                    city: city,
-                    state: state)
+                        name: tripName,
+                        start: start,
+                        end: end,
+                        destination: GeoPoint(latitude: latitude, longitude: longitude),
+                        numGuests: guests,
+                        city: city,
+                        state: state)
+
         do {
             let ref = try Firestore.firestore().collection("trips").addDocument(from: trip)
             print("Added to Firestore")
@@ -56,9 +49,9 @@ struct NewTripView: View {
             tripId = ref.documentID
             navigateToOverview = true
         } catch {
-            print("Error: ",error)
+            print("Error: ", error)
         }
-        
+
         print("Created Trip: \(trip)")
     }
     
