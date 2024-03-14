@@ -86,10 +86,25 @@ struct ItineraryView: View {
         
         while currentDate <= endDate {
             dates.append(currentDate)
-            currentDate = calendar.date(byAdding: .day, value: 1, to: currentDate)!
+            
+            guard let day = calendar.date(byAdding: .day, value: 1, to: currentDate) else {
+                return [Date()]
+            }
+            
+            currentDate = day
         }
         
         return dates
+    }
+    
+    func dayOfWeek(_ date: Date) -> String {
+        let calendar = Calendar.current
+        let components = calendar.dateComponents([.weekday], from: date)
+        guard let weekday = components.weekday else { return "" }
+        
+        // Get the day of the week name from the weekday number
+        let dayName = calendar.weekdaySymbols[weekday - 1].capitalized
+        return dayName
     }
     
     func reverseGeocoding(latitude: Double, longitude: Double, completion: @escaping (CLPlacemark?) -> Void) {
@@ -199,7 +214,7 @@ struct ItineraryView: View {
                         ForEach(rangeOfDates, id: \.self) { day in
                             HStack {
                                 Spacer()
-                                Text(formatDate(day)) // Convert Date to String
+                                Text( "\(dayOfWeek(day)), \(formatDate(day))") // Convert Date to String
                                     .font(.custom("Poppins-Bold", size:20))
                                     .foregroundStyle(Color.darkTeal)
                                 Spacer()
