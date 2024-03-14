@@ -271,7 +271,7 @@ struct ItineraryView: View {
         .allowsHeaderCollapse()
         .collapseProgress($itineraryModel.collapseProgress)
         .setHeaderSnapMode(.immediately)
-        .ignoresSafeArea()
+        .ignoresSafeArea(edges: .top)
         .popup(isPresented: $showMapView) {
             MapView(showMapView: $showMapView)
                 .navigationBarBackButtonHidden(true)

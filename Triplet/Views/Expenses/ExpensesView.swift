@@ -211,7 +211,7 @@ struct ExpensesView: View {
         .allowsHeaderCollapse()
         .collapseProgress($expenseModel.collapseProgress)
         .setHeaderSnapMode(.immediately)
-        .ignoresSafeArea()
+        .ignoresSafeArea(edges: .top)
         .onAppear {
             expenseModel.subscribe(tripId: tripId)
         }

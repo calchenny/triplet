@@ -336,7 +336,7 @@ struct OverviewView: View {
         .allowsHeaderCollapse()
         .collapseProgress($viewModel.collapseProgress)
         .setHeaderSnapMode(.immediately)
-        .ignoresSafeArea()
+        .ignoresSafeArea(edges: .top)
         .popup(isPresented: $viewModel.showFoodPopup) {
             FoodPopupView()
                 .environmentObject(viewModel)
