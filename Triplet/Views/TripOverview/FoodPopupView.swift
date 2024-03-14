@@ -12,6 +12,7 @@ import Firebase
 struct FoodPopupView: View {
     @EnvironmentObject var overviewViewModel: OverviewViewModel
     @State var selectedFoodCategory: FoodCategory = .breakfast
+    @State var date: Date = Date()
     @State var location: String = ""
     @State var selectedLandmark: LandmarkViewModel?
     @State var landmarks: [LandmarkViewModel] = [LandmarkViewModel]()
@@ -82,7 +83,8 @@ struct FoodPopupView: View {
                             .foregroundStyle(.darkerGray)
                     }
                 }
-                .padding([.leading, .trailing, .bottom])
+                .padding([.leading, .trailing])
+                .padding(.bottom, 5)
                 VStack(alignment: .leading) {
                     Text("\(landmarks.count) Results")
                         .font(.custom("Poppins-Regular", size: 14))
@@ -117,32 +119,37 @@ struct FoodPopupView: View {
                     .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, maxHeight: 200)
                 }
                 .padding([.leading, .trailing])
-                HStack {
-                    VStack(alignment: .leading) {
-                        Text("Category")
-                            .font(.custom("Poppins-Medium", size: 16))
-                            .padding(.top)
-                        Menu {
-                            Picker("", selection: $selectedFoodCategory) {
-                                ForEach(FoodCategory.allCases, id: \.self) { category in
-                                    Text(category.rawValue)
-                                }
-                            }
-                        } label: {
-                            HStack {
-                                Text(selectedFoodCategory.rawValue)
-                                    .font(.custom("Poppins-Regular", size: 16))
-                                    .frame(minWidth: 150)
-                                    .foregroundStyle(.black)
-                                Image(systemName: "chevron.down")
-                                    .foregroundStyle(Color("Darker Gray"))
+                HStack(alignment: .center, spacing: 15) {
+                    Text("Category")
+                        .font(.custom("Poppins-Medium", size: 16))
+                    Menu {
+                        Picker("", selection: $selectedFoodCategory) {
+                            ForEach(FoodCategory.allCases, id: \.self) { category in
+                                Text(category.rawValue)
                             }
                         }
-                        .frame(maxWidth: 200, maxHeight: 25)
-                        .padding(5)
-                        .overlay(RoundedRectangle(cornerRadius: 5).stroke(Color("Darker Gray")))
+                    } label: {
+                        HStack {
+                            Text(selectedFoodCategory.rawValue)
+                                .font(.custom("Poppins-Regular", size: 16))
+                                .frame(minWidth: 150)
+                                .foregroundStyle(.black)
+                            Image(systemName: "chevron.down")
+                                .foregroundStyle(Color("Darker Gray"))
+                        }
                     }
-                    Spacer()
+                    .frame(maxWidth: .infinity, maxHeight: 25)
+                    .padding(5)
+                    .overlay(RoundedRectangle(cornerRadius: 5).stroke(Color("Darker Gray")))
+                }
+                .padding([.top, .leading, .trailing])
+                HStack(alignment: .center, spacing: 15) {
+                    Text("Date/Time")
+                        .font(.custom("Poppins-Medium", size: 16))
+                    DatePicker("Please enter a date", selection: $date)
+                        .labelsHidden()
+                        .frame(maxWidth: .infinity, maxHeight: 25)
+                        .tint(.darkTeal)
                 }
                 .padding([.leading, .trailing])
                 Button {
@@ -153,7 +160,8 @@ struct FoodPopupView: View {
                     overviewViewModel.addFoodPlace(name: selectedLandmark.name,
                                                    location: GeoPoint(latitude: selectedLandmark.coordinate.latitude, 
                                                                       longitude: selectedLandmark.coordinate.longitude),
-                                                   address: selectedLandmark.title,
+                                                   address: selectedLandmark.title, 
+                                                   start: date,
                                                    foodCategory: selectedFoodCategory)
                     overviewViewModel.showFoodPopup.toggle()
                 } label: {
