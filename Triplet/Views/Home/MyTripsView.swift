@@ -177,7 +177,7 @@ struct CurrentTripsView: View  {
                         HStack {
                             VStack (alignment: .leading) {
                                 Text(userModel.currentTrips[index].name)
-                                    .font(.custom("Poppins-Bold", size: 15))
+                                    .font(.custom("Poppins-Bold", size: 16))
                                     .frame(maxWidth: .infinity, alignment: .leading)
                                     .foregroundStyle(.darkTeal)
                                 Text("\(userModel.currentTrips[index].city), \(userModel.currentTrips[index].state)")
@@ -266,7 +266,7 @@ struct PastTripsView: View {
                         HStack {
                             VStack (alignment: .leading) {
                                 Text(userModel.pastTrips[index].name)
-                                    .font(.custom("Poppins-Bold", size: 15))
+                                    .font(.custom("Poppins-Bold", size: 16))
                                     .frame(maxWidth: .infinity, alignment: .leading)
                                     .foregroundStyle(.darkTeal)
                                 Text("\(userModel.pastTrips[index].city), \(userModel.pastTrips[index].state)")

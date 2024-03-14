@@ -75,7 +75,7 @@ struct ExpensesView: View {
         } content: {
             VStack {
                 Text("Expenses")
-                    .font(.custom("Poppins-Medium", size: 30))
+                    .font(.custom("Poppins-Bold", size: 30))
                     .foregroundColor(Color.darkTeal)
                     .padding()
                 Text("$\(expenseModel.currentTotal, specifier: "%.2f")")
@@ -84,7 +84,7 @@ struct ExpensesView: View {
                     .tint(Color.darkTeal)
                     .frame(minWidth: 0, maxWidth: 200)
                 Text("Budget: $\(expenseModel.budget, specifier: "%.2f")")
-                    .font(.custom("Poppins-Regular", size: 16))
+                    .font(.custom("Poppins-Medium", size: 16))
                     .foregroundColor(Color.darkTeal)
                     .padding(.bottom, 15)
             }
