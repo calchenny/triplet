@@ -12,7 +12,7 @@ struct TripView: View {
     var tripId: String
     @Binding var isActive:Bool
     @State var selectedIndex: Int = 0
-    let names = ["star", "text.book.closed", "calendar", "dollarsign.circle"]
+    let names = ["star", "text.book.closed", "list.clipboard", "dollarsign.square"]
     func wiggleButtonAt(_ index: Int, name: String) -> some View {
         WiggleButton(image: Image(systemName: name), maskImage: Image(systemName: "\(name).fill"), isSelected: index == selectedIndex)
             .scaleEffect(1.2)

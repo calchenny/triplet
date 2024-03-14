@@ -203,6 +203,7 @@ struct ItineraryView: View {
                     .font(.custom("Poppins-Medium", size: 16))
                     .foregroundColor(.darkerGray)
                     .padding()
+                    .padding(.top, 10)
             } else {
                 ScrollView {
                     if let trip = itineraryModel.trip,
