@@ -83,7 +83,7 @@ struct NoTripPlanned: View {
             VStack {
                 Text("No trip planned")
                     .padding(.bottom, 20)
-                    .foregroundColor(.darkTeal)
+                    .foregroundColor(.lighterGray)
                     .font(.custom("Poppins-Bold", size: 24))
                 Button {
                     
@@ -172,7 +172,7 @@ struct CurrentTripsView: View  {
                 ForEach(0..<userModel.currentTrips.count, id: \.self) { index in
                     ZStack {
                         RoundedRectangle(cornerRadius: 20)
-                            .fill(.evenLighterBlue)
+                            .fill(.lighterGray)
                             .frame(width: UIScreen.main.bounds.width * 0.8, height:120)
                         HStack {
                             VStack (alignment: .leading) {
@@ -261,7 +261,7 @@ struct PastTripsView: View {
                 ForEach(0..<userModel.pastTrips.count, id: \.self) { index in
                     ZStack {
                         RoundedRectangle(cornerRadius: 20)
-                            .fill(.evenLighterBlue)
+                            .fill(.lighterGray)
                             .frame(width: UIScreen.main.bounds.width * 0.8, height:120)
                         HStack {
                             VStack (alignment: .leading) {
