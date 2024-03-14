@@ -84,7 +84,7 @@
 /* Begin PBXFileReference section */
 		128284332B81FCCD00E3E084 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		129457E72BA18719005EFA4D /* DayOfView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayOfView.swift; sourceTree = "<group>"; };
-		129457EE2BA2B40C005EFA4D /* Triplet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Triplet.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		129457EE2BA2B40C005EFA4D /* Triplet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = Triplet.app; path = "/Users/danderekma/Documents/ECS 189E/triplet/build/Debug-iphoneos/Triplet.app"; sourceTree = "<absolute>"; };
 		24246BD32B97ED690028DAAF /* ItineraryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItineraryView.swift; sourceTree = "<group>"; };
 		24246BD42B97ED690028DAAF /* AddPlaceView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddPlaceView.swift; sourceTree = "<group>"; };
 		24246BD62B97ED690028DAAF /* NoteView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoteView.swift; sourceTree = "<group>"; };
@@ -257,7 +257,6 @@
 			isa = PBXGroup;
 			children = (
 				8935A4242B7F496200F62185 /* Triplet */,
-				129457EE2BA2B40C005EFA4D /* Triplet.app */,
 			);
 			sourceTree = "<group>";
 		};
