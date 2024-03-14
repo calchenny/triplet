@@ -17,8 +17,8 @@ struct LoadingView: View {
                 Image(.fullIcon)
                     .resizable()
                     .scaledToFit()
-                    .padding(.vertical, 100)
-                    .frame(width: UIScreen.main.bounds.width * 0.4, alignment: .center)
+                    .frame(width: UIScreen.main.bounds.width * 0.6, alignment: .center)
+                    .padding(.bottom)
                 ProgressView()
                     .controlSize(.large)
                     .progressViewStyle(.circular)
@@ -47,5 +47,6 @@ struct LoadingView: View {
     NavigationStack {
         LoadingView()
             .environmentObject(LoginViewModel())
+            .environmentObject(UserModel())
     }
 }

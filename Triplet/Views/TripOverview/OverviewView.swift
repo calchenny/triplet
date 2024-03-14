@@ -196,6 +196,7 @@ struct OverviewView: View {
                                 .font(.custom("Poppins-Medium", size: 16))
                             Spacer()
                         }
+                        .padding(.top)
                         .padding(.bottom, 5)
                         .tint(.gray)
                     }
@@ -395,7 +396,6 @@ struct OverviewView: View {
                 HomeView()
             }
             .navigationBarBackButtonHidden(true)
-            
         }
         .onAppear {
             viewModel.subscribe(tripId: tripId)

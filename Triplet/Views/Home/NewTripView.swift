@@ -22,7 +22,6 @@ struct NewTripView: View {
     @State var navigateToOverview: Bool = false
     @State var isActive: Bool = false
     func createTrip() {
-        
         guard let latitude = destinationViewModel.latitude else {
             return
         }

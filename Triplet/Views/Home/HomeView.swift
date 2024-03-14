@@ -32,7 +32,6 @@ struct HomeView: View {
             }
         }
         .tint(Color("Dark Blue"))
-
     }
 }
 

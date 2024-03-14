@@ -23,6 +23,17 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 struct TripletApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     
+    init() {
+        UISegmentedControl.appearance()
+            .backgroundColor = UIColor(Color.evenLighterBlue)
+        UISegmentedControl.appearance()
+            .selectedSegmentTintColor = UIColor(Color.darkBlue)
+        UISegmentedControl.appearance()
+            .setTitleTextAttributes([.foregroundColor: UIColor(Color.darkBlue), .font: UIFont(name: "Poppins-Regular", size: 14) as Any], for: .normal)
+        UISegmentedControl.appearance()
+            .setTitleTextAttributes([.foregroundColor: UIColor(Color.evenLighterBlue)], for: .selected)
+    }
+    
     var body: some Scene {
         WindowGroup {
             RootView()
