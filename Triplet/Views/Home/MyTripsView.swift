@@ -210,7 +210,8 @@ struct CurrentTripsView: View  {
                             .foregroundColor((getDaysUntilTrip(start: userModel.currentTrips[index].start) == 0) ?
                                              Color.white : Color.black)
                             Image(systemName: "chevron.right")
-                                .foregroundStyle(.darkBlue)
+                                .foregroundStyle((getDaysUntilTrip(start: userModel.currentTrips[index].start) == 0) ?
+                                             Color.white : .darkBlue)
                                 .padding(.trailing, 10)
                         }
                         
