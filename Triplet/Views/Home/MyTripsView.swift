@@ -173,28 +173,29 @@ struct CurrentTripsView: View  {
                         
                         .padding(20)
                         .padding(.leading, 15)
-                        .onTapGesture {
-                            guard let tripID = userModel.currentTrips[index].id else {
-                                print("can't get tripID")
-                                return
-                            }
-                            self.tripID = tripID
-                            print("tripID", self.tripID)
-                            // navigate to overview page
-                            navigateToOverview = true
-                        }
-                        .navigationDestination(isPresented: $navigateToOverview) {
-                            if self.tripID != "" {
-                                NavigationStack {
-                                    TripView(tripId: self.tripID)
-                                }
-                                .navigationBarBackButtonHidden(true)
-
-                            }
-                        }
+                       
                     }
                     .padding(.bottom, 15)
+                    .background(Color.white)
+                    .onTapGesture {
+                        guard let tripID = userModel.currentTrips[index].id else {
+                            print("can't get tripID")
+                            return
+                        }
+                        self.tripID = tripID
+                        print("tripID", self.tripID)
+                        // navigate to overview page
+                        navigateToOverview = true
+                    }
+                    .navigationDestination(isPresented: $navigateToOverview) {
+                        if self.tripID != "" {
+                            NavigationStack {
+                                TripView(tripId: self.tripID)
+                            }
+                            .navigationBarBackButtonHidden(true)
 
+                        }
+                    }
                 }
             }
             .frame(width: UIScreen.main.bounds.width * 0.85)
@@ -206,6 +207,7 @@ struct CurrentTripsView: View  {
 struct PastTripsView: View {
     @EnvironmentObject var userModel: UserModel
     @State private var navigateToOverview: Bool = false
+    @State private var tripID: String = ""
     var body: some View {
         VStack {
             
@@ -216,6 +218,8 @@ struct PastTripsView: View {
             if userModel.pastTrips.count == 0 {
                 NoTripPlanned()
             }
+            
+            
             ScrollView {
                 ForEach(0..<userModel.pastTrips.count, id: \.self) { index in
                     ZStack {
@@ -243,32 +247,39 @@ struct PastTripsView: View {
                                         .foregroundStyle(Color.gray)
                                 }
                             }
-                            
+                            Image(systemName: "chevron.right")
+                                .foregroundStyle(.darkBlue)
+                                .padding(.trailing, 10)
                         }
                         
                         .padding(20)
                         .padding(.leading, 15)
-                        .onTapGesture {
-                            guard let tripID = userModel.pastTrips[index].id else {
-                                print("can't get tripID")
-                                return
-                            }
-                            print("tripID", tripID)
-                            // navigate to overview page
-                            navigateToOverview = true
-                        }
-                        .navigationDestination(isPresented: $navigateToOverview) {
-    //                            OverviewView()
-    //                                .environmentObject(userModel)
-    //                                .environmentObject(viewModel)
-                        }
+                       
                     }
                     .padding(.bottom, 15)
+                    .background(Color.white)
+                    .onTapGesture {
+                        guard let tripID = userModel.pastTrips[index].id else {
+                            print("can't get tripID")
+                            return
+                        }
+                        self.tripID = tripID
+                        print("tripID", self.tripID)
+                        // navigate to overview page
+                        navigateToOverview = true
+                    }
+                    .navigationDestination(isPresented: $navigateToOverview) {
+                        if self.tripID != "" {
+                            NavigationStack {
+                                TripView(tripId: self.tripID)
+                            }
+                            .navigationBarBackButtonHidden(true)
 
+                        }
+                    }
                 }
             }
             .frame(width: UIScreen.main.bounds.width * 0.85)
-            
         }
         .padding(.bottom, 40)
     }
