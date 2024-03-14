@@ -172,18 +172,14 @@ struct CurrentTripsView: View  {
                 ForEach(0..<userModel.currentTrips.count, id: \.self) { index in
                     ZStack {
                         RoundedRectangle(cornerRadius: 20)
-                            .fill((getDaysUntilTrip(start: userModel.currentTrips[index].start) == 0) ?
-                                    .darkBlue : Color.white )
-                            .shadow(color: .gray, radius: 5, x: 0, y: 3)
+                            .fill(.evenLighterBlue)
                             .frame(width: UIScreen.main.bounds.width * 0.8, height:120)
-                            .padding(.top, 10)
                         HStack {
                             VStack (alignment: .leading) {
                                 Text(userModel.currentTrips[index].name)
                                     .font(.custom("Poppins-Bold", size: 15))
                                     .frame(maxWidth: .infinity, alignment: .leading)
-                                    .foregroundStyle((getDaysUntilTrip(start: userModel.currentTrips[index].start) == 0) ?
-                                            Color.white: .darkBlue)
+                                    .foregroundStyle(.darkBlue)
                                 Text("\(userModel.currentTrips[index].city), \(userModel.currentTrips[index].state)")
                                     .font(.custom("Poppins-Regular", size: 12))
                                     .padding(.bottom, 5)
@@ -194,25 +190,22 @@ struct CurrentTripsView: View  {
                                         
                                      Text("(\(getTripDuration(start: userModel.currentTrips[index].start, end: userModel.currentTrips[index].end)) days)")
                                         .font(.custom("Poppins-Regular", size: 12))
-                                        .foregroundStyle((getDaysUntilTrip(start: userModel.currentTrips[index].start) == 0) ?
-                                                         Color.white: Color.gray)
+                                        .foregroundStyle(Color.gray)
                                 }
                                 
                                 if (getDaysUntilTrip(start: userModel.currentTrips[index].start) == 0) {
                                     Text("Happening Now")
                                         .font(.custom("Poppins-Regular", size: 12))
+                                        .foregroundStyle(Color.red)
                                 } else {
                                     Text("\(getDaysUntilTrip(start: userModel.currentTrips[index].start)) days until trip starts")
                                         .font(.custom("Poppins-Regular", size: 12))
                                 }
                                 
                             }
-                            .foregroundColor((getDaysUntilTrip(start: userModel.currentTrips[index].start) == 0) ?
-                                             Color.white : Color.black)
                             Image(systemName: "chevron.right")
-                                .foregroundStyle((getDaysUntilTrip(start: userModel.currentTrips[index].start) == 0) ?
-                                             Color.white : .darkBlue)
                                 .padding(.trailing, 10)
+                                .foregroundStyle(.darkBlue)
                         }
                         .padding(15)
                         .padding(.leading, 15)
@@ -268,8 +261,7 @@ struct PastTripsView: View {
                 ForEach(0..<userModel.pastTrips.count, id: \.self) { index in
                     ZStack {
                         RoundedRectangle(cornerRadius: 20)
-                            .fill(Color.white)
-                            .shadow(color: .gray, radius: 5, x: 0, y: 3)
+                            .fill(.evenLighterBlue)
                             .frame(width: UIScreen.main.bounds.width * 0.8, height:120)
                         HStack {
                             VStack (alignment: .leading) {
