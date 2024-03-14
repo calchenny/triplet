@@ -25,7 +25,7 @@ struct AddNewExpenseView: View {
 
     var body: some View {
 
-        let categories = ["Select One", "Housing", "Transportation", "Food", "Other"]
+        let categories = ["Select One", "Activities", "Entertainment", "Food", "Housing", "Shopping", "Transportation", "Other"]
 
         VStack {
             Text("New Expense")
@@ -81,7 +81,7 @@ struct AddNewExpenseView: View {
                         Text($0)
                     }
                 }
-                .frame(width: 150)
+                .frame(width: 160)
                 .tint(.gray)
                 .overlay(
                     RoundedRectangle(cornerRadius: 10)

@@ -122,6 +122,22 @@ struct ExpensesView: View {
                                         }
                                         .frame(width: 50)
                                     }
+                                    else if (expense.category == "Activities") {
+                                        HStack {
+                                            Image(systemName: "figure.walk")
+                                                .font(.custom("Poppins-Regular", size: 16))
+                                            .padding([.leading, .trailing], 10)
+                                        }
+                                        .frame(width: 50)
+                                    }
+                                    else if (expense.category == "Entertainment") {
+                                        HStack {
+                                            Image(systemName: "popcorn.fill")
+                                                .font(.custom("Poppins-Regular", size: 16))
+                                            .padding([.leading, .trailing], 10)
+                                        }
+                                        .frame(width: 50)
+                                    }
                                     else if (expense.category == "Transportation") {
                                         HStack {
                                             Image(systemName: "bus.fill")
