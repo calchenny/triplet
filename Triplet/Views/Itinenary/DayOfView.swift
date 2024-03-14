@@ -26,6 +26,11 @@ struct DayOfView: View {
     @State var navigateToHome: Bool = false
     @State private var reverseGeocodedAddress: String = ""
     private let timer = Timer.publish(every: 60, on: .main, in: .default).autoconnect()
+    var tripId: String
+    
+    init(tripId: String) {
+        self.tripId = tripId
+    }
     
     func getDayOfWeek(_ date: Date) -> String {
         let dateFormatter = DateFormatter()
@@ -140,19 +145,21 @@ struct DayOfView: View {
                             set: { itineraryModel.cameraPosition = $0 }
                         ), interactionModes: [])
                         .onTapGesture {
-                                showMapView = true
+                            showMapView = true
                         }
                         RoundedRectangle(cornerRadius: 15)
-                            .frame(width: getHeaderWidth(screenWidth: geometry.size.width), height: getHeaderHeight())
+                            .frame(width: getHeaderWidth(screenWidth: UIScreen.main.bounds.width), height: getHeaderHeight())
                             .foregroundStyle(.evenLighterBlue)
                             .overlay(
                                 VStack {
-                                    Text("Most Amazing Trip") // CHANGE THIS
-                                        .font(.custom("Poppins-Bold", size: getHeaderTitleSize()))
-                                        .foregroundStyle(Color.darkTeal)
-                                    Text("Seattle, WA | 3/13 - 3/17") // CHANGE THIS
-                                        .font(.custom("Poppins-Regular", size: 15))
-                                        .foregroundStyle(.darkTeal)
+                                    if let trip = itineraryModel.trip {
+                                        Text(trip.name)
+                                            .font(.custom("Poppins-Bold", size: getHeaderTitleSize()))
+                                            .foregroundStyle(Color("Dark Teal"))
+                                        Text("\(trip.city), \(trip.state) | \(getDateString(date: trip.start)) - \(getDateString(date: trip.end))")
+                                            .font(.custom("Poppins-Medium", size: 13))
+                                            .foregroundStyle(Color("Dark Teal"))
+                                    }
                                 }
                             )
                             .padding(.bottom, 30)
@@ -261,10 +268,10 @@ struct DayOfView: View {
                         }
                     
                     } label: {
-                        Text("Next Events")
-                            .font(.custom("Poppins-Regular", size: 20))
-                            .foregroundStyle(Color.darkTeal)
-                            
+//                        Text("Next Events")
+//                            .font(.custom("Poppins-Regular", size: 20))
+//                            .foregroundStyle(Color.darkTeal)
+//                            
                     }
                 }
                 
@@ -275,7 +282,7 @@ struct DayOfView: View {
             .setHeaderSnapMode(.immediately)
             .ignoresSafeArea()
             .onAppear {
-                itineraryModel.subscribe(tripId: "bXQdm19F9v2DbjS4VPyi")
+                itineraryModel.subscribe(tripId: tripId)
             }
             .onDisappear {
                 itineraryModel.unsubscribe()
@@ -296,5 +303,5 @@ struct DayOfView: View {
 }
 
 #Preview {
-    DayOfView()
+    DayOfView(tripId: "bXQdm19F9v2DbjS4VPyi")
 }

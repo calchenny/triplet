@@ -21,7 +21,7 @@ struct TripView: View {
     var body: some View {
         if selectedIndex == 0 {
             NavigationStack {
-                DayOfView()
+                DayOfView(tripId: tripId)
             }
         } else if selectedIndex == 3 {
             NavigationStack {
