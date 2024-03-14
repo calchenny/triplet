@@ -121,7 +121,36 @@ func getTripDuration(start: Date?, end: Date?) -> Int {
     
     let calendar = Calendar.current
     let components = calendar.dateComponents([.day], from: start, to: end)
-    return components.day ?? 0
+    guard let day = components.day else {
+        print("Can't get day from component")
+        return 0
+    }
+    return day + 1
+    
+}
+
+func getDaysUntilTrip(start: Date?) -> Int {
+    guard let start else {
+        return 0
+    }
+    let currentDate = Date() // Initialize to today
+    
+    let calendar = Calendar.current
+    let components1 = calendar.dateComponents([.year, .month, .day], from: currentDate)
+    let components2 = calendar.dateComponents([.year, .month, .day], from: start)
+    let components = calendar.dateComponents([.day], from: currentDate, to: start)
+    // Compare dates
+    if components1.year == components2.year &&
+       components1.month == components2.month &&
+       components1.day == components2.day {
+        return 0
+    }
+    
+    guard let day = components.day else {
+        print("Can't get day from component")
+        return 0
+    }
+    return day
     
 }
 
@@ -129,9 +158,9 @@ struct CurrentTripsView: View  {
     @EnvironmentObject var userModel: UserModel
     @State private var navigateToOverview: Bool = false
     @State private var tripID: String = ""
+    
     var body: some View {
         VStack {
-            
             Text(" You have \(userModel.currentTrips.count) trips planned.")
                 .font(.custom("Poppins-Regular", size: 13))
                 .frame(width: UIScreen.main.bounds.width * 0.8, alignment: .leading)
@@ -143,7 +172,8 @@ struct CurrentTripsView: View  {
                 ForEach(0..<userModel.currentTrips.count, id: \.self) { index in
                     ZStack {
                         RoundedRectangle(cornerRadius: 20)
-                            .fill(Color.white)
+                            .fill((getDaysUntilTrip(start: userModel.currentTrips[index].start) == 0) ?
+                                    .darkBlue : Color.white )
                             .shadow(color: .gray, radius: 5, x: 0, y: 3)
                             .frame(width: UIScreen.main.bounds.width * 0.8, height:120)
                             .padding(.top, 10)
@@ -152,7 +182,8 @@ struct CurrentTripsView: View  {
                                 Text(userModel.currentTrips[index].name)
                                     .font(.custom("Poppins-Bold", size: 15))
                                     .frame(maxWidth: .infinity, alignment: .leading)
-                                    .foregroundStyle(.darkBlue)
+                                    .foregroundStyle((getDaysUntilTrip(start: userModel.currentTrips[index].start) == 0) ?
+                                            Color.white: .darkBlue)
                                 Text("\(userModel.currentTrips[index].city), \(userModel.currentTrips[index].state)")
                                     .font(.custom("Poppins-Regular", size: 12))
                                     .padding(.bottom, 5)
@@ -163,9 +194,21 @@ struct CurrentTripsView: View  {
                                         
                                      Text("(\(getTripDuration(start: userModel.currentTrips[index].start, end: userModel.currentTrips[index].end)) days)")
                                         .font(.custom("Poppins-Regular", size: 12))
-                                        .foregroundStyle(Color.gray)
+                                        .foregroundStyle((getDaysUntilTrip(start: userModel.currentTrips[index].start) == 0) ?
+                                                         Color.white: Color.gray)
                                 }
+                                
+                                if (getDaysUntilTrip(start: userModel.currentTrips[index].start) == 0) {
+                                    Text("Happening Now")
+                                        .font(.custom("Poppins-Regular", size: 12))
+                                } else {
+                                    Text("\(getDaysUntilTrip(start: userModel.currentTrips[index].start)) days until trip starts")
+                                        .font(.custom("Poppins-Regular", size: 12))
+                                }
+                                
                             }
+                            .foregroundColor((getDaysUntilTrip(start: userModel.currentTrips[index].start) == 0) ?
+                                             Color.white : Color.black)
                             Image(systemName: "chevron.right")
                                 .foregroundStyle(.darkBlue)
                                 .padding(.trailing, 10)
@@ -183,6 +226,7 @@ struct CurrentTripsView: View  {
                             return
                         }
                         self.tripID = tripID
+                        
                         print("tripID", self.tripID)
                         // navigate to overview page
                         navigateToOverview = true
