@@ -237,11 +237,12 @@ struct ItineraryView: View {
                                             Image(systemName: getCategoryImageName(category: event.type.rawValue))
                                                 .resizable()
                                                 .frame(width: 30, height: 30)
+                                                .padding([.leading, .trailing])
                                                 .foregroundColor(.darkTeal)
                                             
                                             Divider()
                                                 .frame(width: 2)
-                                                .background(Color.darkTeal)
+                                                .backgroundStyle(.darkerGray)
                                             
                                             // Event details
                                             VStack(alignment: .leading) {
@@ -268,7 +269,7 @@ struct ItineraryView: View {
                                             .padding(.leading)
                                             .tint(.primary)
                                         }
-                                        .padding(20)
+                                        .padding([.leading, .trailing])
                                     }
                                 }
                             }
