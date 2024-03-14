@@ -51,7 +51,7 @@ class OverviewViewModel: ObservableObject {
         }
     }
     
-    func addFoodPlace(name: String, location: GeoPoint, address: String, foodCategory: FoodCategory) {
+    func addFoodPlace(name: String, location: GeoPoint, address: String, start: Date, foodCategory: FoodCategory) {
         guard let trip else {
             print("Missing trip")
             return
@@ -64,9 +64,9 @@ class OverviewViewModel: ObservableObject {
                               location: location,
                               type: EventType.food,
                               category: foodCategory,
-                              start: Date.now,
+                              start: start,
                               address: address,
-                              end: Date.now)
+                              end: start + 60 * 60)
         do {
             try db.collection("trips/\(tripId)/events").addDocument(from: foodPlace)
         } catch {
