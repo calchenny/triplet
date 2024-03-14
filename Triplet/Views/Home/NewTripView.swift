@@ -66,6 +66,7 @@ struct NewTripView: View {
         VStack {
             Text("Plan a new trip")
                 .font(.custom("Poppins-Bold", size: 32))
+                .foregroundStyle(Color("Dark Teal"))
                 .padding(.bottom, 5)
             
             Text("Build an itinerary and map out your upcoming travel plans")
@@ -76,6 +77,7 @@ struct NewTripView: View {
 
             Text("Where to?")
                 .font(.custom("Poppins-Bold", size: 16))
+                .foregroundStyle(Color("Dark Teal"))
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.top)
             
@@ -126,8 +128,9 @@ struct NewTripView: View {
                 
             }
             
-            Text("Dates (optional)")
+            Text("Dates")
                 .font(.custom("Poppins-Bold", size: 16))
+                .foregroundStyle(Color("Dark Teal"))
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.top)
             
@@ -197,10 +200,11 @@ struct NewTripView: View {
                 VStack {
                     Text("How many guests?")
                         .font(.custom("Poppins-Bold", size: 16))
+                        .foregroundStyle(Color("Dark Teal"))
                         .padding(.trailing)
                     Text("(Including yourself)")
                         .font(.custom("Poppins-Regular", size: 11))
-                        .foregroundStyle(.placeholder)
+                        .foregroundStyle(.darkerGray)
                         .padding(.trailing)
                 }
                 
@@ -231,9 +235,9 @@ struct NewTripView: View {
             }
             .padding(.top)
 
-            
             Text("Trip Name")
                 .font(.custom("Poppins-Bold", size: 16))
+                .foregroundStyle(Color("Dark Teal"))
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.top)
             

@@ -131,7 +131,7 @@ struct VerificationView: View {
                             RoundedRectangle(cornerRadius: 10)
                                 .stroke(
                                     pinList[pin].trimmingCharacters(in: .whitespaces) == "" ?
-                                    Color(.systemGray6) :
+                                    Color("Lighter Gray") :
                                     pinList[pin].trimmingCharacters(in: .whitespaces).count == 1 ?
                                     Color.green :
                                     Color.red
