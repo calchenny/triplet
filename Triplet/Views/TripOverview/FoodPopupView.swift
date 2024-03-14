@@ -65,26 +65,21 @@ struct FoodPopupView: View {
                             }
                     }
                 }
-                .padding(.bottom)
-                VStack(alignment: .leading) {
-                    Text("Add a place")
-                        .font(.custom("Poppins-Medium", size: 16))
-                    ZStack(alignment: .trailing) {
-                        TextField("Restaurant, Eatery, Etc.", text: $location)
-                            .padding(20)
-                            .frame(maxHeight: 35)
-                            .font(.custom("Poppins-Regular", size: 16))
-                            .overlay(RoundedRectangle(cornerRadius: 5).stroke(Color("Darker Gray")))
-                            .onChange(of: location) {
-                                getNearByLandmarks()
-                            }
-                        Image(systemName: "magnifyingglass")
-                            .padding(.trailing)
-                            .foregroundStyle(.darkerGray)
-                    }
+                .padding(20)
+                ZStack(alignment: .trailing) {
+                    TextField("Search restaurants, eateries, etc.", text: $location)
+                        .padding(20)
+                        .frame(maxHeight: 35)
+                        .font(.custom("Poppins-Regular", size: 16))
+                        .overlay(RoundedRectangle(cornerRadius: 5).stroke(Color("Darker Gray")))
+                        .onChange(of: location) {
+                            getNearByLandmarks()
+                        }
+                    Image(systemName: "magnifyingglass")
+                        .padding(.trailing)
+                        .foregroundStyle(.darkerGray)
                 }
-                .padding([.leading, .trailing])
-                .padding(.bottom, 5)
+                .padding([.leading, .trailing, .bottom], 20)
                 VStack(alignment: .leading) {
                     Text("\(landmarks.count) Results")
                         .font(.custom("Poppins-Regular", size: 14))
@@ -118,7 +113,7 @@ struct FoodPopupView: View {
                     }
                     .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, maxHeight: 200)
                 }
-                .padding([.leading, .trailing])
+                .padding([.leading, .trailing], 20)
                 HStack(alignment: .center, spacing: 15) {
                     Text("Category")
                         .font(.custom("Poppins-Medium", size: 16))
@@ -142,7 +137,8 @@ struct FoodPopupView: View {
                     .padding(5)
                     .overlay(RoundedRectangle(cornerRadius: 5).stroke(Color("Darker Gray")))
                 }
-                .padding([.top, .leading, .trailing])
+                .padding(.top)
+                .padding([.leading, .trailing], 20)
                 HStack(alignment: .center, spacing: 15) {
                     Text("Date/Time")
                         .font(.custom("Poppins-Medium", size: 16))
@@ -151,7 +147,7 @@ struct FoodPopupView: View {
                         .frame(maxWidth: .infinity, maxHeight: 25)
                         .tint(.darkTeal)
                 }
-                .padding([.leading, .trailing])
+                .padding([.leading, .trailing], 20)
                 Button {
                     guard let selectedLandmark else {
                         showAlert.toggle()
@@ -184,9 +180,8 @@ struct FoodPopupView: View {
                     Text("Please select a place")
                 }
             }
-            .padding()
         }
-        .padding([.leading, .trailing])
+        .padding()
         .frame(maxHeight: 600)
     }
 }

@@ -347,7 +347,6 @@ struct OverviewView: View {
                 .animation(.spring())
                 .closeOnTap(false)
                 .closeOnTapOutside(false)
-                .useKeyboardSafeArea(true)
                 .isOpaque(true)
                 .backgroundColor(.black.opacity(0.25))
         }
@@ -361,7 +360,6 @@ struct OverviewView: View {
                 .animation(.spring())
                 .closeOnTap(false)
                 .closeOnTapOutside(false)
-                .useKeyboardSafeArea(true)
                 .isOpaque(true)
                 .backgroundColor(.black.opacity(0.25))
         }
@@ -376,7 +374,6 @@ struct OverviewView: View {
                 .animation(.easeIn)
                 .closeOnTap(false)
                 .closeOnTapOutside(false)
-                .useKeyboardSafeArea(true)
                 .isOpaque(true)
                 .backgroundColor(.black.opacity(0.25))
         }
