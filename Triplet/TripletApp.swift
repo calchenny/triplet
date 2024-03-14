@@ -25,13 +25,13 @@ struct TripletApp: App {
     
     init() {
         UISegmentedControl.appearance()
-            .backgroundColor = UIColor(Color.evenLighterBlue)
+            .backgroundColor = UIColor(Color.lighterGray)
         UISegmentedControl.appearance()
             .selectedSegmentTintColor = UIColor(Color.darkTeal)
         UISegmentedControl.appearance()
-            .setTitleTextAttributes([.foregroundColor: UIColor(Color.darkTeal), .font: UIFont(name: "Poppins-Regular", size: 14) as Any], for: .normal)
+            .setTitleTextAttributes([.font: UIFont(name: "Poppins-Regular", size: 14) as Any], for: .normal)
         UISegmentedControl.appearance()
-            .setTitleTextAttributes([.foregroundColor: UIColor(Color.evenLighterBlue)], for: .selected)
+            .setTitleTextAttributes([.foregroundColor: UIColor(.white)], for: .selected)
     }
     
     var body: some Scene {
