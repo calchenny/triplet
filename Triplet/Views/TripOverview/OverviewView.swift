@@ -348,6 +348,7 @@ struct OverviewView: View {
                 .closeOnTap(false)
                 .closeOnTapOutside(false)
                 .useKeyboardSafeArea(true)
+                .isOpaque(true)
                 .backgroundColor(.black.opacity(0.25))
         }
         .popup(isPresented: $viewModel.showHousingPopup) {
@@ -361,6 +362,7 @@ struct OverviewView: View {
                 .closeOnTap(false)
                 .closeOnTapOutside(false)
                 .useKeyboardSafeArea(true)
+                .isOpaque(true)
                 .backgroundColor(.black.opacity(0.25))
         }
         .popup(isPresented: $showMapView) {

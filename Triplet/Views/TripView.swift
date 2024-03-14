@@ -45,7 +45,7 @@ struct TripView: View {
                 .selectedColor(.darkTeal)
                 .unselectedColor(.darkTeal.opacity(0.6))
                 .ballColor(.darkTeal)
-                .verticalPadding(20)
+                .verticalPadding(15)
                 .ballTrajectory(.teleport)
         } else {
             AnimatedTabBar(selectedIndex: $selectedIndex,
@@ -54,12 +54,12 @@ struct TripView: View {
                 .selectedColor(.darkTeal)
                 .unselectedColor(.darkTeal.opacity(0.6))
                 .ballColor(.darkTeal)
-                .verticalPadding(20)
+                .verticalPadding(15)
                 .ballTrajectory(.teleport)
         }
     }
 }
 
-//#Preview {
-//    TripView(tripId: "bXQdm19F9v2DbjS4VPyi", isActive: 0)
-//}
+#Preview {
+    TripView(tripId: "bXQdm19F9v2DbjS4VPyi", isActive: .constant(false))
+}
