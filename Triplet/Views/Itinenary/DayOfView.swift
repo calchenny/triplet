@@ -25,6 +25,7 @@ struct DayOfView: View {
     @State var showAddEventSheet: Bool = false
     
     @State private var reverseGeocodedAddress: String = ""
+    private let timer = Timer.publish(every: 60, on: .main, in: .default).autoconnect()
     
     func getDayOfWeek(_ date: Date) -> String {
         let dateFormatter = DateFormatter()
@@ -38,6 +39,20 @@ struct DayOfView: View {
             checkedEvents.remove(eventID)
         } else {
             checkedEvents.insert(eventID)
+        }
+    }
+    
+    // Function to refresh the screen if current time matches an event's start or end time
+    private func refreshScreenIfNeeded() {
+        let currentTime = Date()
+        let events = itineraryModel.events.filter { event in
+            // Check if current time matches event's start or end time
+            return currentTime >= event.start && currentTime <= event.end
+        }
+        
+        if !events.isEmpty {
+            // Refresh the screen if the current time matches any event's start or end time
+            currentDate = Date()
         }
     }
     
@@ -164,47 +179,92 @@ struct DayOfView: View {
                             .foregroundStyle(Color.darkBlue)
                     }
                     .padding(.top, 20)
-                    ForEach(itineraryModel.events.filter {Calendar.current.isDate($0.start, inSameDayAs: currentDate)}) { event in
-                        
+                    // Displaying only the current event corresponding to the current date
+                    if let currentEvent = itineraryModel.events.first(where: { Calendar.current.isDate($0.start, inSameDayAs: currentDate) && $0.start <= Date() && $0.end >= Date() }) {
                         HStack(spacing: 20) {
                             // Image for the event's category
-                            Image(systemName: getCategoryImageName(category: event.type.rawValue))
+                            Image(systemName: getCategoryImageName(category: currentEvent.type.rawValue))
                                 .resizable()
                                 .frame(width: 30, height: 30)
                                 .foregroundColor(.darkBlue)
                             
                             // Event details
                             VStack(alignment: .leading){
-                                Text(event.name)
+                                Text(currentEvent.name)
                                     .font(.custom("Poppins-Bold", size: 20))
                                     .foregroundStyle(Color.darkBlue)
-                                Text("\(formatTime(event.start)) - \(formatTime(event.end))")
+                                Text("\(formatTime(currentEvent.start)) - \(formatTime(currentEvent.end))")
                                     .font(.custom("Poppins-Bold", size: 15))
-                                Text(event.address)
+                                Text(currentEvent.address)
                                     .font(.custom("Poppins-Regular", size: 13))
                             }
                             .padding()
                             Spacer()
-                            // Checkbox (Toggle) for each event
+                            // Checkbox (Toggle) for the current event
                             Button(action: {
-                                toggleEventCheck(eventID: event.id ?? "")
+                                toggleEventCheck(eventID: currentEvent.id ?? "")
                             }) {
-                                Image(systemName: checkedEvents.contains(event.id ?? "") ? "checkmark.square" : "square")
+                                Image(systemName: checkedEvents.contains(currentEvent.id ?? "") ? "checkmark.square" : "square")
                                     .resizable()
                                     .frame(width: 20, height: 20)
                                     .foregroundColor(.darkBlue)
                             }
-                           
                         }
                         .padding(10)
                         .background(
                             RoundedRectangle(cornerRadius: 25)
                                 .fill(Color.white)
-                                .shadow(color: (isCurrentTimeWithinEventTime(event: event) ? .darkBlue : .clear), radius: 5, x: 0, y: 2)
+                                .shadow(color: (isCurrentTimeWithinEventTime(event: currentEvent) ? .darkBlue : .clear), radius: 5, x: 0, y: 2)
                         )
-                        
+                        .padding()
                     }
-                    .padding()
+                    
+                    DisclosureGroup{
+                        ForEach(itineraryModel.events.filter { event in
+                                               Calendar.current.isDate(event.start, inSameDayAs: currentDate) &&
+                                                   event.start > Date() && event.end > Date()
+                                           }) { event in
+                            
+                            HStack(spacing: 20) {
+                                // Image for the event's category
+                                Image(systemName: getCategoryImageName(category: event.type.rawValue))
+                                    .resizable()
+                                    .frame(width: 30, height: 30)
+                                    .foregroundColor(.darkBlue)
+                                
+                                // Event details
+                                VStack(alignment: .leading){
+                                    Text(event.name)
+                                        .font(.custom("Poppins-Bold", size: 20))
+                                        .foregroundStyle(Color.darkBlue)
+                                    Text("\(formatTime(event.start)) - \(formatTime(event.end))")
+                                        .font(.custom("Poppins-Bold", size: 15))
+                                    Text(event.address)
+                                        .font(.custom("Poppins-Regular", size: 13))
+                                }
+                                .padding()
+                                Spacer()
+                                // Checkbox (Toggle) for each event
+                                Button(action: {
+                                    toggleEventCheck(eventID: event.id ?? "")
+                                }) {
+                                    Image(systemName: checkedEvents.contains(event.id ?? "") ? "checkmark.square" : "square")
+                                        .resizable()
+                                        .frame(width: 20, height: 20)
+                                        .foregroundColor(.darkBlue)
+                                }
+                               
+                            }
+                            .padding(10)
+                            
+                        }
+                    
+                    } label: {
+                        Text("Next Events")
+                            .font(.custom("Poppins-Regular", size: 20))
+                            .foregroundStyle(Color.darkBlue)
+                            
+                    }
                 }
                 
             }
@@ -219,6 +279,10 @@ struct DayOfView: View {
             .onDisappear {
                 itineraryModel.unsubscribe()
             }
+        }
+        .onReceive(timer) { _ in
+            
+            refreshScreenIfNeeded()
         }
     }
             
