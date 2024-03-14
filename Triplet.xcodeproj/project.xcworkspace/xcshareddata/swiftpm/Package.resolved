@@ -1,5 +1,5 @@
 {
-  "originHash" : "c89acfb95d9169dda2d98edfc16aa1804b96691a9a524262e4f522fdc6de9229",
+  "originHash" : "b3eccc268efe6cf95d32a576d4f92ddcc2b0eeebff7a74bcd290db3df40323c7",
   "pins" : [
     {
       "identity" : "abseil-cpp-binary",
@@ -8,6 +8,15 @@
       "state" : {
         "revision" : "df308b8b46607675f2b9ec8e569109008f9155ce",
         "version" : "1.2022062300.1"
+      }
+    },
+    {
+      "identity" : "animatedtabbar",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/exyte/AnimatedTabBar.git",
+      "state" : {
+        "revision" : "f5f342227283e76c7b49371e735516bac3caef68",
+        "version" : "0.1.2"
       }
     },
     {

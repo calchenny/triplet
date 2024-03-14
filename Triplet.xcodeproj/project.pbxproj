@@ -35,7 +35,6 @@
 		8935A42A2B7F496300F62185 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8935A4292B7F496300F62185 /* Assets.xcassets */; };
 		8935A42D2B7F496300F62185 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8935A42C2B7F496300F62185 /* Preview Assets.xcassets */; };
 		89621B062B915053006C0848 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89621B052B915053006C0848 /* UserModel.swift */; };
-		89A6D89D2BA2CC56002BBC86 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 89A6D89C2BA2CC56002BBC86 /* GoogleService-Info.plist */; };
 		89B3F3BA2B8FA7C600D79E5D /* Poppins-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 89B3F3AB2B8FA70100D79E5D /* Poppins-Regular.ttf */; };
 		89B9FFC62B9ABF4D005C530A /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 89B9FFC52B9ABF4D005C530A /* Launch Screen.storyboard */; };
 		89B9FFC92B9ABFA3005C530A /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 89B9FFC82B9ABFA3005C530A /* FirebaseAnalytics */; };
@@ -78,13 +77,14 @@
 		89BDCE722B8FB46800C69895 /* LocationSearchViewData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BDCE712B8FB46800C69895 /* LocationSearchViewData.swift */; };
 		89C1396D2B8FF0CB00DEE0CD /* Poppins-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 89BDCE742B8FE28A00C69895 /* Poppins-Medium.ttf */; };
 		89C1396E2B8FF0CB00DEE0CD /* Poppins-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 89BDCE732B8FE26500C69895 /* Poppins-Bold.ttf */; };
+		9255451B2BA2F33F007D9A94 /* AnimatedTabBar in Frameworks */ = {isa = PBXBuildFile; productRef = 9255451A2BA2F33F007D9A94 /* AnimatedTabBar */; };
 		92B3F97D2B9B10A600819D0E /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B3F97C2B9B10A600819D0E /* LoadingView.swift */; };
+		92FFAE542BA2EBA60080CDD6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 92FFAE532BA2EBA60080CDD6 /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		128284332B81FCCD00E3E084 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		129457E72BA18719005EFA4D /* DayOfView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayOfView.swift; sourceTree = "<group>"; };
-		129457EE2BA2B40C005EFA4D /* Triplet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = Triplet.app; path = "/Users/danderekma/Documents/ECS 189E/triplet/build/Debug-iphoneos/Triplet.app"; sourceTree = "<absolute>"; };
 		24246BD32B97ED690028DAAF /* ItineraryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItineraryView.swift; sourceTree = "<group>"; };
 		24246BD42B97ED690028DAAF /* AddPlaceView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddPlaceView.swift; sourceTree = "<group>"; };
 		24246BD62B97ED690028DAAF /* NoteView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoteView.swift; sourceTree = "<group>"; };
@@ -111,7 +111,6 @@
 		8935A4292B7F496300F62185 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8935A42C2B7F496300F62185 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		89621B052B915053006C0848 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
-		89A6D89C2BA2CC56002BBC86 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		89B3F3AB2B8FA70100D79E5D /* Poppins-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Regular.ttf"; sourceTree = "<group>"; };
 		89B9FFC52B9ABF4D005C530A /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		89BAE34B2BA25876009A710B /* TripView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripView.swift; sourceTree = "<group>"; };
@@ -126,6 +125,8 @@
 		89BDCE732B8FE26500C69895 /* Poppins-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Bold.ttf"; sourceTree = "<group>"; };
 		89BDCE742B8FE28A00C69895 /* Poppins-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Medium.ttf"; sourceTree = "<group>"; };
 		92B3F97C2B9B10A600819D0E /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
+		92FFAE522BA2EB960080CDD6 /* Triplet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Triplet.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		92FFAE532BA2EBA60080CDD6 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -149,6 +150,7 @@
 				89B9FFE12B9ABFA3005C530A /* FirebaseFirestore in Frameworks */,
 				89BDCE4F2B8FAF1500C69895 /* PopupView in Frameworks */,
 				89B9FFEB2B9ABFA3005C530A /* FirebaseInAppMessaging-Beta in Frameworks */,
+				9255451B2BA2F33F007D9A94 /* AnimatedTabBar in Frameworks */,
 				89BDCE522B8FAF6D00C69895 /* ScalingHeaderScrollView in Frameworks */,
 				89B9FFCB2B9ABFA3005C530A /* FirebaseAnalyticsOnDeviceConversion in Frameworks */,
 				89B9FFF92B9ABFA3005C530A /* FirebaseRemoteConfigSwift in Frameworks */,
@@ -257,6 +259,7 @@
 			isa = PBXGroup;
 			children = (
 				8935A4242B7F496200F62185 /* Triplet */,
+				92FFAE522BA2EB960080CDD6 /* Triplet.app */,
 			);
 			sourceTree = "<group>";
 		};
@@ -268,7 +271,7 @@
 				128284142B81FAE500E3E084 /* ViewModels */,
 				128284132B81FADE00E3E084 /* Views */,
 				8935A4252B7F496200F62185 /* TripletApp.swift */,
-				89A6D89C2BA2CC56002BBC86 /* GoogleService-Info.plist */,
+				92FFAE532BA2EBA60080CDD6 /* GoogleService-Info.plist */,
 				89031F572B80012800282C88 /* Info.plist */,
 				8935A4292B7F496300F62185 /* Assets.xcassets */,
 				89B9FFC52B9ABF4D005C530A /* Launch Screen.storyboard */,
@@ -361,9 +364,10 @@
 				89B9FFF82B9ABFA3005C530A /* FirebaseRemoteConfigSwift */,
 				89B9FFFA2B9ABFA3005C530A /* FirebaseStorage */,
 				89B9FFFC2B9ABFA3005C530A /* FirebaseStorageCombine-Community */,
+				9255451A2BA2F33F007D9A94 /* AnimatedTabBar */,
 			);
 			productName = Triplet;
-			productReference = 129457EE2BA2B40C005EFA4D /* Triplet.app */;
+			productReference = 92FFAE522BA2EB960080CDD6 /* Triplet.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -395,6 +399,7 @@
 				89BDCE502B8FAF6D00C69895 /* XCRemoteSwiftPackageReference "ScalingHeaderScrollView" */,
 				24C780952B982B3A00552B57 /* XCRemoteSwiftPackageReference "PhoneNumberKit" */,
 				89B9FFC72B9ABFA3005C530A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				925545192BA2F33F007D9A94 /* XCRemoteSwiftPackageReference "AnimatedTabBar" */,
 			);
 			productRefGroup = 8935A4192B7F496200F62185;
 			projectDirPath = "";
@@ -411,7 +416,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				89C1396D2B8FF0CB00DEE0CD /* Poppins-Medium.ttf in Resources */,
-				89A6D89D2BA2CC56002BBC86 /* GoogleService-Info.plist in Resources */,
+				92FFAE542BA2EBA60080CDD6 /* GoogleService-Info.plist in Resources */,
 				89C1396E2B8FF0CB00DEE0CD /* Poppins-Bold.ttf in Resources */,
 				8935A42D2B7F496300F62185 /* Preview Assets.xcassets in Resources */,
 				89B3F3BA2B8FA7C600D79E5D /* Poppins-Regular.ttf in Resources */,
@@ -709,6 +714,14 @@
 				minimumVersion = 1.1.0;
 			};
 		};
+		925545192BA2F33F007D9A94 /* XCRemoteSwiftPackageReference "AnimatedTabBar" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/exyte/AnimatedTabBar.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.1.2;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -861,6 +874,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 89BDCE502B8FAF6D00C69895 /* XCRemoteSwiftPackageReference "ScalingHeaderScrollView" */;
 			productName = ScalingHeaderScrollView;
+		};
+		9255451A2BA2F33F007D9A94 /* AnimatedTabBar */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 925545192BA2F33F007D9A94 /* XCRemoteSwiftPackageReference "AnimatedTabBar" */;
+			productName = AnimatedTabBar;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

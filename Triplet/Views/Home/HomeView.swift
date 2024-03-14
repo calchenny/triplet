@@ -6,35 +6,45 @@
 //
 
 import SwiftUI
+import AnimatedTabBar
+
 
 struct HomeView: View {
+    func wiggleButtonAt(_ index: Int, name: String) -> some View {
+        WiggleButton(image: Image(systemName: name), maskImage: Image(systemName: "\(name).fill"), isSelected: index == selectedIndex)
+            .scaleEffect(1.2)
+    }
+    let names = ["house", "plus.app", "gearshape"]
     @EnvironmentObject var userModel: UserModel
     @EnvironmentObject var loginViewModel: LoginViewModel
+    @State var selectedIndex: Int = 0
     var body: some View {
-        TabView {
-            NavigationStack {
-                MyTripsView()
-            }
-            .tabItem {
-                Image(systemName: "house.fill")
-            }
-            NavigationStack {
-                NewTripView()
-            }
-            .tabItem {
-                Image(systemName: "square.and.pencil")
-            }
+        if selectedIndex == 2 {
             NavigationStack {
                 SettingView()
             }
-            .tabItem {
-                Image(systemName: "gearshape.fill")
+        } else if selectedIndex == 1 {
+            NavigationStack {
+                NewTripView()
+            }
+        } else {
+            NavigationStack {
+                MyTripsView()
             }
         }
-        .tint(Color("Dark Teal"))
+        Spacer()
+        AnimatedTabBar(selectedIndex: $selectedIndex,
+                                       views: (0..<names.count).map { wiggleButtonAt($0, name: names[$0]) })
+            .cornerRadius(16)
+            .selectedColor(.darkTeal)
+            .unselectedColor(.darkTeal.opacity(0.6))
+            .ballColor(.darkTeal)
+            .verticalPadding(20)
+            .ballTrajectory(.teleport)
+
     }
 }
 
-#Preview {
-    HomeView()
-}
+//#Preview {
+//    HomeView()
+//}

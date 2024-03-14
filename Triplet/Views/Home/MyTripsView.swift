@@ -69,7 +69,6 @@ struct MyTripsView: View {
             print(userModel.trips.count)
             
         }
-        .padding(40)
     }
 }
 
