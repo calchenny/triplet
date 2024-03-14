@@ -29,6 +29,8 @@
 		24246BFB2B97EE290028DAAF /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24246BF92B97EE290028DAAF /* MapView.swift */; };
 		24246BFC2B97EE290028DAAF /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24246BFA2B97EE290028DAAF /* RootView.swift */; };
 		24AD39C42B982C42005223D7 /* PhoneNumberKit in Frameworks */ = {isa = PBXBuildFile; productRef = 24AD39C32B982C42005223D7 /* PhoneNumberKit */; };
+		3C51D0BC2BA2DC1700BAC49F /* apiCallsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C51D0BB2BA2DC1700BAC49F /* apiCallsViewModel.swift */; };
+		3C51D0BE2BA2DC3A00BAC49F /* testAPICallsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C51D0BD2BA2DC3A00BAC49F /* testAPICallsView.swift */; };
 		3CE48FD12B9D324900710CCA /* ExpensesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CE48FD02B9D324900710CCA /* ExpensesViewModel.swift */; };
 		8935A4262B7F496200F62185 /* TripletApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8935A4252B7F496200F62185 /* TripletApp.swift */; };
 		8935A42A2B7F496300F62185 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8935A4292B7F496300F62185 /* Assets.xcassets */; };
@@ -102,6 +104,8 @@
 		24246BE72B97ED690028DAAF /* AlertView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
 		24246BF92B97EE290028DAAF /* MapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		24246BFA2B97EE290028DAAF /* RootView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
+		3C51D0BB2BA2DC1700BAC49F /* apiCallsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = apiCallsViewModel.swift; sourceTree = "<group>"; };
+		3C51D0BD2BA2DC3A00BAC49F /* testAPICallsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = testAPICallsView.swift; sourceTree = "<group>"; };
 		3CE48FD02B9D324900710CCA /* ExpensesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpensesViewModel.swift; sourceTree = "<group>"; };
 		89031F572B80012800282C88 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		8935A4252B7F496200F62185 /* TripletApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripletApp.swift; sourceTree = "<group>"; };
@@ -190,6 +194,8 @@
 				89BDCE672B8FB37600C69895 /* ItineraryViewModel.swift */,
 				89BDCE692B8FB3C800C69895 /* LandmarkViewModel.swift */,
 				3CE48FD02B9D324900710CCA /* ExpensesViewModel.swift */,
+				3C51D0BB2BA2DC1700BAC49F /* apiCallsViewModel.swift */,
+				3C51D0BD2BA2DC3A00BAC49F /* testAPICallsView.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -427,6 +433,7 @@
 				89BDCE722B8FB46800C69895 /* LocationSearchViewData.swift in Sources */,
 				24246BF52B97ED690028DAAF /* LoginView.swift in Sources */,
 				24246BF02B97ED690028DAAF /* SettingsView.swift in Sources */,
+				3C51D0BC2BA2DC1700BAC49F /* apiCallsViewModel.swift in Sources */,
 				24246BF22B97ED690028DAAF /* DestinationSearchView.swift in Sources */,
 				24246BEC2B97ED690028DAAF /* OverviewView.swift in Sources */,
 				24246BF62B97ED690028DAAF /* VerificationView.swift in Sources */,
@@ -452,6 +459,7 @@
 				24246BEB2B97ED690028DAAF /* FoodPopupView.swift in Sources */,
 				89BDCE702B8FB45600C69895 /* LocationManager.swift in Sources */,
 				24246BED2B97ED690028DAAF /* HousingPopupView.swift in Sources */,
+				3C51D0BE2BA2DC3A00BAC49F /* testAPICallsView.swift in Sources */,
 				89BDCE6A2B8FB3C800C69895 /* LandmarkViewModel.swift in Sources */,
 				89621B062B915053006C0848 /* UserModel.swift in Sources */,
 				24246BFC2B97EE290028DAAF /* RootView.swift in Sources */,
