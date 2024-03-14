@@ -24,7 +24,7 @@ struct ExpensesView: View {
     @State private var currentTotal: Double = 0.00
     @State private var percentage: Double = 0
     @State private var showNewExpenseSheet: Bool = false
-
+    @State var navigateToHome: Bool = false
     @EnvironmentObject var userModel: UserModel
     @StateObject var expenseModel = ExpensesViewModel()
 
@@ -69,6 +69,7 @@ struct ExpensesView: View {
                         .padding(.bottom, 30)
                 }
                 Button {
+                    navigateToHome = true
                 } label: {
                     Image(systemName: "house")
                         .font(.title2)
@@ -222,6 +223,12 @@ struct ExpensesView: View {
             } // VStack closing bracket
             .frame(maxWidth: .infinity)
             .padding(.vertical, 20)
+            .navigationDestination(isPresented: $navigateToHome) {
+                NavigationStack{
+                    HomeView()
+                }
+                .navigationBarBackButtonHidden(true)
+            }
         }
         .height(min: expenseModel.minHeight, max: expenseModel.maxHeight)
         .allowsHeaderCollapse()
