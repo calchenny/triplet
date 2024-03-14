@@ -98,7 +98,7 @@ struct OverviewView: View {
             .frame(maxWidth: .infinity)
         } content: {
             Text("Overview")
-                .font(.custom("Poppins-Medium", size: 30))
+                .font(.custom("Poppins-Bold", size: 30))
                 .foregroundStyle(Color("Dark Teal"))
                 .padding(.top, 25)
                 .padding([.leading, .trailing])
@@ -145,7 +145,7 @@ struct OverviewView: View {
                 }
             } label: {
                 Text("Notes")
-                    .font(.custom("Poppins-Medium", size: 24))
+                    .font(.custom("Poppins-Bold", size: 24))
             }
             .frame(maxWidth: UIScreen.main.bounds.width * 0.85)
             .padding()
@@ -190,7 +190,7 @@ struct OverviewView: View {
                 }
             } label: {
                 Text("Hotel & Lodging")
-                    .font(.custom("Poppins-Medium", size: 24))
+                    .font(.custom("Poppins-Bold", size: 24))
             }
             .frame(maxWidth: UIScreen.main.bounds.width * 0.85)
             .padding()
@@ -324,7 +324,7 @@ struct OverviewView: View {
                 .padding([.top, .leading, .trailing, .bottom])
             } label: {
                 Text("Food Spots")
-                    .font(.custom("Poppins-Medium", size: 24))
+                    .font(.custom("Poppins-Bold", size: 24))
             }
             .frame(maxWidth: UIScreen.main.bounds.width * 0.85)
             .padding()

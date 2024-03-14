@@ -73,7 +73,7 @@ struct ExpensesView: View {
                     Image(systemName: "house")
                         .font(.title2)
                         .padding()
-                        .background(Color("Dark Blue"))
+                        .background(Color("Dark Teal"))
                         .foregroundStyle(.white)
                         .clipShape(Circle())
                 }

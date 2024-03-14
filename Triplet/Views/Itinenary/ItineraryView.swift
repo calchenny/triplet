@@ -158,7 +158,7 @@ struct ItineraryView: View {
             .frame(maxWidth: .infinity)
         } content: {
             Text("Itinerary")
-                .font(.custom("Poppins-Medium", size: 30))
+                .font(.custom("Poppins-Bold", size: 30))
                 .foregroundStyle(Color.darkTeal)
                 .padding(25)
             Button(action: {

@@ -70,7 +70,7 @@ struct NewTripView: View {
                 .padding(.bottom, 5)
             
             Text("Build an itinerary and map out your upcoming travel plans")
-                .font(.custom("Poppins-Regular", size: 13))
+                .font(.custom("Poppins-Regular", size: 14))
                 .frame(maxWidth: UIScreen.main.bounds.width/1.5, alignment: .center)
                 .multilineTextAlignment(.center)
                 .fixedSize(horizontal: false, vertical:true)

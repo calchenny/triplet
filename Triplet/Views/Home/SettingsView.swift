@@ -16,8 +16,9 @@ struct SettingView: View {
         VStack {
             Spacer()
             VStack{
-                Text("Setting")
-                    .font(.custom("Poppins-Regular", size: 18))
+                Text("Settings")
+                    .font(.custom("Poppins-Bold", size: 30))
+                    .foregroundStyle(.darkTeal)
             }
             .padding()
             ZStack {
@@ -46,6 +47,7 @@ struct SettingView: View {
                             Text("Logout")
                                 .font(.custom("Poppins-Regular", size: 18))
                                 .foregroundColor(.white)
+                                .padding(.vertical, 7)
                         }
                         
                     }
