@@ -17,7 +17,7 @@ struct ItineraryView: View {
     
     @StateObject var itineraryModel = ItineraryViewModel()
     @EnvironmentObject var userModel: UserModel
-    
+    @State var navigateToHome: Bool = false
     @State var goToDayView = false
     @State var searchText: String = ""
     @State var showMapView: Bool = false
@@ -141,21 +141,19 @@ struct ItineraryView: View {
                         )
                         .padding(.bottom, 30)
                 }
-                NavigationLink(destination: DayOfView().navigationBarBackButtonHidden(true), isActive: $goToDayView) {
-                    Button {
-                        goToDayView = true
-                    } label: {
-                        Image(systemName: "house")
-                            .font(.title2)
-                            .padding()
-                            .background(Color("Dark Teal"))
-                            .foregroundStyle(.white)
-                            .clipShape(Circle())
-                    }
-                    .padding(.top, 60)
-                    .padding(.leading)
-                    .tint(.primary)
+                Button {
+                    navigateToHome = true
+                } label: {
+                    Image(systemName: "house")
+                        .font(.title2)
+                        .padding()
+                        .background(Color("Dark Teal"))
+                        .foregroundStyle(.white)
+                        .clipShape(Circle())
                 }
+                .padding(.top, 60)
+                .padding(.leading)
+                .tint(.primary)
             }
             .frame(maxWidth: .infinity)
         } content: {
@@ -259,67 +257,12 @@ struct ItineraryView: View {
                             .padding(.bottom, 20)
                         }
                     }
-                    
-//                    ForEach(["03/13", "03/14", "03/15", "03/16", "03/17"], id: \.self) { day in // CHANGE THIS
-//                        
-//                        HStack {
-//                            Spacer()
-//                            Text(day)
-//                                .font(.custom("Poppins-Bold", size:20))
-//                                .foregroundStyle(Color.darkTeal)
-//                            Spacer()
-//                        }
-//                        .background(Color.evenLighterBlue)
-//                        .cornerRadius(20)
-//                        .frame(maxWidth: .infinity)
-//                        VStack {
-//                            if itineraryModel.events.filter({formatDate($0.start) == day}).isEmpty {
-//                                Text("No events planned.")
-//                                    .font(.custom("Poppins-Regular", size: 13))
-//                            } else {
-//                                ForEach(itineraryModel.events.filter({formatDate($0.start) == day})) { event in
-//                                    HStack(spacing: 10) {
-//                                        // Image for the event's category
-//                                        Image(systemName: getCategoryImageName(category: event.type.rawValue))
-//                                            .resizable()
-//                                            .frame(width: 30, height: 30)
-//                                            .foregroundColor(.darkTeal)
-//                                        
-//                                        Divider()
-//                                            .frame(width: 2)
-//                                            .background(Color.darkTeal)
-//                                        
-//                                        // Event details
-//                                        VStack(alignment: .leading) {
-//                                            Text(event.name)
-//                                                .font(.custom("Poppins-Bold", size: 20))
-//                                                .foregroundStyle(Color.darkTeal)
-//                                            Text("\(formatTime(event.start)) - \(formatTime(event.end))")
-//                                                .font(.custom("Poppins-Bold", size: 15))
-//                                            Text(event.address)
-//                                                .font(.custom("Poppins-Regular", size: 13))
-//                                        }
-//                                        .padding()
-//                                        Spacer()
-//                                        Button {
-//                                            itineraryModel.deleteEventFromFirestore(eventID: event.id ?? "")
-//                                        } label: {
-//                                            Image(systemName: "trash")
-//                                                .font(.title2)
-//                                                .padding()
-//                                                .background(Color("Dark Teal"))
-//                                                .foregroundStyle(.white)
-//                                                .clipShape(Circle())
-//                                        }
-//                                        .padding(.leading)
-//                                        .tint(.primary)
-//                                    }
-//                                    .padding(20)
-//                                }
-//                            }
-//                        }
-//                        .padding(.bottom, 20)
-//                    }
+                }
+                .navigationDestination(isPresented: $navigateToHome) {
+                    NavigationStack{
+                        HomeView()
+                    }
+                    .navigationBarBackButtonHidden(true)
                 }
                 .frame(maxWidth: .infinity)
             }
