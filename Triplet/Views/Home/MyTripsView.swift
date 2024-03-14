@@ -196,7 +196,7 @@ struct CurrentTripsView: View  {
                                 if (getDaysUntilTrip(start: userModel.currentTrips[index].start) == 0) {
                                     Text("Happening Now")
                                         .font(.custom("Poppins-Regular", size: 12))
-                                        .foregroundStyle(Color.red)
+                                        .foregroundStyle(.darkBlue)
                                 } else {
                                     Text("\(getDaysUntilTrip(start: userModel.currentTrips[index].start)) days until trip starts")
                                         .font(.custom("Poppins-Regular", size: 12))
