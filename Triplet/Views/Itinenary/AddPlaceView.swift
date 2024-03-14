@@ -50,17 +50,7 @@ struct AddPlaceView: View {
                 var newLandmarks: [LandmarkViewModel] = [] // Create a new array to store filtered landmarks
 
                 for item in response.mapItems {
-                    if let eventLocation = item.placemark.location {
-                        
-                        if let tripLocation = itineraryModel.trip?.destination {
-                            
-                            let coord = CLLocation(latitude: tripLocation.latitude, longitude: tripLocation.longitude)
-                            
-                            let distance = coord.distance(from: eventLocation)
-                            
-                            newLandmarks.append(LandmarkViewModel(placemark: item.placemark))
-                        }
-                    }
+                    newLandmarks.append(LandmarkViewModel(placemark: item.placemark))
                 }
                 // Update the landmarks array outside the loop to avoid multiple updates
                 self.landmarks = newLandmarks
