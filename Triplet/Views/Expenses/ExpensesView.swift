@@ -50,10 +50,10 @@ struct ExpensesView: View {
                             VStack {
                                 Text("Most Amazing Trip")
                                     .font(.custom("Poppins-Bold", size: getHeaderTitleSize()))
-                                    .foregroundStyle(Color.darkBlue)
+                                    .foregroundStyle(Color.darkTeal)
                                 Text("Seattle, WA | 10/20 - 10/25")
                                     .font(.custom("Poppins-Regular", size: 13))
-                                    .foregroundStyle(.darkBlue)
+                                    .foregroundStyle(.darkTeal)
                             }
                         )
                         .padding(.bottom, 30)
@@ -63,7 +63,7 @@ struct ExpensesView: View {
                     Image(systemName: "house")
                         .font(.title2)
                         .padding()
-                        .background(Color("Dark Blue"))
+                        .background(Color("Dark Teal"))
                         .foregroundStyle(.white)
                         .clipShape(Circle())
                 }
@@ -77,18 +77,18 @@ struct ExpensesView: View {
                 Text("Expenses")
                     .font(.title)
                     .bold()
-                    .foregroundColor(Color.darkBlue)
+                    .foregroundColor(Color.darkTeal)
                     .padding()
                 Text("$\(expenseModel.currentTotal, specifier: "%.2f")")
-                    .foregroundColor(Color.darkBlue)
+                    .foregroundColor(Color.darkTeal)
                     .bold()
                     .font(.largeTitle)
                 ProgressView(value: expenseModel.percentage)
-                    .tint(Color.darkBlue)
+                    .tint(Color.darkTeal)
                     .frame(minWidth: 0, maxWidth: 200)
                 
                 Text("Budget: $\(expenseModel.budget, specifier: "%.2f")")
-                    .foregroundColor(Color.darkBlue)
+                    .foregroundColor(Color.darkTeal)
                     .padding(.bottom, 15)
             }
             .onChange(of: expenseModel.expenses) {
@@ -165,7 +165,7 @@ struct ExpensesView: View {
                     Text("No expenses added yet.")
                         .font(.title3)
                         .bold()
-                        .foregroundColor(Color.darkBlue)
+                        .foregroundColor(Color.darkTeal)
                     Spacer()
                 }
                 Button() {
@@ -176,7 +176,7 @@ struct ExpensesView: View {
                         .padding(.horizontal, 50)
                         .padding(.vertical, 15)
                         .foregroundColor(.white)
-                        .background(Color.darkBlue)
+                        .background(Color.darkTeal)
                         .cornerRadius(100)
                         .bold()
                 }

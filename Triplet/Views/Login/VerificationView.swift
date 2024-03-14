@@ -55,7 +55,7 @@ struct VerificationView: View {
                         Image(systemName: "arrowshape.backward.fill")
                             .font(.headline)
                             .padding(12)
-                            .background(.darkBlue)
+                            .background(.darkTeal)
                             .foregroundColor(.white)
                             .clipShape(Circle())
                             .shadow(radius: 4, x: 0, y: 4)
@@ -151,7 +151,7 @@ struct VerificationView: View {
                         .foregroundStyle(.white)
                         .padding(.vertical)
                         .frame(width:UIScreen.main.bounds.width * 0.6)
-                        .background(.darkBlue)
+                        .background(.darkTeal)
                         .cornerRadius(15)
                 }
                 .padding(.top, 20)

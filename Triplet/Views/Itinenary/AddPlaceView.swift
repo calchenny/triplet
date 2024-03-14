@@ -69,19 +69,19 @@ struct AddPlaceView: View {
             Text("Add a Place")
                 .font(.custom("Poppins-Bold", size: 40))
                 .padding(.bottom, 30)
-                .foregroundStyle(Color.darkBlue)
+                .foregroundStyle(Color.darkTeal)
             if let trip = itineraryModel.trip,
                 let start = trip.start,
                 let end = trip.end {
                 DatePicker(selection: $startDate, in: start...end, displayedComponents: [.date, .hourAndMinute]) {
                     Text("Start:")
                         .font(.custom("Poppins-Medium", size: 20))
-                        .foregroundStyle(Color.darkBlue)
+                        .foregroundStyle(Color.darkTeal)
                 }
                 DatePicker(selection: $endDate, in: start...end, displayedComponents: [.date, .hourAndMinute]) {
                     Text("End:")
                         .font(.custom("Poppins-Medium", size: 20))
-                        .foregroundStyle(Color.darkBlue)
+                        .foregroundStyle(Color.darkTeal)
                 }
             }
 
@@ -175,7 +175,7 @@ struct DropDownPicker: View {
                 }
                 .padding(.horizontal, 15)
                 .frame(width: maxWidth, height: 50)
-                .background(.darkBlue)
+                .background(.darkTeal)
                 .contentShape(.rect)
                 .onTapGesture {
                     index += 1

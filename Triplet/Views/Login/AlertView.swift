@@ -17,7 +17,7 @@ struct AlertView: View {
         VStack(alignment: .leading, spacing: 15, content: {
             Text("Error Message")
                 .font(.custom("Poppins-Bold", size: 16))
-                .foregroundStyle(.darkBlue)
+                .foregroundStyle(.darkTeal)
             
             Text(msg)
                 .font(.custom("Poppins-Regular", size: 14))
@@ -30,7 +30,7 @@ struct AlertView: View {
                     .foregroundStyle(.white)
                     .padding()
                     .frame(width: UIScreen.main.bounds.width - 100)
-                    .background(.darkBlue)
+                    .background(.darkTeal)
                     .cornerRadius(15)
             })
             .padding()

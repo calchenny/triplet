@@ -35,7 +35,7 @@ struct DestinationSearchView: View {
                     Image(systemName: "xmark")
                         .font(.title3.weight(.semibold))
                         .padding(7)
-                        .background(.darkBlue)
+                        .background(.darkTeal)
                         .foregroundColor(.white)
                         .clipShape(Circle())
                         .shadow(radius: 4, x: 0, y: 4)

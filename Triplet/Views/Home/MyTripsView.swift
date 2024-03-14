@@ -24,16 +24,16 @@ struct MyTripsView: View {
             VStack(alignment: .leading) {
                 Text("My Trips")
                     .font(.custom("Poppins-Bold", size: 24))
-                    .foregroundStyle(.darkBlue)
+                    .foregroundStyle(.darkTeal)
                 Picker("", selection: $tabSelection) {
                     Text("Upcoming Trips")
                         .font(.custom("Poppins-Regular", size: 15))
-                        .foregroundColor(.darkBlue)
+                        .foregroundColor(.darkTeal)
                         .tag(0)
                         
                     Text("Past Trips")
                         .font(.custom("Poppins-Regular", size: 15))
-                        .foregroundColor(.darkBlue)
+                        .foregroundColor(.darkTeal)
                         .tag(1)
                         
                 }
@@ -83,7 +83,7 @@ struct NoTripPlanned: View {
             VStack {
                 Text("No trip planned")
                     .padding(.bottom, 20)
-                    .foregroundColor(.darkBlue)
+                    .foregroundColor(.darkTeal)
                     .font(.custom("Poppins-Bold", size: 24))
                 Button {
                     
@@ -92,7 +92,7 @@ struct NoTripPlanned: View {
                         .font(.custom("Poppins-Regular", size: 12))
                 }
                 .padding(15)
-                .background(.darkBlue)
+                .background(.darkTeal)
                 .foregroundColor(.white)
                 .cornerRadius(25)
             }
@@ -179,7 +179,7 @@ struct CurrentTripsView: View  {
                                 Text(userModel.currentTrips[index].name)
                                     .font(.custom("Poppins-Bold", size: 15))
                                     .frame(maxWidth: .infinity, alignment: .leading)
-                                    .foregroundStyle(.darkBlue)
+                                    .foregroundStyle(.darkTeal)
                                 Text("\(userModel.currentTrips[index].city), \(userModel.currentTrips[index].state)")
                                     .font(.custom("Poppins-Regular", size: 12))
                                     .padding(.bottom, 5)
@@ -196,7 +196,7 @@ struct CurrentTripsView: View  {
                                 if (getDaysUntilTrip(start: userModel.currentTrips[index].start) == 0) {
                                     Text("Happening Now")
                                         .font(.custom("Poppins-Regular", size: 12))
-                                        .foregroundStyle(.darkBlue)
+                                        .foregroundStyle(.darkTeal)
                                 } else {
                                     Text("\(getDaysUntilTrip(start: userModel.currentTrips[index].start)) days until trip starts")
                                         .font(.custom("Poppins-Regular", size: 12))
@@ -205,7 +205,7 @@ struct CurrentTripsView: View  {
                             }
                             Image(systemName: "chevron.right")
                                 .padding(.trailing, 10)
-                                .foregroundStyle(.darkBlue)
+                                .foregroundStyle(.darkTeal)
                         }
                         .padding(15)
                         .padding(.leading, 15)
@@ -268,7 +268,7 @@ struct PastTripsView: View {
                                 Text(userModel.pastTrips[index].name)
                                     .font(.custom("Poppins-Bold", size: 15))
                                     .frame(maxWidth: .infinity, alignment: .leading)
-                                    .foregroundStyle(.darkBlue)
+                                    .foregroundStyle(.darkTeal)
                                 Text("\(userModel.pastTrips[index].city), \(userModel.pastTrips[index].state)")
                                     .font(.custom("Poppins-Regular", size: 12))
                                     .padding(.bottom, 5)
@@ -283,7 +283,7 @@ struct PastTripsView: View {
                                 }
                             }
                             Image(systemName: "chevron.right")
-                                .foregroundStyle(.darkBlue)
+                                .foregroundStyle(.darkTeal)
                                 .padding(.trailing, 10)
                         }
                         .padding(15)

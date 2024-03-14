@@ -31,7 +31,7 @@ struct HomeView: View {
                 Image(systemName: "gearshape.fill")
             }
         }
-        .tint(Color("Dark Blue"))
+        .tint(Color("Dark Teal"))
     }
 }
 

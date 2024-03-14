@@ -132,10 +132,10 @@ struct ItineraryView: View {
                                 if let trip = itineraryModel.trip {
                                     Text(trip.name)
                                         .font(.custom("Poppins-Bold", size: getHeaderTitleSize()))
-                                        .foregroundStyle(Color("Dark Blue"))
+                                        .foregroundStyle(Color("Dark Teal"))
                                     Text("\(trip.city), \(trip.state) | \(getDateString(date: trip.start)) - \(getDateString(date: trip.end))")
                                         .font(.custom("Poppins-Medium", size: 13))
-                                        .foregroundStyle(Color("Dark Blue"))
+                                        .foregroundStyle(Color("Dark Teal"))
                                 }
                             }
                         )
@@ -148,7 +148,7 @@ struct ItineraryView: View {
                         Image(systemName: "house")
                             .font(.title2)
                             .padding()
-                            .background(Color("Dark Blue"))
+                            .background(Color("Dark Teal"))
                             .foregroundStyle(.white)
                             .clipShape(Circle())
                     }
@@ -161,7 +161,7 @@ struct ItineraryView: View {
         } content: {
             Text("Itinerary")
                 .font(.custom("Poppins-Bold", size:30))
-                .foregroundStyle(Color.darkBlue)
+                .foregroundStyle(Color.darkTeal)
                 .padding(25)
             Button(action: {
                 showAddEventSheet.toggle()
@@ -175,7 +175,7 @@ struct ItineraryView: View {
                 }
                 .foregroundColor(.white)
                 .padding()
-                .background(Color.darkBlue)
+                .background(Color.darkTeal)
                 .cornerRadius(10)
             }
             .padding(.bottom, 15)
@@ -203,7 +203,7 @@ struct ItineraryView: View {
                                 Spacer()
                                 Text(formatDate(day)) // Convert Date to String
                                     .font(.custom("Poppins-Bold", size:20))
-                                    .foregroundStyle(Color.darkBlue)
+                                    .foregroundStyle(Color.darkTeal)
                                 Spacer()
                             }
                             .background(Color.evenLighterBlue)
@@ -221,17 +221,17 @@ struct ItineraryView: View {
                                             Image(systemName: getCategoryImageName(category: event.type.rawValue))
                                                 .resizable()
                                                 .frame(width: 30, height: 30)
-                                                .foregroundColor(.darkBlue)
+                                                .foregroundColor(.darkTeal)
                                             
                                             Divider()
                                                 .frame(width: 2)
-                                                .background(Color.darkBlue)
+                                                .background(Color.darkTeal)
                                             
                                             // Event details
                                             VStack(alignment: .leading) {
                                                 Text(event.name)
                                                     .font(.custom("Poppins-Bold", size: 20))
-                                                    .foregroundStyle(Color.darkBlue)
+                                                    .foregroundStyle(Color.darkTeal)
                                                 Text("\(formatTime(event.start)) - \(formatTime(event.end))")
                                                     .font(.custom("Poppins-Bold", size: 15))
                                                 Text(event.address)
@@ -245,7 +245,7 @@ struct ItineraryView: View {
                                                 Image(systemName: "trash")
                                                     .font(.title2)
                                                     .padding()
-                                                    .background(Color("Dark Blue"))
+                                                    .background(Color("Dark Teal"))
                                                     .foregroundStyle(.white)
                                                     .clipShape(Circle())
                                             }
@@ -266,7 +266,7 @@ struct ItineraryView: View {
 //                            Spacer()
 //                            Text(day)
 //                                .font(.custom("Poppins-Bold", size:20))
-//                                .foregroundStyle(Color.darkBlue)
+//                                .foregroundStyle(Color.darkTeal)
 //                            Spacer()
 //                        }
 //                        .background(Color.evenLighterBlue)
@@ -283,17 +283,17 @@ struct ItineraryView: View {
 //                                        Image(systemName: getCategoryImageName(category: event.type.rawValue))
 //                                            .resizable()
 //                                            .frame(width: 30, height: 30)
-//                                            .foregroundColor(.darkBlue)
+//                                            .foregroundColor(.darkTeal)
 //                                        
 //                                        Divider()
 //                                            .frame(width: 2)
-//                                            .background(Color.darkBlue)
+//                                            .background(Color.darkTeal)
 //                                        
 //                                        // Event details
 //                                        VStack(alignment: .leading) {
 //                                            Text(event.name)
 //                                                .font(.custom("Poppins-Bold", size: 20))
-//                                                .foregroundStyle(Color.darkBlue)
+//                                                .foregroundStyle(Color.darkTeal)
 //                                            Text("\(formatTime(event.start)) - \(formatTime(event.end))")
 //                                                .font(.custom("Poppins-Bold", size: 15))
 //                                            Text(event.address)
@@ -307,7 +307,7 @@ struct ItineraryView: View {
 //                                            Image(systemName: "trash")
 //                                                .font(.title2)
 //                                                .padding()
-//                                                .background(Color("Dark Blue"))
+//                                                .background(Color("Dark Teal"))
 //                                                .foregroundStyle(.white)
 //                                                .clipShape(Circle())
 //                                        }

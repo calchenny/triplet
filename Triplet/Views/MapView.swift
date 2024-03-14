@@ -240,7 +240,7 @@ struct MapView: View {
                                     .cornerRadius(10)
                             }
                             .buttonStyle(.borderedProminent)
-                            .tint(.darkBlue)
+                            .tint(.darkTeal)
 
                         }
                         .padding(.vertical)
@@ -274,7 +274,7 @@ struct MapView: View {
                         Image(systemName: "arrowshape.backward.fill")
                             .font(.title3)
                             .padding(15)
-                            .background(.darkBlue)
+                            .background(.darkTeal)
                             .foregroundColor(.white)
                             .clipShape(Circle())
                             .shadow(radius: 4, x: 0, y: 4)

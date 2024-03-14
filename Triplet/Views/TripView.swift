@@ -40,7 +40,7 @@ struct TripView: View {
                 Image(systemName: "dollarsign.circle")
             }
         }
-        .tint(Color("Dark Blue"))
+        .tint(Color("Dark Teal"))
     }
 }
 

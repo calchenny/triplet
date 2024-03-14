@@ -72,10 +72,10 @@ struct OverviewView: View {
                                 if let trip = viewModel.trip {
                                     Text(trip.name)
                                         .font(.custom("Poppins-Bold", size: getHeaderTitleSize()))
-                                        .foregroundStyle(Color("Dark Blue"))
+                                        .foregroundStyle(Color("Dark Teal"))
                                     Text("\(trip.city), \(trip.state) | \(getDateString(date: trip.start)) - \(getDateString(date: trip.end))")
                                         .font(.custom("Poppins-Medium", size: 13))
-                                        .foregroundStyle(Color("Dark Blue"))
+                                        .foregroundStyle(Color("Dark Teal"))
                                 }
                             }
                         )
@@ -87,7 +87,7 @@ struct OverviewView: View {
                     Image(systemName: "house")
                         .font(.title2)
                         .padding()
-                        .background(Color("Dark Blue"))
+                        .background(Color("Dark Teal"))
                         .foregroundStyle(.white)
                         .clipShape(Circle())
                 }
@@ -101,7 +101,7 @@ struct OverviewView: View {
 //                    Image(systemName: "house")
 //                        .font(.title2)
 //                        .padding()
-//                        .background(Color("Dark Blue"))
+//                        .background(Color("Dark Teal"))
 //                        .foregroundStyle(.white)
 //                        .clipShape(Circle())
 //                }
@@ -113,7 +113,7 @@ struct OverviewView: View {
         } content: {
             Text("Overview")
                 .font(.custom("Poppins-Bold", size: 30))
-                .foregroundStyle(Color("Dark Blue"))
+                .foregroundStyle(Color("Dark Teal"))
                 .padding(25)
             DisclosureGroup(isExpanded: $viewModel.toggleStates.notes) {
                 VStack {
@@ -164,7 +164,7 @@ struct OverviewView: View {
             .padding()
             .background(Color(.secondarySystemBackground))
             .clipShape(RoundedRectangle(cornerRadius: 15))
-            .tint(Color("Dark Blue"))
+            .tint(Color("Dark Teal"))
             Spacer()
                 .frame(height: 15)
             DisclosureGroup(isExpanded: $viewModel.toggleStates.housing) {
@@ -172,7 +172,7 @@ struct OverviewView: View {
                     ForEach(viewModel.housing, id: \.id) { housing in
                         HStack {
                             Image(systemName: "house")
-                                .foregroundStyle(Color("Dark Blue"))
+                                .foregroundStyle(Color("Dark Teal"))
                                 .font(.title2)
                             Spacer()
                                 .frame(maxWidth: 20)
@@ -209,7 +209,7 @@ struct OverviewView: View {
             .padding()
             .background(Color(.secondarySystemBackground))
             .clipShape(RoundedRectangle(cornerRadius: 15))
-            .tint(Color("Dark Blue"))
+            .tint(Color("Dark Teal"))
             Spacer()
                 .frame(height: 15)
             DisclosureGroup(isExpanded: $viewModel.toggleStates.food.all) {
@@ -239,7 +239,7 @@ struct OverviewView: View {
                     ForEach(breakfast, id: \.id) { event in
                         HStack {
                             Image(systemName: "cup.and.saucer")
-                                .foregroundStyle(Color("Dark Blue"))
+                                .foregroundStyle(Color("Dark Teal"))
                                 .font(.title2)
                             Spacer()
                                 .frame(maxWidth: 20)
@@ -276,7 +276,7 @@ struct OverviewView: View {
                     ForEach(lunch, id: \.id) { event in
                         HStack {
                             Image(systemName: "takeoutbag.and.cup.and.straw")
-                                .foregroundStyle(Color("Dark Blue"))
+                                .foregroundStyle(Color("Dark Teal"))
                                 .font(.title2)
                             Spacer()
                                 .frame(maxWidth: 20)
@@ -312,7 +312,7 @@ struct OverviewView: View {
                     ForEach(dinner, id: \.id) { event in
                         HStack {
                             Image(systemName: "wineglass")
-                                .foregroundStyle(Color("Dark Blue"))
+                                .foregroundStyle(Color("Dark Teal"))
                                 .font(.title2)
                             Spacer()
                                 .frame(maxWidth: 20)
@@ -343,7 +343,7 @@ struct OverviewView: View {
             .padding()
             .background(Color(.secondarySystemBackground))
             .clipShape(RoundedRectangle(cornerRadius: 15))
-            .tint(Color("Dark Blue"))
+            .tint(Color("Dark Teal"))
         }
         .height(min: viewModel.minHeight, max: viewModel.maxHeight)
         .allowsHeaderCollapse()

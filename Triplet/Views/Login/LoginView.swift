@@ -106,7 +106,7 @@ struct LoginView: View {
                         .padding(.horizontal, 30)
                         .foregroundStyle(.white)
                         .frame(width: 200, height: 50)
-                        .background(login.phoneNumber.count < 14 ? Color.gray.opacity(0.5) : login.phoneNumber.count == 14 ? Color(.darkBlue) : Color.red.opacity(0.5))
+                        .background(login.phoneNumber.count < 14 ? Color.gray.opacity(0.5) : login.phoneNumber.count == 14 ? Color(.darkTeal) : Color.red.opacity(0.5))
                         .cornerRadius(15)
                 }
                 .disabled(login.phoneNumber.count != 14)

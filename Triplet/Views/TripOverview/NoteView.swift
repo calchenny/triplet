@@ -19,7 +19,7 @@ struct NoteView: View {
             TextField("Note Title", text: $title)
                 .padding([.leading, .trailing], 40)
                 .font(.custom("Poppins-Bold", size: 30))
-                .foregroundStyle(Color("Dark Blue"))
+                .foregroundStyle(Color("Dark Teal"))
             Spacer()
                 .frame(maxHeight: 20)
             TextEditor(text: $content)

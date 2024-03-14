@@ -159,7 +159,7 @@ struct NewTripView: View {
                     .labelsHidden()
                     .blendMode(.destinationOver)
                     .padding(.horizontal, 10)
-                    .tint(.darkBlue)
+                    .tint(.darkTeal)
             }
             
             HStack {
@@ -190,7 +190,7 @@ struct NewTripView: View {
                     .labelsHidden()
                     .blendMode(.destinationOver)
                     .padding(.horizontal, 10)
-                    .tint(.darkBlue)
+                    .tint(.darkTeal)
             }
             
             HStack {
@@ -266,7 +266,7 @@ struct NewTripView: View {
             .cornerRadius(15)
             .buttonStyle(.borderedProminent)
             .padding(.vertical)
-            .tint(.darkBlue)
+            .tint(.darkTeal)
             .navigationDestination(isPresented: $navigateToOverview) {
                 if let tripId {
                     TripView(tripId: tripId, isActive: $isActive)

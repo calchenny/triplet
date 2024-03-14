@@ -42,7 +42,7 @@ struct SettingView: View {
                     } label: {
                         ZStack{
                             RoundedRectangle(cornerRadius: 12)
-                                .fill(Color.darkBlue)
+                                .fill(Color.darkTeal)
                             Text("Logout")
                                 .font(.custom("Poppins-Regular", size: 18))
                                 .foregroundColor(.white)

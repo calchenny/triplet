@@ -23,7 +23,7 @@ struct FoodPopupView: View {
                         } label: {
                             Circle()
                                 .frame(maxWidth: 30)
-                                .foregroundStyle(Color("Dark Blue"))
+                                .foregroundStyle(Color("Dark Teal"))
                                 .overlay {
                                     Image(systemName: "xmark")
                                         .foregroundStyle(.white)
@@ -32,7 +32,7 @@ struct FoodPopupView: View {
                     }
                     Text("New Food Spot")
                         .font(.custom("Poppins-Bold", size: 30))
-                        .foregroundStyle(Color("Dark Blue"))
+                        .foregroundStyle(Color("Dark Teal"))
                     Spacer()
                     HStack {
                         VStack(alignment: .leading) {
@@ -54,7 +54,7 @@ struct FoodPopupView: View {
                                 }
                             }
                             .frame(maxWidth: 200, maxHeight: 30)
-                            .tint(Color("Dark Blue"))
+                            .tint(Color("Dark Teal"))
                             .padding(5)
                             .overlay(RoundedRectangle(cornerRadius: 5).stroke(Color("Darker Gray")))
                         }
@@ -67,7 +67,7 @@ struct FoodPopupView: View {
                     } label: {
                         RoundedRectangle(cornerRadius: 15)
                             .frame(width: 200, height: 50)
-                            .foregroundStyle(Color("Dark Blue"))
+                            .foregroundStyle(Color("Dark Teal"))
                             .overlay(
                                 HStack {
                                     Image(systemName: "plus")

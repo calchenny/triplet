@@ -149,10 +149,10 @@ struct DayOfView: View {
                                 VStack {
                                     Text("Most Amazing Trip") // CHANGE THIS
                                         .font(.custom("Poppins-Bold", size: getHeaderTitleSize()))
-                                        .foregroundStyle(Color.darkBlue)
+                                        .foregroundStyle(Color.darkTeal)
                                     Text("Seattle, WA | 3/13 - 3/17") // CHANGE THIS
                                         .font(.custom("Poppins-Regular", size: 15))
-                                        .foregroundStyle(.darkBlue)
+                                        .foregroundStyle(.darkTeal)
                                 }
                             )
                             .padding(.bottom, 30)
@@ -163,7 +163,7 @@ struct DayOfView: View {
                         Image(systemName: "house")
                             .font(.title2)
                             .padding()
-                            .background(Color("Dark Blue"))
+                            .background(Color("Dark Teal"))
                             .foregroundStyle(.white)
                             .clipShape(Circle())
                     }
@@ -177,7 +177,7 @@ struct DayOfView: View {
                     HStack {
                         Text("\(getDayOfWeek(currentDate)), \(formatDate(currentDate))")
                             .font(.custom("Poppins-Bold", size: 30))
-                            .foregroundStyle(Color.darkBlue)
+                            .foregroundStyle(Color.darkTeal)
                     }
                     .padding(.top, 20)
                     // Displaying only the current event corresponding to the current date
@@ -187,13 +187,13 @@ struct DayOfView: View {
                             Image(systemName: getCategoryImageName(category: currentEvent.type.rawValue))
                                 .resizable()
                                 .frame(width: 30, height: 30)
-                                .foregroundColor(.darkBlue)
+                                .foregroundColor(.darkTeal)
                             
                             // Event details
                             VStack(alignment: .leading){
                                 Text(currentEvent.name)
                                     .font(.custom("Poppins-Bold", size: 20))
-                                    .foregroundStyle(Color.darkBlue)
+                                    .foregroundStyle(Color.darkTeal)
                                 Text("\(formatTime(currentEvent.start)) - \(formatTime(currentEvent.end))")
                                     .font(.custom("Poppins-Bold", size: 15))
                                 Text(currentEvent.address)
@@ -208,14 +208,14 @@ struct DayOfView: View {
                                 Image(systemName: checkedEvents.contains(currentEvent.id ?? "") ? "checkmark.square" : "square")
                                     .resizable()
                                     .frame(width: 20, height: 20)
-                                    .foregroundColor(.darkBlue)
+                                    .foregroundColor(.darkTeal)
                             }
                         }
                         .padding(10)
                         .background(
                             RoundedRectangle(cornerRadius: 25)
                                 .fill(Color.white)
-                                .shadow(color: (isCurrentTimeWithinEventTime(event: currentEvent) ? .darkBlue : .clear), radius: 5, x: 0, y: 2)
+                                .shadow(color: (isCurrentTimeWithinEventTime(event: currentEvent) ? .darkTeal : .clear), radius: 5, x: 0, y: 2)
                         )
                         .padding()
                     }
@@ -231,13 +231,13 @@ struct DayOfView: View {
                                 Image(systemName: getCategoryImageName(category: event.type.rawValue))
                                     .resizable()
                                     .frame(width: 30, height: 30)
-                                    .foregroundColor(.darkBlue)
+                                    .foregroundColor(.darkTeal)
                                 
                                 // Event details
                                 VStack(alignment: .leading){
                                     Text(event.name)
                                         .font(.custom("Poppins-Bold", size: 20))
-                                        .foregroundStyle(Color.darkBlue)
+                                        .foregroundStyle(Color.darkTeal)
                                     Text("\(formatTime(event.start)) - \(formatTime(event.end))")
                                         .font(.custom("Poppins-Bold", size: 15))
                                     Text(event.address)
@@ -252,7 +252,7 @@ struct DayOfView: View {
                                     Image(systemName: checkedEvents.contains(event.id ?? "") ? "checkmark.square" : "square")
                                         .resizable()
                                         .frame(width: 20, height: 20)
-                                        .foregroundColor(.darkBlue)
+                                        .foregroundColor(.darkTeal)
                                 }
                                
                             }
@@ -263,7 +263,7 @@ struct DayOfView: View {
                     } label: {
                         Text("Next Events")
                             .font(.custom("Poppins-Regular", size: 20))
-                            .foregroundStyle(Color.darkBlue)
+                            .foregroundStyle(Color.darkTeal)
                             
                     }
                 }

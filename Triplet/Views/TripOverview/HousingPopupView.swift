@@ -22,7 +22,7 @@ struct HousingPopupView: View {
                         } label: {
                             Circle()
                                 .frame(maxWidth: 30)
-                                .foregroundStyle(Color("Dark Blue"))
+                                .foregroundStyle(Color("Dark Teal"))
                                 .overlay {
                                     Image(systemName: "xmark")
                                         .foregroundStyle(.white)
@@ -31,14 +31,14 @@ struct HousingPopupView: View {
                     }
                     Text("New Hotel/Lodging")
                         .font(.custom("Poppins-Bold", size: 30))
-                        .foregroundStyle(Color("Dark Blue"))
+                        .foregroundStyle(Color("Dark Teal"))
                     Spacer()
                     Button {
                         
                     } label: {
                         RoundedRectangle(cornerRadius: 15)
                             .frame(width: 200, height: 50)
-                            .foregroundStyle(Color("Dark Blue"))
+                            .foregroundStyle(Color("Dark Teal"))
                             .overlay(
                                 HStack {
                                     Image(systemName: "plus")
