@@ -87,7 +87,7 @@ struct ExpensesView: View {
                 Text("Expenses")
                     .font(.custom("Poppins-Bold", size: 30))
                     .foregroundColor(Color.darkTeal)
-                    .padding()
+                    .padding(25)
                 Text("$\(expenseModel.currentTotal, specifier: "%.2f")")
                     .font(.custom("Poppins-Regular", size: 30))
                 ProgressView(value: expenseModel.percentage)
