@@ -47,7 +47,30 @@ class OverviewViewModel: ObservableObject {
             try db.collection("trips/\(tripId)/notes").addDocument(from: Note(title: newNoteTitle))
             newNoteTitle = ""
         } catch {
-            print(error)
+            print(error.localizedDescription)
+        }
+    }
+    
+    func addFoodPlace(name: String, location: GeoPoint, address: String, foodCategory: FoodCategory) {
+        guard let trip else {
+            print("Missing trip")
+            return
+        }
+        guard let tripId = trip.id else {
+            print("Missing tripId")
+            return
+        }
+        let foodPlace = Event(name: name,
+                              location: location,
+                              type: EventType.food,
+                              category: foodCategory,
+                              start: Date.now,
+                              address: address,
+                              end: Date.now)
+        do {
+            try db.collection("trips/\(tripId)/events").addDocument(from: foodPlace)
+        } catch {
+            print(error.localizedDescription)
         }
     }
     
