@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct AddNewExpenseView: View {
-    
+
     @EnvironmentObject var expensesModel: ExpensesViewModel
     @Environment(\.dismiss) var dismiss
     @State private var name: String = ""
@@ -17,23 +17,23 @@ struct AddNewExpenseView: View {
     @State private var selection: String = "Select One"
     @State var date: Date = Date()
     @State private var error: Bool = false
-    
+
     // function that will bring down the keyboard
     func hideKeyboard() {
         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
     }
-    
+
     var body: some View {
-        
+
         let categories = ["Select One", "Housing", "Transportation", "Food", "Other"]
-        
+
         VStack {
             Text("New Expense")
                 .font(.largeTitle)
                 .bold()
                 .foregroundColor(Color.darkTeal)
                 .padding(.top, 30)
-            
+
             Text("Expense Name")
                 .bold()
                 .foregroundColor(Color.darkTeal)
@@ -81,6 +81,7 @@ struct AddNewExpenseView: View {
                         Text($0)
                     }
                 }
+                .frame(width: 150)
                 .tint(.gray)
                 .overlay(
                     RoundedRectangle(cornerRadius: 10)
@@ -96,7 +97,7 @@ struct AddNewExpenseView: View {
                 .foregroundColor(Color.darkTeal)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding()
-            
+
             HStack {
                 DatePicker("",selection: $date, displayedComponents: .date)
                 .datePickerStyle(.compact)
@@ -113,19 +114,19 @@ struct AddNewExpenseView: View {
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.leading, 10)
 
-            
-            
-            
+
+
+
             if (error == true) {
                 Text("Make sure all fields are filed out.")
                     .foregroundColor(.red)
             }
-        
-            
-            
+
+
+
             Spacer()
             Button() {
-                print("button pressed")
+                //print("button pressed")
                 if (name == "" || costInput == "" || selection == "Select One") {
                     error = true
                 }
@@ -140,7 +141,7 @@ struct AddNewExpenseView: View {
                     }
                     dismiss()
                 }
-                
+
             } label: {
                 Text("+ Add Expense")
                     .padding(.horizontal, 50)
@@ -149,9 +150,9 @@ struct AddNewExpenseView: View {
                     .background(Color.darkTeal)
                     .cornerRadius(100)
                     .bold()
-                
+
             }
-            
+
         } // VStack closing
     }
 }

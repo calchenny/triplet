@@ -34,7 +34,7 @@ struct TripView: View {
                 Image(systemName: "calendar")
             }
             NavigationStack {
-                ExpensesView()
+                ExpensesView(tripId: tripId)
             }
             .tabItem {
                 Image(systemName: "dollarsign.circle")

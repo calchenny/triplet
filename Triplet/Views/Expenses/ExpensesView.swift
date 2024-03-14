@@ -13,11 +13,19 @@ import CoreLocation
 import FirebaseFirestore
 
 struct ExpensesView: View {
+
+    var tripId: String
+
+    init(tripId: String) {
+        self.tripId = tripId
+    }
+
     @State private var budget: Double = 10000.00
     @State private var currentTotal: Double = 0.00
     @State private var percentage: Double = 0
     @State private var showNewExpenseSheet: Bool = false
 
+    @EnvironmentObject var userModel: UserModel
     @StateObject var expenseModel = ExpensesViewModel()
 
     func getHeaderWidth(screenWidth: CGFloat) -> CGFloat {
@@ -48,12 +56,14 @@ struct ExpensesView: View {
                         .foregroundStyle(.evenLighterBlue)
                         .overlay(
                             VStack {
-                                Text("Most Amazing Trip")
-                                    .font(.custom("Poppins-Bold", size: getHeaderTitleSize()))
-                                    .foregroundStyle(Color.darkTeal)
-                                Text("Seattle, WA | 10/20 - 10/25")
-                                    .font(.custom("Poppins-Regular", size: 13))
-                                    .foregroundStyle(.darkTeal)
+                                if let trip = expenseModel.trip {
+                                    Text(trip.name)
+                                        .font(.custom("Poppins-Bold", size: getHeaderTitleSize()))
+                                        .foregroundStyle(Color("Dark Teal"))
+                                    Text("\(trip.city), \(trip.state) | \(getDateString(date: trip.start)) - \(getDateString(date: trip.end))")
+                                        .font(.custom("Poppins-Medium", size: 13))
+                                        .foregroundStyle(Color("Dark Teal"))
+                                }
                             }
                         )
                         .padding(.bottom, 30)
@@ -63,7 +73,7 @@ struct ExpensesView: View {
                     Image(systemName: "house")
                         .font(.title2)
                         .padding()
-                        .background(Color("Dark Teal"))
+                        .background(Color("Dark Blue"))
                         .foregroundStyle(.white)
                         .clipShape(Circle())
                 }
@@ -75,16 +85,19 @@ struct ExpensesView: View {
         } content: {
             VStack {
                 Text("Expenses")
-                    .font(.custom("Poppins-Medium", size: 30))
+                    .font(.title)
+                    .bold()
                     .foregroundColor(Color.darkTeal)
                     .padding()
                 Text("$\(expenseModel.currentTotal, specifier: "%.2f")")
-                    .font(.custom("Poppins-Regular", size: 30))
+                    .foregroundColor(Color.darkTeal)
+                    .bold()
+                    .font(.largeTitle)
                 ProgressView(value: expenseModel.percentage)
                     .tint(Color.darkTeal)
                     .frame(minWidth: 0, maxWidth: 200)
+
                 Text("Budget: $\(expenseModel.budget, specifier: "%.2f")")
-                    .font(.custom("Poppins-Regular", size: 16))
                     .foregroundColor(Color.darkTeal)
                     .padding(.bottom, 15)
             }
@@ -94,67 +107,84 @@ struct ExpensesView: View {
                 print("currentTotal: \(expenseModel.currentTotal)")
                 print("percentage: \(expenseModel.percentage)")
             }
-            
+
             VStack {
-                
+
                 if !expenseModel.expenses.isEmpty {
+
                     ScrollView {
                         ForEach(expenseModel.expenses, id: \.name) { expense in
-                            ZStack {
-                                RoundedRectangle(cornerRadius: 15)
-                                    .fill(.lighterGray)
-                                HStack {
-                                    if (expense.category == "Housing") {
-                                        Image(systemName: "house.fill")
-                                            .font(.custom("Poppins-Regular", size: 16))
-                                            .padding([.leading, .trailing], 10)
+
+                            HStack {
+                                if (expense.category == "Housing") {
+
+                                    HStack {
+                                        Image(systemName: "building.fill")
+                                            .font(.title3)
+                                        .padding([.leading, .trailing], 10)
                                     }
-                                    else if (expense.category == "Transportation") {
-                                        Image(systemName: "car.side.fill")
-                                            .font(.custom("Poppins-Regular", size: 16))
-                                            .padding([.leading, .trailing], 10)
-                                    }
-                                    else if (expense.category == "Food") {
-                                        Image(systemName: "fork.knife")
-                                            .font(.custom("Poppins-Regular", size: 16))
-                                            .padding([.leading, .trailing], 10)
-                                    }
-                                    else {
-                                        Image(systemName: "dollarsign")
-                                            .font(.custom("Poppins-Regular", size: 16))
-                                            .padding([.leading, .trailing], 10)
-                                    }
-                                    VStack {
-                                        HStack{
-                                            Text("\(expense.name)")
-                                                .font(.custom("Poppins-Medium", size: 16))
-                                            Spacer()
-                                            Text("-$\(expense.cost, specifier: "%.2f")")
-                                                .font(.custom("Poppins-Medium", size: 16))
-                                                .foregroundColor(.red)
-                                            
-                                        }
-                                        .padding([.top, .leading, .trailing], 10)
-                                        .onAppear {
-                                            
-                                        }
-                                        HStack {
-                                            Text("\(expense.category)")
-                                                .font(.custom("Poppins-Regular", size: 12))
-                                            Spacer()
-                                            Text(expense.date, format: .dateTime.day().month())
-                                                .font(.custom("Poppins-Regular", size: 12))
-                                        }
-                                        .padding([.bottom, .leading, .trailing], 10)
-                                    }
+                                    .frame(width: 50)
                                 }
-                                .padding([.leading, .trailing])
+                                else if (expense.category == "Transportation") {
+                                    HStack {
+                                        Image(systemName: "bus.fill")
+                                            .font(.title3)
+                                        .padding([.leading, .trailing], 10)
+                                    }
+                                    .frame(width: 50)
+                                }
+                                else if (expense.category == "Food") {
+                                    HStack {
+                                        Image(systemName: "fork.knife")
+                                            .font(.title3)
+                                        .padding([.leading, .trailing], 10)
+                                    }
+                                    .frame(width: 50)
+                                }
+                                else {
+                                    HStack {
+                                        Image(systemName: "dollarsign")
+                                            .font(.title3)
+                                        .padding([.leading, .trailing], 10)
+                                    }
+                                    .frame(width: 50)
+                                }
+                                VStack {
+                                    HStack{
+                                        Text("\(expense.name)")
+                                            .bold()
+                                        Spacer()
+                                        Text("-$\(expense.cost, specifier: "%.2f")")
+                                            .bold()
+                                            .foregroundColor(.red)
+
+                                    }
+                                    .padding([.top, .leading, .trailing], 10)
+                                    .onAppear {
+
+                                    }
+                                    HStack {
+                                        Text("\(expense.category)")
+                                            .font(.caption)
+                                        Spacer()
+                                        Text(expense.date, format: .dateTime.day().month())
+                                            .font(.caption)
+                                    }
+                                    .padding([.bottom, .leading, .trailing], 10)
+
+                                }
                             }
-                            .padding([.leading, .trailing, .bottom])
+                            .padding(10)
+                            .frame(width: 325)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 20)
+                                    .fill(Color.gray.opacity(0.15))
+                            )
+                            .padding(.bottom, 10)
                         }
                     }
                     Spacer()
-                    
+
                 }
                 else {
                     Spacer()
@@ -191,7 +221,7 @@ struct ExpensesView: View {
         .setHeaderSnapMode(.immediately)
         .ignoresSafeArea()
         .onAppear {
-            expenseModel.subscribe()
+            expenseModel.subscribe(tripId: tripId)
         }
         .onDisappear {
             expenseModel.unsubscribe()
@@ -200,5 +230,5 @@ struct ExpensesView: View {
 } // view closing bracket
 
 #Preview {
-    ExpensesView()
+    ExpensesView(tripId: "bXQdm19F9v2DbjS4VPyi")
 }

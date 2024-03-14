@@ -12,7 +12,8 @@ import MapKit
 import FirebaseFirestore
 
 class ExpensesViewModel: ObservableObject {
-    var tripId: String = "Placeholder tripId"
+    //var tripId: String = "Placeholder tripId"
+    @Published var trip: Trip?
     @Published var expenses: [Expense] = []
     @Published var budget: Double = 10000.00
     @Published var currentTotal: Double = 0.00
@@ -39,6 +40,15 @@ class ExpensesViewModel: ObservableObject {
     }
     
     func addExpenseToFirestore(_ expense: Expense) {
+        guard let trip else {
+            print("Missing trip")
+            return
+        }
+        guard let tripId = trip.id else {
+            print("Missing tripId")
+            return
+        }
+        
         do {
             let expenseReference = try Firestore.firestore().collection("trips").document(tripId).collection("expenses").addDocument(from: expense)
             print("Expense added to Firestore with ID: \(expenseReference.documentID)")
@@ -61,7 +71,7 @@ class ExpensesViewModel: ObservableObject {
         
     }
     
-    func subscribe() {
+    func subscribe(tripId: String) {
         if listenerRegistrations.isEmpty {
             
             guard !tripId.isEmpty else {
@@ -89,6 +99,21 @@ class ExpensesViewModel: ObservableObject {
             
             // Update the local expenses array
                     self.expenses = fetchedExpenses
+            })
+            
+            let tripQuery = db.document("trips/\(tripId)")
+            listenerRegistrations.append(tripQuery.addSnapshotListener { documentSnapshot, error in
+                guard let document = documentSnapshot else {
+                  print("Error fetching document: \(error!)")
+                  return
+                }
+                do {
+                    let trip = try document.data(as: Trip.self)
+                    self.trip = trip
+                    self.cameraPosition = MapCameraPosition.region(MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: trip.destination.latitude, longitude: trip.destination.longitude), span: MKCoordinateSpan(latitudeDelta: 0.5, longitudeDelta: 0.5)))
+                } catch {
+                    print(error)
+                }
             })
         }
     }
