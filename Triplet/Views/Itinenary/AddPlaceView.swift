@@ -23,19 +23,25 @@ struct AddPlaceView: View {
     
     private func getNearByLandmarks() {
         let request = MKLocalSearch.Request()
-        request.naturalLanguageQuery = search
+        
+        guard let city = itineraryModel.trip?.city, let state = itineraryModel.trip?.state else {
+            // Handle missing city or state information
+            return
+        }
+        
+        request.pointOfInterestFilter = .includingAll
+        request.naturalLanguageQuery = "\(search) \(city) \(state)"
                 
         let lat = itineraryModel.trip?.destination.latitude ?? 47.608013
         let lon = itineraryModel.trip?.destination.latitude ?? -122.335167
         
-        var region = MKCoordinateRegion(
+        let region = MKCoordinateRegion(
             center: CLLocationCoordinate2D(latitude: lat, longitude: lon),
             span: MKCoordinateSpan(latitudeDelta: 0.5, longitudeDelta: 0.5)
         )
         
         // Limiting the search for events to around the destination
         request.region = region
-        request.pointOfInterestFilter = .includingAll // Include all types of points of interest
         
         let search = MKLocalSearch(request: request)
         
@@ -52,10 +58,7 @@ struct AddPlaceView: View {
                             
                             let distance = coord.distance(from: eventLocation)
                             
-                            // Only return locations that are within 20 mile radius (approx. 32000 meters)
-                            if distance <= 32000 {
-                                newLandmarks.append(LandmarkViewModel(placemark: item.placemark))
-                            }
+                            newLandmarks.append(LandmarkViewModel(placemark: item.placemark))
                         }
                     }
                 }
