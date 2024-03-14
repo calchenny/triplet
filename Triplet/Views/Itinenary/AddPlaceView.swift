@@ -78,7 +78,7 @@ struct AddPlaceView: View {
                         .font(.custom("Poppins-Medium", size: 20))
                         .foregroundStyle(Color.darkTeal)
                 }
-                DatePicker(selection: $endDate, in: start...end, displayedComponents: [.date, .hourAndMinute]) {
+                DatePicker(selection: $endDate, in: startDate...end, displayedComponents: [.date, .hourAndMinute]) {
                     Text("End:")
                         .font(.custom("Poppins-Medium", size: 20))
                         .foregroundStyle(Color.darkTeal)

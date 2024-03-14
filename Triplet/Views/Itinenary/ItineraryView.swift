@@ -177,7 +177,7 @@ struct ItineraryView: View {
             Text("Itinerary")
                 .font(.custom("Poppins-Bold", size: 30))
                 .foregroundStyle(Color.darkTeal)
-                .padding(25)
+                .padding(.top, 25)
             Button(action: {
                 showAddEventSheet.toggle()
             }) {
@@ -194,9 +194,9 @@ struct ItineraryView: View {
                 .cornerRadius(10)
             }
             .padding(.bottom, 15)
-            .padding(.top, 10)
             .sheet(isPresented: $showAddEventSheet) {
                 AddPlaceView()
+                    .presentationDragIndicator(.visible)
                     .environmentObject(itineraryModel)
             }
             
