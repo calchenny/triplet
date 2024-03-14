@@ -15,22 +15,24 @@ struct HomeView: View {
             NavigationStack {
                 MyTripsView()
             }
-                .tabItem {
-                Label("Menu", systemImage: "list.dash")
-                }
+            .tabItem {
+                Image(systemName: "house.fill")
+            }
             NavigationStack {
                 NewTripView()
             }
-                .tabItem {
-                    Label("New Trip", systemImage: "square.and.pencil")
-                }
+            .tabItem {
+                Image(systemName: "square.and.pencil")
+            }
             NavigationStack {
                 SettingView()
             }
-                .tabItem {
-                    Label("Settings", systemImage: "gearshape.fill")
-                }
+            .tabItem {
+                Image(systemName: "gearshape.fill")
+            }
         }
+        .tint(Color("Dark Blue"))
+
     }
 }
 
