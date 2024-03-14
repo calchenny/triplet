@@ -43,7 +43,9 @@ struct MyTripsView: View {
             }
             
             if tabSelection == 0 {
-                CurrentTripsView()
+                NavigationStack {
+                    CurrentTripsView()
+                }
                     .environmentObject(userModel)
             } else {
                 PastTripsView()
@@ -126,7 +128,7 @@ func getTripDuration(start: Date?, end: Date?) -> Int {
 struct CurrentTripsView: View  {
     @EnvironmentObject var userModel: UserModel
     @State private var navigateToOverview: Bool = false
-
+    @State private var tripID: String = ""
     var body: some View {
         VStack {
             
@@ -176,14 +178,19 @@ struct CurrentTripsView: View  {
                                 print("can't get tripID")
                                 return
                             }
-                            print("tripID", tripID)
+                            self.tripID = tripID
+                            print("tripID", self.tripID)
                             // navigate to overview page
                             navigateToOverview = true
                         }
                         .navigationDestination(isPresented: $navigateToOverview) {
-    //                            OverviewView()
-    //                                .environmentObject(userModel)
-    //                                .environmentObject(viewModel)
+                            if self.tripID != "" {
+                                NavigationStack {
+                                    TripView(tripId: self.tripID)
+                                }
+                                .navigationBarBackButtonHidden(true)
+
+                            }
                         }
                     }
                     .padding(.bottom, 15)

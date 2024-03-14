@@ -14,7 +14,7 @@ import PopupView
 struct OverviewView: View {
     @StateObject var viewModel = OverviewViewModel()
     @State var showMapView: Bool = false
-
+    @State var navigateToHome: Bool = false
     var tripId: String
     
     init(tripId: String) {
@@ -81,9 +81,8 @@ struct OverviewView: View {
                         )
                         .padding(.bottom, 30)
                 }
-                NavigationLink {
-                    HomeView()
-                        .navigationBarBackButtonHidden()
+                Button {
+                    navigateToHome = true
                 } label: {
                     Image(systemName: "house")
                         .font(.title2)
@@ -95,6 +94,20 @@ struct OverviewView: View {
                 .padding(.top, 60)
                 .padding(.leading)
                 .tint(.primary)
+//                NavigationLink {
+//                    HomeView()
+//                        .navigationBarBackButtonHidden()
+//                } label: {
+//                    Image(systemName: "house")
+//                        .font(.title2)
+//                        .padding()
+//                        .background(Color("Dark Blue"))
+//                        .foregroundStyle(.white)
+//                        .clipShape(Circle())
+//                }
+//                .padding(.top, 60)
+//                .padding(.leading)
+//                .tint(.primary)
             }
             .frame(maxWidth: .infinity)
         } content: {
@@ -376,6 +389,13 @@ struct OverviewView: View {
                 .useKeyboardSafeArea(true)
                 .isOpaque(true)
                 .backgroundColor(.black.opacity(0.25))
+        }
+        .navigationDestination(isPresented: $navigateToHome) {
+            NavigationStack{
+                HomeView()
+            }
+            .navigationBarBackButtonHidden(true)
+            
         }
         .onAppear {
             viewModel.subscribe(tripId: tripId)

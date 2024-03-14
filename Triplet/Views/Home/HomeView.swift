@@ -12,15 +12,21 @@ struct HomeView: View {
     @EnvironmentObject var loginViewModel: LoginViewModel
     var body: some View {
         TabView {
-            MyTripsView()
+            NavigationStack {
+                MyTripsView()
+            }
                 .tabItem {
                 Label("Menu", systemImage: "list.dash")
                 }
-            NewTripView()
+            NavigationStack {
+                NewTripView()
+            }
                 .tabItem {
                     Label("New Trip", systemImage: "square.and.pencil")
                 }
-            SettingView()
+            NavigationStack {
+                SettingView()
+            }
                 .tabItem {
                     Label("Settings", systemImage: "gearshape.fill")
                 }
