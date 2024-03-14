@@ -92,8 +92,8 @@ struct LoginView: View {
                 }
                 
                 Text("Enter your phone number to receive a OTP")
-                    .font(.custom("Poppins-Regular", size: 12))
-                    .foregroundStyle(Color.gray)
+                    .font(.custom("Poppins-Regular", size: 14))
+                    .foregroundStyle(.darkerGray)
                     .padding(.bottom, 30)
                             
                 // Call function from usermodel to send code

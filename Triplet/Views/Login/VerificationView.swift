@@ -46,34 +46,16 @@ struct VerificationView: View {
     }
     
     var body: some View {
-        ZStack {
+        ZStack(alignment: .topLeading) {
             VStack {
-                HStack {
-                    Button(action: {
-                        present.wrappedValue.dismiss()
-                    }, label: {
-                        Image(systemName: "arrowshape.backward.fill")
-                            .font(.headline)
-                            .padding(12)
-                            .background(.darkTeal)
-                            .foregroundColor(.white)
-                            .clipShape(Circle())
-                            .shadow(radius: 4, x: 0, y: 4)
-                    })
-                    Spacer()
-                }
-                .padding(.top, 60)
-                .padding(.leading, 15)
-                
                 Spacer()
-                
                 HStack {
                     Spacer()
                     
                     Text("Verify Phone Number")
-                        .font(.custom("Poppins-Bold", size: 24))
+                        .font(.custom("Poppins-Bold", size: 30))
                         .fontWeight(.bold)
-                        .foregroundStyle(Color.black)
+                        .foregroundStyle(.darkTeal)
                     
                     Spacer()
                     
@@ -87,6 +69,7 @@ struct VerificationView: View {
                     .padding(.bottom)
                 
                 HStack {
+                    Spacer()
                     // Loop to generate the TextFields
                     ForEach($pinList.indices, id: \.self) { pin in
                         let binding = Binding<String>(
@@ -138,11 +121,9 @@ struct VerificationView: View {
                                     , lineWidth: 5.0)
                         )
                         .cornerRadius(10)
-
                     }
+                    Spacer()
                 }
-                .padding()
-                
                 Button{
                     resendCode()
                 } label: {
@@ -169,6 +150,19 @@ struct VerificationView: View {
             if login.error{
                 AlertView(msg: login.errorMsg, show: $login.error)
             }
+            Button {
+                present.wrappedValue.dismiss()
+            } label: {
+                Image(systemName: "arrowshape.backward.fill")
+                    .font(.title2)
+                    .padding()
+                    .background(.darkTeal)
+                    .foregroundColor(.white)
+                    .clipShape(Circle())
+            }
+            .padding(.top, 60)
+            .padding(.leading)
+            .tint(.primary)
         }
         .onAppear() {
             pinFocusState = 0 // The first TextField is the first one to be focused
@@ -176,8 +170,8 @@ struct VerificationView: View {
                 print("hi from verification view")
             }
         }
+        .ignoresSafeArea()
     }
-
 }
 
 #Preview {

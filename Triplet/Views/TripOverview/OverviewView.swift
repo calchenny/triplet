@@ -283,7 +283,7 @@ struct OverviewView: View {
                     }
                 } label: {
                     Text("Lunch")
-                        .font(.custom("Poppins-Bold", size: 20))
+                        .font(.custom("Poppins-Medium", size: 20))
                 }
                 .padding([.top, .leading, .trailing])
                 DisclosureGroup(isExpanded: $viewModel.toggleStates.food.dinner) {
