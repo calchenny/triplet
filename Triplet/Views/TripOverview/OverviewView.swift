@@ -94,6 +94,20 @@ struct OverviewView: View {
                 .padding(.top, 60)
                 .padding(.leading)
                 .tint(.primary)
+//                NavigationLink {
+//                    HomeView()
+//                        .navigationBarBackButtonHidden()
+//                } label: {
+//                    Image(systemName: "house")
+//                        .font(.title2)
+//                        .padding()
+//                        .background(Color("Dark Blue"))
+//                        .foregroundStyle(.white)
+//                        .clipShape(Circle())
+//                }
+//                .padding(.top, 60)
+//                .padding(.leading)
+//                .tint(.primary)
             }
             .frame(maxWidth: .infinity)
         } content: {

@@ -35,6 +35,7 @@
 		8935A42A2B7F496300F62185 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8935A4292B7F496300F62185 /* Assets.xcassets */; };
 		8935A42D2B7F496300F62185 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8935A42C2B7F496300F62185 /* Preview Assets.xcassets */; };
 		89621B062B915053006C0848 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89621B052B915053006C0848 /* UserModel.swift */; };
+		89A6D89D2BA2CC56002BBC86 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 89A6D89C2BA2CC56002BBC86 /* GoogleService-Info.plist */; };
 		89B3F3BA2B8FA7C600D79E5D /* Poppins-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 89B3F3AB2B8FA70100D79E5D /* Poppins-Regular.ttf */; };
 		89B9FFC62B9ABF4D005C530A /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 89B9FFC52B9ABF4D005C530A /* Launch Screen.storyboard */; };
 		89B9FFC92B9ABFA3005C530A /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 89B9FFC82B9ABFA3005C530A /* FirebaseAnalytics */; };
@@ -77,7 +78,6 @@
 		89BDCE722B8FB46800C69895 /* LocationSearchViewData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BDCE712B8FB46800C69895 /* LocationSearchViewData.swift */; };
 		89C1396D2B8FF0CB00DEE0CD /* Poppins-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 89BDCE742B8FE28A00C69895 /* Poppins-Medium.ttf */; };
 		89C1396E2B8FF0CB00DEE0CD /* Poppins-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 89BDCE732B8FE26500C69895 /* Poppins-Bold.ttf */; };
-		929978232BA2E183005CDE28 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 929978222BA2E183005CDE28 /* GoogleService-Info.plist */; };
 		92B3F97D2B9B10A600819D0E /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B3F97C2B9B10A600819D0E /* LoadingView.swift */; };
 /* End PBXBuildFile section */
 
@@ -111,6 +111,7 @@
 		8935A4292B7F496300F62185 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8935A42C2B7F496300F62185 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		89621B052B915053006C0848 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
+		89A6D89C2BA2CC56002BBC86 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		89B3F3AB2B8FA70100D79E5D /* Poppins-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Regular.ttf"; sourceTree = "<group>"; };
 		89B9FFC52B9ABF4D005C530A /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		89BAE34B2BA25876009A710B /* TripView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripView.swift; sourceTree = "<group>"; };
@@ -124,7 +125,6 @@
 		89BDCE712B8FB46800C69895 /* LocationSearchViewData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSearchViewData.swift; sourceTree = "<group>"; };
 		89BDCE732B8FE26500C69895 /* Poppins-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Bold.ttf"; sourceTree = "<group>"; };
 		89BDCE742B8FE28A00C69895 /* Poppins-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Medium.ttf"; sourceTree = "<group>"; };
-		929978222BA2E183005CDE28 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		92B3F97C2B9B10A600819D0E /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -269,7 +269,7 @@
 				128284142B81FAE500E3E084 /* ViewModels */,
 				128284132B81FADE00E3E084 /* Views */,
 				8935A4252B7F496200F62185 /* TripletApp.swift */,
-				929978222BA2E183005CDE28 /* GoogleService-Info.plist */,
+				89A6D89C2BA2CC56002BBC86 /* GoogleService-Info.plist */,
 				89031F572B80012800282C88 /* Info.plist */,
 				8935A4292B7F496300F62185 /* Assets.xcassets */,
 				89B9FFC52B9ABF4D005C530A /* Launch Screen.storyboard */,
@@ -412,7 +412,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				89C1396D2B8FF0CB00DEE0CD /* Poppins-Medium.ttf in Resources */,
-				929978232BA2E183005CDE28 /* GoogleService-Info.plist in Resources */,
+				89A6D89D2BA2CC56002BBC86 /* GoogleService-Info.plist in Resources */,
 				89C1396E2B8FF0CB00DEE0CD /* Poppins-Bold.ttf in Resources */,
 				8935A42D2B7F496300F62185 /* Preview Assets.xcassets in Resources */,
 				89B3F3BA2B8FA7C600D79E5D /* Poppins-Regular.ttf in Resources */,
