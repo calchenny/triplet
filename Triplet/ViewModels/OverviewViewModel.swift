@@ -74,6 +74,28 @@ class OverviewViewModel: ObservableObject {
         }
     }
     
+    func addHousingPlace(name: String, location: GeoPoint, address: String, start: Date, end: Date) {
+        guard let trip else {
+            print("Missing trip")
+            return
+        }
+        guard let tripId = trip.id else {
+            print("Missing tripId")
+            return
+        }
+        let housingPlace = Event(name: name,
+                              location: location,
+                              type: EventType.housing,
+                              start: start,
+                              address: address,
+                              end: end)
+        do {
+            try db.collection("trips/\(tripId)/events").addDocument(from: housingPlace)
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
+    
     func updateNote(noteId: String, content: String) {
         guard let trip else {
             print("Missing trip")

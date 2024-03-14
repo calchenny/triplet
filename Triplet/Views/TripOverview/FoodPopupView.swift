@@ -65,7 +65,7 @@ struct FoodPopupView: View {
                             }
                     }
                 }
-                .padding(20)
+                .padding(.top, 20)
                 ZStack(alignment: .trailing) {
                     TextField("Search restaurants, eateries, etc.", text: $location)
                         .padding(20)
@@ -79,7 +79,7 @@ struct FoodPopupView: View {
                         .padding(.trailing)
                         .foregroundStyle(.darkerGray)
                 }
-                .padding([.leading, .trailing, .bottom], 20)
+                .padding(.bottom)
                 VStack(alignment: .leading) {
                     Text("\(landmarks.count) Results")
                         .font(.custom("Poppins-Regular", size: 14))
@@ -113,7 +113,6 @@ struct FoodPopupView: View {
                     }
                     .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, maxHeight: 200)
                 }
-                .padding([.leading, .trailing], 20)
                 HStack(alignment: .center, spacing: 15) {
                     Text("Category")
                         .font(.custom("Poppins-Medium", size: 16))
@@ -138,7 +137,6 @@ struct FoodPopupView: View {
                     .overlay(RoundedRectangle(cornerRadius: 5).stroke(Color("Darker Gray")))
                 }
                 .padding(.top)
-                .padding([.leading, .trailing], 20)
                 HStack(alignment: .center, spacing: 15) {
                     Text("Date/Time")
                         .font(.custom("Poppins-Medium", size: 16))
@@ -147,7 +145,6 @@ struct FoodPopupView: View {
                         .frame(maxWidth: .infinity, maxHeight: 25)
                         .tint(.darkTeal)
                 }
-                .padding([.leading, .trailing], 20)
                 Button {
                     guard let selectedLandmark else {
                         showAlert.toggle()
@@ -180,6 +177,7 @@ struct FoodPopupView: View {
                     Text("Please select a place")
                 }
             }
+            .padding([.leading, .trailing], 20)
         }
         .padding()
         .frame(maxHeight: 600)

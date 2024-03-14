@@ -166,13 +166,16 @@ struct OverviewView: View {
                             VStack(alignment: .leading) {
                                 Text(housing.name)
                                     .font(.custom("Poppins-Medium", size: 16))
+                                Text("\(getDateString(date: housing.start, includeTime: true)) - \(getDateString(date: housing.end, includeTime: true))")
+                                    .font(.custom("Poppins-Regular", size: 12))
+                                    .foregroundStyle(.secondary)
                                 Text(housing.address)
                                     .font(.custom("Poppins-Regular", size: 12))
                                     .foregroundStyle(.secondary)
                             }
                             Spacer()
                         }
-                        .padding()
+                        .padding([.top, .leading, .trailing])
                     }
                     Button {
                         viewModel.showHousingPopup.toggle()
@@ -321,7 +324,7 @@ struct OverviewView: View {
                     Text("Dinner")
                         .font(.custom("Poppins-Medium", size: 20))
                 }
-                .padding([.top, .leading, .trailing, .bottom])
+                .padding()
             } label: {
                 Text("Food Spots")
                     .font(.custom("Poppins-Bold", size: 20))
