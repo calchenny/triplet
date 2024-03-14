@@ -29,16 +29,16 @@ struct AddNewExpenseView: View {
 
         VStack {
             Text("New Expense")
-                .font(.largeTitle)
-                .bold()
+                .font(.custom("Poppins-Bold", size: 30))
                 .foregroundColor(Color.darkTeal)
                 .padding(.top, 30)
 
             Text("Expense Name")
-                .bold()
+                .font(.custom("Poppins-Bold", size: 16))
                 .foregroundColor(Color.darkTeal)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding()
+            
             TextField("Hotel, Uber, Dinner, Etc.", text: $name)
                 .keyboardType(.alphabet)
                 .padding(8)
@@ -48,21 +48,24 @@ struct AddNewExpenseView: View {
                         .stroke(.gray)
                 )
                 .padding(.horizontal, 20)
+            
             Text("Cost")
-                .bold()
+                .font(.custom("Poppins-Bold", size: 16))
                 .foregroundColor(Color.darkTeal)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding()
+            
             HStack {
                 Text("$")
-                    .bold()
-                    .foregroundColor(.gray)
+                    .font(.custom("Poppins-Medium", size: 16))
                     .padding(.leading, 5)
+                
                 TextField("0.00", text: $costInput)
+                    .font(.custom("Poppins-Regular", size: 16))
                     .keyboardType(.decimalPad)
                     .padding(8)
                     .cornerRadius(10)
-                    .frame(width: 75)
+                    .frame(width: 100)
             }
             .overlay(
                 RoundedRectangle(cornerRadius: 10)
@@ -70,15 +73,18 @@ struct AddNewExpenseView: View {
             )
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.leading, 20)
+            
             Text("Category")
-                .bold()
+                .font(.custom("Poppins-Bold", size: 16))
                 .foregroundColor(Color.darkTeal)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding()
+            
             HStack {
                 Picker("", selection: $selection) {
                     ForEach(categories, id: \.self) {
                         Text($0)
+                            .font(.custom("Poppins-Regular", size: 16))
                     }
                 }
                 .frame(width: 160)
@@ -93,7 +99,7 @@ struct AddNewExpenseView: View {
             .padding(.leading, 20)
 
             Text("Date")
-                .bold()
+                .font(.custom("Poppins-Bold", size: 16))
                 .foregroundColor(Color.darkTeal)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding()
@@ -102,12 +108,7 @@ struct AddNewExpenseView: View {
                 DatePicker("",selection: $date, displayedComponents: .date)
                 .datePickerStyle(.compact)
                 .labelsHidden()
-                .padding(8)
                 .cornerRadius(10)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 10)
-                        .stroke(.gray)
-                )
                 .padding(.horizontal, 10)
                 .background(.white)
             }
@@ -115,16 +116,15 @@ struct AddNewExpenseView: View {
             .padding(.leading, 10)
 
 
-
-
             if (error == true) {
                 Text("Make sure all fields are filed out.")
+                    .font(.custom("Poppins-Regular", size: 16))
                     .foregroundColor(.red)
+                    .padding(.vertical)
             }
 
-
-
             Spacer()
+            
             Button() {
                 //print("button pressed")
                 if (name == "" || costInput == "" || selection == "Select One") {
@@ -144,14 +144,17 @@ struct AddNewExpenseView: View {
 
             } label: {
                 Text("+ Add Expense")
+                    .font(.custom("Poppins-Regular", size: 15))
                     .padding(.horizontal, 50)
                     .padding(.vertical, 15)
                     .foregroundColor(.white)
                     .background(Color.darkTeal)
-                    .cornerRadius(100)
+                    .cornerRadius(15)
                     .bold()
 
             }
+            
+            Spacer()
 
         } // VStack closing
     }

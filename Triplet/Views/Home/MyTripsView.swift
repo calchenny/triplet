@@ -83,18 +83,18 @@ struct NoTripPlanned: View {
             VStack {
                 Text("No trip planned")
                     .padding(.bottom, 20)
-                    .foregroundColor(.lighterGray)
+                    .foregroundColor(.darkerGray)
                     .font(.custom("Poppins-Bold", size: 24))
                 Button {
                     
                 } label: {
                     Text("Create a trip to get started")
-                        .font(.custom("Poppins-Regular", size: 12))
+                        .font(.custom("Poppins-Regular", size: 15))
                 }
                 .padding(15)
                 .background(.darkTeal)
                 .foregroundColor(.white)
-                .cornerRadius(25)
+                .cornerRadius(15)
             }
             .padding(25)
             .frame(width: UIScreen.main.bounds.width * 0.8, height: 200)
@@ -195,7 +195,7 @@ struct CurrentTripsView: View  {
                                 
                                 if (getDaysUntilTrip(start: userModel.currentTrips[index].start) == 0) {
                                     Text("Happening Now")
-                                        .font(.custom("Poppins-Regular", size: 12))
+                                        .font(.custom("Poppins-Bold", size: 12))
                                         .foregroundStyle(.darkTeal)
                                 } else {
                                     Text("\(getDaysUntilTrip(start: userModel.currentTrips[index].start)) days until trip starts")
