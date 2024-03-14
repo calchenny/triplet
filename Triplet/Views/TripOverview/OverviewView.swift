@@ -98,9 +98,10 @@ struct OverviewView: View {
             .frame(maxWidth: .infinity)
         } content: {
             Text("Overview")
-                .font(.custom("Poppins-Bold", size: 30))
+                .font(.custom("Poppins-Medium", size: 30))
                 .foregroundStyle(Color("Dark Teal"))
-                .padding(25)
+                .padding(.top, 25)
+                .padding([.leading, .trailing])
             DisclosureGroup(isExpanded: $viewModel.toggleStates.notes) {
                 VStack {
                     ForEach(viewModel.notes, id: \.id) { note in
@@ -144,7 +145,7 @@ struct OverviewView: View {
                 }
             } label: {
                 Text("Notes")
-                    .font(.custom("Poppins-Bold", size: 24))
+                    .font(.custom("Poppins-Medium", size: 24))
             }
             .frame(maxWidth: UIScreen.main.bounds.width * 0.85)
             .padding()
@@ -189,7 +190,7 @@ struct OverviewView: View {
                 }
             } label: {
                 Text("Hotel & Lodging")
-                    .font(.custom("Poppins-Bold", size: 24))
+                    .font(.custom("Poppins-Medium", size: 24))
             }
             .frame(maxWidth: UIScreen.main.bounds.width * 0.85)
             .padding()
@@ -246,7 +247,7 @@ struct OverviewView: View {
                     
                 } label: {
                     Text("Breakfast/Brunch")
-                        .font(.custom("Poppins-Bold", size: 20))
+                        .font(.custom("Poppins-Medium", size: 20))
                 }
                 .padding([.top, .leading, .trailing])
                 DisclosureGroup(isExpanded: $viewModel.toggleStates.food.lunch) {
@@ -282,7 +283,7 @@ struct OverviewView: View {
                     }
                 } label: {
                     Text("Lunch")
-                        .font(.custom("Poppins-Bold", size: 20))
+                        .font(.custom("Poppins-Medium", size: 20))
                 }
                 .padding([.top, .leading, .trailing])
                 DisclosureGroup(isExpanded: $viewModel.toggleStates.food.dinner) {
@@ -318,12 +319,12 @@ struct OverviewView: View {
                     }
                 } label: {
                     Text("Dinner")
-                        .font(.custom("Poppins-Bold", size: 20))
+                        .font(.custom("Poppins-Medium", size: 20))
                 }
                 .padding([.top, .leading, .trailing, .bottom])
             } label: {
                 Text("Food Spots")
-                    .font(.custom("Poppins-Bold", size: 24))
+                    .font(.custom("Poppins-Medium", size: 24))
             }
             .frame(maxWidth: UIScreen.main.bounds.width * 0.85)
             .padding()

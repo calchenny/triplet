@@ -158,7 +158,7 @@ struct ItineraryView: View {
             .frame(maxWidth: .infinity)
         } content: {
             Text("Itinerary")
-                .font(.custom("Poppins-Bold", size:30))
+                .font(.custom("Poppins-Medium", size: 30))
                 .foregroundStyle(Color.darkTeal)
                 .padding(25)
             Button(action: {
@@ -185,8 +185,8 @@ struct ItineraryView: View {
             
             if itineraryModel.events.isEmpty {
                 Text("No events planned yet!")
-                    .font(.headline)
-                    .foregroundColor(.gray)
+                    .font(.custom("Poppins-Medium", size: 16))
+                    .foregroundColor(.darkerGray)
                     .padding()
             } else {
                 ScrollView {
