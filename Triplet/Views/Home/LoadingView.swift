@@ -30,7 +30,6 @@ struct LoadingView: View {
                 print("Loading user data")
                 try await userModel.setUid(uid: loginViewModel.fetchUserUID())
                 // Once user data is loaded, navigate to the home view
-                await userModel.loadingUserData()
                 self.isUserLoaded = true
             } catch {
                 print("No user data found")
