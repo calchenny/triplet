@@ -34,7 +34,7 @@ struct NoteView: View {
             ToolbarItem {
                 Button {
                     if let noteId = note.id {
-                        overviewViewModel.updateNote(noteId: noteId, content: content)
+                        overviewViewModel.updateNote(noteId: noteId, title: title, content: content)
                     }
                 } label: {
                     Text("Save")
