@@ -20,44 +20,44 @@ struct testAPICallsView: View {
     @State private var address: String = "1%20Shields%20Ave%2C%20Davis%2C%20CA%2095616"
 
     var body: some View {
-        VStack {
-            
+        VStack(alignment: .center) {
             HStack {
-                Text("Plan gone wrong? \nHere's some similar locations: ")
-                    .font(.custom("Poppins-Regular", size: 16))
-                .foregroundStyle(Color.darkTeal)
+                VStack(alignment: .leading) {
+                    Text("Plan gone wrong?")
+                        .font(.custom("Poppins-Medium", size: 16))
+                    Text("Here's some similar locations: ")
+                        .font(.custom("Poppins-Regular", size: 12))
+                }
                 Spacer()
             }
-            //.padding(.leading, 50)
-                
-                
-            HStack {
-                if photoURLs.count != 0 {
-                    ForEach(photoURLs.prefix(3).indices, id: \.self) { index in
-                        let imageURL = photoURLs[index]
-                        let name = names[index]
-
-                        VStack {
+            .padding(.bottom)
+            ScrollView(.horizontal) {
+                HStack(alignment: .top, spacing: 10) {
+                    if photoURLs.count != 0 {
+                        ForEach(photoURLs.indices, id: \.self) { index in
                             VStack {
-                                AsyncImage(url: URL(string: imageURL), content: { image in
-                                    image.resizable()
-                                        .aspectRatio(contentMode: .fit)
-                                        .frame(maxWidth: 125, maxHeight: 125)
-                                        //.clipShape(Circle())
-                                }, placeholder: {ProgressView()})
+                                AsyncImage(url: URL(string: photoURLs[index])) { image in
+                                    image
+                                        .resizable()
+                                        .scaledToFill()
+                                } placeholder: {
+                                    ProgressView()
+                                }
+                                .frame(width: 100, height: 100)
+                                .cornerRadius(15)
+                                Text(names[index])
+                                    .fixedSize(horizontal: false, vertical: true)
+                                    .frame(maxWidth: 100, alignment: .center)
+                                    .font(.custom("Poppins-Regular", size: 14))
                             }
                             .frame(width: 100)
-                            .cornerRadius(50)
-                            Text(name)
-                                .font(.custom("Poppins-Regular", size: 12))
-                                .foregroundStyle(Color.darkTeal)
                         }
                     }
                 }
             }
-            .padding(50)
-            
         }
+        .padding()
+        .padding(.bottom, 5)
         .onAppear {
             print("appeared")
             apiCaller.yelpRetrieveVenues(longitude: longitude, latitude: latitude, term: term) { (aliases, error) in

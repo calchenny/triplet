@@ -74,7 +74,7 @@ struct DayOfView: View {
     }
     
     func getHeaderHeight() -> CGFloat {
-        let maxHeight = CGFloat(80)
+        let maxHeight = CGFloat(100)
         let minHeight = CGFloat(30)
         return max((1 - itineraryModel.collapseProgress + 0.5 * itineraryModel.collapseProgress) * maxHeight, minHeight)
     }
@@ -87,7 +87,6 @@ struct DayOfView: View {
     
     
     func getCategoryImageName(category: String) -> String {
-
         switch category {
         case "Food":
             return "fork.knife.circle"
@@ -181,101 +180,78 @@ struct DayOfView: View {
                 .frame(maxWidth: .infinity)
             } content: {
                 VStack {
-                    HStack {
-                        Text("\(getDayOfWeek(currentDate)), \(formatDate(currentDate))")
-                            .font(.custom("Poppins-Bold", size: 30))
-                            .foregroundStyle(Color.darkTeal)
-                    }
-                    .padding(.top, 20)
-                    // Displaying only the current event corresponding to the current date
-                    if let currentEvent = itineraryModel.events.first(where: { Calendar.current.isDate($0.start, inSameDayAs: currentDate) && $0.start <= Date() && $0.end >= Date() }) {
-                        VStack {
-                            HStack(spacing: 20) {
-                                // Image for the event's category
-                                Image(systemName: getCategoryImageName(category: currentEvent.type.rawValue))
-                                    .resizable()
-                                    .frame(width: 30, height: 30)
-                                    .foregroundColor(.darkTeal)
-                                
-                                // Event details
-                                VStack(alignment: .leading){
-                                    Text(currentEvent.name)
-                                        .font(.custom("Poppins-Bold", size: 20))
-                                        .foregroundStyle(Color.darkTeal)
-                                    Text("\(formatTime(currentEvent.start)) - \(formatTime(currentEvent.end))")
-                                        .font(.custom("Poppins-Bold", size: 15))
-                                    Text(currentEvent.address)
-                                        .font(.custom("Poppins-Regular", size: 13))
-                                }
-                                .padding()
+                    Text("Today")
+                        .font(.custom("Poppins-Bold", size: 30))
+                        .foregroundStyle(Color.darkTeal)
+                        .padding(.top, 25)
+                    RoundedRectangle(cornerRadius: 10)
+                        .frame(height: 40)
+                        .foregroundStyle(.evenLighterBlue)
+                        .overlay(
+                            HStack {
                                 Spacer()
-                                // Checkbox (Toggle) for the current event
-                                Button(action: {
-                                    toggleEventCheck(eventID: currentEvent.id ?? "")
-                                }) {
-                                    Image(systemName: checkedEvents.contains(currentEvent.id ?? "") ? "checkmark.square" : "square")
-                                        .resizable()
-                                        .frame(width: 20, height: 20)
-                                        .foregroundColor(.darkTeal)
-                                }
-                            }
-                            
-                            
-                            
-                            if currentEvent.start < Date() {
-                                // Show recommendations for other alternatives
-                                let location = currentEvent.location
-                                let latitude = location.latitude
-                                let longitude = location.longitude
-                                testAPICallsView(longitude: longitude, latitude: latitude, term: currentEvent.type.rawValue)
-                                
-                            }
-                        }
-                        .padding(10)
-                        .background(
-                            RoundedRectangle(cornerRadius: 25)
-                                .fill(Color.white)
-                                .shadow(color: (isCurrentTimeWithinEventTime(event: currentEvent) ? .darkTeal : .clear), radius: 5, x: 0, y: 2)
-                        )
-                        .padding()
-                    }
-                    
-                    // The events that come after the current event
-                    ForEach(itineraryModel.events.filter { event in
-                                           Calendar.current.isDate(event.start, inSameDayAs: currentDate) &&
-                                               event.start > Date() && event.end > Date()
-                    }) { event in
-                        HStack(spacing: 20) {
-                            // Image for the event's category
-                            Image(systemName: getCategoryImageName(category: event.type.rawValue))
-                                .resizable()
-                                .frame(width: 30, height: 30)
-                                .foregroundColor(.darkTeal)
-                            
-                            // Event details
-                            VStack(alignment: .leading){
-                                Text(event.name)
+                                Text( "\(getDayOfWeek(currentDate)), \(formatDate(currentDate))") // Convert Date to String
                                     .font(.custom("Poppins-Bold", size: 20))
                                     .foregroundStyle(Color.darkTeal)
-                                Text("\(formatTime(event.start)) - \(formatTime(event.end))")
-                                    .font(.custom("Poppins-Bold", size: 15))
-                                Text(event.address)
-                                    .font(.custom("Poppins-Regular", size: 13))
+                                Spacer()
+                            }
+                        )
+                        .padding(.bottom, 25)
+                        .padding([.leading, .trailing])
+                    Text("Happening Now:")
+                        .font(.custom("Poppins-Medium", size: 16))
+                        .foregroundStyle(.darkerGray)
+                    ForEach(itineraryModel.events.filter { Calendar.current.isDate($0.start, inSameDayAs: currentDate) && $0.end > Date() }) { event in
+                        ZStack {
+                            RoundedRectangle(cornerRadius: 25)
+                                .foregroundStyle(isCurrentTimeWithinEventTime(event: event) ? .lighterGray : .clear)
+                            VStack {
+                                HStack {
+                                    // Image for the event's category
+                                    Image(systemName: getCategoryImageName(category: event.type.rawValue))
+                                        .resizable()
+                                        .frame(width: 30, height: 30)
+                                        .padding([.leading, .trailing])
+                                        .foregroundColor(.darkTeal)
+                                    
+                                    Divider()
+                                        .frame(width: 2)
+                                        .backgroundStyle(.darkerGray)
+                                    
+                                    // Event details
+                                    VStack(alignment: .leading) {
+                                        Text(event.name)
+                                            .font(.custom("Poppins-Medium", size: 16))
+                                        Text("\(formatTime(event.start)) - \(formatTime(event.end))")
+                                            .font(.custom("Poppins-Regular", size: 12))
+                                        Text(event.address)
+                                            .font(.custom("Poppins-Regular", size: 12))
+                                            .foregroundStyle(.secondary)
+                                    }
+                                    .padding()
+                                    Spacer()
+                                    // Checkbox (Toggle) for the current event
+                                    Button(action: {
+                                        toggleEventCheck(eventID: event.id ?? "")
+                                    }) {
+                                        Image(systemName: checkedEvents.contains(event.id ?? "") ? "checkmark.square.fill" : "square")
+                                            .resizable()
+                                            .frame(width: 20, height: 20)
+                                            .foregroundColor(.darkTeal)
+                                    }
+                                }
+                                .frame(maxHeight: 100)
+                                if event.start < Date() {
+                                    let location = event.location
+                                    let latitude = location.latitude
+                                    let longitude = location.longitude
+                                    testAPICallsView(longitude: longitude, latitude: latitude, term: event.type.rawValue)
+                                }
                             }
                             .padding()
-                            Spacer()
-                            // Checkbox (Toggle) for each event
-                            Button(action: {
-                                toggleEventCheck(eventID: event.id ?? "")
-                            }) {
-                                Image(systemName: checkedEvents.contains(event.id ?? "") ? "checkmark.square" : "square")
-                                    .resizable()
-                                    .frame(width: 20, height: 20)
-                                    .foregroundColor(.darkTeal)
-                            }
-                            
                         }
-                        .padding(25)
+                        .padding([.leading, .trailing])
+                        .padding(.bottom, 10)
                     }
                 }
                 
@@ -307,5 +283,5 @@ struct DayOfView: View {
 }
 
 #Preview {
-    DayOfView(tripId: "bXQdm19F9v2DbjS4VPyi")
+    DayOfView(tripId: "xv5hwNz7WaYCUlxWLMTX")
 }

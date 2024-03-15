@@ -72,7 +72,7 @@ class APICaller: ObservableObject {
 
         let headers = [
             "accept": "application/json",
-            "Authorization": "Bearer f4Rf97-CC8Z0pjBX_4eQ1_5ytMfPcx4vQd0xAsxJHPwACJGG4Tvku5z-Ca8x3Shnu3BqkRI3hW1U6ZJLcmAQB2tiPFUqNWmTr4Ahag0i7LUfwzVE6KY0NlyXK5nhZXYx"
+            "Authorization": "Bearer wNI4avybk18pMLzent2IWyNqspdo-xCFfWjeOvEQemmxbhf03nXV-FyMMiYoxOOi3JTqXyX52YgakO-xPXHqfuSChhRHKNKG0QBmXuZPL1gECOMlMKH4R69zkN_zZXYx"
         ]
 
         let request = NSMutableURLRequest(url: NSURL(string: "https://api.yelp.com/v3/businesses/search?latitude=\(latitude)&longitude=\(longitude)&term=\(term)&locale=\(locale)&open_now=true&sort_by=\(sortBy)&limit=\(limit)")! as URL,
@@ -124,7 +124,7 @@ class APICaller: ObservableObject {
         print("inside yelpLoadSuggestions")
         let headers = [
             "accept": "application/json",
-            "Authorization": "Bearer f4Rf97-CC8Z0pjBX_4eQ1_5ytMfPcx4vQd0xAsxJHPwACJGG4Tvku5z-Ca8x3Shnu3BqkRI3hW1U6ZJLcmAQB2tiPFUqNWmTr4Ahag0i7LUfwzVE6KY0NlyXK5nhZXYx"
+            "Authorization": "Bearer wNI4avybk18pMLzent2IWyNqspdo-xCFfWjeOvEQemmxbhf03nXV-FyMMiYoxOOi3JTqXyX52YgakO-xPXHqfuSChhRHKNKG0QBmXuZPL1gECOMlMKH4R69zkN_zZXYx"
         ]
 
         let request = NSMutableURLRequest(url: NSURL(string: "https://api.yelp.com/v3/businesses/\(alias)")! as URL,
