@@ -11,8 +11,8 @@ import Firebase
 
 struct HousingPopupView: View {
     @EnvironmentObject var overviewViewModel: OverviewViewModel
-    @State var start: Date = Date()
-    @State var end: Date = Date()
+    @State private var startDate: Date = Date()
+    @State private var endDate: Date = Date()
     @State var location: String = ""
     @State var selectedLandmark: LandmarkViewModel?
     @State var landmarks: [LandmarkViewModel] = [LandmarkViewModel]()
@@ -113,26 +113,22 @@ struct HousingPopupView: View {
                     }
                     .frame(maxWidth: .infinity, maxHeight: 200)
                 }
-                HStack(alignment: .center, spacing: 15) {
-                    Text("Start")
-                        .font(.custom("Poppins-Medium", size: 16))
-                    Spacer()
-                    DatePicker("Please enter a date", selection: $start)
-                        .labelsHidden()
-                        .frame(maxHeight: 25)
-                        .tint(.darkTeal)
+                if let trip = overviewViewModel.trip,
+                    let start = trip.start,
+                    let end = trip.end {
+                    DatePicker(selection: $startDate, in: start...end, displayedComponents: [.date, .hourAndMinute]) {
+                        Text("Start:")
+                            .font(.custom("Poppins-Medium", size: 16))
+                    }
+                    .tint(.darkTeal)
+
+                    DatePicker(selection: $endDate, in: startDate...end, displayedComponents: [.date, .hourAndMinute]) {
+                        Text("End:")
+                            .font(.custom("Poppins-Medium", size: 16))
+                    }
+                    .tint(.darkTeal)
+                    
                 }
-                .padding(.top)
-                HStack(alignment: .center, spacing: 15) {
-                    Text("End")
-                        .font(.custom("Poppins-Medium", size: 16))
-                    Spacer()
-                    DatePicker("Please enter a date", selection: $end)
-                        .labelsHidden()
-                        .frame(maxHeight: 25)
-                        .tint(.darkTeal)
-                }
-                .padding(.top, 5)
                 Button {
                     guard let selectedLandmark else {
                         showAlert.toggle()
@@ -142,8 +138,8 @@ struct HousingPopupView: View {
                                                       location: GeoPoint(latitude: selectedLandmark.coordinate.latitude,
                                                                          longitude: selectedLandmark.coordinate.longitude),
                                                       address: selectedLandmark.title,
-                                                      start: start,
-                                                      end: end)
+                                                      start: startDate,
+                                                      end: endDate)
                     overviewViewModel.showHousingPopup.toggle()
                 } label: {
                     RoundedRectangle(cornerRadius: 15)

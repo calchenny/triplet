@@ -37,6 +37,7 @@ struct TripletApp: App {
     var body: some Scene {
         WindowGroup {
             RootView()
+                .preferredColorScheme(.light)
                 .environmentObject(LoginViewModel())
                 .environmentObject(UserModel())
 //            ItineraryView()

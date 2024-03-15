@@ -137,24 +137,22 @@ struct AddPlaceView: View {
                     }
                     .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, maxHeight: 300)
                 }
-                HStack(alignment: .center, spacing: 15) {
-                    Text("Start")
-                        .font(.custom("Poppins-Medium", size: 16))
-                    Spacer()
-                    DatePicker("Please enter a date", selection: $startDate)
-                        .labelsHidden()
-                        .frame(maxHeight: 25)
-                        .tint(.darkTeal)
-                }
-                .padding(.top)
-                HStack(alignment: .center, spacing: 15) {
-                    Text("End")
-                        .font(.custom("Poppins-Medium", size: 16))
-                    Spacer()
-                    DatePicker("Please enter a date", selection: $endDate)
-                        .labelsHidden()
-                        .frame(maxHeight: 25)
-                        .tint(.darkTeal)
+                if let trip = itineraryModel.trip,
+                    let start = trip.start,
+                    let end = trip.end {
+                    DatePicker(selection: $startDate, in: start...end, displayedComponents: [.date, .hourAndMinute]) {
+                        Text("Start:")
+                            .font(.custom("Poppins-Medium", size: 16))
+                    }
+                    .tint(.darkTeal)
+
+                    DatePicker(selection: $endDate, in: startDate...end, displayedComponents: [.date, .hourAndMinute]) {
+                        Text("End:")
+                            .font(.custom("Poppins-Medium", size: 16))
+                    }
+                    .tint(.darkTeal)
+                    
+                    
                 }
                 HStack(alignment: .center, spacing: 15) {
                     Text("Category")
