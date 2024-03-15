@@ -14,6 +14,7 @@ struct AddPlaceView: View {
     @State private var startDate: Date = Date()
     @State private var endDate: Date = Date()
     @State private var category: EventType = .attraction
+    @State var showAlert: Bool = false
     @State private var selectedLandmark: LandmarkViewModel?
     @Environment(\.presentationMode) var presentationMode
     
@@ -65,65 +66,152 @@ struct AddPlaceView: View {
     }
     
     var body: some View {
-        VStack {
-            Text("Add a Place")
-                .font(.custom("Poppins-Bold", size: 30))
-                .padding(.bottom, 30)
-                .foregroundStyle(Color.darkTeal)
-            if let trip = itineraryModel.trip,
-                let start = trip.start,
-                let end = trip.end {
-                DatePicker(selection: $startDate, in: start...end, displayedComponents: [.date, .hourAndMinute]) {
-                    Text("Start:")
-                        .font(.custom("Poppins-Medium", size: 20))
-                        .foregroundStyle(Color.darkTeal)
-                }
-                DatePicker(selection: $endDate, in: startDate...end, displayedComponents: [.date, .hourAndMinute]) {
-                    Text("End:")
-                        .font(.custom("Poppins-Medium", size: 20))
-                        .foregroundStyle(Color.darkTeal)
-                }
-            }
-
-            DropDownPicker(
-                selection: $category,
-                options: EventType.allCases.map { $0.rawValue }
-            )
-            .padding(30)
-            
+        ZStack {
+            RoundedRectangle(cornerRadius: 15)
+                .foregroundStyle(.white)
             VStack {
-                TextField("Search", text: $search, onEditingChanged: { _ in}) {
-                    self.getNearByLandmarks()
-                }.textFieldStyle(RoundedBorderTextFieldStyle())
-                    .padding()
-                    .cornerRadius(10)
-                    .font(.custom("Poppins-Medium", size: 20))
-                    
-                    
-                List {
-                    ForEach(self.landmarks, id: \.id) { landmark in
-                        VStack(alignment: .leading) {
-                            Text(landmark.name)
-                                .fontWeight(.bold)
-                            Text(landmark.title)
-                        }
-                        .onTapGesture {
-                            print("Start date: \(startDate)")
-                            selectedLandmark = landmark
-                            guard let checkLandMark = selectedLandmark else {
-                                return
+                ZStack(alignment: .trailing) {
+                    HStack {
+                        Text("Add Event")
+                            .font(.custom("Poppins-Bold", size: 25))
+                            .foregroundStyle(Color("Dark Teal"))
+                    }
+                    .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/)
+                    Button {
+                        itineraryModel.showNewPlacePopUp.toggle()
+                    } label: {
+                        Circle()
+                            .frame(maxWidth: 30)
+                            .foregroundStyle(Color("Dark Teal"))
+                            .overlay {
+                                Image(systemName: "xmark")
+                                    .foregroundStyle(.white)
                             }
-                             
-                            itineraryModel.addEvent(name: checkLandMark.name, location: GeoPoint(latitude: checkLandMark.coordinate.latitude, longitude: checkLandMark.coordinate.longitude),type: category, category: nil, start: startDate, address: checkLandMark.title, end: endDate)
-                            self.presentationMode.wrappedValue.dismiss()
-                        }
                     }
                 }
+                .padding(.top, 10)
+                if let trip = itineraryModel.trip,
+                    let start = trip.start,
+                    let end = trip.end {
+                    DatePicker(selection: $startDate, in: start...end, displayedComponents: [.date, .hourAndMinute]) {
+                        Text("Start:")
+                            .font(.custom("Poppins-Medium", size: 15))
+                            .foregroundStyle(Color.darkTeal)
+                    }
+                    
+                    DatePicker(selection: $endDate, in: startDate...end, displayedComponents: [.date, .hourAndMinute]) {
+                        Text("End:")
+                            .font(.custom("Poppins-Medium", size: 15))
+                            .foregroundStyle(Color.darkTeal)
+                    }
+                    
+                }
+                ZStack(alignment: .trailing) {
+                    TextField("Search for an event", text: $search)
+                        .padding(20)
+                        .frame(maxHeight: 35)
+                        .font(.custom("Poppins-Regular", size: 16))
+                        .overlay(RoundedRectangle(cornerRadius: 5).stroke(Color("Darker Gray")))
+                        .onChange(of: search) {
+                            getNearByLandmarks()
+                        }
+                    Image(systemName: "magnifyingglass")
+                        .padding(.trailing)
+                        .foregroundStyle(.darkerGray)
+                }
+                .padding(.bottom)
+                VStack(alignment: .leading) {
+                    Text("\(landmarks.count) Results")
+                        .font(.custom("Poppins-Regular", size: 14))
+                    ScrollView {
+                        VStack(spacing: 5) {
+                            ForEach(landmarks) { landmark in
+                                ZStack {
+                                    RoundedRectangle(cornerRadius: 10)
+                                        .foregroundStyle(landmark == selectedLandmark ? .lighterGray : .white)
+                                    HStack {
+                                        Image(systemName: "mappin.and.ellipse")
+                                            .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
+                                            .padding(.trailing)
+                                            .foregroundStyle(.darkTeal)
+                                        VStack(alignment: .leading) {
+                                            Text(landmark.name)
+                                                .font(.custom("Poppins-Regular", size: 14))
+                                            Text(landmark.title)
+                                                .foregroundStyle(.darkerGray)
+                                                .font(.custom("Poppins-Regular", size: 12))
+                                        }
+                                        Spacer()
+                                    }
+                                    .padding(5)
+                                }
+                                .onTapGesture {
+                                    selectedLandmark = selectedLandmark == landmark ? nil : landmark
+                                }
+                            }
+                        }
+                    }
+                    .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, maxHeight: 300)
+                }
+                HStack(alignment: .center, spacing: 15) {
+                    Text("Category")
+                        .font(.custom("Poppins-Medium", size: 16))
+                    Menu {
+                        Picker("", selection: $category) {
+                            ForEach(EventType.allCases, id: \.self) { category in
+                                Text(category.rawValue)
+                            }
+                        }
+                    } label: {
+                        HStack {
+                            Text(category.rawValue)
+                                .font(.custom("Poppins-Regular", size: 16))
+                                .frame(minWidth: 150)
+                                .foregroundStyle(.black)
+                            Image(systemName: "chevron.down")
+                                .foregroundStyle(Color("Darker Gray"))
+                        }
+                    }
+                    .frame(maxWidth: .infinity, maxHeight: 25)
+                    .padding(5)
+                    .overlay(RoundedRectangle(cornerRadius: 5).stroke(Color("Darker Gray")))
+                }
+                .padding(.top)
+                Button {
+                    guard let selectedLandmark else {
+                        showAlert.toggle()
+                        return
+                    }
+                    itineraryModel.addEvent(name: selectedLandmark.name, location: GeoPoint(latitude: selectedLandmark.coordinate.latitude, longitude: selectedLandmark.coordinate.longitude),type: category, category: nil, start: startDate, address: selectedLandmark.title, end: endDate)
+                                                   
+                    itineraryModel.showNewPlacePopUp.toggle()
+                } label: {
+                    RoundedRectangle(cornerRadius: 10)
+                        .frame(width: 200, height: 40)
+                        .foregroundStyle(Color("Dark Teal"))
+                        .overlay(
+                            HStack {
+                                Image(systemName: "plus")
+                                Text("Add Event")
+                                    .font(.custom("Poppins-Medium", size: 16))
+                            }
+                                .tint(.white)
+                        )
+                        .padding([.top, .bottom])
+                }
+                .alert("No Place Selected", isPresented: $showAlert) {
+                    Button("OK", role: .cancel) { }
+                } message: {
+                    Text("Please select a place")
+                }
             }
+            .padding([.leading, .trailing], 20)
         }
-        .padding(15)
+        .padding()
+        .frame(maxHeight: 600)
     }
 }
+
 
 private let dateFormatter: DateFormatter = {
     let formatter = DateFormatter()
@@ -131,108 +219,9 @@ private let dateFormatter: DateFormatter = {
     return formatter
 }()
 
-enum DropDownPickerState {
-    case top
-    case bottom
-}
 
-struct DropDownPicker: View {
-    
-    @Binding var selection: EventType
-    var state: DropDownPickerState = .bottom
-    var options: [String]
-    var maxWidth: CGFloat = 180
-    
-    @State var showDropdown = false
-    
-    @SceneStorage("drop_down_zindex") private var index = 1000.0
-    @State var zindex = 1000.0
-    
-    var body: some View {
-        GeometryReader {
-            let size = $0.size
-           
-            
-            VStack(spacing: 0) {
-                
-                
-                if state == .top && showDropdown {
-                    OptionsView()
-                }
-                
-                HStack {
-                    Text(selection.rawValue)
-                        .foregroundStyle(Color.white)
-                        .font(.custom("Poppins-Medium", size: 20))
-                    
-                    
-                    Spacer(minLength: 0)
-                    
-                    Image(systemName: state == .top ? "chevron.up" : "chevron.down")
-                        .font(.title3)
-                        .foregroundColor(.white)
-                        .rotationEffect(.degrees((showDropdown ? -180 : 0)))
-                }
-                .padding(.horizontal, 15)
-                .frame(width: maxWidth, height: 50)
-                .background(.darkTeal)
-                .contentShape(.rect)
-                .onTapGesture {
-                    index += 1
-                    zindex = index
-                    withAnimation(.snappy) {
-                        showDropdown.toggle()
-                    }
-                }
-                .zIndex(10)
-                
-                if state == .bottom && showDropdown {
-                    OptionsView()
-                }
-            }
-            .clipped()
-            .background(.evenLighterBlue)
-            .cornerRadius(10)
-            .overlay {
-                RoundedRectangle(cornerRadius: 10)
-                    .stroke(.gray)
-            }
-            .frame(height: size.height, alignment: state == .top ? .bottom : .top)
-            
-        }
-        .frame(width: maxWidth, height: 50)
-        .zIndex(zindex)
-    }
-    
-    
-    func OptionsView() -> some View {
-        VStack(spacing: 0) {
-            ForEach(EventType.allCases, id: \.self) { category in
-                HStack {
-                    Text(category.rawValue)
-                        .foregroundStyle(Color.black)
-                    Spacer()
-                    Image(systemName: "checkmark")
-                        .opacity(selection == category ? 1 : 0)
-                }
-                .foregroundStyle(selection == category ? Color.primary : Color.gray)
-                .animation(.none, value: selection)
-                .frame(height: 40)
-                .contentShape(.rect)
-                .padding(.horizontal, 15)
-                .onTapGesture {
-                    withAnimation(.snappy) {
-                        selection = category
-                        showDropdown.toggle()
-                    }
-                }
-            }
-        }
-        .transition(.move(edge: state == .top ? .bottom : .top))
-        .zIndex(1)
-    }
-}
 
-//#Preview {
-//    AddPlaceView()
-//}
+#Preview {
+    AddPlaceView()
+        .environmentObject(ItineraryViewModel())
+}

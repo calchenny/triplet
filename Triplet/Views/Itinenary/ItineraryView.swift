@@ -21,7 +21,6 @@ struct ItineraryView: View {
     @State var goToDayView = false
     @State var searchText: String = ""
     @State var showMapView: Bool = false
-    @State var showAddEventSheet: Bool = false
     
     @State private var reverseGeocodedAddress: String = ""
     
@@ -179,7 +178,7 @@ struct ItineraryView: View {
                 .foregroundStyle(Color.darkTeal)
                 .padding(.top, 25)
             Button(action: {
-                showAddEventSheet.toggle()
+                itineraryModel.showNewPlacePopUp.toggle()
             }) {
                 RoundedRectangle(cornerRadius: 10)
                     .frame(width: 200, height: 40)
@@ -194,11 +193,20 @@ struct ItineraryView: View {
                     )
                     .padding(.bottom, 30)
             }
-            .sheet(isPresented: $showAddEventSheet) {
+            .popup(isPresented: $itineraryModel.showNewPlacePopUp) {
                 AddPlaceView()
-                    .presentationDragIndicator(.visible)
                     .environmentObject(itineraryModel)
+            } customize: { popup in
+                popup
+                    .type(.floater())
+                    .position(.center)
+                    .animation(.spring())
+                    .closeOnTap(false)
+                    .closeOnTapOutside(false)
+                    .isOpaque(true)
+                    .backgroundColor(.black.opacity(0.25))
             }
+            .padding()
             
             if itineraryModel.events.isEmpty {
                 Text("No events planned yet!")
@@ -304,7 +312,7 @@ struct ItineraryView: View {
                 .closeOnTapOutside(false)
                 .useKeyboardSafeArea(true)
                 .isOpaque(true)
-                .backgroundColor(.black.opacity(0.25))
+                .backgroundColor(.black)
         }
         .onAppear {
             itineraryModel.subscribe(tripId: tripId)

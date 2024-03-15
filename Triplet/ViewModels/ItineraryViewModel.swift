@@ -15,6 +15,7 @@ class ItineraryViewModel: ObservableObject {
     @Published var trip: Trip?
     @Published var events: [Event] = []
     @Published var cameraPosition: MapCameraPosition?
+    @Published var showNewPlacePopUp: Bool = false
 
     @Published var collapseProgress: CGFloat = 0
     
