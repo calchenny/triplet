@@ -53,21 +53,27 @@ struct MyTripsView: View {
             }
             Spacer()
         }
-        .task {
-            do {
-                print("Loading user data")
-                try await userModel.setUid(uid: loginViewModel.fetchUserUID())
-    //                    userModel.subscribe()
-                // Once user data is loaded, navigate to the home view
-                await userModel.loadingUserData()
-            } catch {
-                print("No user data found")
-            }
-        }
+//        .task {
+//            do {
+//                print("Loading user data")
+//                try await userModel.setUid(uid: loginViewModel.fetchUserUID())
+//                        userModel.subscribe()
+//                // Once user data is loaded, navigate to the home view
+//                await userModel.loadingUserData()
+//            } catch {
+//                print("No user data found")
+//            }
+//        }
         .onAppear() {
             print("trip of the user")
             print(userModel.trips.count)
             
+        }
+        .onAppear {
+            userModel.subscribe()
+        }
+        .onDisappear {
+            userModel.unsubscribe()
         }
     }
 }
