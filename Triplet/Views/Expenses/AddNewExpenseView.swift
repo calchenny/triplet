@@ -101,7 +101,7 @@ struct AddNewExpenseView: View {
                 Text("Date")
                     .font(.custom("Poppins-Medium", size: 16))
                 
-                DatePicker("Please enter a date", selection: $date)
+                DatePicker("Please enter a date", selection: $date, displayedComponents: .date)
                     .labelsHidden()
                     .frame(maxHeight: 25)
                     .tint(.darkTeal)

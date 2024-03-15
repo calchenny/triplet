@@ -57,7 +57,6 @@ struct Event: Identifiable, Codable {
 enum ExpenseCategory: String, Codable, CaseIterable {
     case housing = "Housing"
     case activities = "Activities"
-    case dinner = "Dinner"
     case entertainment = "Entertainment"
     case transportation = "Transportation"
     case food = "Food"
