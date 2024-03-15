@@ -96,7 +96,7 @@ class OverviewViewModel: ObservableObject {
         }
     }
     
-    func updateNote(noteId: String, content: String) {
+    func updateNote(noteId: String, title: String, content: String) {
         guard let trip else {
             print("Missing trip")
             return
@@ -106,7 +106,7 @@ class OverviewViewModel: ObservableObject {
             return
         }
         let noteRef = db.document("trips/\(tripId)/notes/\(noteId)")
-        noteRef.updateData(["content": content]) { error in
+        noteRef.updateData(["title": title, "content": content]) { error in
             if let error {
                 print(error.localizedDescription)
             } else {
