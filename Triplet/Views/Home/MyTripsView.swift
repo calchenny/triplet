@@ -68,8 +68,6 @@ struct MyTripsView: View {
             print("trip of the user")
             print(userModel.trips.count)
             
-        }
-        .onAppear {
             userModel.subscribe()
         }
         .onDisappear {
