@@ -189,33 +189,44 @@ struct DayOfView: View {
                     .padding(.top, 20)
                     // Displaying only the current event corresponding to the current date
                     if let currentEvent = itineraryModel.events.first(where: { Calendar.current.isDate($0.start, inSameDayAs: currentDate) && $0.start <= Date() && $0.end >= Date() }) {
-                        HStack(spacing: 20) {
-                            // Image for the event's category
-                            Image(systemName: getCategoryImageName(category: currentEvent.type.rawValue))
-                                .resizable()
-                                .frame(width: 30, height: 30)
-                                .foregroundColor(.darkTeal)
-                            
-                            // Event details
-                            VStack(alignment: .leading){
-                                Text(currentEvent.name)
-                                    .font(.custom("Poppins-Bold", size: 20))
-                                    .foregroundStyle(Color.darkTeal)
-                                Text("\(formatTime(currentEvent.start)) - \(formatTime(currentEvent.end))")
-                                    .font(.custom("Poppins-Bold", size: 15))
-                                Text(currentEvent.address)
-                                    .font(.custom("Poppins-Regular", size: 13))
-                            }
-                            .padding()
-                            Spacer()
-                            // Checkbox (Toggle) for the current event
-                            Button(action: {
-                                toggleEventCheck(eventID: currentEvent.id ?? "")
-                            }) {
-                                Image(systemName: checkedEvents.contains(currentEvent.id ?? "") ? "checkmark.square" : "square")
+                        VStack {
+                            HStack(spacing: 20) {
+                                // Image for the event's category
+                                Image(systemName: getCategoryImageName(category: currentEvent.type.rawValue))
                                     .resizable()
-                                    .frame(width: 20, height: 20)
+                                    .frame(width: 30, height: 30)
                                     .foregroundColor(.darkTeal)
+                                
+                                // Event details
+                                VStack(alignment: .leading){
+                                    Text(currentEvent.name)
+                                        .font(.custom("Poppins-Bold", size: 20))
+                                        .foregroundStyle(Color.darkTeal)
+                                    Text("\(formatTime(currentEvent.start)) - \(formatTime(currentEvent.end))")
+                                        .font(.custom("Poppins-Bold", size: 15))
+                                    Text(currentEvent.address)
+                                        .font(.custom("Poppins-Regular", size: 13))
+                                }
+                                .padding()
+                                Spacer()
+                                // Checkbox (Toggle) for the current event
+                                Button(action: {
+                                    toggleEventCheck(eventID: currentEvent.id ?? "")
+                                }) {
+                                    Image(systemName: checkedEvents.contains(currentEvent.id ?? "") ? "checkmark.square" : "square")
+                                        .resizable()
+                                        .frame(width: 20, height: 20)
+                                        .foregroundColor(.darkTeal)
+                                }
+                            }
+                            
+                            
+                            
+                            if currentEvent.start < Date() {
+                                // Show recommendations for other alternatives
+                                Text("Other recommendations")
+                                    .font(.custom("Poppins-Regular", size: 13))
+                                testAPICallsView()
                             }
                         }
                         .padding(10)
@@ -227,51 +238,42 @@ struct DayOfView: View {
                         .padding()
                     }
                     
-                    DisclosureGroup{
-                        ForEach(itineraryModel.events.filter { event in
-                                               Calendar.current.isDate(event.start, inSameDayAs: currentDate) &&
-                                                   event.start > Date() && event.end > Date()
-                                           }) { event in
+                    // The events that come after the current event
+                    ForEach(itineraryModel.events.filter { event in
+                                           Calendar.current.isDate(event.start, inSameDayAs: currentDate) &&
+                                               event.start > Date() && event.end > Date()
+                    }) { event in
+                        HStack(spacing: 20) {
+                            // Image for the event's category
+                            Image(systemName: getCategoryImageName(category: event.type.rawValue))
+                                .resizable()
+                                .frame(width: 30, height: 30)
+                                .foregroundColor(.darkTeal)
                             
-                            HStack(spacing: 20) {
-                                // Image for the event's category
-                                Image(systemName: getCategoryImageName(category: event.type.rawValue))
-                                    .resizable()
-                                    .frame(width: 30, height: 30)
-                                    .foregroundColor(.darkTeal)
-                                
-                                // Event details
-                                VStack(alignment: .leading){
-                                    Text(event.name)
-                                        .font(.custom("Poppins-Bold", size: 20))
-                                        .foregroundStyle(Color.darkTeal)
-                                    Text("\(formatTime(event.start)) - \(formatTime(event.end))")
-                                        .font(.custom("Poppins-Bold", size: 15))
-                                    Text(event.address)
-                                        .font(.custom("Poppins-Regular", size: 13))
-                                }
-                                .padding()
-                                Spacer()
-                                // Checkbox (Toggle) for each event
-                                Button(action: {
-                                    toggleEventCheck(eventID: event.id ?? "")
-                                }) {
-                                    Image(systemName: checkedEvents.contains(event.id ?? "") ? "checkmark.square" : "square")
-                                        .resizable()
-                                        .frame(width: 20, height: 20)
-                                        .foregroundColor(.darkTeal)
-                                }
-                               
+                            // Event details
+                            VStack(alignment: .leading){
+                                Text(event.name)
+                                    .font(.custom("Poppins-Bold", size: 20))
+                                    .foregroundStyle(Color.darkTeal)
+                                Text("\(formatTime(event.start)) - \(formatTime(event.end))")
+                                    .font(.custom("Poppins-Bold", size: 15))
+                                Text(event.address)
+                                    .font(.custom("Poppins-Regular", size: 13))
                             }
-                            .padding(10)
+                            .padding()
+                            Spacer()
+                            // Checkbox (Toggle) for each event
+                            Button(action: {
+                                toggleEventCheck(eventID: event.id ?? "")
+                            }) {
+                                Image(systemName: checkedEvents.contains(event.id ?? "") ? "checkmark.square" : "square")
+                                    .resizable()
+                                    .frame(width: 20, height: 20)
+                                    .foregroundColor(.darkTeal)
+                            }
                             
                         }
-                    
-                    } label: {
-//                        Text("Next Events")
-//                            .font(.custom("Poppins-Regular", size: 20))
-//                            .foregroundStyle(Color.darkTeal)
-//                            
+                        .padding(25)
                     }
                 }
                 
