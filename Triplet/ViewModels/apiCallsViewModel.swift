@@ -64,9 +64,9 @@ class APICaller: ObservableObject {
     }
 
 
-    func yelpRetrieveVenues(longitude: Double, latitude: Double, term: String, completionHandler: @escaping ([String]?, Error?) -> Void) {
+    func yelpRetrieveVenues(eventName: String, longitude: Double, latitude: Double, term: String, completionHandler: @escaping ([String]?, Error?) -> Void) {
         print("inside yelpRetrieveVenues()")
-        let limit: Int = 3
+        let limit: Int = 5
         let sortBy: String = "best_match"
         let locale: String = "en_US"
         let apiKey = ProcessInfo.processInfo.environment["YELP_API_KEY"] ?? ""
@@ -98,7 +98,13 @@ class APICaller: ObservableObject {
                             // Extract business information here and use it as needed
                             if let name = business["name"] as? String {
                                 print("Business Name: \(name)")
+                                
+                                //do not add the location if it is a duplicate to the one we are finding replacements for
+                                if name == eventName{
+                                    continue
+                                }
                             }
+                            
 
                             if let alias = business["alias"] as? String {
                                 aliases.append(alias)
@@ -120,7 +126,7 @@ class APICaller: ObservableObject {
         dataTask.resume()
     }
 
-    func yelpLoadSuggestions(alias: String, completionHandler: @escaping ([(String, String)]?, Error?) -> Void) {
+    func yelpLoadSuggestions(alias: String, completionHandler: @escaping ([(String, String, String)]?, Error?) -> Void) {
 
         print("inside yelpLoadSuggestions")
         let headers = [
@@ -143,17 +149,17 @@ class APICaller: ObservableObject {
                     let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
 
                     if let photosArray = json?["photos"] as? [String],
-                       let name = json?["name"] as? String,
+                       let name = json?["name"] as? String, let yelpURL = json?["url"] as? String,
                        let firstPhotoURL = photosArray.first {
 
-                        let result: (String, String) = (name, firstPhotoURL)
+                        let result: (String, String, String) = (name, firstPhotoURL, yelpURL)
                         completionHandler([result], nil)
-                        print("photoURLS successful")
+                        print("tuple of (name, photoURL, and yelpURL) successfully returned from yelpLoadSuggestions()")
                         return
                     }
 
                     // If photos array or name is empty or not present
-                    print("photoURLS empty")
+                    print("return tuple empty")
                     completionHandler(nil, nil)
 
                 } catch {
