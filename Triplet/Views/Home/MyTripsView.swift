@@ -196,7 +196,7 @@ struct CurrentTripsView: View  {
                                         .foregroundStyle(Color.gray)
                                 }
                                 
-                                if (getDaysUntilTrip(start: userModel.currentTrips[index].start) == 0) {
+                                if (getDaysUntilTrip(start: userModel.currentTrips[index].start) <= 0) {
                                     Text("Happening Now")
                                         .font(.custom("Poppins-Bold", size: 12))
                                         .foregroundStyle(.darkTeal)
@@ -221,7 +221,7 @@ struct CurrentTripsView: View  {
                             return
                         }
                         self.tripID = tripID
-                        self.isActive = (getDaysUntilTrip(start: userModel.currentTrips[index].start) == 0)
+                        self.isActive = (getDaysUntilTrip(start: userModel.currentTrips[index].start) <= 0)
                         print("tripID", self.tripID)
                         // navigate to overview page
                         navigateToOverview = true
