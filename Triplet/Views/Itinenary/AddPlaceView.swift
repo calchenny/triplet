@@ -90,23 +90,6 @@ struct AddPlaceView: View {
                     }
                 }
                 .padding(.top, 10)
-                if let trip = itineraryModel.trip,
-                    let start = trip.start,
-                    let end = trip.end {
-                    DatePicker(selection: $startDate, in: start...end, displayedComponents: [.date, .hourAndMinute]) {
-                        Text("Start:")
-                            .font(.custom("Poppins-Medium", size: 15))
-                            .foregroundStyle(Color.darkTeal)
-                    }
-                    
-                    DatePicker(selection: $endDate, in: startDate...end, displayedComponents: [.date, .hourAndMinute]) {
-                        Text("End:")
-                            .font(.custom("Poppins-Medium", size: 15))
-                            .foregroundStyle(Color.darkTeal)
-                    }
-                    
-                    
-                }
                 ZStack(alignment: .trailing) {
                     TextField("Search for an event", text: $search)
                         .padding(20)
@@ -120,7 +103,7 @@ struct AddPlaceView: View {
                         .padding(.trailing)
                         .foregroundStyle(.darkerGray)
                 }
-                .padding(.vertical)
+                .padding(.bottom)
                 VStack(alignment: .leading) {
                     Text("\(landmarks.count) Results")
                         .font(.custom("Poppins-Regular", size: 14))
@@ -155,8 +138,28 @@ struct AddPlaceView: View {
                     .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, maxHeight: 300)
                 }
                 HStack(alignment: .center, spacing: 15) {
+                    Text("Start")
+                        .font(.custom("Poppins-Medium", size: 16))
+                    Spacer()
+                    DatePicker("Please enter a date", selection: $startDate)
+                        .labelsHidden()
+                        .frame(maxHeight: 25)
+                        .tint(.darkTeal)
+                }
+                .padding(.top)
+                HStack(alignment: .center, spacing: 15) {
+                    Text("End")
+                        .font(.custom("Poppins-Medium", size: 16))
+                    Spacer()
+                    DatePicker("Please enter a date", selection: $endDate)
+                        .labelsHidden()
+                        .frame(maxHeight: 25)
+                        .tint(.darkTeal)
+                }
+                HStack(alignment: .center, spacing: 15) {
                     Text("Category")
                         .font(.custom("Poppins-Medium", size: 16))
+                    Spacer()
                     Menu {
                         Picker("", selection: $category) {
                             ForEach(EventType.allCases, id: \.self) { category in
@@ -177,7 +180,6 @@ struct AddPlaceView: View {
                     .padding(5)
                     .overlay(RoundedRectangle(cornerRadius: 5).stroke(Color("Darker Gray")))
                 }
-                .padding(.top)
                 Button {
                     guard let selectedLandmark else {
                         showAlert.toggle()
@@ -206,7 +208,7 @@ struct AddPlaceView: View {
                     Text("Please select a place")
                 }
             }
-            .padding([.leading, .trailing], 20)
+            .padding(20)
         }
         .padding()
         .frame(maxHeight: 600)

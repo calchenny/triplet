@@ -29,7 +29,6 @@ class UserModel: ObservableObject {
         }
     }
 
-    
     func subscribe() {
         if listenerRegistration == nil {
             guard let uid else {
