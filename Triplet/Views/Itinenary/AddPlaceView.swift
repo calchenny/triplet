@@ -105,6 +105,7 @@ struct AddPlaceView: View {
                             .foregroundStyle(Color.darkTeal)
                     }
                     
+                    
                 }
                 ZStack(alignment: .trailing) {
                     TextField("Search for an event", text: $search)
@@ -119,7 +120,7 @@ struct AddPlaceView: View {
                         .padding(.trailing)
                         .foregroundStyle(.darkerGray)
                 }
-                .padding(.bottom)
+                .padding(.vertical)
                 VStack(alignment: .leading) {
                     Text("\(landmarks.count) Results")
                         .font(.custom("Poppins-Regular", size: 14))
@@ -209,6 +210,14 @@ struct AddPlaceView: View {
         }
         .padding()
         .frame(maxHeight: 600)
+        .onAppear() {
+            if let trip = itineraryModel.trip,
+               let start = trip.start {
+                endDate = start
+                startDate = start
+            }
+            
+        }
     }
 }
 
