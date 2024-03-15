@@ -12,7 +12,7 @@ struct RootView: View {
     @EnvironmentObject var userModel: UserModel
     var body: some View {
         Group {
-            if loginViewModel.userSession != nil {
+            if $loginViewModel.userSession != nil {
                 NavigationStack {
                     LoadingView()
                 }

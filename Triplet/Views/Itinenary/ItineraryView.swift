@@ -92,9 +92,7 @@ struct ItineraryView: View {
             
             currentDate = day
         }
-        if !dates.contains(endDate) {
-            dates.append(endDate)
-        }
+
         return dates
     }
     
