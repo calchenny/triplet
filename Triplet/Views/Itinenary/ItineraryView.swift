@@ -207,7 +207,7 @@ struct ItineraryView: View {
                     .padding()
                     .padding(.top, 10)
             } else {
-                ScrollView {
+                VStack {
                     if let trip = itineraryModel.trip,
                        let start = trip.start,
                        let end = trip.end {
@@ -216,7 +216,7 @@ struct ItineraryView: View {
                         
                         ForEach(rangeOfDates, id: \.self) { day in
                             RoundedRectangle(cornerRadius: 10)
-                                .frame(width: .infinity, height: 40)
+                                .frame(height: 40)
                                 .foregroundStyle(.evenLighterBlue)
                                 .overlay(
                                     HStack {

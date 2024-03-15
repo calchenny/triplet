@@ -97,7 +97,7 @@ struct ExpensesView: View {
                 Text("Budget: $\(expenseModel.budget, specifier: "%.2f")")
                     .font(.custom("Poppins-Medium", size: 16))
                     .foregroundColor(Color.darkTeal)
-                    .padding(.bottom, 15)
+                    .padding(.bottom, 40)
             }
             .onChange(of: expenseModel.expenses) {
                 expenseModel.currentTotal = expenseModel.calculateTotal()
@@ -224,7 +224,6 @@ struct ExpensesView: View {
                             }
                                 .tint(.white)
                         )
-                        .padding(.bottom, 30)
                 }
                 .popup(isPresented: $expenseModel.showNewExpensePopup) {
                     AddNewExpenseView()
@@ -239,10 +238,9 @@ struct ExpensesView: View {
                         .isOpaque(true)
                         .backgroundColor(.black.opacity(0.25))
                 }
-                .padding(30)
+                .padding()
             } // VStack closing bracket
             .frame(maxWidth: .infinity)
-            .padding(.vertical, 30)
             .navigationDestination(isPresented: $navigateToHome) {
                 NavigationStack{
                     HomeView()
