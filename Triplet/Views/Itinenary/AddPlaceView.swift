@@ -67,7 +67,7 @@ struct AddPlaceView: View {
     var body: some View {
         VStack {
             Text("Add a Place")
-                .font(.custom("Poppins-Bold", size: 40))
+                .font(.custom("Poppins-Bold", size: 30))
                 .padding(.bottom, 30)
                 .foregroundStyle(Color.darkTeal)
             if let trip = itineraryModel.trip,
