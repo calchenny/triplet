@@ -394,6 +394,7 @@ struct OverviewView: View {
                 .animation(.easeIn)
                 .closeOnTap(false)
                 .closeOnTapOutside(false)
+                .dragToDismiss(false)
                 .isOpaque(true)
                 .backgroundColor(.black.opacity(0.25))
         }

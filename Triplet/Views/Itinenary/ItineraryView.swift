@@ -310,6 +310,7 @@ struct ItineraryView: View {
                 .animation(.easeIn)
                 .closeOnTap(false)
                 .closeOnTapOutside(false)
+                .dragToDismiss(false)
                 .useKeyboardSafeArea(true)
                 .isOpaque(true)
                 .backgroundColor(.black)

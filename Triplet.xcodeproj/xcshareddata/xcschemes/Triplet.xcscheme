@@ -52,8 +52,8 @@
       </BuildableProductRunnable>
       <EnvironmentVariables>
          <EnvironmentVariable
-            key = "API_KEY"
-            value = "this_is_api_key"
+            key = "YELP_API_KEY"
+            value = "wNI4avybk18pMLzent2IWyNqspdo-xCFfWjeOvEQemmxbhf03nXV-FyMMiYoxOOi3JTqXyX52YgakO-xPXHqfuSChhRHKNKG0QBmXuZPL1gECOMlMKH4R69zkN_zZXYx"
             isEnabled = "YES">
          </EnvironmentVariable>
       </EnvironmentVariables>

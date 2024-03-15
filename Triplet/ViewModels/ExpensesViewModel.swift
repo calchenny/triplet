@@ -20,7 +20,7 @@ class ExpensesViewModel: ObservableObject {
     @Published var percentage: Double = 0.00
     @Published var showNewExpensePopup: Bool = false
 
-    @Published var cameraPosition = MapCameraPosition.region(MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 47.608013, longitude: -122.335167), span: MKCoordinateSpan(latitudeDelta: 0.5, longitudeDelta: 0.5)))
+    @Published var cameraPosition: MapCameraPosition?
 
     @Published var collapseProgress: CGFloat = 0
 

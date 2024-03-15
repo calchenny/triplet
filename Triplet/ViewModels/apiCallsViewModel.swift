@@ -69,10 +69,11 @@ class APICaller: ObservableObject {
         let limit: Int = 3
         let sortBy: String = "best_match"
         let locale: String = "en_US"
+        let apiKey = ProcessInfo.processInfo.environment["YELP_API_KEY"] ?? ""
 
         let headers = [
             "accept": "application/json",
-            "Authorization": "Bearer wNI4avybk18pMLzent2IWyNqspdo-xCFfWjeOvEQemmxbhf03nXV-FyMMiYoxOOi3JTqXyX52YgakO-xPXHqfuSChhRHKNKG0QBmXuZPL1gECOMlMKH4R69zkN_zZXYx"
+            "Authorization": "Bearer \(apiKey)"
         ]
 
         let request = NSMutableURLRequest(url: NSURL(string: "https://api.yelp.com/v3/businesses/search?latitude=\(latitude)&longitude=\(longitude)&term=\(term)&locale=\(locale)&open_now=true&sort_by=\(sortBy)&limit=\(limit)")! as URL,

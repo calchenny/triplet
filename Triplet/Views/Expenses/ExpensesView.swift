@@ -25,6 +25,7 @@ struct ExpensesView: View {
     @State private var currentTotal: Double = 0.00
     @State private var percentage: Double = 0
     @State var navigateToHome: Bool = false
+    @State var showMapView: Bool = false
     @EnvironmentObject var userModel: UserModel
     @StateObject var expenseModel = ExpensesViewModel()
 
@@ -50,7 +51,18 @@ struct ExpensesView: View {
         ScalingHeaderScrollView {
             ZStack(alignment: .topLeading) {
                 ZStack(alignment: .bottom) {
-                    Map(position: $expenseModel.cameraPosition)
+                    Map(position: Binding(
+                        get: {
+                            guard let cameraPosition = expenseModel.cameraPosition else {
+                                return MapCameraPosition.region(MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 47.608013, longitude: -122.335167), span: MKCoordinateSpan(latitudeDelta: 0.5, longitudeDelta: 0.5)))
+                            }
+                            return cameraPosition
+                        },
+                        set: { expenseModel.cameraPosition = $0 }
+                    ), interactionModes: [])
+                    .onTapGesture {
+                            showMapView = true
+                    }
                     RoundedRectangle(cornerRadius: 15)
                         .frame(width: getHeaderWidth(screenWidth: UIScreen.main.bounds.width), height: getHeaderHeight())
                         .foregroundStyle(.evenLighterBlue)
@@ -253,6 +265,21 @@ struct ExpensesView: View {
         .collapseProgress($expenseModel.collapseProgress)
         .setHeaderSnapMode(.immediately)
         .ignoresSafeArea(edges: .top)
+        .popup(isPresented: $showMapView) {
+            MapView(showMapView: $showMapView)
+                .navigationBarBackButtonHidden(true)
+        } customize: { popup in
+            popup
+                .appearFrom(.top)
+                .type(.default)
+                .position(.center)
+                .animation(.easeIn)
+                .closeOnTap(false)
+                .closeOnTapOutside(false)
+                .dragToDismiss(false)
+                .isOpaque(true)
+                .backgroundColor(.black.opacity(0.25))
+        }
         .onAppear {
             expenseModel.subscribe(tripId: tripId)
         }
