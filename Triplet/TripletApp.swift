@@ -32,6 +32,7 @@ struct TripletApp: App {
             .setTitleTextAttributes([.font: UIFont(name: "Poppins-Regular", size: 14) as Any], for: .normal)
         UISegmentedControl.appearance()
             .setTitleTextAttributes([.foregroundColor: UIColor(.white)], for: .selected)
+        UINavigationBar.appearance().tintColor = .darkTeal
     }
     
     var body: some Scene {
