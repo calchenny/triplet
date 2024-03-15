@@ -224,9 +224,11 @@ struct DayOfView: View {
                             
                             if currentEvent.start < Date() {
                                 // Show recommendations for other alternatives
-                                Text("Other recommendations")
-                                    .font(.custom("Poppins-Regular", size: 13))
-                                testAPICallsView()
+                                let location = currentEvent.location
+                                let latitude = location.latitude
+                                let longitude = location.longitude
+                                testAPICallsView(longitude: longitude, latitude: latitude, term: currentEvent.type.rawValue)
+                                
                             }
                         }
                         .padding(10)

@@ -22,6 +22,8 @@ struct RootView: View {
                 }
             }
         }
+        //for newland to test
+        //testAPICallsView()
     }
 }
 

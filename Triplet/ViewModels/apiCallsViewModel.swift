@@ -65,6 +65,7 @@ class APICaller: ObservableObject {
 
 
     func yelpRetrieveVenues(longitude: Double, latitude: Double, term: String, completionHandler: @escaping ([String]?, Error?) -> Void) {
+        print("inside yelpRetrieveVenues()")
         let limit: Int = 3
         let sortBy: String = "best_match"
         let locale: String = "en_US"
@@ -120,6 +121,7 @@ class APICaller: ObservableObject {
 
     func yelpLoadSuggestions(alias: String, completionHandler: @escaping ([(String, String)]?, Error?) -> Void) {
 
+        print("inside yelpLoadSuggestions")
         let headers = [
             "accept": "application/json",
             "Authorization": "Bearer f4Rf97-CC8Z0pjBX_4eQ1_5ytMfPcx4vQd0xAsxJHPwACJGG4Tvku5z-Ca8x3Shnu3BqkRI3hW1U6ZJLcmAQB2tiPFUqNWmTr4Ahag0i7LUfwzVE6KY0NlyXK5nhZXYx"
@@ -145,13 +147,16 @@ class APICaller: ObservableObject {
 
                         let result: (String, String) = (name, firstPhotoURL)
                         completionHandler([result], nil)
+                        print("photoURLS successful")
                         return
                     }
 
                     // If photos array or name is empty or not present
+                    print("photoURLS empty")
                     completionHandler(nil, nil)
 
                 } catch {
+                    print("there was an error")
                     completionHandler(nil, error)
                 }
             }
