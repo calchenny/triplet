@@ -78,6 +78,7 @@
 		89BDCE722B8FB46800C69895 /* LocationSearchViewData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BDCE712B8FB46800C69895 /* LocationSearchViewData.swift */; };
 		89C1396D2B8FF0CB00DEE0CD /* Poppins-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 89BDCE742B8FE28A00C69895 /* Poppins-Medium.ttf */; };
 		89C1396E2B8FF0CB00DEE0CD /* Poppins-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 89BDCE732B8FE26500C69895 /* Poppins-Bold.ttf */; };
+		89D806552BA4F4F800654DBC /* TripViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89D806542BA4F4F800654DBC /* TripViewModel.swift */; };
 		9255451B2BA2F33F007D9A94 /* AnimatedTabBar in Frameworks */ = {isa = PBXBuildFile; productRef = 9255451A2BA2F33F007D9A94 /* AnimatedTabBar */; };
 		92B3F97D2B9B10A600819D0E /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B3F97C2B9B10A600819D0E /* LoadingView.swift */; };
 /* End PBXBuildFile section */
@@ -125,6 +126,7 @@
 		89BDCE712B8FB46800C69895 /* LocationSearchViewData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSearchViewData.swift; sourceTree = "<group>"; };
 		89BDCE732B8FE26500C69895 /* Poppins-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Bold.ttf"; sourceTree = "<group>"; };
 		89BDCE742B8FE28A00C69895 /* Poppins-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Medium.ttf"; sourceTree = "<group>"; };
+		89D806542BA4F4F800654DBC /* TripViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripViewModel.swift; sourceTree = "<group>"; };
 		92B3F97C2B9B10A600819D0E /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		92FFAE522BA2EB960080CDD6 /* Triplet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Triplet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -176,7 +178,6 @@
 			children = (
 				24246BF92B97EE290028DAAF /* MapView.swift */,
 				24246BFA2B97EE290028DAAF /* RootView.swift */,
-				89BAE34B2BA25876009A710B /* TripView.swift */,
 				24246BDA2B97ED690028DAAF /* Expenses */,
 				24246BDD2B97ED690028DAAF /* Home */,
 				24246BD22B97ED690028DAAF /* Itinenary */,
@@ -266,6 +267,7 @@
 		8935A4242B7F496200F62185 /* Triplet */ = {
 			isa = PBXGroup;
 			children = (
+				89D8064F2BA4F42A00654DBC /* Features */,
 				89BDCE422B8FAD5600C69895 /* Models */,
 				89B3F3A12B8FA6DD00D79E5D /* Resources */,
 				128284142B81FAE500E3E084 /* ViewModels */,
@@ -311,8 +313,49 @@
 		89BDCE422B8FAD5600C69895 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				89BDCE432B8FAE8E00C69895 /* TripModel.swift */,
 				89621B052B915053006C0848 /* UserModel.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		89D8064F2BA4F42A00654DBC /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				89D806502BA4F44400654DBC /* Trip */,
+			);
+			path = Features;
+			sourceTree = "<group>";
+		};
+		89D806502BA4F44400654DBC /* Trip */ = {
+			isa = PBXGroup;
+			children = (
+				89D806532BA4F4C700654DBC /* Models */,
+				89D806522BA4F4B900654DBC /* ViewModels */,
+				89D806512BA4F4B200654DBC /* Views */,
+			);
+			path = Trip;
+			sourceTree = "<group>";
+		};
+		89D806512BA4F4B200654DBC /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				89BAE34B2BA25876009A710B /* TripView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		89D806522BA4F4B900654DBC /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				89D806542BA4F4F800654DBC /* TripViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		89D806532BA4F4C700654DBC /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				89BDCE432B8FAE8E00C69895 /* TripModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -445,6 +488,7 @@
 				89BDCE462B8FAEB100C69895 /* OverviewViewModel.swift in Sources */,
 				24246BE82B97ED690028DAAF /* ItineraryView.swift in Sources */,
 				24246BF12B97ED690028DAAF /* HomeView.swift in Sources */,
+				89D806552BA4F4F800654DBC /* TripViewModel.swift in Sources */,
 				89BDCE542B8FAFCF00C69895 /* DestinationViewModel.swift in Sources */,
 				24246BF82B97ED690028DAAF /* AlertView.swift in Sources */,
 				3CE48FD12B9D324900710CCA /* ExpensesViewModel.swift in Sources */,

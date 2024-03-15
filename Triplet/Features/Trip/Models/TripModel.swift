@@ -70,7 +70,6 @@ struct Expense: Identifiable, Codable, Equatable {
     var category: ExpenseCategory
     var cost: Double
     
-    // Implement Equatable conformance
     static func == (lhs: Expense, rhs: Expense) -> Bool {
         return lhs.id == rhs.id
     }
