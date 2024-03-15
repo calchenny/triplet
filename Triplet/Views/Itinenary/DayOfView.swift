@@ -275,10 +275,10 @@ struct DayOfView: View {
             }
             .navigationBarBackButtonHidden(true)
         }
-        .onReceive(timer) { _ in
-            
-            refreshScreenIfNeeded()
-        }
+//        .onReceive(timer) { _ in
+//            
+//            refreshScreenIfNeeded()
+//        }
     }
             
 }
