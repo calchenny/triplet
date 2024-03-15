@@ -54,11 +54,21 @@ struct Event: Identifiable, Codable {
     var end: Date
 }
 
+enum ExpenseCategory: String, Codable, CaseIterable {
+    case housing = "Housing"
+    case activities = "Activities"
+    case dinner = "Dinner"
+    case entertainment = "Entertainment"
+    case transportation = "Transportation"
+    case food = "Food"
+    case other = "Other"
+}
+
 struct Expense: Identifiable, Codable, Equatable {
     var id: String?
     var name: String
     var date: Date
-    var category: String
+    var category: ExpenseCategory
     var cost: Double
     
     // Implement Equatable conformance

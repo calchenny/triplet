@@ -11,6 +11,7 @@ import ScalingHeaderScrollView
 import MapKit
 import CoreLocation
 import FirebaseFirestore
+import PopupView
 
 struct ExpensesView: View {
     
@@ -23,7 +24,6 @@ struct ExpensesView: View {
     @State private var budget: Double = 10000.00
     @State private var currentTotal: Double = 0.00
     @State private var percentage: Double = 0
-    @State private var showNewExpenseSheet: Bool = false
     @State var navigateToHome: Bool = false
     @EnvironmentObject var userModel: UserModel
     @StateObject var expenseModel = ExpensesViewModel()
@@ -113,53 +113,60 @@ struct ExpensesView: View {
                         ForEach(expenseModel.expenses, id: \.name) { expense in
                             ZStack {
                                 RoundedRectangle(cornerRadius: 15)
-                                    .fill(.lighterGray)
+                                    .frame(height: 70)
+                                    .foregroundStyle(.lighterGray)
                                 HStack {
-                                    if (expense.category == "Housing") {
+                                    if (expense.category == .housing) {
                                         HStack {
                                             Image(systemName: "building.fill")
-                                                .font(.custom("Poppins-Regular", size: 16))
-                                            .padding([.leading, .trailing], 10)
+                                                .font(.title2)
+                                                .padding([.leading, .trailing], 10)
+                                                .foregroundStyle(.darkTeal)
                                         }
                                         .frame(width: 50)
                                     }
-                                    else if (expense.category == "Activities") {
+                                    else if (expense.category == .activities) {
                                         HStack {
                                             Image(systemName: "figure.walk")
-                                                .font(.custom("Poppins-Regular", size: 16))
-                                            .padding([.leading, .trailing], 10)
+                                                .font(.title2)
+                                                .padding([.leading, .trailing], 10)
+                                                .foregroundStyle(.darkTeal)
                                         }
                                         .frame(width: 50)
                                     }
-                                    else if (expense.category == "Entertainment") {
+                                    else if (expense.category == .entertainment) {
                                         HStack {
                                             Image(systemName: "popcorn.fill")
-                                                .font(.custom("Poppins-Regular", size: 16))
-                                            .padding([.leading, .trailing], 10)
+                                                .font(.title2)
+                                                .padding([.leading, .trailing], 10)
+                                                .foregroundStyle(.darkTeal)
                                         }
                                         .frame(width: 50)
                                     }
-                                    else if (expense.category == "Transportation") {
+                                    else if (expense.category == .transportation) {
                                         HStack {
                                             Image(systemName: "bus.fill")
-                                                .font(.custom("Poppins-Regular", size: 16))
-                                            .padding([.leading, .trailing], 10)
+                                                .font(.title2)
+                                                .padding([.leading, .trailing], 10)
+                                                .foregroundStyle(.darkTeal)
                                         }
                                         .frame(width: 50)
                                     }
-                                    else if (expense.category == "Food") {
+                                    else if (expense.category == .food) {
                                         HStack {
                                             Image(systemName: "fork.knife")
-                                                .font(.custom("Poppins-Regular", size: 16))
-                                            .padding([.leading, .trailing], 10)
+                                                .font(.title2)
+                                                .padding([.leading, .trailing], 10)
+                                                .foregroundStyle(.darkTeal)
                                         }
                                         .frame(width: 50)
                                     }
                                     else {
                                         HStack {
                                             Image(systemName: "dollarsign")
-                                                .font(.custom("Poppins-Regular", size: 16))
-                                            .padding([.leading, .trailing], 10)
+                                                .font(.title2)
+                                                .padding([.leading, .trailing], 10)
+                                                .foregroundStyle(.darkTeal)
                                         }
                                         .frame(width: 50)
                                     }
@@ -178,7 +185,7 @@ struct ExpensesView: View {
                                             
                                         }
                                         HStack {
-                                            Text("\(expense.category)")
+                                            Text("\(expense.category.rawValue)")
                                                 .font(.custom("Poppins-Regular", size: 12))
                                             Spacer()
                                             Text(expense.date, format: .dateTime.day().month())
@@ -189,7 +196,7 @@ struct ExpensesView: View {
                                 }
                                 .padding([.leading, .trailing])
                             }
-                            .padding([.leading, .trailing, .bottom])
+                            .padding([.leading, .trailing, .bottom], 10)
                         }
                     }
                     Spacer()
@@ -203,26 +210,39 @@ struct ExpensesView: View {
                         .foregroundColor(Color.darkTeal)
                     Spacer()
                 }
-                Button() {
-                    print("button pressed")
-                    showNewExpenseSheet.toggle()
+                Button {
+                    expenseModel.showNewExpensePopup.toggle()
                 } label: {
-                    Text("+ Add Expense")
-                        .padding(.horizontal, 50)
-                        .padding(.vertical, 15)
-                        .foregroundColor(.white)
-                        .background(Color.darkTeal)
-                        .cornerRadius(100)
-                        .bold()
+                    RoundedRectangle(cornerRadius: 10)
+                        .frame(width: 200, height: 40)
+                        .foregroundStyle(Color("Dark Teal"))
+                        .overlay(
+                            HStack {
+                                Image(systemName: "plus")
+                                Text("Add Expense")
+                                    .font(.custom("Poppins-Medium", size: 16))
+                            }
+                                .tint(.white)
+                        )
+                        .padding(.bottom, 30)
                 }
-                .sheet(isPresented: $showNewExpenseSheet) {
+                .popup(isPresented: $expenseModel.showNewExpensePopup) {
                     AddNewExpenseView()
                         .environmentObject(expenseModel)
+                } customize: { popup in
+                    popup
+                        .type(.floater())
+                        .position(.center)
+                        .animation(.spring())
+                        .closeOnTap(false)
+                        .closeOnTapOutside(false)
+                        .isOpaque(true)
+                        .backgroundColor(.black.opacity(0.25))
                 }
                 .padding(30)
             } // VStack closing bracket
             .frame(maxWidth: .infinity)
-            .padding(.vertical, 20)
+            .padding(.vertical, 30)
             .navigationDestination(isPresented: $navigateToHome) {
                 NavigationStack{
                     HomeView()
@@ -245,5 +265,5 @@ struct ExpensesView: View {
 } // view closing bracket
 
 #Preview {
-    ExpensesView(tripId: "bXQdm19F9v2DbjS4VPyi")
+    ExpensesView(tripId: "zXtPknz7e75wBCht7tZx")
 }

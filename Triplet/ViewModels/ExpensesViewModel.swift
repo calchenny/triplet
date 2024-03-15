@@ -18,6 +18,7 @@ class ExpensesViewModel: ObservableObject {
     @Published var budget: Double = 10000.00
     @Published var currentTotal: Double = 0.00
     @Published var percentage: Double = 0.00
+    @Published var showNewExpensePopup: Bool = false
 
     @Published var cameraPosition = MapCameraPosition.region(MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 47.608013, longitude: -122.335167), span: MKCoordinateSpan(latitudeDelta: 0.5, longitudeDelta: 0.5)))
 
@@ -57,7 +58,7 @@ class ExpensesViewModel: ObservableObject {
         }
     }
     
-    func addExpense(name: String, date: Date, category: String, cost: Double) {
+    func addExpense(name: String, date: Date, category: ExpenseCategory, cost: Double) {
         let newExpense = Expense(
             id: nil,
             name: name,
@@ -68,7 +69,7 @@ class ExpensesViewModel: ObservableObject {
         
         // Add the new expense to Firestore
         addExpenseToFirestore(newExpense)
-        
+        showNewExpensePopup.toggle()
     }
     
     func subscribe(tripId: String) {
@@ -98,7 +99,9 @@ class ExpensesViewModel: ObservableObject {
                   }
             
             // Update the local expenses array
+                withAnimation {
                     self.expenses = fetchedExpenses
+                }
             })
             
             let tripQuery = db.document("trips/\(tripId)")
@@ -109,8 +112,10 @@ class ExpensesViewModel: ObservableObject {
                 }
                 do {
                     let trip = try document.data(as: Trip.self)
-                    self.trip = trip
-                    self.cameraPosition = MapCameraPosition.region(MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: trip.destination.latitude, longitude: trip.destination.longitude), span: MKCoordinateSpan(latitudeDelta: 0.5, longitudeDelta: 0.5)))
+                    withAnimation {
+                        self.trip = trip
+                        self.cameraPosition = MapCameraPosition.region(MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: trip.destination.latitude, longitude: trip.destination.longitude), span: MKCoordinateSpan(latitudeDelta: 0.5, longitudeDelta: 0.5)))
+                    }
                 } catch {
                     print(error)
                 }
