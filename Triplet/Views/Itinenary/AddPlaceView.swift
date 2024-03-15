@@ -73,7 +73,7 @@ struct AddPlaceView: View {
                 ZStack(alignment: .trailing) {
                     HStack {
                         Text("Add Event")
-                            .font(.custom("Poppins-Bold", size: 25))
+                            .font(.custom("Poppins-Bold", size: 30))
                             .foregroundStyle(Color("Dark Teal"))
                     }
                     .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/)
@@ -211,7 +211,7 @@ struct AddPlaceView: View {
             .padding(20)
         }
         .padding()
-        .frame(maxHeight: 600)
+        .frame(maxHeight: 650)
         .onAppear() {
             if let trip = itineraryModel.trip,
                let start = trip.start {
