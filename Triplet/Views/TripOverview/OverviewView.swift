@@ -396,5 +396,5 @@ struct OverviewView: View {
 }
 
 #Preview {
-    OverviewView(tripId: "bXQdm19F9v2DbjS4VPyi")
+    OverviewView(tripId: "zXtPknz7e75wBCht7tZx")
 }

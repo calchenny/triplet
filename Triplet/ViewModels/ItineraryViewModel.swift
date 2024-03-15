@@ -109,9 +109,11 @@ class ItineraryViewModel: ObservableObject {
                         }
                     }
                     
-                    // Update the local events array
-                    self.events = fetchedEvents
-                    self.sortEvents()
+                    withAnimation {
+                        // Update the local events array
+                        self.events = fetchedEvents
+                        self.sortEvents()
+                    }
                 })
                 
                 let tripQuery = db.document("trips/\(tripId)")
@@ -122,8 +124,10 @@ class ItineraryViewModel: ObservableObject {
                     }
                     do {
                         let trip = try document.data(as: Trip.self)
-                        self.trip = trip
-                        self.cameraPosition = MapCameraPosition.region(MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: trip.destination.latitude, longitude: trip.destination.longitude), span: MKCoordinateSpan(latitudeDelta: 0.5, longitudeDelta: 0.5)))
+                        withAnimation {
+                            self.trip = trip
+                            self.cameraPosition = MapCameraPosition.region(MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: trip.destination.latitude, longitude: trip.destination.longitude), span: MKCoordinateSpan(latitudeDelta: 0.5, longitudeDelta: 0.5)))
+                        }
                     } catch {
                         print(error)
                     }

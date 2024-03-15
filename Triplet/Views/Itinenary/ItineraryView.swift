@@ -181,19 +181,19 @@ struct ItineraryView: View {
             Button(action: {
                 showAddEventSheet.toggle()
             }) {
-                HStack {
-                    Image(systemName: "plus.circle.fill")
-                        .resizable()
-                        .frame(width: 20, height: 20)
-                    Text("Add an Event")
-                        .font(.custom("Poppins-Regular", size:15))
-                }
-                .foregroundColor(.white)
-                .padding()
-                .background(Color.darkTeal)
-                .cornerRadius(10)
+                RoundedRectangle(cornerRadius: 10)
+                    .frame(width: 200, height: 40)
+                    .foregroundStyle(Color("Dark Teal"))
+                    .overlay(
+                        HStack {
+                            Image(systemName: "plus")
+                            Text("Add Event")
+                                .font(.custom("Poppins-Medium", size: 16))
+                        }
+                            .tint(.white)
+                    )
+                    .padding(.bottom, 30)
             }
-            .padding(.bottom, 15)
             .sheet(isPresented: $showAddEventSheet) {
                 AddPlaceView()
                     .presentationDragIndicator(.visible)
@@ -215,24 +215,27 @@ struct ItineraryView: View {
                         let rangeOfDates = datesInRange(from: start, to: end)
                         
                         ForEach(rangeOfDates, id: \.self) { day in
-                            HStack {
-                                Spacer()
-                                Text( "\(dayOfWeek(day)), \(formatDate(day))") // Convert Date to String
-                                    .font(.custom("Poppins-Bold", size:20))
-                                    .foregroundStyle(Color.darkTeal)
-                                Spacer()
-                            }
-                            .background(Color.evenLighterBlue)
-                            .cornerRadius(20)
-                            .frame(maxWidth: .infinity)
+                            RoundedRectangle(cornerRadius: 10)
+                                .frame(width: .infinity, height: 40)
+                                .foregroundStyle(.evenLighterBlue)
+                                .overlay(
+                                    HStack {
+                                        Spacer()
+                                        Text( "\(dayOfWeek(day)), \(formatDate(day))") // Convert Date to String
+                                            .font(.custom("Poppins-Bold", size: 20))
+                                            .foregroundStyle(Color.darkTeal)
+                                        Spacer()
+                                    }
+                                )
+                                .padding([.leading, .trailing, .bottom])
                             
-                            VStack {
+                            VStack(alignment: .leading) {
                                 if itineraryModel.events.filter({formatDate($0.start) == formatDate(day)}).isEmpty {
                                     Text("No events planned.")
-                                        .font(.custom("Poppins-Regular", size: 13))
+                                        .font(.custom("Poppins-Regular", size: 14))
                                 } else {
                                     ForEach(itineraryModel.events.filter({formatDate($0.start) == formatDate(day)})) { event in
-                                        HStack(spacing: 10) {
+                                        HStack {
                                             // Image for the event's category
                                             Image(systemName: getCategoryImageName(category: event.type.rawValue))
                                                 .resizable()
@@ -247,12 +250,12 @@ struct ItineraryView: View {
                                             // Event details
                                             VStack(alignment: .leading) {
                                                 Text(event.name)
-                                                    .font(.custom("Poppins-Bold", size: 20))
-                                                    .foregroundStyle(Color.darkTeal)
+                                                    .font(.custom("Poppins-Medium", size: 16))
                                                 Text("\(formatTime(event.start)) - \(formatTime(event.end))")
-                                                    .font(.custom("Poppins-Bold", size: 15))
+                                                    .font(.custom("Poppins-Regular", size: 12))
                                                 Text(event.address)
-                                                    .font(.custom("Poppins-Regular", size: 13))
+                                                    .font(.custom("Poppins-Regular", size: 12))
+                                                    .foregroundStyle(.secondary)
                                             }
                                             .padding()
                                             Spacer()
@@ -262,14 +265,11 @@ struct ItineraryView: View {
                                                 Image(systemName: "trash")
                                                     .font(.title2)
                                                     .padding()
-                                                    .background(Color("Dark Teal"))
-                                                    .foregroundStyle(.white)
-                                                    .clipShape(Circle())
+                                                    .foregroundStyle(.darkerGray)
                                             }
-                                            .padding(.leading)
                                             .tint(.primary)
                                         }
-                                        .padding([.leading, .trailing])
+                                        .padding([.leading, .trailing], 20)
                                     }
                                 }
                             }
@@ -318,5 +318,5 @@ struct ItineraryView: View {
 
 
 #Preview {
-    ItineraryView(tripId: "bXQdm19F9v2DbjS4VPyi")
+    ItineraryView(tripId: "zXtPknz7e75wBCht7tZx")
 }
