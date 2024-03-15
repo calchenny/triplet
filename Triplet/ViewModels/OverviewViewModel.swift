@@ -114,6 +114,19 @@ class OverviewViewModel: ObservableObject {
             }
         }
     }
+    
+    func deleteTrip() {
+        guard let trip else {
+            print("Missing trip")
+            return
+        }
+        guard let tripId = trip.id else {
+            print("Missing tripId")
+            return
+        }
+        let tripRef = db.document("trips/\(tripId)")
+        tripRef.delete()
+    }
 
     func unsubscribe() {
         if !listenerRegistrations.isEmpty {

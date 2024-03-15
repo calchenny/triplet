@@ -63,7 +63,7 @@ struct OverviewView: View {
                     ), interactionModes: [])
                     .onTapGesture {
                             showMapView = true
-                    }   
+                    }  
                     RoundedRectangle(cornerRadius: 15)
                         .frame(width: getHeaderWidth(screenWidth: UIScreen.main.bounds.width), height: getHeaderHeight())
                         .foregroundStyle(Color("Even Lighter Blue"))
@@ -81,19 +81,36 @@ struct OverviewView: View {
                         )
                         .padding(.bottom, 30)
                 }
-                Button {
-                    navigateToHome = true
-                } label: {
-                    Image(systemName: "house")
-                        .font(.title2)
-                        .padding()
-                        .background(Color("Dark Teal"))
-                        .foregroundStyle(.white)
-                        .clipShape(Circle())
+                HStack {
+                    Button {
+                        navigateToHome = true
+                    } label: {
+                        Image(systemName: "house")
+                            .font(.title2)
+                            .padding()
+                            .background(Color("Dark Teal"))
+                            .foregroundStyle(.white)
+                            .clipShape(Circle())
+                    }
+                    .padding(.top, 60)
+                    .padding(.leading)
+                    .tint(.primary)
+                    Spacer()
+                    Button {
+                        viewModel.deleteTrip()
+                        navigateToHome = true
+                    } label: {
+                        Image(systemName: "trash")
+                            .font(.title2)
+                            .padding()
+                            .background(.evenLighterBlue)
+                            .foregroundStyle(.red)
+                            .clipShape(Circle())
+                    }
+                    .padding(.top, 60)
+                    .padding(.trailing)
+                    .tint(.primary)
                 }
-                .padding(.top, 60)
-                .padding(.leading)
-                .tint(.primary)
             }
             .frame(maxWidth: .infinity)
         } content: {
