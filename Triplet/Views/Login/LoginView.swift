@@ -40,7 +40,7 @@ struct LoginView: View {
                     .resizable()
                     .scaledToFit()
                     .padding(.vertical, 100)
-                    .frame(width: UIScreen.main.bounds.width * 0.4, alignment: .center)
+                    .frame(width: UIScreen.main.bounds.width * 0.5, alignment: .center)
                     
                 //Handles the phone number text view; could maybe do a state variable here instead for the
                 // phone number

@@ -66,6 +66,7 @@ struct VerificationView: View {
                 Text("Enter in the 6-digit OTP we just sent to \(login.phoneNumber)")
                     .font(.custom("Poppins-Regular", size: 14))
                     .multilineTextAlignment(.center)
+                    .frame(maxWidth: 250)
                     .padding(.bottom)
                 
                 HStack {

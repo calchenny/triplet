@@ -53,8 +53,7 @@ struct TripView: View {
                             showMapView = true
                     }
                     RoundedRectangle(cornerRadius: 15)
-                        .frame(width: getHeaderWidth(collapseProgress: tripViewModel.headerCollapseProgress, screenWidth: UIScreen.main.bounds.width),
-                               height: getHeaderHeight(collapseProgress: tripViewModel.headerCollapseProgress))
+                        .frame(maxWidth: UIScreen.main.bounds.width * 0.9, maxHeight: 100)
                         .foregroundStyle(Color("Even Lighter Blue"))
                         .overlay(
                             VStack {
@@ -69,6 +68,8 @@ struct TripView: View {
                             }
                         )
                         .padding(.bottom, 30)
+                        .scaleEffect(x: getHeaderWidthScale(collapseProgress: tripViewModel.headerCollapseProgress, screenWidth: UIScreen.main.bounds.width),
+                                     y: getHeaderHeightScale(collapseProgress: tripViewModel.headerCollapseProgress))
                 }
                 HStack {
                     Button {

@@ -17,7 +17,7 @@ class TripViewModel: ObservableObject {
     private var db = Firestore.firestore()
     private var listenerRegistration: ListenerRegistration?
     
-    let headerMinHeight: CGFloat = 150.0
+    let headerMinHeight: CGFloat = 165.0
     let headerMaxHeight: CGFloat = 300.0
     
     func deleteTrip() {

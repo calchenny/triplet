@@ -7,16 +7,16 @@
 
 import Foundation
 
-func getHeaderWidth(collapseProgress: CGFloat, screenWidth: CGFloat) -> CGFloat {
+func getHeaderWidthScale(collapseProgress: CGFloat, screenWidth: CGFloat) -> CGFloat {
     let maxWidth = screenWidth * 0.9
     let minWidth = screenWidth * 0.5
-    return max((1 - collapseProgress + 0.5 * collapseProgress) * maxWidth, minWidth)
+    return max((1 - collapseProgress + 0.5 * collapseProgress) * maxWidth, minWidth) / maxWidth
 }
 
-func getHeaderHeight(collapseProgress: CGFloat) -> CGFloat {
+func getHeaderHeightScale(collapseProgress: CGFloat) -> CGFloat {
     let maxHeight = CGFloat(100)
     let minHeight = CGFloat(60)
-    return max((1 - collapseProgress + 0.5 * collapseProgress) * maxHeight, minHeight)
+    return max((1 - collapseProgress + 0.5 * collapseProgress) * maxHeight, minHeight) / maxHeight
 }
 
 func getHeaderTitleSize(collapseProgress: CGFloat) -> CGFloat {
