@@ -12,119 +12,23 @@ import ScalingHeaderScrollView
 import PopupView
 
 struct OverviewView: View {
-    @StateObject var viewModel = OverviewViewModel()
-    @State var showMapView: Bool = false
-    @State var navigateToHome: Bool = false
     var tripId: String
-    
-    init(tripId: String) {
-        self.tripId = tripId
-    }
-    
-    func getHeaderWidth(screenWidth: CGFloat) -> CGFloat {
-        let maxWidth = screenWidth * 0.9
-        let minWidth = screenWidth * 0.5
-        return max((1 - viewModel.collapseProgress + 0.5 * viewModel.collapseProgress) * maxWidth, minWidth)
-    }
-    
-    func getHeaderHeight() -> CGFloat {
-        let maxHeight = CGFloat(100)
-        let minHeight = CGFloat(60)
-        return max((1 - viewModel.collapseProgress + 0.5 * viewModel.collapseProgress) * maxHeight, minHeight)
-    }
-    
-    func getHeaderTitleSize() -> CGFloat {
-        let maxSize = CGFloat(30)
-        let minSize = CGFloat(16)
-        return max((1 - viewModel.collapseProgress + 0.5 * viewModel.collapseProgress) * maxSize, minSize)
-    }
-    
-    func getDateString(date: Date?, includeTime: Bool = false) -> String {
-        guard let date else {
-            return ""
-        }
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = includeTime ? "MM/dd, h:mm a" : "MM/dd"
-        return dateFormatter.string(from: date)
-    }
+    @StateObject var overviewViewModel = OverviewViewModel()
+    @EnvironmentObject var tripViewModel: TripViewModel
 
     var body: some View {
-        ScalingHeaderScrollView {
-            ZStack(alignment: .topLeading) {
-                ZStack(alignment: .bottom) {
-                    Map(position: Binding(
-                        get: {
-                            guard let cameraPosition = viewModel.cameraPosition else {
-                                return MapCameraPosition.region(MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 47.608013, longitude: -122.335167), span: MKCoordinateSpan(latitudeDelta: 0.5, longitudeDelta: 0.5)))
-                            }
-                            return cameraPosition
-                        },
-                        set: { viewModel.cameraPosition = $0 }
-                    ), interactionModes: [])
-                    .onTapGesture {
-                            showMapView = true
-                    }  
-                    RoundedRectangle(cornerRadius: 15)
-                        .frame(width: getHeaderWidth(screenWidth: UIScreen.main.bounds.width), height: getHeaderHeight())
-                        .foregroundStyle(Color("Even Lighter Blue"))
-                        .overlay(
-                            VStack {
-                                if let trip = viewModel.trip {
-                                    Text(trip.name)
-                                        .font(.custom("Poppins-Bold", size: getHeaderTitleSize()))
-                                        .foregroundStyle(Color("Dark Teal"))
-                                    Text("\(trip.city), \(trip.state) | \(getDateString(date: trip.start)) - \(getDateString(date: trip.end))")
-                                        .font(.custom("Poppins-Medium", size: 13))
-                                        .foregroundStyle(Color("Dark Teal"))
-                                }
-                            }
-                        )
-                        .padding(.bottom, 30)
-                }
-                HStack {
-                    Button {
-                        navigateToHome = true
-                    } label: {
-                        Image(systemName: "house")
-                            .font(.title2)
-                            .padding()
-                            .background(Color("Dark Teal"))
-                            .foregroundStyle(.white)
-                            .clipShape(Circle())
-                    }
-                    .padding(.top, 60)
-                    .padding(.leading)
-                    .tint(.primary)
-                    Spacer()
-                    Button {
-                        viewModel.deleteTrip()
-                        navigateToHome = true
-                    } label: {
-                        Image(systemName: "trash")
-                            .font(.title2)
-                            .padding()
-                            .background(.evenLighterBlue)
-                            .foregroundStyle(.red)
-                            .clipShape(Circle())
-                    }
-                    .padding(.top, 60)
-                    .padding(.trailing)
-                    .tint(.primary)
-                }
-            }
-            .frame(maxWidth: .infinity)
-        } content: {
+        VStack {
             Text("Overview")
                 .font(.custom("Poppins-Bold", size: 30))
                 .foregroundStyle(Color("Dark Teal"))
                 .padding(.top, 25)
                 .padding([.leading, .trailing])
-            DisclosureGroup(isExpanded: $viewModel.toggleStates.notes) {
+            DisclosureGroup(isExpanded: $overviewViewModel.toggleStates.notes) {
                 VStack {
-                    ForEach(viewModel.notes, id: \.id) { note in
+                    ForEach(overviewViewModel.notes, id: \.id) { note in
                         NavigationLink {
-                            NoteView(note: note)
-                                .environmentObject(viewModel)
+                            NoteView(tripId: tripId, note: note)
+                                .environmentObject(overviewViewModel)
                         } label: {
                             HStack {
                                 Text(note.title)
@@ -140,7 +44,7 @@ struct OverviewView: View {
                         .padding(.top)
                     }
                     Button {
-                        viewModel.showAlert.toggle()
+                        overviewViewModel.showAlert.toggle()
                     } label: {
                         HStack {
                             Image(systemName: "plus")
@@ -152,9 +56,11 @@ struct OverviewView: View {
                         .tint(.gray)
                     }
                     .padding(.top)
-                    .alert("Add New Note", isPresented: $viewModel.showAlert) {
-                        TextField("Enter note title", text: $viewModel.newNoteTitle)
-                        Button("Add", action: viewModel.addNote)
+                    .alert("Add New Note", isPresented: $overviewViewModel.showAlert) {
+                        TextField("Enter note title", text: $overviewViewModel.newNoteTitle)
+                        Button("Add") {
+                            overviewViewModel.addNote(tripId: tripId)
+                        }
                         Button("Cancel", role: .cancel) { }
                     } message: {
                         Text("Please enter a title for the new note")
@@ -171,9 +77,9 @@ struct OverviewView: View {
             .tint(Color("Dark Teal"))
             Spacer()
                 .frame(height: 15)
-            DisclosureGroup(isExpanded: $viewModel.toggleStates.housing) {
+            DisclosureGroup(isExpanded: $overviewViewModel.toggleStates.housing) {
                 VStack {
-                    ForEach(viewModel.housing, id: \.id) { housing in
+                    ForEach(overviewViewModel.housing, id: \.id) { housing in
                         HStack {
                             Image(systemName: "house")
                                 .foregroundStyle(Color("Dark Teal"))
@@ -195,7 +101,7 @@ struct OverviewView: View {
                         .padding([.top, .leading, .trailing])
                     }
                     Button {
-                        viewModel.showHousingPopup.toggle()
+                        overviewViewModel.showHousingPopup.toggle()
                     } label: {
                         HStack {
                             Image(systemName: "plus")
@@ -219,9 +125,9 @@ struct OverviewView: View {
             .tint(Color("Dark Teal"))
             Spacer()
                 .frame(height: 15)
-            DisclosureGroup(isExpanded: $viewModel.toggleStates.food.all) {
+            DisclosureGroup(isExpanded: $overviewViewModel.toggleStates.food.all) {
                 Button {
-                    viewModel.showFoodPopup.toggle()
+                    overviewViewModel.showFoodPopup.toggle()
                 } label: {
                     HStack {
                         Image(systemName: "plus")
@@ -233,8 +139,8 @@ struct OverviewView: View {
                     .tint(.gray)
                 }
                 .padding(.top)
-                DisclosureGroup(isExpanded: $viewModel.toggleStates.food.breakfast) {
-                    let breakfast = viewModel.food.compactMap { food -> Event? in
+                DisclosureGroup(isExpanded: $overviewViewModel.toggleStates.food.breakfast) {
+                    let breakfast = overviewViewModel.food.compactMap { food -> Event? in
                         guard let category = food.category else {
                             return nil
                         }
@@ -270,8 +176,8 @@ struct OverviewView: View {
                         .font(.custom("Poppins-Medium", size: 20))
                 }
                 .padding([.top, .leading, .trailing])
-                DisclosureGroup(isExpanded: $viewModel.toggleStates.food.lunch) {
-                    let lunch = viewModel.food.compactMap { food -> Event? in
+                DisclosureGroup(isExpanded: $overviewViewModel.toggleStates.food.lunch) {
+                    let lunch = overviewViewModel.food.compactMap { food -> Event? in
                         guard let category = food.category else {
                             return nil
                         }
@@ -306,8 +212,8 @@ struct OverviewView: View {
                         .font(.custom("Poppins-Medium", size: 20))
                 }
                 .padding([.top, .leading, .trailing])
-                DisclosureGroup(isExpanded: $viewModel.toggleStates.food.dinner) {
-                    let dinner = viewModel.food.compactMap { food -> Event? in
+                DisclosureGroup(isExpanded: $overviewViewModel.toggleStates.food.dinner) {
+                    let dinner = overviewViewModel.food.compactMap { food -> Event? in
                         guard let category = food.category else {
                             return nil
                         }
@@ -352,14 +258,9 @@ struct OverviewView: View {
             .clipShape(RoundedRectangle(cornerRadius: 15))
             .tint(Color("Dark Teal"))
         }
-        .height(min: viewModel.minHeight, max: viewModel.maxHeight)
-        .allowsHeaderCollapse()
-        .collapseProgress($viewModel.collapseProgress)
-        .setHeaderSnapMode(.immediately)
-        .ignoresSafeArea(edges: .top)
-        .popup(isPresented: $viewModel.showFoodPopup) {
-            FoodPopupView()
-                .environmentObject(viewModel)
+        .popup(isPresented: $overviewViewModel.showFoodPopup) {
+            FoodPopupView(tripId: tripId)
+                .environmentObject(overviewViewModel)
         } customize: { popup in
             popup
                 .type(.floater())
@@ -370,9 +271,9 @@ struct OverviewView: View {
                 .isOpaque(true)
                 .backgroundColor(.black.opacity(0.25))
         }
-        .popup(isPresented: $viewModel.showHousingPopup) {
-            HousingPopupView()
-                .environmentObject(viewModel)
+        .popup(isPresented: $overviewViewModel.showHousingPopup) {
+            HousingPopupView(tripId: tripId)
+                .environmentObject(overviewViewModel)
         } customize: { popup in
             popup
                 .type(.floater())
@@ -382,37 +283,17 @@ struct OverviewView: View {
                 .closeOnTapOutside(false)
                 .isOpaque(true)
                 .backgroundColor(.black.opacity(0.25))
-        }
-        .popup(isPresented: $showMapView) {
-            MapView(showMapView: $showMapView)
-                .navigationBarBackButtonHidden(true)
-        } customize: { popup in
-            popup
-                .appearFrom(.top)
-                .type(.default)
-                .position(.center)
-                .animation(.easeIn)
-                .closeOnTap(false)
-                .closeOnTapOutside(false)
-                .dragToDismiss(false)
-                .isOpaque(true)
-                .backgroundColor(.black.opacity(0.25))
-        }
-        .navigationDestination(isPresented: $navigateToHome) {
-            NavigationStack{
-                HomeView()
-            }
-            .navigationBarBackButtonHidden(true)
         }
         .onAppear {
-            viewModel.subscribe(tripId: tripId)
+            overviewViewModel.subscribe(tripId: tripId)
         }
         .onDisappear {
-            viewModel.unsubscribe()
+            overviewViewModel.unsubscribe()
         }
     }
 }
 
 #Preview {
-    OverviewView(tripId: "zXtPknz7e75wBCht7tZx")
+    OverviewView(tripId: "9xXh1qW2Yh9dRT5qYT0m")
+        .environmentObject(TripViewModel())
 }

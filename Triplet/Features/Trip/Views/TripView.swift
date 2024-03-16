@@ -6,13 +6,18 @@
 //
 
 import SwiftUI
+import MapKit
 import AnimatedTabBar
+import ScalingHeaderScrollView
+import PopupView
 
 struct TripView: View {
     var tripId: String
     @StateObject var tripViewModel: TripViewModel = TripViewModel()
     @Binding var isActive: Bool
     @State var selectedIndex: Int = 0
+    @State var showMapView: Bool = false
+    @State var navigateToHome: Bool = false
 
     func wiggleButtonAt(_ index: Int, name: String) -> some View {
         WiggleButton(image: Image(systemName: name), maskImage: Image(systemName: "\(name).fill"), isSelected: index == selectedIndex)
@@ -28,44 +33,134 @@ struct TripView: View {
     }
     
     var body: some View {
-        VStack {
-                switch selectedIndex {
-                case 0:
-                    NavigationStack {
-                        if isActive {
-                            DayOfView(tripId: tripId)
-                        } else {
-                            OverviewView(tripId: tripId)
-                        }
+        ScalingHeaderScrollView {
+            ZStack(alignment: .topLeading) {
+                ZStack(alignment: .bottom) {
+                    Map(position: Binding(
+                        get: {
+                            guard let cameraPosition = tripViewModel.cameraPosition else {
+                                let center = CLLocationCoordinate2D(latitude: 0, longitude: 0)
+                                let span = MKCoordinateSpan(latitudeDelta: 0.5, longitudeDelta: 0.5)
+                                let region = MKCoordinateRegion(center: center, span: span)
+                                
+                                return MapCameraPosition.region(region)
+                            }
+                            return cameraPosition
+                        },
+                        set: { tripViewModel.cameraPosition = $0 }
+                    ), interactionModes: [])
+                    .onTapGesture {
+                            showMapView = true
                     }
-                case 1:
-                    NavigationStack {
-                        if isActive {
-                            OverviewView(tripId: tripId)
-                        } else {
-                            ItineraryView(tripId: tripId)
-                        }
+                    RoundedRectangle(cornerRadius: 15)
+                        .frame(width: getHeaderWidth(collapseProgress: tripViewModel.headerCollapseProgress, screenWidth: UIScreen.main.bounds.width),
+                               height: getHeaderHeight(collapseProgress: tripViewModel.headerCollapseProgress))
+                        .foregroundStyle(Color("Even Lighter Blue"))
+                        .overlay(
+                            VStack {
+                                if let trip = tripViewModel.trip {
+                                    Text(trip.name)
+                                        .font(.custom("Poppins-Bold", size: getHeaderTitleSize(collapseProgress: tripViewModel.headerCollapseProgress)))
+                                        .foregroundStyle(Color("Dark Teal"))
+                                    Text("\(trip.city), \(trip.state) | \(getDateString(date: trip.start)) - \(getDateString(date: trip.end))")
+                                        .font(.custom("Poppins-Medium", size: 13))
+                                        .foregroundStyle(Color("Dark Teal"))
+                                }
+                            }
+                        )
+                        .padding(.bottom, 30)
+                }
+                HStack {
+                    Button {
+                        navigateToHome = true
+                    } label: {
+                        Image(systemName: "house")
+                            .font(.title2)
+                            .padding()
+                            .background(Color("Dark Teal"))
+                            .foregroundStyle(.white)
+                            .clipShape(Circle())
                     }
-                case 2:
-                    NavigationStack {
-                        if isActive {
-                            ItineraryView(tripId: tripId)
-                        } else {
+                    .padding(.top, 60)
+                    .padding(.leading)
+                    .tint(.primary)
+                    Spacer()
+                    Button {
+                        tripViewModel.deleteTrip()
+                        navigateToHome = true
+                    } label: {
+                        Image(systemName: "trash")
+                            .font(.title2)
+                            .padding()
+                            .background(.evenLighterBlue)
+                            .foregroundStyle(.red)
+                            .clipShape(Circle())
+                    }
+                    .padding(.top, 60)
+                    .padding(.trailing)
+                    .tint(.primary)
+                }
+            }
+            .frame(maxWidth: .infinity)
+        } content: {
+            VStack {
+                    switch selectedIndex {
+                    case 0:
+                        NavigationStack {
+                            if isActive {
+                                ActiveTripView(tripId: tripId)
+                            } else {
+                                OverviewView(tripId: tripId)
+                            }
+                        }
+                    case 1:
+                        NavigationStack {
+                            if isActive {
+                                OverviewView(tripId: tripId)
+                            } else {
+                                ItineraryView(tripId: tripId)
+                            }
+                        }
+                    case 2:
+                        NavigationStack {
+                            if isActive {
+                                ItineraryView(tripId: tripId)
+                            } else {
+                                ExpensesView(tripId: tripId)
+                            }
+                        }
+                    default:
+                        NavigationStack {
                             ExpensesView(tripId: tripId)
                         }
                     }
-                default:
-                    NavigationStack {
-                        ExpensesView(tripId: tripId)
-                    }
-                }
-                AnimatedTabBar(selectedIndex: $selectedIndex, views: getViews(isActive: isActive))
-                    .cornerRadius(16)
-                    .selectedColor(.darkTeal)
-                    .unselectedColor(.darkTeal.opacity(0.6))
-                    .ballColor(.darkTeal)
-                    .verticalPadding(15)
-                    .ballTrajectory(.teleport)
+            }
+        }
+        .height(min: tripViewModel.headerMinHeight, max: tripViewModel.headerMaxHeight)
+        .allowsHeaderCollapse()
+        .collapseProgress($tripViewModel.headerCollapseProgress)
+        .setHeaderSnapMode(.immediately)
+        .ignoresSafeArea(edges: .top)
+        .popup(isPresented: $showMapView) {
+            MapView(showMapView: $showMapView)
+                .navigationBarBackButtonHidden(true)
+        } customize: { popup in
+            popup
+                .appearFrom(.top)
+                .type(.default)
+                .position(.center)
+                .animation(.easeIn)
+                .closeOnTap(false)
+                .closeOnTapOutside(false)
+                .dragToDismiss(false)
+                .isOpaque(true)
+                .backgroundColor(.black.opacity(0.25))
+        }
+        .navigationDestination(isPresented: $navigateToHome) {
+            NavigationStack{
+                HomeView()
+            }
+            .navigationBarBackButtonHidden(true)
         }
         .environmentObject(tripViewModel)
         .onAppear {
@@ -74,6 +169,13 @@ struct TripView: View {
         .onDisappear {
             tripViewModel.unsubscribe()
         }
+        AnimatedTabBar(selectedIndex: $selectedIndex, views: getViews(isActive: isActive))
+            .cornerRadius(16)
+            .selectedColor(.darkTeal)
+            .unselectedColor(.darkTeal.opacity(0.6))
+            .ballColor(.darkTeal)
+            .verticalPadding(15)
+            .ballTrajectory(.teleport)
     }
 }
 

@@ -8,8 +8,9 @@
 import SwiftUI
 
 struct AddNewExpenseView: View {
-
+    var tripId: String
     @EnvironmentObject var expensesModel: ExpensesViewModel
+    
     @Environment(\.dismiss) var dismiss
     @State private var name: String = ""
     @State private var cost: Double = 0
@@ -126,7 +127,7 @@ struct AddNewExpenseView: View {
                         else {
                             print("creating new expense...")
                             if let cost = Double(costInput) {
-                                expensesModel.addExpense(name: name, date: date, category: selection, cost: cost)
+                                expensesModel.addExpense(name: name, date: date, category: selection, cost: cost, tripId: tripId)
                                 //expenses.append(newExpense)
                             }
                             else {
@@ -157,8 +158,4 @@ struct AddNewExpenseView: View {
         .padding()
         .frame(maxHeight: 600)
     }
-}
-
-#Preview {
-    AddNewExpenseView()
 }

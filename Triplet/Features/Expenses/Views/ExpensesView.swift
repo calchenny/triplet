@@ -14,115 +14,40 @@ import FirebaseFirestore
 import PopupView
 
 struct ExpensesView: View {
-    
     var tripId: String
-
-    init(tripId: String) {
-        self.tripId = tripId
-    }
-    
+    @StateObject var expenseViewModel = ExpensesViewModel()
+    @EnvironmentObject var tripViewModel: TripViewModel
+    @EnvironmentObject var userModel: UserModel
     @State private var budget: Double = 10000.00
     @State private var currentTotal: Double = 0.00
     @State private var percentage: Double = 0
-    @State var navigateToHome: Bool = false
-    @State var showMapView: Bool = false
-    @EnvironmentObject var userModel: UserModel
-    @StateObject var expenseModel = ExpensesViewModel()
-
-    func getHeaderWidth(screenWidth: CGFloat) -> CGFloat {
-        let maxWidth = screenWidth * 0.9
-        let minWidth = screenWidth * 0.5
-        return max((1 - expenseModel.collapseProgress + 0.5 * expenseModel.collapseProgress) * maxWidth, minWidth)
-    }
-
-    func getHeaderHeight() -> CGFloat {
-        let maxHeight = CGFloat(100)
-        let minHeight = CGFloat(60)
-        return max((1 - expenseModel.collapseProgress + 0.5 * expenseModel.collapseProgress) * maxHeight, minHeight)
-    }
-
-    func getHeaderTitleSize() -> CGFloat {
-        let maxSize = CGFloat(30)
-        let minSize = CGFloat(16)
-        return max((1 - expenseModel.collapseProgress + 0.5 * expenseModel.collapseProgress) * maxSize, minSize)
-    }
-
+    
     var body: some View {
-        ScalingHeaderScrollView {
-            ZStack(alignment: .topLeading) {
-                ZStack(alignment: .bottom) {
-                    Map(position: Binding(
-                        get: {
-                            guard let cameraPosition = expenseModel.cameraPosition else {
-                                return MapCameraPosition.region(MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 47.608013, longitude: -122.335167), span: MKCoordinateSpan(latitudeDelta: 0.5, longitudeDelta: 0.5)))
-                            }
-                            return cameraPosition
-                        },
-                        set: { expenseModel.cameraPosition = $0 }
-                    ), interactionModes: [])
-                    .onTapGesture {
-                            showMapView = true
-                    }
-                    RoundedRectangle(cornerRadius: 15)
-                        .frame(width: getHeaderWidth(screenWidth: UIScreen.main.bounds.width), height: getHeaderHeight())
-                        .foregroundStyle(.evenLighterBlue)
-                        .overlay(
-                            VStack {
-                                if let trip = expenseModel.trip {
-                                    Text(trip.name)
-                                        .font(.custom("Poppins-Bold", size: getHeaderTitleSize()))
-                                        .foregroundStyle(Color("Dark Teal"))
-                                    Text("\(trip.city), \(trip.state) | \(getDateString(date: trip.start)) - \(getDateString(date: trip.end))")
-                                        .font(.custom("Poppins-Medium", size: 13))
-                                        .foregroundStyle(Color("Dark Teal"))
-                                }
-                            }
-                        )
-                        .padding(.bottom, 30)
-                }
-                Button {
-                    navigateToHome = true
-                } label: {
-                    Image(systemName: "house")
-                        .font(.title2)
-                        .padding()
-                        .background(Color("Dark Teal"))
-                        .foregroundStyle(.white)
-                        .clipShape(Circle())
-                }
-                .padding(.top, 60)
-                .padding(.leading)
-                .tint(.primary)
-            }
-            .frame(maxWidth: .infinity)
-        } content: {
+        VStack {
             VStack {
                 Text("Expenses")
                     .font(.custom("Poppins-Bold", size: 30))
                     .foregroundColor(Color.darkTeal)
                     .padding(25)
-                Text("$\(expenseModel.currentTotal, specifier: "%.2f")")
+                Text("$\(expenseViewModel.currentTotal, specifier: "%.2f")")
                     .font(.custom("Poppins-Regular", size: 30))
-                ProgressView(value: expenseModel.percentage)
+                ProgressView(value: expenseViewModel.percentage)
                     .tint(Color.darkTeal)
                     .frame(minWidth: 0, maxWidth: 200)
-                Text("Budget: $\(expenseModel.budget, specifier: "%.2f")")
+                Text("Budget: $\(expenseViewModel.budget, specifier: "%.2f")")
                     .font(.custom("Poppins-Medium", size: 16))
                     .foregroundColor(Color.darkTeal)
                     .padding(.bottom, 40)
             }
-            .onChange(of: expenseModel.expenses) {
-                expenseModel.currentTotal = expenseModel.calculateTotal()
-                expenseModel.percentage = expenseModel.calculatePercentage()
-                print("currentTotal: \(expenseModel.currentTotal)")
-                print("percentage: \(expenseModel.percentage)")
+            .onChange(of: expenseViewModel.expenses) {
+                expenseViewModel.currentTotal = expenseViewModel.calculateTotal()
+                expenseViewModel.percentage = expenseViewModel.calculatePercentage()
             }
             
             VStack {
-                
-                if !expenseModel.expenses.isEmpty {
+                if !expenseViewModel.expenses.isEmpty {
                     ScrollView {
-                        ForEach(expenseModel.expenses, id: \.name) { expense in
+                        ForEach(expenseViewModel.expenses, id: \.name) { expense in
                             ZStack {
                                 RoundedRectangle(cornerRadius: 15)
                                     .frame(height: 70)
@@ -223,7 +148,7 @@ struct ExpensesView: View {
                     Spacer()
                 }
                 Button {
-                    expenseModel.showNewExpensePopup.toggle()
+                    expenseViewModel.showNewExpensePopup.toggle()
                 } label: {
                     RoundedRectangle(cornerRadius: 10)
                         .frame(width: 200, height: 40)
@@ -237,9 +162,9 @@ struct ExpensesView: View {
                                 .tint(.white)
                         )
                 }
-                .popup(isPresented: $expenseModel.showNewExpensePopup) {
-                    AddNewExpenseView()
-                        .environmentObject(expenseModel)
+                .popup(isPresented: $expenseViewModel.showNewExpensePopup) {
+                    AddNewExpenseView(tripId: tripId)
+                        .environmentObject(expenseViewModel)
                 } customize: { popup in
                     popup
                         .type(.floater())
@@ -253,38 +178,12 @@ struct ExpensesView: View {
                 .padding()
             } // VStack closing bracket
             .frame(maxWidth: .infinity)
-            .navigationDestination(isPresented: $navigateToHome) {
-                NavigationStack{
-                    HomeView()
-                }
-                .navigationBarBackButtonHidden(true)
-            }
-        }
-        .height(min: expenseModel.minHeight, max: expenseModel.maxHeight)
-        .allowsHeaderCollapse()
-        .collapseProgress($expenseModel.collapseProgress)
-        .setHeaderSnapMode(.immediately)
-        .ignoresSafeArea(edges: .top)
-        .popup(isPresented: $showMapView) {
-            MapView(showMapView: $showMapView)
-                .navigationBarBackButtonHidden(true)
-        } customize: { popup in
-            popup
-                .appearFrom(.top)
-                .type(.default)
-                .position(.center)
-                .animation(.easeIn)
-                .closeOnTap(false)
-                .closeOnTapOutside(false)
-                .dragToDismiss(false)
-                .isOpaque(true)
-                .backgroundColor(.black.opacity(0.25))
         }
         .onAppear {
-            expenseModel.subscribe(tripId: tripId)
+            expenseViewModel.subscribe(tripId: tripId)
         }
         .onDisappear {
-            expenseModel.unsubscribe()
+            expenseViewModel.unsubscribe()
         }
     } // body closing bracket
 } // view closing bracket

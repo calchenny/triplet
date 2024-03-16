@@ -1,25 +1,27 @@
 //
-//  FoodPopupView.swift
+//  HousingPopupView.swift
 //  Triplet
 //
-//  Created by Derek Ma on 2/27/24.
+//  Created by Derek Ma on 2/28/24.
 //
 
 import SwiftUI
 import MapKit
 import Firebase
 
-struct FoodPopupView: View {
+struct HousingPopupView: View {
+    var tripId: String
     @EnvironmentObject var overviewViewModel: OverviewViewModel
-    @State var selectedFoodCategory: FoodCategory = .breakfast
-    @State var date: Date = Date()
+    @EnvironmentObject var tripViewModel: TripViewModel
+    @State private var startDate: Date = Date()
+    @State private var endDate: Date = Date()
     @State var location: String = ""
     @State var selectedLandmark: LandmarkViewModel?
     @State var landmarks: [LandmarkViewModel] = [LandmarkViewModel]()
     @State var showAlert: Bool = false
     
     private func getNearByLandmarks() {
-        guard let trip = overviewViewModel.trip else {
+        guard let trip = tripViewModel.trip else {
             print("Missing trip")
             return
         }
@@ -48,13 +50,13 @@ struct FoodPopupView: View {
             VStack {
                 ZStack(alignment: .trailing) {
                     HStack {
-                        Text("New Food Spot")
+                        Text("New Housing")
                             .font(.custom("Poppins-Bold", size: 30))
                             .foregroundStyle(Color("Dark Teal"))
                     }
                     .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/)
                     Button {
-                        overviewViewModel.showFoodPopup.toggle()
+                        overviewViewModel.showHousingPopup.toggle()
                     } label: {
                         Circle()
                             .frame(maxWidth: 30)
@@ -67,7 +69,7 @@ struct FoodPopupView: View {
                 }
                 .padding(.top, 20)
                 ZStack(alignment: .trailing) {
-                    TextField("Search restaurants, eateries, etc.", text: $location)
+                    TextField("Search hotels, motels, etc.", text: $location)
                         .padding(20)
                         .frame(maxHeight: 35)
                         .font(.custom("Poppins-Regular", size: 16))
@@ -111,63 +113,47 @@ struct FoodPopupView: View {
                             }
                         }
                     }
-                    .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, maxHeight: 200)
+                    .frame(maxWidth: .infinity, maxHeight: 200)
                 }
-                HStack(alignment: .center, spacing: 15) {
-                    Text("Category")
-                        .font(.custom("Poppins-Medium", size: 16))
-                    Menu {
-                        Picker("", selection: $selectedFoodCategory) {
-                            ForEach(FoodCategory.allCases, id: \.self) { category in
-                                Text(category.rawValue)
-                            }
-                        }
-                    } label: {
-                        HStack {
-                            Text(selectedFoodCategory.rawValue)
-                                .font(.custom("Poppins-Regular", size: 16))
-                                .frame(minWidth: 150)
-                                .foregroundStyle(.black)
-                            Image(systemName: "chevron.down")
-                                .foregroundStyle(Color("Darker Gray"))
-                        }
+                if let trip = tripViewModel.trip,
+                    let start = trip.start,
+                    let end = trip.end {
+                    DatePicker(selection: $startDate, in: start...end, displayedComponents: [.date, .hourAndMinute]) {
+                        Text("Start:")
+                            .font(.custom("Poppins-Medium", size: 16))
                     }
-                    .frame(maxWidth: .infinity, maxHeight: 25)
-                    .padding(5)
-                    .overlay(RoundedRectangle(cornerRadius: 5).stroke(Color("Darker Gray")))
-                }
-                .padding(.top)
-                HStack(alignment: .center, spacing: 15) {
-                    Text("Date/Time")
-                        .font(.custom("Poppins-Medium", size: 16))
-                    DatePicker("Please enter a date", selection: $date)
-                        .labelsHidden()
-                        .frame(maxWidth: .infinity, maxHeight: 25)
-                        .tint(.darkTeal)
+                    .tint(.darkTeal)
+
+                    DatePicker(selection: $endDate, in: startDate...end, displayedComponents: [.date, .hourAndMinute]) {
+                        Text("End:")
+                            .font(.custom("Poppins-Medium", size: 16))
+                    }
+                    .tint(.darkTeal)
+                    
                 }
                 Button {
                     guard let selectedLandmark else {
                         showAlert.toggle()
                         return
                     }
-                    overviewViewModel.addFoodPlace(name: selectedLandmark.name,
-                                                   location: GeoPoint(latitude: selectedLandmark.coordinate.latitude, 
-                                                                      longitude: selectedLandmark.coordinate.longitude),
-                                                   address: selectedLandmark.title, 
-                                                   start: date,
-                                                   foodCategory: selectedFoodCategory)
-                    overviewViewModel.showFoodPopup.toggle()
+                    overviewViewModel.addHousingPlace(name: selectedLandmark.name,
+                                                      location: GeoPoint(latitude: selectedLandmark.coordinate.latitude,
+                                                                         longitude: selectedLandmark.coordinate.longitude),
+                                                      address: selectedLandmark.title,
+                                                      start: startDate,
+                                                      end: endDate, tripId: tripId)
+                    overviewViewModel.showHousingPopup.toggle()
                 } label: {
-                    RoundedRectangle(cornerRadius: 10)
-                        .frame(width: 200, height: 40)
+                    RoundedRectangle(cornerRadius: 15)
+                        .frame(width: 200, height: 50)
                         .foregroundStyle(Color("Dark Teal"))
                         .overlay(
                             HStack {
                                 Image(systemName: "plus")
-                                Text("Add food")
+                                Text("Add lodging")
                                     .font(.custom("Poppins-Medium", size: 16))
                             }
-                                .tint(.white)
+                            .tint(.white)
                         )
                         .padding([.top, .bottom])
                 }
@@ -182,9 +168,4 @@ struct FoodPopupView: View {
         .padding()
         .frame(maxHeight: 600)
     }
-}
-
-#Preview {
-    FoodPopupView()
-        .environmentObject(OverviewViewModel())
 }

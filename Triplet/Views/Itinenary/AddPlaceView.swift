@@ -9,8 +9,10 @@ import MapKit
 import FirebaseFirestore
 
 struct AddPlaceView: View {
-
+    var tripId: String
     @EnvironmentObject var itineraryModel: ItineraryViewModel
+    @EnvironmentObject var tripViewModel: TripViewModel
+    
     @State private var startDate: Date = Date()
     @State private var endDate: Date = Date()
     @State private var category: EventType = .attraction
@@ -18,46 +20,31 @@ struct AddPlaceView: View {
     @State private var selectedLandmark: LandmarkViewModel?
     @Environment(\.presentationMode) var presentationMode
     
-    @State private var search:String = ""
+    @State private var search: String = ""
     
     @State private var landmarks: [LandmarkViewModel] = [LandmarkViewModel]()
     
     private func getNearByLandmarks() {
-        let request = MKLocalSearch.Request()
-        
-        guard let city = itineraryModel.trip?.city, let state = itineraryModel.trip?.state else {
-            // Handle missing city or state information
+        guard let trip = tripViewModel.trip else {
+            print("Missing trip")
             return
         }
-        
+
+        let request = MKLocalSearch.Request()
         request.pointOfInterestFilter = .includingAll
-        request.naturalLanguageQuery = "\(search) \(city) \(state)"
-                
-        let lat = itineraryModel.trip?.destination.latitude ?? 47.608013
-        let lon = itineraryModel.trip?.destination.latitude ?? -122.335167
-        
-        let region = MKCoordinateRegion(
-            center: CLLocationCoordinate2D(latitude: lat, longitude: lon),
+        request.naturalLanguageQuery = "\(search) \(trip.city) \(trip.state)"
+        request.region = MKCoordinateRegion(
+            center: CLLocationCoordinate2D(latitude: trip.destination.latitude, longitude: trip.destination.longitude),
             span: MKCoordinateSpan(latitudeDelta: 0.5, longitudeDelta: 0.5)
         )
         
-        // Limiting the search for events to around the destination
-        request.region = region
-        
         let search = MKLocalSearch(request: request)
         
-        search.start {(response, error) in
+        search.start { response, error in
             if let response = response {
-                var newLandmarks: [LandmarkViewModel] = [] // Create a new array to store filtered landmarks
-
-                for item in response.mapItems {
-                    newLandmarks.append(LandmarkViewModel(placemark: item.placemark))
-                }
-                // Update the landmarks array outside the loop to avoid multiple updates
-                self.landmarks = newLandmarks
+                self.landmarks = response.mapItems.compactMap { LandmarkViewModel(placemark: $0.placemark) }
             }
         }
-        
     }
     
     // Function to convert a string to EventType
@@ -137,7 +124,7 @@ struct AddPlaceView: View {
                     }
                     .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, maxHeight: 300)
                 }
-                if let trip = itineraryModel.trip,
+                if let trip = tripViewModel.trip,
                     let start = trip.start,
                     let end = trip.end {
                     DatePicker(selection: $startDate, in: start...end, displayedComponents: [.date, .hourAndMinute]) {
@@ -183,7 +170,7 @@ struct AddPlaceView: View {
                         showAlert.toggle()
                         return
                     }
-                    itineraryModel.addEvent(name: selectedLandmark.name, location: GeoPoint(latitude: selectedLandmark.coordinate.latitude, longitude: selectedLandmark.coordinate.longitude),type: category, category: nil, start: startDate, address: selectedLandmark.title, end: endDate)
+                    itineraryModel.addEvent(name: selectedLandmark.name, location: GeoPoint(latitude: selectedLandmark.coordinate.latitude, longitude: selectedLandmark.coordinate.longitude),type: category, category: nil, start: startDate, address: selectedLandmark.title, end: endDate, tripId: tripId)
                                                    
                     itineraryModel.showNewPlacePopUp.toggle()
                 } label: {
@@ -211,7 +198,7 @@ struct AddPlaceView: View {
         .padding()
         .frame(maxHeight: 650)
         .onAppear() {
-            if let trip = itineraryModel.trip,
+            if let trip = tripViewModel.trip,
                let start = trip.start {
                 endDate = start
                 startDate = start
@@ -219,18 +206,4 @@ struct AddPlaceView: View {
             
         }
     }
-}
-
-
-private let dateFormatter: DateFormatter = {
-    let formatter = DateFormatter()
-    formatter.dateFormat = "MM/dd"
-    return formatter
-}()
-
-
-
-#Preview {
-    AddPlaceView()
-        .environmentObject(ItineraryViewModel())
 }

@@ -10,17 +10,13 @@ import SwiftUI
 import MapKit
 
 class OverviewViewModel: ObservableObject {
-    @Published var trip: Trip?
     @Published var notes: [Note] = []
     @Published var housing: [Event] = []
     @Published var food: [Event] = []
-    
-    @Published var cameraPosition: MapCameraPosition?
     @Published var toggleStates = ToggleStates()
     @Published var showAlert: Bool = false
     @Published var newNoteTitle: String = ""
     @Published var validationError: String = ""
-    @Published var collapseProgress: CGFloat = 0
     @Published var showFoodPopup: Bool = false
     @Published var showHousingPopup: Bool = false
     
@@ -30,19 +26,7 @@ class OverviewViewModel: ObservableObject {
     let minHeight: CGFloat = 150.0
     let maxHeight: CGFloat = 300.0
 
-    func addNote() {
-        guard !newNoteTitle.isEmpty else {
-            print("Note name must be non-empty")
-            return
-        }
-        guard let trip else {
-            print("Missing trip")
-            return
-        }
-        guard let tripId = trip.id else {
-            print("Missing tripId")
-            return
-        }
+    func addNote(tripId: String) {
         do {
             try db.collection("trips/\(tripId)/notes").addDocument(from: Note(title: newNoteTitle))
             newNoteTitle = ""
@@ -51,15 +35,7 @@ class OverviewViewModel: ObservableObject {
         }
     }
     
-    func addFoodPlace(name: String, location: GeoPoint, address: String, start: Date, foodCategory: FoodCategory) {
-        guard let trip else {
-            print("Missing trip")
-            return
-        }
-        guard let tripId = trip.id else {
-            print("Missing tripId")
-            return
-        }
+    func addFoodPlace(name: String, location: GeoPoint, address: String, start: Date, foodCategory: FoodCategory, tripId: String) {
         let foodPlace = Event(name: name,
                               location: location,
                               type: EventType.food,
@@ -74,15 +50,7 @@ class OverviewViewModel: ObservableObject {
         }
     }
     
-    func addHousingPlace(name: String, location: GeoPoint, address: String, start: Date, end: Date) {
-        guard let trip else {
-            print("Missing trip")
-            return
-        }
-        guard let tripId = trip.id else {
-            print("Missing tripId")
-            return
-        }
+    func addHousingPlace(name: String, location: GeoPoint, address: String, start: Date, end: Date, tripId: String) {
         let housingPlace = Event(name: name,
                               location: location,
                               type: EventType.housing,
@@ -96,15 +64,7 @@ class OverviewViewModel: ObservableObject {
         }
     }
     
-    func updateNote(noteId: String, title: String, content: String) {
-        guard let trip else {
-            print("Missing trip")
-            return
-        }
-        guard let tripId = trip.id else {
-            print("Missing tripId")
-            return
-        }
+    func updateNote(noteId: String, title: String, content: String, tripId: String) {
         let noteRef = db.document("trips/\(tripId)/notes/\(noteId)")
         noteRef.updateData(["title": title, "content": content]) { error in
             if let error {
@@ -113,19 +73,6 @@ class OverviewViewModel: ObservableObject {
                 print("Updated note")
             }
         }
-    }
-    
-    func deleteTrip() {
-        guard let trip else {
-            print("Missing trip")
-            return
-        }
-        guard let tripId = trip.id else {
-            print("Missing tripId")
-            return
-        }
-        let tripRef = db.document("trips/\(tripId)")
-        tripRef.delete()
     }
 
     func unsubscribe() {
@@ -139,21 +86,6 @@ class OverviewViewModel: ObservableObject {
     
     func subscribe(tripId: String) {
         if listenerRegistrations.isEmpty {
-            let tripQuery = db.document("trips/\(tripId)")
-            listenerRegistrations.append(tripQuery.addSnapshotListener { documentSnapshot, error in
-                guard let document = documentSnapshot else {
-                  print("Error fetching document: \(error!)")
-                  return
-                }
-                do {
-                    let trip = try document.data(as: Trip.self)
-                    self.trip = trip
-                    self.cameraPosition = MapCameraPosition.region(MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: trip.destination.latitude, longitude: trip.destination.longitude), span: MKCoordinateSpan(latitudeDelta: 0.5, longitudeDelta: 0.5)))
-                } catch {
-                    print(error)
-                }
-            })
-            
             let notesQuery = db.collection("trips/\(tripId)/notes")
             listenerRegistrations.append(notesQuery.addSnapshotListener { (querySnapshot, error) in
                 guard let documents = querySnapshot?.documents else {
