@@ -39,7 +39,6 @@ struct TripletApp: App {
         WindowGroup {
             RootView()
                 .preferredColorScheme(.light)
-//            ItineraryView()
         }
     }
 }

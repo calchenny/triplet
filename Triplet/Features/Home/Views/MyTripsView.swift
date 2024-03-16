@@ -40,7 +40,7 @@ struct MyTripsView: View {
                 .pickerStyle(.segmented)
                 .frame(width: UIScreen.main.bounds.width * 0.80)
             }
-            NavigationStack {
+            Group {
                 if tabSelection == 0 {
                     CurrentTripsView()
                 } else {
@@ -213,11 +213,8 @@ struct CurrentTripsView: View  {
                     }
                     .navigationDestination(isPresented: $navigateToOverview) {
                         if self.tripID != "" {
-                            NavigationStack {
-                                TripView(tripId: self.tripID, isActive: $isActive)
-                            }
-                            .navigationBarBackButtonHidden(true)
-
+                            TripView(tripId: self.tripID, isActive: $isActive)
+                                .navigationBarBackButtonHidden(true)
                         }
                     }
                 }
@@ -290,11 +287,8 @@ struct PastTripsView: View {
                     }
                     .navigationDestination(isPresented: $navigateToOverview) {
                         if self.tripID != "" {
-                            NavigationStack {
-                                TripView(tripId: self.tripID, isActive: $isActive)
-                            }
-                            .navigationBarBackButtonHidden(true)
-
+                            TripView(tripId: self.tripID, isActive: $isActive)
+                                .navigationBarBackButtonHidden(true)
                         }
                     }
                 }
