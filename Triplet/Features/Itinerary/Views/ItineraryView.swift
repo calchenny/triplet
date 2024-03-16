@@ -17,7 +17,6 @@ struct ItineraryView: View {
     var tripId: String
     @StateObject var itineraryModel = ItineraryViewModel()
     @EnvironmentObject var tripViewModel: TripViewModel
-    @EnvironmentObject var userModel: UserModel
 
     @State var goToDayView = false
     @State var searchText: String = ""

@@ -17,7 +17,6 @@ struct ExpensesView: View {
     var tripId: String
     @StateObject var expensesViewModel = ExpensesViewModel()
     @EnvironmentObject var tripViewModel: TripViewModel
-    @EnvironmentObject var userModel: UserModel
     
     var body: some View {
         VStack {

@@ -17,7 +17,6 @@ struct ActiveTripView: View {
     var tripId: String
     @StateObject var itineraryModel = ItineraryViewModel()
     @EnvironmentObject var tripViewModel: TripViewModel
-    @EnvironmentObject var userModel: UserModel
     
     @State var isExpanded = false
     @State var searchText: String = ""

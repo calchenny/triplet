@@ -9,8 +9,7 @@
 import SwiftUI
 
 struct SettingView: View {
-    @EnvironmentObject var loginViewModel: LoginViewModel
-    @EnvironmentObject var userModel: UserModel
+    @EnvironmentObject var authenticationModel: AuthenticationModel
     @State var signedOut = false
     var body: some View {
         VStack {
@@ -34,10 +33,8 @@ struct SettingView: View {
                             .font(.custom("Poppins-Regular", size: 15))
                         
                     }
-                    Button{
-                        Task {
-                            await loginViewModel.signOut()
-                            userModel.unsubscribe()
+                    Button {
+                        authenticationModel.signOut {
                             signedOut = true
                         }
                     } label: {

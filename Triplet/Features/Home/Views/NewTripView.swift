@@ -11,7 +11,6 @@ import FirebaseFirestore
 
 struct NewTripView: View {
     @Environment(\.dismiss) var dismiss
-    @EnvironmentObject var userModel: UserModel
     @StateObject var destinationViewModel = DestinationViewModel()
     @State var tripId: String?
     @State var guests: Int = 0
@@ -23,12 +22,16 @@ struct NewTripView: View {
     @State var isActive: Bool = false
     
     func createTrip() {
+        guard let uid = Auth.auth().currentUser?.uid else {
+            print("Missing user")
+            return
+        }
+        
         print("Hit")
         guard let latitude = destinationViewModel.latitude,
               let longitude = destinationViewModel.longitude,
               let city = destinationViewModel.city,
               let state = destinationViewModel.state,
-              let uid = userModel.uid,
               let start = Calendar.current.date(bySettingHour: 0, minute: 0, second: 0, of: startDate),
               let end = Calendar.current.date(bySettingHour: 23, minute: 59, second: 59, of: endDate) else {
                 return

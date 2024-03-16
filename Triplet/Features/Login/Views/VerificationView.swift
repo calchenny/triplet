@@ -9,6 +9,7 @@ import SwiftUI
 
 struct VerificationView: View {
     @EnvironmentObject var loginViewModel : LoginViewModel
+    @EnvironmentObject var authenticationModel: AuthenticationModel
     @Environment(\.presentationMode) var present
     @State var navigateToHome: Bool = false
     @FocusState var isFocused: Bool
@@ -31,24 +32,21 @@ struct VerificationView: View {
 
     //function to resend code
     func resendCode() {
-        Task {
-            do {
-                try await loginViewModel.requestCode()
-            } catch {
-                print("An unexpected error occurred: \(error)")
-            }
-        }
+//        Task {
+//            do {
+//                try await loginViewModel.requestCode()
+//            } catch {
+//                print("An unexpected error occurred: \(error)")
+//            }
+//        }
     }
 
     // function that verifies otp code and then creates the account (same process)
     func verifyAndCreateAccount() {
-        Task {
-            do {
-                try await loginViewModel.verifyCode()
-                navigateToHome.toggle()
-            } catch {
-                print("An unexpected error occurred: \(error)")
-            }
+        authenticationModel.signIn(loginViewModel.code) {
+            loginViewModel.code = ""
+            loginViewModel.phoneNumber = ""
+            navigateToHome.toggle()
         }
     }
     

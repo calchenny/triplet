@@ -10,36 +10,30 @@ import AnimatedTabBar
 
 
 struct HomeView: View {
+    @State var selectedIndex: Int = 0
+    let names = ["house", "plus.app", "gearshape"]
+
     func wiggleButtonAt(_ index: Int, name: String) -> some View {
         WiggleButton(image: Image(systemName: name), maskImage: Image(systemName: "\(name).fill"), isSelected: index == selectedIndex)
             .scaleEffect(1.2)
     }
-    let names = ["house", "plus.app", "gearshape"]
-    @State var selectedIndex: Int = 0
+    
     var body: some View {
         if selectedIndex == 2 {
-            NavigationStack {
-                SettingView()
-            }
+            SettingView()
         } else if selectedIndex == 1 {
-            NavigationStack {
-                NewTripView()
-            }
+            NewTripView()
         } else {
-            NavigationStack {
-                MyTripsView()
-            }
+            MyTripsView()
         }
         Spacer()
-        AnimatedTabBar(selectedIndex: $selectedIndex,
-                                       views: (0..<names.count).map { wiggleButtonAt($0, name: names[$0]) })
+        AnimatedTabBar(selectedIndex: $selectedIndex, views: (0..<names.count).map { wiggleButtonAt($0, name: names[$0]) })
             .cornerRadius(16)
             .selectedColor(.darkTeal)
             .unselectedColor(.darkTeal.opacity(0.6))
             .ballColor(.darkTeal)
             .verticalPadding(20)
             .ballTrajectory(.teleport)
-
     }
 }
 

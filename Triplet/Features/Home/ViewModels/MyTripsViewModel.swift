@@ -1,26 +1,21 @@
 //
-//  UserModel.swift
+//  MyTripsViewModel.swift
 //  Triplet
 //
 //  Created by Derek Ma on 2/29/24.
 //
 
-import FirebaseFirestore
+import Firebase
 import SwiftUI
-import FirebaseFirestoreSwift
 
-class UserModel: ObservableObject {
-    @Published var uid: String?
+
+class MyTripsViewModel: ObservableObject {
     @Published var trips: [Trip] = []
     @Published var currentTrips: [Trip] = []
     @Published var pastTrips: [Trip] = []
     private var db = Firestore.firestore()
     private var listenerRegistration: ListenerRegistration?
     private var tripIDs: Set<String> = []
-    
-    func setUid(uid: String) {
-        self.uid = uid
-    }
     
     func unsubscribe() {
         if listenerRegistration != nil {
@@ -30,12 +25,12 @@ class UserModel: ObservableObject {
     }
 
     func subscribe() {
+        guard let uid = Auth.auth().currentUser?.uid else {
+            print("Missing user")
+            return
+        }
+        
         if listenerRegistration == nil {
-            guard let uid else {
-                print("Missing uid")
-                return
-            }
-
             let tripsQuery = db.collection("trips").whereField("owner", isEqualTo: uid)
 
             listenerRegistration = tripsQuery.addSnapshotListener { (querySnapshot, error) in

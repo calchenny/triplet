@@ -10,7 +10,7 @@ import CoreLocation
 
 struct MyTripsView: View {
     @State var tabSelection = 0
-    @EnvironmentObject var userModel: UserModel
+    @StateObject var myTripsViewModel: MyTripsViewModel = MyTripsViewModel()
     @State var tripCities: [String] = []
     @State var tripStates: [String] = []
     
@@ -40,37 +40,22 @@ struct MyTripsView: View {
                 .pickerStyle(.segmented)
                 .frame(width: UIScreen.main.bounds.width * 0.80)
             }
-            
-            if tabSelection == 0 {
-                NavigationStack {
+            NavigationStack {
+                if tabSelection == 0 {
                     CurrentTripsView()
-                }
-            } else {
-                NavigationStack {
+                } else {
                     PastTripsView()
                 }
             }
+            .environmentObject(myTripsViewModel)
+
             Spacer()
         }
-//        .task {
-//            do {
-//                print("Loading user data")
-//                try await userModel.setUid(uid: loginViewModel.fetchUserUID())
-//                        userModel.subscribe()
-//                // Once user data is loaded, navigate to the home view
-//                await userModel.loadingUserData()
-//            } catch {
-//                print("No user data found")
-//            }
-//        }
         .onAppear() {
-            print("trip of the user")
-            print(userModel.trips.count)
-            
-            userModel.subscribe()
+            myTripsViewModel.subscribe()
         }
         .onDisappear {
-            userModel.unsubscribe()
+            myTripsViewModel.unsubscribe()
         }
     }
 }
@@ -157,50 +142,50 @@ func getDaysUntilTrip(start: Date?) -> Int {
 }
 
 struct CurrentTripsView: View  {
-    @EnvironmentObject var userModel: UserModel
+    @EnvironmentObject var myTripsViewModel: MyTripsViewModel
     @State private var navigateToOverview: Bool = false
     @State private var tripID: String = ""
     @State private var isActive: Bool = false
     var body: some View {
         VStack {
-            Text(" You have \(userModel.currentTrips.count) trips planned.")
+            Text(" You have \(myTripsViewModel.currentTrips.count) trips planned.")
                 .font(.custom("Poppins-Regular", size: 16))
                 .frame(width: UIScreen.main.bounds.width * 0.8, alignment: .leading)
                 .padding()
-            if userModel.currentTrips.count == 0 {
+            if myTripsViewModel.currentTrips.count == 0 {
                 NoTripPlanned()
             }
             ScrollView {
-                ForEach(0..<userModel.currentTrips.count, id: \.self) { index in
+                ForEach(0..<myTripsViewModel.currentTrips.count, id: \.self) { index in
                     ZStack {
                         RoundedRectangle(cornerRadius: 20)
                             .fill(.lighterGray)
                             .frame(width: UIScreen.main.bounds.width * 0.8, height:120)
                         HStack {
                             VStack (alignment: .leading) {
-                                Text(userModel.currentTrips[index].name)
+                                Text(myTripsViewModel.currentTrips[index].name)
                                     .font(.custom("Poppins-Bold", size: 16))
                                     .frame(maxWidth: .infinity, alignment: .leading)
                                     .foregroundStyle(.darkTeal)
-                                Text("\(userModel.currentTrips[index].city), \(userModel.currentTrips[index].state)")
+                                Text("\(myTripsViewModel.currentTrips[index].city), \(myTripsViewModel.currentTrips[index].state)")
                                     .font(.custom("Poppins-Regular", size: 12))
                                     .padding(.bottom, 5)
                                     .frame(maxWidth: .infinity, alignment: .leading)
                                 HStack {
-                                    Text("\(getDateString(date: userModel.currentTrips[index].start)) - \(getDateString(date: userModel.currentTrips[index].end))")
+                                    Text("\(getDateString(date: myTripsViewModel.currentTrips[index].start)) - \(getDateString(date: myTripsViewModel.currentTrips[index].end))")
                                         .font(.custom("Poppins-Regular", size: 12))
                                         
-                                     Text("(\(getTripDuration(start: userModel.currentTrips[index].start, end: userModel.currentTrips[index].end)) days)")
+                                     Text("(\(getTripDuration(start: myTripsViewModel.currentTrips[index].start, end: myTripsViewModel.currentTrips[index].end)) days)")
                                         .font(.custom("Poppins-Regular", size: 12))
                                         .foregroundStyle(Color.gray)
                                 }
                                 
-                                if (getDaysUntilTrip(start: userModel.currentTrips[index].start) <= 0) {
+                                if (getDaysUntilTrip(start: myTripsViewModel.currentTrips[index].start) <= 0) {
                                     Text("Happening Now")
                                         .font(.custom("Poppins-Bold", size: 12))
                                         .foregroundStyle(.darkTeal)
                                 } else {
-                                    Text("\(getDaysUntilTrip(start: userModel.currentTrips[index].start)) days until trip starts")
+                                    Text("\(getDaysUntilTrip(start: myTripsViewModel.currentTrips[index].start)) days until trip starts")
                                         .font(.custom("Poppins-Regular", size: 12))
                                 }
                                 
@@ -215,12 +200,12 @@ struct CurrentTripsView: View  {
                     .padding(.bottom)
                     .background(Color.white)
                     .onTapGesture {
-                        guard let tripID = userModel.currentTrips[index].id else {
+                        guard let tripID = myTripsViewModel.currentTrips[index].id else {
                             print("can't get tripID")
                             return
                         }
                         self.tripID = tripID
-                        self.isActive = (getDaysUntilTrip(start: userModel.currentTrips[index].start) <= 0)
+                        self.isActive = (getDaysUntilTrip(start: myTripsViewModel.currentTrips[index].start) <= 0)
                         print("tripID", self.tripID)
                         // navigate to overview page
                         navigateToOverview = true
@@ -243,43 +228,43 @@ struct CurrentTripsView: View  {
 }
 
 struct PastTripsView: View {
-    @EnvironmentObject var userModel: UserModel
+    @EnvironmentObject var myTripsViewModel: MyTripsViewModel
     @State private var navigateToOverview: Bool = false
     @State private var tripID: String = ""
     @State private var isActive: Bool = false
     var body: some View {
         VStack {
             
-            Text("You had \(userModel.pastTrips.count) past trips.")
+            Text("You had \(myTripsViewModel.pastTrips.count) past trips.")
                 .font(.custom("Poppins-Regular", size: 16))
                 .frame(width: UIScreen.main.bounds.width * 0.8, alignment: .leading)
                 .padding()
-            if userModel.pastTrips.count == 0 {
+            if myTripsViewModel.pastTrips.count == 0 {
                 NoTripPlanned()
             }
             
             
             ScrollView {
-                ForEach(0..<userModel.pastTrips.count, id: \.self) { index in
+                ForEach(0..<myTripsViewModel.pastTrips.count, id: \.self) { index in
                     ZStack {
                         RoundedRectangle(cornerRadius: 20)
                             .fill(.lighterGray)
                             .frame(width: UIScreen.main.bounds.width * 0.8, height:120)
                         HStack {
                             VStack (alignment: .leading) {
-                                Text(userModel.pastTrips[index].name)
+                                Text(myTripsViewModel.pastTrips[index].name)
                                     .font(.custom("Poppins-Bold", size: 16))
                                     .frame(maxWidth: .infinity, alignment: .leading)
                                     .foregroundStyle(.darkTeal)
-                                Text("\(userModel.pastTrips[index].city), \(userModel.pastTrips[index].state)")
+                                Text("\(myTripsViewModel.pastTrips[index].city), \(myTripsViewModel.pastTrips[index].state)")
                                     .font(.custom("Poppins-Regular", size: 12))
                                     .padding(.bottom, 5)
                                     .frame(maxWidth: .infinity, alignment: .leading)
                                 HStack {
-                                    Text("\(getDateString(date: userModel.pastTrips[index].start)) - \(getDateString(date: userModel.pastTrips[index].end))")
+                                    Text("\(getDateString(date: myTripsViewModel.pastTrips[index].start)) - \(getDateString(date: myTripsViewModel.pastTrips[index].end))")
                                         .font(.custom("Poppins-Regular", size: 12))
                                         
-                                     Text("(\(getTripDuration(start: userModel.pastTrips[index].start, end: userModel.pastTrips[index].end)) days)")
+                                     Text("(\(getTripDuration(start: myTripsViewModel.pastTrips[index].start, end: myTripsViewModel.pastTrips[index].end)) days)")
                                         .font(.custom("Poppins-Regular", size: 12))
                                         .foregroundStyle(Color.gray)
                                 }
@@ -294,7 +279,7 @@ struct PastTripsView: View {
                     .padding(.bottom)
                     .background(Color.white)
                     .onTapGesture {
-                        guard let tripID = userModel.pastTrips[index].id else {
+                        guard let tripID = myTripsViewModel.pastTrips[index].id else {
                             print("can't get tripID")
                             return
                         }
@@ -318,10 +303,4 @@ struct PastTripsView: View {
         }
         .padding(.bottom, 40)
     }
-}
-
-#Preview {
-    MyTripsView()
-        .environmentObject(UserModel())
-        .environmentObject(LoginViewModel())
 }

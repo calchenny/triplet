@@ -10,6 +10,7 @@ import PhoneNumberKit
 
 struct LoginView: View {
     @EnvironmentObject var login: LoginViewModel
+    @EnvironmentObject var authenticationModel: AuthenticationModel
     @State var navigateToVerify: Bool = false
     @FocusState private var isTextFieldFocused: Bool
     
@@ -18,17 +19,9 @@ struct LoginView: View {
         defaultRegion: "US",
         maxDigits: 10)
     
-    // function to send code to phone
     func continueClick() {
-        Task {
-            do {
-                let _ = try await login.sendCode()
-                navigateToVerify = true
-                print("Successfully sent code")
-            } catch {
-                navigateToVerify = false
-                print("Error sending code or verifying")
-            }
+        authenticationModel.verifyPhoneNumber(login.phoneNumber) {
+            navigateToVerify.toggle()
         }
     }
     
@@ -94,8 +87,7 @@ struct LoginView: View {
                     .font(.custom("Poppins-Regular", size: 14))
                     .foregroundStyle(.darkerGray)
                     .padding(.bottom, 30)
-                            
-                // Call function from usermodel to send code
+
                 Button {
                     continueClick()
                 } label: {
