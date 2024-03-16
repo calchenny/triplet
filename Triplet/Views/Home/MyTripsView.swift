@@ -11,7 +11,6 @@ import CoreLocation
 struct MyTripsView: View {
     @State var tabSelection = 0
     @EnvironmentObject var userModel: UserModel
-    @EnvironmentObject var loginViewModel: LoginViewModel
     @State var tripCities: [String] = []
     @State var tripStates: [String] = []
     
@@ -46,10 +45,10 @@ struct MyTripsView: View {
                 NavigationStack {
                     CurrentTripsView()
                 }
-                .environmentObject(userModel)
             } else {
-                PastTripsView()
-                    .environmentObject(userModel)
+                NavigationStack {
+                    PastTripsView()
+                }
             }
             Spacer()
         }

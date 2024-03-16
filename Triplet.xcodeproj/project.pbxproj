@@ -182,11 +182,8 @@
 			children = (
 				24246BF92B97EE290028DAAF /* MapView.swift */,
 				24246BFA2B97EE290028DAAF /* RootView.swift */,
-				24246BDA2B97ED690028DAAF /* Expenses */,
 				24246BDD2B97ED690028DAAF /* Home */,
-				24246BD22B97ED690028DAAF /* Itinenary */,
 				24246BE32B97ED690028DAAF /* Login */,
-				24246BD52B97ED690028DAAF /* TripOverview */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -202,28 +199,6 @@
 				3C51D0BD2BA2DC3A00BAC49F /* testAPICallsView.swift */,
 			);
 			path = ViewModels;
-			sourceTree = "<group>";
-		};
-		24246BD22B97ED690028DAAF /* Itinenary */ = {
-			isa = PBXGroup;
-			children = (
-				24246BD42B97ED690028DAAF /* AddPlaceView.swift */,
-			);
-			path = Itinenary;
-			sourceTree = "<group>";
-		};
-		24246BD52B97ED690028DAAF /* TripOverview */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = TripOverview;
-			sourceTree = "<group>";
-		};
-		24246BDA2B97ED690028DAAF /* Expenses */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Expenses;
 			sourceTree = "<group>";
 		};
 		24246BDD2B97ED690028DAAF /* Home */ = {
@@ -323,6 +298,7 @@
 			isa = PBXGroup;
 			children = (
 				24246BD32B97ED690028DAAF /* ItineraryView.swift */,
+				24246BD42B97ED690028DAAF /* AddPlaceView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";

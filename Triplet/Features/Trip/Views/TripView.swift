@@ -59,10 +59,10 @@ struct TripView: View {
                             VStack {
                                 if let trip = tripViewModel.trip {
                                     Text(trip.name)
-                                        .font(.custom("Poppins-Bold", size: getHeaderTitleSize(collapseProgress: tripViewModel.headerCollapseProgress)))
+                                        .font(.custom("Poppins-Bold", size: 30))
                                         .foregroundStyle(Color("Dark Teal"))
                                     Text("\(trip.city), \(trip.state) | \(getDateString(date: trip.start)) - \(getDateString(date: trip.end))")
-                                        .font(.custom("Poppins-Medium", size: 13))
+                                        .font(.custom("Poppins-Medium", size: 20))
                                         .foregroundStyle(Color("Dark Teal"))
                                 }
                             }

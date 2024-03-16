@@ -9,7 +9,6 @@ import SwiftUI
 
 struct VerificationView: View {
     @EnvironmentObject var loginViewModel : LoginViewModel
-    @EnvironmentObject var userModel : UserModel
     @Environment(\.presentationMode) var present
     @State var navigateToHome: Bool = false
     @FocusState var isFocused: Bool
@@ -100,7 +99,6 @@ struct VerificationView: View {
                     }
                 }
                 .onTapGesture {
-                    print("Hi")
                     isFocused = true
                 }
                 Button{

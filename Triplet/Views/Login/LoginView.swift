@@ -10,7 +10,6 @@ import PhoneNumberKit
 
 struct LoginView: View {
     @EnvironmentObject var login: LoginViewModel
-    @EnvironmentObject var userModel: UserModel
     @State var navigateToVerify: Bool = false
     @FocusState private var isTextFieldFocused: Bool
     

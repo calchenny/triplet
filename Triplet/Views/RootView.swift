@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct RootView: View {
-    @EnvironmentObject var loginViewModel: LoginViewModel
-    @EnvironmentObject var userModel: UserModel
+    @StateObject var loginViewModel: LoginViewModel = LoginViewModel()
+    @StateObject var userModel: UserModel = UserModel()
     var body: some View {
         Group {
             if loginViewModel.userSession != nil {
@@ -22,6 +22,8 @@ struct RootView: View {
                 }
             }
         }
+        .environmentObject(userModel)
+        .environmentObject(loginViewModel)
         //for newland to test
         //testAPICallsView()
     }

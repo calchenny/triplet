@@ -15,8 +15,6 @@ struct HomeView: View {
             .scaleEffect(1.2)
     }
     let names = ["house", "plus.app", "gearshape"]
-    @EnvironmentObject var userModel: UserModel
-    @EnvironmentObject var loginViewModel: LoginViewModel
     @State var selectedIndex: Int = 0
     var body: some View {
         if selectedIndex == 2 {

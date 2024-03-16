@@ -8,9 +8,10 @@
 import SwiftUI
 
 struct LoadingView: View {
+    @EnvironmentObject var userModel: UserModel
     @EnvironmentObject var loginViewModel: LoginViewModel
     @State private var isUserLoaded = false
-    @EnvironmentObject var userModel: UserModel
+    
     var body: some View {
         ZStack {
             VStack {
