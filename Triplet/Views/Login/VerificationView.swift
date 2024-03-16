@@ -8,38 +8,46 @@
 import SwiftUI
 
 struct VerificationView: View {
-    @EnvironmentObject var login : LoginViewModel
+    @EnvironmentObject var loginViewModel : LoginViewModel
     @EnvironmentObject var userModel : UserModel
     @Environment(\.presentationMode) var present
     @State var navigateToHome: Bool = false
-    @State var pinList: [String] = ["", " ", " ", " ", " ", " "]
-    @FocusState private var pinFocusState: Int?
+    @FocusState var isFocused: Bool
 
-    enum FocusPin {
-        case  pinOne, pinTwo, pinThree, pinFour, pinFive, pinSix
+    func otpDigit(at index: Int) -> String {
+        guard index < loginViewModel.code.count else {
+            return ""
+        }
+        let digitIndex = loginViewModel.code.index(loginViewModel.code.startIndex, offsetBy: index)
+        return String(loginViewModel.code[digitIndex])
     }
     
+    func handleChange() {
+        if loginViewModel.code.count == 6 {
+            verifyAndCreateAccount()
+        } else {
+            loginViewModel.code = String(loginViewModel.code.prefix(6))
+        }
+    }
 
     //function to resend code
     func resendCode() {
-            Task {
-                do {
-                    try await login.requestCode()
-                } catch {
-                    print("An unexpected error occurred: \(error)")
-                }
+        Task {
+            do {
+                try await loginViewModel.requestCode()
+            } catch {
+                print("An unexpected error occurred: \(error)")
             }
+        }
     }
 
     // function that verifies otp code and then creates the account (same process)
     func verifyAndCreateAccount() {
         Task {
             do {
-                try await login.verifyCode()
-                navigateToHome = true
-                
+                try await loginViewModel.verifyCode()
+                navigateToHome.toggle()
             } catch {
-                navigateToHome = false
                 print("An unexpected error occurred: \(error)")
             }
         }
@@ -59,71 +67,41 @@ struct VerificationView: View {
                     
                     Spacer()
                     
-                    if login.loading{ProgressView()}
+                    if loginViewModel.loading{
+                        ProgressView()
+                    }
                 }
                 .padding()
                 
-                Text("Enter in the 6-digit OTP we just sent to \(login.phoneNumber)")
+                Text("Enter in the 6-digit OTP we just sent to \(loginViewModel.phoneNumber)")
                     .font(.custom("Poppins-Regular", size: 14))
                     .multilineTextAlignment(.center)
                     .frame(maxWidth: 250)
                     .padding(.bottom)
                 
-                HStack {
-                    Spacer()
-                    // Loop to generate the TextFields
-                    ForEach($pinList.indices, id: \.self) { pin in
-                        let binding = Binding<String>(
-                            get: { pinList[pin] },
-                            set: { pinList[pin] = $0 }
-                        )
-                        TextField("", text: binding)
-                        .onChange(of:binding.wrappedValue) {
-                            let currentBoxCode = pinList[pin].trimmingCharacters(in: .whitespaces)
-                            login.code = pinList.joined(separator: "").filter { !$0.isWhitespace }
-                            
-                            // When the OTP is filled out, verify the code
-                            if (login.code.count == 6) {
-                                verifyAndCreateAccount()
-                            }
-                            if (currentBoxCode.count >= 1) { // When a number is inputted, focus the next field
-                                if (pin == 0) {
-                                    pinList[pin] = String(pinList[pin].prefix(1))
-                                } else {
-                                    pinList[pin] = String(pinList[pin].prefix(2))
-                                }
-                                pinFocusState = pin + 1
-                                
-                            } else {
-                                if (currentBoxCode.count == 0) { // When a number is deleted, go to previous field
-                                    if (!(pin == 0)) {
-                                        pinList[pin] = " " // Add the buffer space back
-                                    }
-                                    pinFocusState = pin - 1
-                                }
-                            }
-                        }
-                        .keyboardType(.numberPad)
-                        .allowsHitTesting(false) // Prevent taps for a view
-                        .textContentType(.oneTimeCode) // Enables one time code autofill
-                        .padding(.vertical, 10)
-                        .frame(width: 50, height: 50)
-                        .cornerRadius(10)
-                        .focused($pinFocusState, equals: pin) // Each field has its distinct focus state
-                        .multilineTextAlignment(.center)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 10)
-                                .stroke(
-                                    pinList[pin].trimmingCharacters(in: .whitespaces) == "" ?
-                                    Color("Lighter Gray") :
-                                    pinList[pin].trimmingCharacters(in: .whitespaces).count == 1 ?
-                                    Color.green :
-                                    Color.red
-                                    , lineWidth: 5.0)
-                        )
-                        .cornerRadius(10)
+                TextField("", text: $loginViewModel.code)
+                    .keyboardType(.numberPad)
+                    .textContentType(.oneTimeCode)
+                    .frame(width: 0, height: 0)
+                    .focused($isFocused)
+                    .onChange(of: loginViewModel.code) {
+                        handleChange()
                     }
-                    Spacer()
+                HStack {
+                    ForEach(0..<6, id: \.self) { index in
+                        Text(otpDigit(at: index))
+                            .frame(width: 50, height: 50)
+                            .contentShape(Rectangle())
+                            .multilineTextAlignment(.center)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 10)
+                                    .stroke(loginViewModel.code == "" || loginViewModel.code.count - 1 < index ? .darkerGray : .green, lineWidth: 1)
+                            )
+                    }
+                }
+                .onTapGesture {
+                    print("Hi")
+                    isFocused = true
                 }
                 Button{
                     resendCode()
@@ -148,8 +126,8 @@ struct VerificationView: View {
             .background(Color.white)
             .cornerRadius(20)
                             
-            if login.error{
-                AlertView(msg: login.errorMsg, show: $login.error)
+            if loginViewModel.error {
+                AlertView(msg: loginViewModel.errorMsg, show: $loginViewModel.error)
             }
             Button {
                 present.wrappedValue.dismiss()
@@ -165,13 +143,11 @@ struct VerificationView: View {
             .padding(.leading)
             .tint(.primary)
         }
-        .onAppear() {
-            pinFocusState = 0 // The first TextField is the first one to be focused
-            Task {
-                print("hi from verification view")
-            }
-        }
         .ignoresSafeArea()
+        .contentShape(Rectangle())
+        .onTapGesture {
+            isFocused = false
+        }
     }
 }
 

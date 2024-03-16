@@ -41,10 +41,10 @@ extension AuthenticationError: LocalizedError {
 
 @MainActor
 class LoginViewModel: ObservableObject {
-    @Published var phoneNumber:String = ""
-    @Published var code:String = ""
-    @Published var errorMsg:String = ""
-    @Published var error:Bool = false
+    @Published var phoneNumber: String = ""
+    @Published var code: String = ""
+    @Published var errorMsg: String = ""
+    @Published var error: Bool = false
     @Published var authToken: String?
     @Published var userSession: FirebaseAuth.User?
     
