@@ -32,13 +32,7 @@ struct VerificationView: View {
 
     //function to resend code
     func resendCode() {
-//        Task {
-//            do {
-//                try await loginViewModel.requestCode()
-//            } catch {
-//                print("An unexpected error occurred: \(error)")
-//            }
-//        }
+        authenticationModel.verifyPhoneNumber(loginViewModel.phoneNumber, completion: { })
     }
 
     // function that verifies otp code and then creates the account (same process)
