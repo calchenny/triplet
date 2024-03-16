@@ -13,16 +13,14 @@ struct DestinationSearchView: View {
     @EnvironmentObject var destinationViewModel: DestinationViewModel
     @Environment(\.dismiss) var dismiss
     
-    func selectedDestination(result: LocationSearch.CityResult) async {
+    func selectedDestination(result: LocationSearch.CityResult) {
         print("Selected place: \(result.city)")
-        
         // Store into model
-        await destinationViewModel.setDestination(city: result.city,
-                                                  state: result.state,
-                                                  country: result.country,
-                                                  latitude: result.latitude,
-                                                  longitude: result.longitude)
-        
+        destinationViewModel.setDestination(city: result.city,
+                                            state: result.state,
+                                            country: result.country,
+                                            latitude: result.latitude,
+                                            longitude: result.longitude)
         dismiss()
     }
     
@@ -63,9 +61,7 @@ struct DestinationSearchView: View {
                         .font(.custom("Poppins-Regular", size: 14))) {
                         List(locationSearch.searchResults, id: \.self) { result in
                             Button(action: {
-                                Task {
-                                    await selectedDestination(result: result)
-                                }
+                                selectedDestination(result: result)
                             }) {
                                 HStack {
                                     Text("\(result.city), \(result.state), \(result.country)")

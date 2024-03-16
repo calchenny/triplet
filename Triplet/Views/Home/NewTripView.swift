@@ -23,6 +23,7 @@ struct NewTripView: View {
     @State var isActive: Bool = false
     
     func createTrip() {
+        print("Hit")
         guard let latitude = destinationViewModel.latitude,
               let longitude = destinationViewModel.longitude,
               let city = destinationViewModel.city,
@@ -93,7 +94,6 @@ struct NewTripView: View {
                         .sheet(isPresented: $showDestinationSheet) {
                             DestinationSearchView(locationSearch: LocationSearch())
                                 .environmentObject(destinationViewModel)
-
                         }
                 }
                 
@@ -116,7 +116,6 @@ struct NewTripView: View {
                             .environmentObject(destinationViewModel)
                             .presentationDragIndicator(.visible)
                             .presentationCornerRadius(25)
-
                     }
                 
             }
@@ -273,8 +272,6 @@ struct NewTripView: View {
 
         }
         .padding()
-        
-
     }
 }
 
