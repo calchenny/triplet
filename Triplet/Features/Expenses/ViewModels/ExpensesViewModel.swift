@@ -12,19 +12,11 @@ import MapKit
 import FirebaseFirestore
 
 class ExpensesViewModel: ObservableObject {
-    //var tripId: String = "Placeholder tripId"
     @Published var expenses: [Expense] = []
     @Published var budget: Double = 10000.00
     @Published var currentTotal: Double = 0.00
     @Published var percentage: Double = 0.00
     @Published var showNewExpensePopup: Bool = false
-
-    @Published var cameraPosition: MapCameraPosition?
-
-    @Published var collapseProgress: CGFloat = 0
-
-    let minHeight: CGFloat = 150.0
-    let maxHeight: CGFloat = 300.0
     
     private var db = Firestore.firestore()
     private var listenerRegistration: ListenerRegistration?
@@ -32,7 +24,7 @@ class ExpensesViewModel: ObservableObject {
     func calculateTotal () -> Double {
         print("inside calculateTotal")
         return self.expenses.reduce(0.0) { $0 + $1.cost }
-        }
+    }
     
     func calculatePercentage () -> Double {
         print("inside calculatePercentage")
@@ -41,7 +33,7 @@ class ExpensesViewModel: ObservableObject {
     
     func addExpenseToFirestore(_ expense: Expense, tripId: String) {
         do {
-            let expenseReference = try Firestore.firestore().collection("trips").document(tripId).collection("expenses").addDocument(from: expense)
+            let expenseReference = try db.collection("trips/\(tripId)/expenses").addDocument(from: expense)
             print("Expense added to Firestore with ID: \(expenseReference.documentID)")
         } catch {
             print("Error adding expense to Firestore: \(error.localizedDescription)")
@@ -49,26 +41,20 @@ class ExpensesViewModel: ObservableObject {
     }
     
     func addExpense(name: String, date: Date, category: ExpenseCategory, cost: Double, tripId: String) {
-        let newExpense = Expense(
-            id: nil,
-            name: name,
-            date: date,
-            category: category,
-            cost: cost
-            )
+        let expense = Expense(name: name, date: date, category: category, cost: cost)
         
         // Add the new expense to Firestore
-        addExpenseToFirestore(newExpense, tripId: tripId)
+        addExpenseToFirestore(expense, tripId: tripId)
         showNewExpensePopup.toggle()
     }
     
     func subscribe(tripId: String) {
-        if listenerRegistration != nil {
+        if listenerRegistration == nil {
             let expensesQuery = db.collection("trips/\(tripId)/expenses")
             listenerRegistration = expensesQuery.addSnapshotListener { collectionSnapshot, error in
                 switch (collectionSnapshot, error) {
                 case (.none, .none):
-                    print("No events found")
+                    print("No expenses found")
                 case (.none, .some(let error)):
                     print("Error: \(error.localizedDescription)")
                 case (.some(let collection), _):

@@ -15,12 +15,9 @@ import PopupView
 
 struct ExpensesView: View {
     var tripId: String
-    @StateObject var expenseViewModel = ExpensesViewModel()
+    @StateObject var expensesViewModel = ExpensesViewModel()
     @EnvironmentObject var tripViewModel: TripViewModel
     @EnvironmentObject var userModel: UserModel
-    @State private var budget: Double = 10000.00
-    @State private var currentTotal: Double = 0.00
-    @State private var percentage: Double = 0
     
     var body: some View {
         VStack {
@@ -29,25 +26,25 @@ struct ExpensesView: View {
                     .font(.custom("Poppins-Bold", size: 30))
                     .foregroundColor(Color.darkTeal)
                     .padding(25)
-                Text("$\(expenseViewModel.currentTotal, specifier: "%.2f")")
+                Text("$\(expensesViewModel.currentTotal, specifier: "%.2f")")
                     .font(.custom("Poppins-Regular", size: 30))
-                ProgressView(value: expenseViewModel.percentage)
+                ProgressView(value: expensesViewModel.percentage)
                     .tint(Color.darkTeal)
                     .frame(minWidth: 0, maxWidth: 200)
-                Text("Budget: $\(expenseViewModel.budget, specifier: "%.2f")")
+                Text("Budget: $\(expensesViewModel.budget, specifier: "%.2f")")
                     .font(.custom("Poppins-Medium", size: 16))
                     .foregroundColor(Color.darkTeal)
                     .padding(.bottom, 40)
             }
-            .onChange(of: expenseViewModel.expenses) {
-                expenseViewModel.currentTotal = expenseViewModel.calculateTotal()
-                expenseViewModel.percentage = expenseViewModel.calculatePercentage()
+            .onChange(of: expensesViewModel.expenses) {
+                expensesViewModel.currentTotal = expensesViewModel.calculateTotal()
+                expensesViewModel.percentage = expensesViewModel.calculatePercentage()
             }
             
             VStack {
-                if !expenseViewModel.expenses.isEmpty {
+                if !expensesViewModel.expenses.isEmpty {
                     ScrollView {
-                        ForEach(expenseViewModel.expenses, id: \.name) { expense in
+                        ForEach(expensesViewModel.expenses, id: \.id) { expense in
                             ZStack {
                                 RoundedRectangle(cornerRadius: 15)
                                     .frame(height: 70)
@@ -137,9 +134,7 @@ struct ExpensesView: View {
                         }
                     }
                     Spacer()
-                    
-                }
-                else {
+                } else {
                     Spacer()
                     Text("No expenses added yet.")
                         .font(.title3)
@@ -148,7 +143,7 @@ struct ExpensesView: View {
                     Spacer()
                 }
                 Button {
-                    expenseViewModel.showNewExpensePopup.toggle()
+                    expensesViewModel.showNewExpensePopup.toggle()
                 } label: {
                     RoundedRectangle(cornerRadius: 10)
                         .frame(width: 200, height: 40)
@@ -162,9 +157,9 @@ struct ExpensesView: View {
                                 .tint(.white)
                         )
                 }
-                .popup(isPresented: $expenseViewModel.showNewExpensePopup) {
+                .popup(isPresented: $expensesViewModel.showNewExpensePopup) {
                     AddNewExpenseView(tripId: tripId)
-                        .environmentObject(expenseViewModel)
+                        .environmentObject(expensesViewModel)
                 } customize: { popup in
                     popup
                         .type(.floater())
@@ -180,10 +175,10 @@ struct ExpensesView: View {
             .frame(maxWidth: .infinity)
         }
         .onAppear {
-            expenseViewModel.subscribe(tripId: tripId)
+            expensesViewModel.subscribe(tripId: tripId)
         }
         .onDisappear {
-            expenseViewModel.unsubscribe()
+            expensesViewModel.unsubscribe()
         }
     } // body closing bracket
 } // view closing bracket

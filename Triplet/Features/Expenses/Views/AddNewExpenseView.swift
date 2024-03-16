@@ -9,7 +9,7 @@ import SwiftUI
 
 struct AddNewExpenseView: View {
     var tripId: String
-    @EnvironmentObject var expensesModel: ExpensesViewModel
+    @EnvironmentObject var expensesViewModel: ExpensesViewModel
     
     @Environment(\.dismiss) var dismiss
     @State private var name: String = ""
@@ -38,7 +38,7 @@ struct AddNewExpenseView: View {
                     }
                     .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/)
                     Button {
-                        expensesModel.showNewExpensePopup.toggle()
+                        expensesViewModel.showNewExpensePopup.toggle()
                     } label: {
                         Circle()
                             .frame(maxWidth: 30)
@@ -127,7 +127,7 @@ struct AddNewExpenseView: View {
                         else {
                             print("creating new expense...")
                             if let cost = Double(costInput) {
-                                expensesModel.addExpense(name: name, date: date, category: selection, cost: cost, tripId: tripId)
+                                expensesViewModel.addExpense(name: name, date: date, category: selection, cost: cost, tripId: tripId)
                                 //expenses.append(newExpense)
                             }
                             else {

@@ -64,7 +64,7 @@ enum ExpenseCategory: String, Codable, CaseIterable {
 }
 
 struct Expense: Identifiable, Codable, Equatable {
-    var id: String?
+    @DocumentID var id: String?
     var name: String
     var date: Date
     var category: ExpenseCategory

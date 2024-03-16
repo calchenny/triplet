@@ -106,33 +106,25 @@ struct TripView: View {
             VStack {
                     switch selectedIndex {
                     case 0:
-                        NavigationStack {
-                            if isActive {
-                                ActiveTripView(tripId: tripId)
-                            } else {
-                                OverviewView(tripId: tripId)
-                            }
+                        if isActive {
+                            ActiveTripView(tripId: tripId)
+                        } else {
+                            OverviewView(tripId: tripId)
                         }
                     case 1:
-                        NavigationStack {
-                            if isActive {
-                                OverviewView(tripId: tripId)
-                            } else {
-                                ItineraryView(tripId: tripId)
-                            }
+                        if isActive {
+                            OverviewView(tripId: tripId)
+                        } else {
+                            ItineraryView(tripId: tripId)
                         }
                     case 2:
-                        NavigationStack {
-                            if isActive {
-                                ItineraryView(tripId: tripId)
-                            } else {
-                                ExpensesView(tripId: tripId)
-                            }
-                        }
-                    default:
-                        NavigationStack {
+                        if isActive {
+                            ItineraryView(tripId: tripId)
+                        } else {
                             ExpensesView(tripId: tripId)
                         }
+                    default:
+                        ExpensesView(tripId: tripId)
                     }
             }
         }

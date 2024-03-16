@@ -121,7 +121,7 @@ struct ItineraryView: View {
                                         Text("No events planned.")
                                             .font(.custom("Poppins-Regular", size: 14))
                                     } else {
-                                        ForEach(itineraryModel.events.filter { getDateString(date: $0.start) == getDateString(date: day) }) { event in
+                                        ForEach(itineraryModel.events.filter { getDateString(date: $0.start) == getDateString(date: day) }, id: \.id) { event in
                                             HStack {
                                                 // Image for the event's category
                                                 Image(systemName: getCategoryImageName(category: event.type.rawValue))
