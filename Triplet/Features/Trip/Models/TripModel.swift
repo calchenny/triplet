@@ -13,8 +13,8 @@ struct Trip: Identifiable, Codable {
     @DocumentID var id: String?
     var owner: String
     var name: String
-    var start: Date?
-    var end: Date?
+    var start: Date
+    var end: Date
     var destination: GeoPoint
     var numGuests: Int?
     var notes: [Note]?

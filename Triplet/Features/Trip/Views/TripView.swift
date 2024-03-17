@@ -17,7 +17,7 @@ struct TripView: View {
     @Binding var isActive: Bool
     @State var selectedIndex: Int = 0
     @State var showMapView: Bool = false
-    @State var navigateToHome: Bool = false
+    @Environment(\.dismiss) var dismiss
 
     func wiggleButtonAt(_ index: Int, name: String) -> some View {
         WiggleButton(image: Image(systemName: name), maskImage: Image(systemName: "\(name).fill"), isSelected: index == selectedIndex)
@@ -73,7 +73,7 @@ struct TripView: View {
                 }
                 HStack {
                     Button {
-                        navigateToHome = true
+                        dismiss()
                     } label: {
                         Image(systemName: "house")
                             .font(.title2)
@@ -88,7 +88,7 @@ struct TripView: View {
                     Spacer()
                     Button {
                         tripViewModel.deleteTrip()
-                        navigateToHome = true
+                        dismiss()
                     } label: {
                         Image(systemName: "trash")
                             .font(.title2)
@@ -148,12 +148,6 @@ struct TripView: View {
                 .dragToDismiss(false)
                 .isOpaque(true)
                 .backgroundColor(.black.opacity(0.25))
-        }
-        .navigationDestination(isPresented: $navigateToHome) {
-            NavigationStack{
-                HomeView()
-            }
-            .navigationBarBackButtonHidden(true)
         }
         .environmentObject(tripViewModel)
         .onAppear {

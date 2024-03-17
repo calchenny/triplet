@@ -19,14 +19,13 @@ struct HomeView: View {
     }
     
     var body: some View {
-        if selectedIndex == 2 {
-            SettingView()
+        if selectedIndex == 0 {
+            MyTripsView(selectedIndex: $selectedIndex)
         } else if selectedIndex == 1 {
-            NewTripView()
+            NewTripView(selectedIndex: $selectedIndex)
         } else {
-            MyTripsView()
+            SettingView()
         }
-        Spacer()
         AnimatedTabBar(selectedIndex: $selectedIndex, views: (0..<names.count).map { wiggleButtonAt($0, name: names[$0]) })
             .cornerRadius(16)
             .selectedColor(.darkTeal)
@@ -36,7 +35,3 @@ struct HomeView: View {
             .ballTrajectory(.teleport)
     }
 }
-
-//#Preview {
-//    HomeView()
-//}

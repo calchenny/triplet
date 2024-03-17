@@ -9,10 +9,12 @@ import SwiftUI
 import CoreLocation
 
 struct MyTripsView: View {
+    @Binding var selectedIndex: Int
     @State var tabSelection = 0
     @StateObject var myTripsViewModel: MyTripsViewModel = MyTripsViewModel()
     @State var tripCities: [String] = []
     @State var tripStates: [String] = []
+    @State var isTripsLoading = true
     
     var body: some View {
         VStack {
@@ -42,9 +44,9 @@ struct MyTripsView: View {
             }
             Group {
                 if tabSelection == 0 {
-                    CurrentTripsView()
+                    CurrentTripsView(selectedIndex: $selectedIndex, isTripsLoading: $isTripsLoading)
                 } else {
-                    PastTripsView()
+                    PastTripsView(isTripsLoading: $isTripsLoading)
                 }
             }
             .environmentObject(myTripsViewModel)
@@ -52,50 +54,54 @@ struct MyTripsView: View {
             Spacer()
         }
         .onAppear() {
-            myTripsViewModel.subscribe()
+            myTripsViewModel.subscribe() {
+                withAnimation {
+                    isTripsLoading.toggle()
+                }
+            }
         }
         .onDisappear {
-            myTripsViewModel.unsubscribe()
+            myTripsViewModel.unsubscribe() {
+                withAnimation {
+                    isTripsLoading.toggle()
+                }
+            }
         }
     }
 }
 
 
 struct NoTripPlanned: View {
+    @Binding var selectedIndex: Int
+    
     var body: some View {
-        ZStack {
-            RoundedRectangle(cornerRadius: 20)
-                .fill(Color.evenLighterBlue)
-                .frame(width: UIScreen.main.bounds.width * 0.8, height: 200)
-            VStack {
-                Text("No trip planned")
-                    .padding(.bottom, 20)
-                    .foregroundColor(.darkerGray)
-                    .font(.custom("Poppins-Bold", size: 24))
-                Button {
-                    
-                } label: {
-                    Text("Create a trip to get started")
-                        .font(.custom("Poppins-Regular", size: 15))
+        VStack {
+            ZStack {
+                RoundedRectangle(cornerRadius: 20)
+                    .fill(Color.evenLighterBlue)
+                    .frame(width: UIScreen.main.bounds.width * 0.8, height: 200)
+                VStack {
+                    Text("No trip planned")
+                        .padding(.bottom, 20)
+                        .foregroundColor(.darkerGray)
+                        .font(.custom("Poppins-Bold", size: 24))
+                    Button {
+                        selectedIndex = 1
+                    } label: {
+                        Text("Create a trip to get started")
+                            .font(.custom("Poppins-Regular", size: 15))
+                    }
+                    .padding(15)
+                    .background(.darkTeal)
+                    .foregroundColor(.white)
+                    .cornerRadius(15)
                 }
-                .padding(15)
-                .background(.darkTeal)
-                .foregroundColor(.white)
-                .cornerRadius(15)
+                .padding(25)
+                .frame(width: UIScreen.main.bounds.width * 0.8)
             }
-            .padding(25)
-            .frame(width: UIScreen.main.bounds.width * 0.8, height: 200)
+            Spacer()
         }
     }
-}
-
-func getDateString(date: Date?) -> String {
-    guard let date else {
-        return ""
-    }
-    let dateFormatter = DateFormatter()
-    dateFormatter.dateFormat = "MM/dd"
-    return dateFormatter.string(from: date)
 }
 
 func getTripDuration(start: Date?, end: Date?) -> Int {
@@ -143,84 +149,94 @@ func getDaysUntilTrip(start: Date?) -> Int {
 
 struct CurrentTripsView: View  {
     @EnvironmentObject var myTripsViewModel: MyTripsViewModel
+    @Binding var selectedIndex: Int
     @State private var navigateToOverview: Bool = false
     @State private var tripID: String = ""
     @State private var isActive: Bool = false
+    @Binding var isTripsLoading: Bool
+    
     var body: some View {
         VStack {
-            Text(" You have \(myTripsViewModel.currentTrips.count) trips planned.")
-                .font(.custom("Poppins-Regular", size: 16))
-                .frame(width: UIScreen.main.bounds.width * 0.8, alignment: .leading)
-                .padding()
-            if myTripsViewModel.currentTrips.count == 0 {
-                NoTripPlanned()
-            }
-            ScrollView {
-                ForEach(0..<myTripsViewModel.currentTrips.count, id: \.self) { index in
-                    ZStack {
-                        RoundedRectangle(cornerRadius: 20)
-                            .fill(.lighterGray)
-                            .frame(width: UIScreen.main.bounds.width * 0.8, height:120)
-                        HStack {
-                            VStack (alignment: .leading) {
-                                Text(myTripsViewModel.currentTrips[index].name)
-                                    .font(.custom("Poppins-Bold", size: 16))
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-                                    .foregroundStyle(.darkTeal)
-                                Text("\(myTripsViewModel.currentTrips[index].city), \(myTripsViewModel.currentTrips[index].state)")
-                                    .font(.custom("Poppins-Regular", size: 12))
-                                    .padding(.bottom, 5)
-                                    .frame(maxWidth: .infinity, alignment: .leading)
+            if isTripsLoading {
+                ProgressView()
+                    .controlSize(.large)
+            } else {
+                Text(" You have \(myTripsViewModel.currentTrips.count) trips planned.")
+                    .font(.custom("Poppins-Regular", size: 16))
+                    .frame(width: UIScreen.main.bounds.width * 0.8, alignment: .leading)
+                    .padding()
+                if myTripsViewModel.currentTrips.count == 0 {
+                    NoTripPlanned(selectedIndex: $selectedIndex)
+                } else {
+                    ScrollView {
+                        ForEach(0..<myTripsViewModel.currentTrips.count, id: \.self) { index in
+                            ZStack {
+                                RoundedRectangle(cornerRadius: 20)
+                                    .fill(.lighterGray)
+                                    .frame(width: UIScreen.main.bounds.width * 0.8, height:120)
                                 HStack {
-                                    Text("\(getDateString(date: myTripsViewModel.currentTrips[index].start)) - \(getDateString(date: myTripsViewModel.currentTrips[index].end))")
-                                        .font(.custom("Poppins-Regular", size: 12))
+                                    VStack (alignment: .leading) {
+                                        Text(myTripsViewModel.currentTrips[index].name)
+                                            .font(.custom("Poppins-Bold", size: 16))
+                                            .frame(maxWidth: .infinity, alignment: .leading)
+                                            .foregroundStyle(.darkTeal)
+                                        Text("\(myTripsViewModel.currentTrips[index].city), \(myTripsViewModel.currentTrips[index].state)")
+                                            .font(.custom("Poppins-Regular", size: 12))
+                                            .padding(.bottom, 5)
+                                            .frame(maxWidth: .infinity, alignment: .leading)
+                                        HStack {
+                                            Text("\(getDateString(date: myTripsViewModel.currentTrips[index].start)) - \(getDateString(date: myTripsViewModel.currentTrips[index].end))")
+                                                .font(.custom("Poppins-Regular", size: 12))
+                                            
+                                            Text("(\(getTripDuration(start: myTripsViewModel.currentTrips[index].start, end: myTripsViewModel.currentTrips[index].end)) days)")
+                                                .font(.custom("Poppins-Regular", size: 12))
+                                                .foregroundStyle(Color.gray)
+                                        }
                                         
-                                     Text("(\(getTripDuration(start: myTripsViewModel.currentTrips[index].start, end: myTripsViewModel.currentTrips[index].end)) days)")
-                                        .font(.custom("Poppins-Regular", size: 12))
-                                        .foregroundStyle(Color.gray)
-                                }
-                                
-                                if (getDaysUntilTrip(start: myTripsViewModel.currentTrips[index].start) <= 0) {
-                                    Text("Happening Now")
-                                        .font(.custom("Poppins-Bold", size: 12))
+                                        if (getDaysUntilTrip(start: myTripsViewModel.currentTrips[index].start) <= 0) {
+                                            Text("Happening Now")
+                                                .font(.custom("Poppins-Bold", size: 12))
+                                                .foregroundStyle(.darkTeal)
+                                        } else {
+                                            Text("\(getDaysUntilTrip(start: myTripsViewModel.currentTrips[index].start)) days until trip starts")
+                                                .font(.custom("Poppins-Regular", size: 12))
+                                        }
+                                        
+                                    }
+                                    Image(systemName: "chevron.right")
+                                        .padding(.trailing, 10)
                                         .foregroundStyle(.darkTeal)
-                                } else {
-                                    Text("\(getDaysUntilTrip(start: myTripsViewModel.currentTrips[index].start)) days until trip starts")
-                                        .font(.custom("Poppins-Regular", size: 12))
                                 }
+                                .padding(15)
+                                .padding(.leading, 15)
+                            }
+                            .padding(.bottom)
+                            .background(Color.white)
+                            .onTapGesture {
+                                guard let tripID = myTripsViewModel.currentTrips[index].id else {
+                                    print("can't get tripID")
+                                    return
+                                }
+                                self.tripID = tripID
+                                self.isActive = (getDaysUntilTrip(start: myTripsViewModel.currentTrips[index].start) <= 0)
+                                print("tripID", self.tripID)
+                                // navigate to overview page
+                                navigateToOverview = true
                                 
                             }
-                            Image(systemName: "chevron.right")
-                                .padding(.trailing, 10)
-                                .foregroundStyle(.darkTeal)
-                        }
-                        .padding(15)
-                        .padding(.leading, 15)
-                    }
-                    .padding(.bottom)
-                    .background(Color.white)
-                    .onTapGesture {
-                        guard let tripID = myTripsViewModel.currentTrips[index].id else {
-                            print("can't get tripID")
-                            return
-                        }
-                        self.tripID = tripID
-                        self.isActive = (getDaysUntilTrip(start: myTripsViewModel.currentTrips[index].start) <= 0)
-                        print("tripID", self.tripID)
-                        // navigate to overview page
-                        navigateToOverview = true
-                        
-                    }
-                    .navigationDestination(isPresented: $navigateToOverview) {
-                        if self.tripID != "" {
-                            TripView(tripId: self.tripID, isActive: $isActive)
-                                .navigationBarBackButtonHidden(true)
+                            .navigationDestination(isPresented: $navigateToOverview) {
+                                if self.tripID != "" {
+                                    TripView(tripId: self.tripID, isActive: $isActive)
+                                        .navigationBarBackButtonHidden(true)
+                                }
+                            }
                         }
                     }
+                    .frame(width: UIScreen.main.bounds.width * 0.85)
                 }
             }
-            .frame(width: UIScreen.main.bounds.width * 0.85)
         }
+        .frame(maxHeight: .infinity)
     }
 }
 
@@ -229,72 +245,74 @@ struct PastTripsView: View {
     @State private var navigateToOverview: Bool = false
     @State private var tripID: String = ""
     @State private var isActive: Bool = false
+    @Binding var isTripsLoading: Bool
+    
     var body: some View {
         VStack {
-            
-            Text("You had \(myTripsViewModel.pastTrips.count) past trips.")
-                .font(.custom("Poppins-Regular", size: 16))
-                .frame(width: UIScreen.main.bounds.width * 0.8, alignment: .leading)
-                .padding()
-            if myTripsViewModel.pastTrips.count == 0 {
-                NoTripPlanned()
-            }
-            
-            
-            ScrollView {
-                ForEach(0..<myTripsViewModel.pastTrips.count, id: \.self) { index in
-                    ZStack {
-                        RoundedRectangle(cornerRadius: 20)
-                            .fill(.lighterGray)
-                            .frame(width: UIScreen.main.bounds.width * 0.8, height:120)
-                        HStack {
-                            VStack (alignment: .leading) {
-                                Text(myTripsViewModel.pastTrips[index].name)
-                                    .font(.custom("Poppins-Bold", size: 16))
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-                                    .foregroundStyle(.darkTeal)
-                                Text("\(myTripsViewModel.pastTrips[index].city), \(myTripsViewModel.pastTrips[index].state)")
-                                    .font(.custom("Poppins-Regular", size: 12))
-                                    .padding(.bottom, 5)
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-                                HStack {
-                                    Text("\(getDateString(date: myTripsViewModel.pastTrips[index].start)) - \(getDateString(date: myTripsViewModel.pastTrips[index].end))")
+            if isTripsLoading {
+                ProgressView()
+                    .controlSize(.large)
+            } else {
+                Text("You had \(myTripsViewModel.pastTrips.count) past trips.")
+                    .font(.custom("Poppins-Regular", size: 16))
+                    .frame(width: UIScreen.main.bounds.width * 0.8, alignment: .leading)
+                    .padding()
+
+                ScrollView {
+                    ForEach(0..<myTripsViewModel.pastTrips.count, id: \.self) { index in
+                        ZStack {
+                            RoundedRectangle(cornerRadius: 20)
+                                .fill(.lighterGray)
+                                .frame(width: UIScreen.main.bounds.width * 0.8, height:120)
+                            HStack {
+                                VStack (alignment: .leading) {
+                                    Text(myTripsViewModel.pastTrips[index].name)
+                                        .font(.custom("Poppins-Bold", size: 16))
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                        .foregroundStyle(.darkTeal)
+                                    Text("\(myTripsViewModel.pastTrips[index].city), \(myTripsViewModel.pastTrips[index].state)")
                                         .font(.custom("Poppins-Regular", size: 12))
+                                        .padding(.bottom, 5)
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                    HStack {
+                                        Text("\(getDateString(date: myTripsViewModel.pastTrips[index].start)) - \(getDateString(date: myTripsViewModel.pastTrips[index].end))")
+                                            .font(.custom("Poppins-Regular", size: 12))
                                         
-                                     Text("(\(getTripDuration(start: myTripsViewModel.pastTrips[index].start, end: myTripsViewModel.pastTrips[index].end)) days)")
-                                        .font(.custom("Poppins-Regular", size: 12))
-                                        .foregroundStyle(Color.gray)
+                                        Text("(\(getTripDuration(start: myTripsViewModel.pastTrips[index].start, end: myTripsViewModel.pastTrips[index].end)) days)")
+                                            .font(.custom("Poppins-Regular", size: 12))
+                                            .foregroundStyle(Color.gray)
+                                    }
                                 }
+                                Image(systemName: "chevron.right")
+                                    .foregroundStyle(.darkTeal)
+                                    .padding(.trailing, 10)
                             }
-                            Image(systemName: "chevron.right")
-                                .foregroundStyle(.darkTeal)
-                                .padding(.trailing, 10)
+                            .padding(15)
+                            .padding(.leading, 15)
                         }
-                        .padding(15)
-                        .padding(.leading, 15)
-                    }
-                    .padding(.bottom)
-                    .background(Color.white)
-                    .onTapGesture {
-                        guard let tripID = myTripsViewModel.pastTrips[index].id else {
-                            print("can't get tripID")
-                            return
+                        .padding(.bottom)
+                        .background(Color.white)
+                        .onTapGesture {
+                            guard let tripID = myTripsViewModel.pastTrips[index].id else {
+                                print("can't get tripID")
+                                return
+                            }
+                            self.tripID = tripID
+                            print("tripID", self.tripID)
+                            // navigate to overview page
+                            navigateToOverview = true
                         }
-                        self.tripID = tripID
-                        print("tripID", self.tripID)
-                        // navigate to overview page
-                        navigateToOverview = true
-                    }
-                    .navigationDestination(isPresented: $navigateToOverview) {
-                        if self.tripID != "" {
-                            TripView(tripId: self.tripID, isActive: $isActive)
-                                .navigationBarBackButtonHidden(true)
+                        .navigationDestination(isPresented: $navigateToOverview) {
+                            if self.tripID != "" {
+                                TripView(tripId: self.tripID, isActive: $isActive)
+                                    .navigationBarBackButtonHidden(true)
+                            }
                         }
                     }
                 }
+                .frame(width: UIScreen.main.bounds.width * 0.85)
             }
-            .frame(width: UIScreen.main.bounds.width * 0.85)
         }
-        .padding(.bottom, 40)
+        .frame(maxHeight: .infinity)
     }
 }

@@ -14,12 +14,12 @@ struct NewTripView: View {
     @StateObject var destinationViewModel = DestinationViewModel()
     @State var tripId: String?
     @State var guests: Int = 0
-    @State var startDate: Date = Date.distantPast
-    @State var endDate: Date = Date.distantPast
+    @State var startDate: Date = Date()
+    @State var endDate: Date = Date()
     @State var tripName: String = ""
     @State var showDestinationSheet: Bool = false
-    @State var navigateToOverview: Bool = false
     @State var isActive: Bool = false
+    @Binding var selectedIndex: Int
     
     func createTrip() {
         guard let uid = Auth.auth().currentUser?.uid else {
@@ -51,7 +51,7 @@ struct NewTripView: View {
             print("Added to Firestore")
             print("Trip ID: ", ref.documentID)
             tripId = ref.documentID
-            navigateToOverview = true
+            selectedIndex = 0
         } catch {
             print("Error: ", error)
         }
@@ -266,13 +266,6 @@ struct NewTripView: View {
             .buttonStyle(.borderedProminent)
             .padding(.vertical)
             .tint(.darkTeal)
-            .navigationDestination(isPresented: $navigateToOverview) {
-                if let tripId {
-                    TripView(tripId: tripId, isActive: $isActive)
-                        .navigationBarBackButtonHidden(true)
-                }
-            }
-
         }
         .padding()
     }

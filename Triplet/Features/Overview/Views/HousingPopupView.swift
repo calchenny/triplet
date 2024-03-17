@@ -115,16 +115,14 @@ struct HousingPopupView: View {
                     }
                     .frame(maxWidth: .infinity, maxHeight: 200)
                 }
-                if let trip = tripViewModel.trip,
-                    let start = trip.start,
-                    let end = trip.end {
-                    DatePicker(selection: $startDate, in: start...end, displayedComponents: [.date, .hourAndMinute]) {
+                if let trip = tripViewModel.trip {
+                    DatePicker(selection: $startDate, in: trip.start...trip.end, displayedComponents: [.date, .hourAndMinute]) {
                         Text("Start:")
                             .font(.custom("Poppins-Medium", size: 16))
                     }
                     .tint(.darkTeal)
 
-                    DatePicker(selection: $endDate, in: startDate...end, displayedComponents: [.date, .hourAndMinute]) {
+                    DatePicker(selection: $endDate, in: startDate...trip.end, displayedComponents: [.date, .hourAndMinute]) {
                         Text("End:")
                             .font(.custom("Poppins-Medium", size: 16))
                     }

@@ -97,8 +97,8 @@ struct ItineraryView: View {
                     .padding(.top, 10)
             } else {
                 VStack {
-                    if let trip = tripViewModel.trip, let start = trip.start, let end = trip.end {
-                        let rangeOfDates = datesInRange(from: start, to: end)
+                    if let trip = tripViewModel.trip {
+                        let rangeOfDates = datesInRange(from: trip.start, to: trip.end)
                         ForEach(rangeOfDates, id: \.self) { day in
                             VStack {
                                 RoundedRectangle(cornerRadius: 10)

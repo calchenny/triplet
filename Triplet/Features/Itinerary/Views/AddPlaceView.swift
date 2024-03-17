@@ -124,16 +124,14 @@ struct AddPlaceView: View {
                     }
                     .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, maxHeight: 300)
                 }
-                if let trip = tripViewModel.trip,
-                    let start = trip.start,
-                    let end = trip.end {
-                    DatePicker(selection: $startDate, in: start...end, displayedComponents: [.date, .hourAndMinute]) {
+                if let trip = tripViewModel.trip {
+                    DatePicker(selection: $startDate, in: trip.start...trip.end , displayedComponents: [.date, .hourAndMinute]) {
                         Text("Start:")
                             .font(.custom("Poppins-Medium", size: 16))
                     }
                     .tint(.darkTeal)
 
-                    DatePicker(selection: $endDate, in: startDate...end, displayedComponents: [.date, .hourAndMinute]) {
+                    DatePicker(selection: $endDate, in: startDate...trip.end , displayedComponents: [.date, .hourAndMinute]) {
                         Text("End:")
                             .font(.custom("Poppins-Medium", size: 16))
                     }
@@ -198,10 +196,9 @@ struct AddPlaceView: View {
         .padding()
         .frame(maxHeight: 650)
         .onAppear() {
-            if let trip = tripViewModel.trip,
-               let start = trip.start {
-                endDate = start
-                startDate = start
+            if let trip = tripViewModel.trip {
+                endDate = trip.start
+                startDate = trip.start
             }
             
         }
