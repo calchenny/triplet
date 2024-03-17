@@ -74,6 +74,7 @@ struct AddNewExpenseView: View {
                         .font(.custom("Poppins-Regular", size: 16))
                         .overlay(RoundedRectangle(cornerRadius: 5).stroke(Color("Darker Gray")))
                         .padding(.bottom)
+                        .keyboardType(.decimalPad)
                 }
                 
                 Text("Category")
@@ -128,7 +129,6 @@ struct AddNewExpenseView: View {
                             print("creating new expense...")
                             if let cost = Double(costInput) {
                                 expensesViewModel.addExpense(name: name, date: date, category: selection, cost: cost, tripId: tripId)
-                                //expenses.append(newExpense)
                             }
                             else {
                                 print("can't convert cost to double -> no expense struct created")

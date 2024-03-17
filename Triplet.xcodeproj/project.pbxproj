@@ -30,6 +30,7 @@
 		24AD39C42B982C42005223D7 /* PhoneNumberKit in Frameworks */ = {isa = PBXBuildFile; productRef = 24AD39C32B982C42005223D7 /* PhoneNumberKit */; };
 		3C51D0BC2BA2DC1700BAC49F /* apiCallsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C51D0BB2BA2DC1700BAC49F /* apiCallsViewModel.swift */; };
 		3C51D0BE2BA2DC3A00BAC49F /* testAPICallsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C51D0BD2BA2DC3A00BAC49F /* testAPICallsView.swift */; };
+		3C6F6DA02BA6B9A90059DD9D /* SetBudgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C6F6D9F2BA6B9A90059DD9D /* SetBudgetView.swift */; };
 		3CE48FD12B9D324900710CCA /* ExpensesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CE48FD02B9D324900710CCA /* ExpensesViewModel.swift */; };
 		892A373F2BA4A5910046BC0F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 892A373E2BA4A5910046BC0F /* GoogleService-Info.plist */; };
 		8935A4262B7F496200F62185 /* TripletApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8935A4252B7F496200F62185 /* TripletApp.swift */; };
@@ -108,6 +109,7 @@
 		24246BFA2B97EE290028DAAF /* RootView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		3C51D0BB2BA2DC1700BAC49F /* apiCallsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = apiCallsViewModel.swift; sourceTree = "<group>"; };
 		3C51D0BD2BA2DC3A00BAC49F /* testAPICallsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = testAPICallsView.swift; sourceTree = "<group>"; };
+		3C6F6D9F2BA6B9A90059DD9D /* SetBudgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetBudgetView.swift; sourceTree = "<group>"; };
 		3CE48FD02B9D324900710CCA /* ExpensesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpensesViewModel.swift; sourceTree = "<group>"; };
 		89031F572B80012800282C88 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		892A373E2BA4A5910046BC0F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -281,6 +283,7 @@
 			children = (
 				24246BDC2B97ED690028DAAF /* AddNewExpenseView.swift */,
 				24246BDB2B97ED690028DAAF /* ExpensesView.swift */,
+				3C6F6D9F2BA6B9A90059DD9D /* SetBudgetView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -599,6 +602,7 @@
 				24246BE82B97ED690028DAAF /* ItineraryView.swift in Sources */,
 				24246BF12B97ED690028DAAF /* HomeView.swift in Sources */,
 				89D806552BA4F4F800654DBC /* TripViewModel.swift in Sources */,
+				3C6F6DA02BA6B9A90059DD9D /* SetBudgetView.swift in Sources */,
 				89BDCE542B8FAFCF00C69895 /* DestinationViewModel.swift in Sources */,
 				89D8065E2BA50B0900654DBC /* DateHelpers.swift in Sources */,
 				24246BF82B97ED690028DAAF /* AlertView.swift in Sources */,

@@ -17,6 +17,9 @@ struct ExpensesView: View {
     var tripId: String
     @StateObject var expensesViewModel = ExpensesViewModel()
     @EnvironmentObject var tripViewModel: TripViewModel
+    @State private var showSetBudgetView: Bool = false
+    
+    @State private var testBudget: Double = 0
     
     var body: some View {
         VStack {
@@ -27,13 +30,28 @@ struct ExpensesView: View {
                     .padding(25)
                 Text("$\(expensesViewModel.currentTotal, specifier: "%.2f")")
                     .font(.custom("Poppins-Regular", size: 30))
-                ProgressView(value: expensesViewModel.percentage)
-                    .tint(Color.darkTeal)
-                    .frame(minWidth: 0, maxWidth: 200)
-                Text("Budget: $\(expensesViewModel.budget, specifier: "%.2f")")
-                    .font(.custom("Poppins-Medium", size: 16))
-                    .foregroundColor(Color.darkTeal)
-                    .padding(.bottom, 40)
+                if testBudget == 0 {
+                    ProgressView(value: 0)
+                        .tint(Color.darkTeal)
+                        .frame(minWidth: 0, maxWidth: 200)
+                    Button() {
+                        showSetBudgetView.toggle()
+                    } label: {
+                        Text("Set a budget")
+                            .font(.custom("Poppins-Medium", size: 16))
+                            .foregroundColor(Color.darkTeal)
+                            .padding(.bottom, 40)
+                    }
+                }
+                else {
+                    ProgressView(value: expensesViewModel.percentage)
+                        .tint(Color.darkTeal)
+                        .frame(minWidth: 0, maxWidth: 200)
+                    Text("Budget: $\(testBudget, specifier: "%.2f")")
+                        .font(.custom("Poppins-Medium", size: 16))
+                        .foregroundColor(Color.darkTeal)
+                        .padding(.bottom, 40)
+                }
             }
             .onChange(of: expensesViewModel.expenses) {
                 expensesViewModel.currentTotal = expensesViewModel.calculateTotal()
