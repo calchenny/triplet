@@ -11,8 +11,10 @@ import MapKit
 struct DestinationSearchView: View {
     @ObservedObject var locationSearchService = LocationSearchService()
     @EnvironmentObject var destinationViewModel: DestinationViewModel
-    @Environment(\.dismiss) var dismiss
-    
+    @State private var searchQuery: String = ""
+    @State private var displayedResults: [LocationSearchService.CityResult] = []
+    @Binding var showDestinationPopup: Bool
+
     func selectedDestination(result: LocationSearchService.CityResult) {
         print("Selected place: \(result.city)")
         // Store into model
@@ -21,32 +23,44 @@ struct DestinationSearchView: View {
                                             country: result.country,
                                             latitude: result.latitude,
                                             longitude: result.longitude)
-        dismiss()
+        showDestinationPopup.toggle()
     }
     
     var body: some View {
-        VStack {
-            HStack {
-                Button(action: {
-                    dismiss()
-                }, label: {
-                    Image(systemName: "xmark")
-                        .font(.title3.weight(.semibold))
-                        .padding(7)
-                        .background(.darkTeal)
-                        .foregroundColor(.white)
-                        .clipShape(Circle())
-                })
-                Spacer()
-            }
-            .padding()
+        ZStack {
+            RoundedRectangle(cornerRadius: 15)
+                .foregroundStyle(.white)
             
+            VStack {
+                HStack {
+                    Spacer()
+                    
+                    Button(action: {
+                        showDestinationPopup.toggle()
+                    }, label: {
+                        Circle()
+                            .frame(maxWidth: 30)
+                            .foregroundStyle(Color("Dark Teal"))
+                            .overlay {
+                                Image(systemName: "xmark")
+                                    .foregroundStyle(.white)
+                            }
+                    })
+                }
+                .padding(.top)
+                
                 Form {
                     Section(header: Text("Location Search")
                         .font(.custom("Poppins-Regular", size: 14))) {
                         ZStack(alignment: .trailing) {
-                            TextField("Search", text: $locationSearchService.searchQuery)
+                            TextField("Search", text: $searchQuery)
                                 .font(.custom("Poppins-Regular", size: 16))
+                                .onChange(of: searchQuery) {
+                                    // Update the locationSearchService when the text changes
+                                    locationSearchService.searchQuery = searchQuery
+                                    displayedResults = locationSearchService.searchResults // Update displayed results
+
+                                }
                             // Displays an icon during an active search
                             if locationSearchService.status == .isSearching {
                                 Image(systemName: "clock")
@@ -58,7 +72,7 @@ struct DestinationSearchView: View {
                     
                     Section(header: Text("Results")
                         .font(.custom("Poppins-Regular", size: 14))) {
-                        List(locationSearchService.searchResults, id: \.self) { result in
+                        List(displayedResults, id: \.self) { result in
                             Button(action: {
                                 selectedDestination(result: result)
                             }) {
@@ -75,10 +89,10 @@ struct DestinationSearchView: View {
                 .background(.white)
                 .scrollContentBackground(.hidden)
             }
-    }
-}
+            .padding([.leading, .trailing], 20)
 
-#Preview {
-    DestinationSearchView(locationSearchService: LocationSearchService())
-        .environmentObject(DestinationViewModel())
+        }
+        .padding()
+        .frame(maxHeight: 550)
+    }
 }

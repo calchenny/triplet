@@ -8,6 +8,7 @@
 import SwiftUI
 import Firebase
 import FirebaseFirestore
+import PopupView
 
 struct NewTripView: View {
     @Environment(\.dismiss) var dismiss
@@ -17,7 +18,7 @@ struct NewTripView: View {
     @State var endDate: Date = Date.distantPast
     @State var tripName: String = ""
     @State var alertMsg: String = ""
-    @State var showDestinationSheet: Bool = false
+    @State var showDestinationPopup: Bool = false
     @State var showError: Bool = false
     @Binding var selectedIndex: Int
     
@@ -94,11 +95,7 @@ struct NewTripView: View {
                         )
                         .padding(.top, 10)
                         .onTapGesture {
-                            showDestinationSheet.toggle()
-                        }
-                        .sheet(isPresented: $showDestinationSheet) {
-                            DestinationSearchView(locationSearchService: LocationSearchService())
-                                .environmentObject(destinationViewModel)
+                            showDestinationPopup.toggle()
                         }
                 }
                 
@@ -114,13 +111,7 @@ struct NewTripView: View {
                     )
                     .padding(.top, 10)
                     .onTapGesture {
-                        showDestinationSheet.toggle()
-                    }
-                    .sheet(isPresented: $showDestinationSheet) {
-                        DestinationSearchView(locationSearchService: LocationSearchService())
-                            .environmentObject(destinationViewModel)
-                            .presentationDragIndicator(.visible)
-                            .presentationCornerRadius(25)
+                        showDestinationPopup.toggle()
                     }
                 
             }
@@ -231,6 +222,19 @@ struct NewTripView: View {
             .padding(.vertical, 30)
             .tint(.darkTeal)
         }
+        .popup(isPresented: $showDestinationPopup) {
+            DestinationSearchView(locationSearchService: LocationSearchService(), showDestinationPopup: $showDestinationPopup)
+                .environmentObject(destinationViewModel)
+        } customize: { popup in
+            popup
+                .type(.floater())
+                .position(.center)
+                .animation(.spring())
+                .closeOnTap(false)
+                .closeOnTapOutside(false)
+                .isOpaque(true)
+                .backgroundColor(.black.opacity(0.25))
+        }
         .overlay(
             Group {
                 if showError {
@@ -244,7 +248,3 @@ struct NewTripView: View {
         )
     }
 }
-
-//#Preview {
-//    NewTripView()
-//}

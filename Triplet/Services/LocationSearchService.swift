@@ -39,8 +39,6 @@ class LocationSearchService: NSObject, ObservableObject, MKLocalSearchCompleterD
         
         queryCancellable = $searchQuery
             .receive(on: DispatchQueue.main)
-            // Debouncing the search to delay the results from popping up too fast
-            .debounce(for: .milliseconds(250), scheduler: RunLoop.main, options: nil)
             .sink(receiveValue: { fragment in
                 self.status = .isSearching
                 if !fragment.isEmpty {
