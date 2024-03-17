@@ -41,6 +41,6 @@ struct AlertView: View {
         .cornerRadius(15)
         .padding(.horizontal, 25)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(Color.black.opacity(0.3).ignoresSafeArea())
+        .background(Color.black.opacity(0.3).ignoresSafeArea(.all, edges: .all))
     }
 }

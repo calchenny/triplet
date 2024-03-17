@@ -16,27 +16,24 @@ struct NewTripView: View {
     @State var startDate: Date = Date.distantPast
     @State var endDate: Date = Date.distantPast
     @State var tripName: String = ""
+    @State var alertMsg: String = ""
     @State var showDestinationSheet: Bool = false
-    @State var isActive: Bool = false
-    @State var verifiedField: [Bool] = [false, false, false, false]
+    @State var showError: Bool = false
     @Binding var selectedIndex: Int
     
     func createTrip() {
-        guard let uid = Auth.auth().currentUser?.uid else {
-            print("Missing user")
-            return
-        }
-        
-        print("Hit")
-        guard let latitude = destinationViewModel.latitude,
+        guard let uid = Auth.auth().currentUser?.uid,
+              let latitude = destinationViewModel.latitude,
               let longitude = destinationViewModel.longitude,
               let city = destinationViewModel.city,
               let state = destinationViewModel.state,
               let start = Calendar.current.date(bySettingHour: 0, minute: 0, second: 0, of: startDate),
               let end = Calendar.current.date(bySettingHour: 23, minute: 59, second: 59, of: endDate) else {
-                return
+            alertMsg = "Unable to create trip. Please restart the app and try again."
+            showError = true
+            return
         }
-
+        
         let trip = Trip(owner: uid,
                         name: tripName,
                         start: start,
@@ -45,6 +42,7 @@ struct NewTripView: View {
                         city: city,
                         state: state)
 
+        // Add the trip to firebase
         do {
             let ref = try Firestore.firestore().collection("trips").addDocument(from: trip)
             print("Added to Firestore")
@@ -52,7 +50,9 @@ struct NewTripView: View {
             tripId = ref.documentID
             selectedIndex = 0
         } catch {
-            print("Error: ", error)
+            alertMsg = "Error adding trip: \(error)"
+            showError = true
+            return
         }
 
         print("Created Trip: \(trip)")
@@ -231,6 +231,17 @@ struct NewTripView: View {
             .padding(.vertical, 30)
             .tint(.darkTeal)
         }
+        .overlay(
+            Group {
+                if showError {
+                    AlertView(msg: alertMsg, show: $showError)
+                        .opacity(showError ? 1 : 0) // Set opacity based on the state
+                        .scaleEffect(showError ? 1 : 0.5) // Scale effect for smooth entrance
+                }
+            }
+            .animation(.easeInOut(duration: 0.5), value: showError) // Apply animation to the error message
+        
+        )
     }
 }
 
