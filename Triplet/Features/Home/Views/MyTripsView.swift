@@ -168,36 +168,36 @@ struct CurrentTripsView: View  {
                     NoTripPlanned(selectedIndex: $selectedIndex)
                 } else {
                     ScrollView {
-                        ForEach(0..<myTripsViewModel.currentTrips.count, id: \.self) { index in
+                        ForEach(myTripsViewModel.currentTrips, id: \.id) { trip in
                             ZStack {
                                 RoundedRectangle(cornerRadius: 20)
                                     .fill(.lighterGray)
                                     .frame(width: UIScreen.main.bounds.width * 0.8, height:120)
                                 HStack {
                                     VStack (alignment: .leading) {
-                                        Text(myTripsViewModel.currentTrips[index].name)
+                                        Text(trip.name)
                                             .font(.custom("Poppins-Bold", size: 16))
                                             .frame(maxWidth: .infinity, alignment: .leading)
                                             .foregroundStyle(.darkTeal)
-                                        Text("\(myTripsViewModel.currentTrips[index].city), \(myTripsViewModel.currentTrips[index].state)")
+                                        Text("\(trip.city), \(trip.state)")
                                             .font(.custom("Poppins-Regular", size: 12))
                                             .padding(.bottom, 5)
                                             .frame(maxWidth: .infinity, alignment: .leading)
                                         HStack {
-                                            Text("\(getDateString(date: myTripsViewModel.currentTrips[index].start)) - \(getDateString(date: myTripsViewModel.currentTrips[index].end))")
+                                            Text("\(getDateString(date: trip.start)) - \(getDateString(date: trip.end))")
                                                 .font(.custom("Poppins-Regular", size: 12))
                                             
-                                            Text("(\(getTripDuration(start: myTripsViewModel.currentTrips[index].start, end: myTripsViewModel.currentTrips[index].end)) days)")
+                                            Text("(\(getTripDuration(start: trip.start, end: trip.end)) days)")
                                                 .font(.custom("Poppins-Regular", size: 12))
                                                 .foregroundStyle(Color.gray)
                                         }
                                         
-                                        if (getDaysUntilTrip(start: myTripsViewModel.currentTrips[index].start) <= 0) {
+                                        if (getDaysUntilTrip(start: trip.start) <= 0) {
                                             Text("Happening Now")
                                                 .font(.custom("Poppins-Bold", size: 12))
                                                 .foregroundStyle(.darkTeal)
                                         } else {
-                                            Text("\(getDaysUntilTrip(start: myTripsViewModel.currentTrips[index].start)) days until trip starts")
+                                            Text("\(getDaysUntilTrip(start: trip.start)) days until trip starts")
                                                 .font(.custom("Poppins-Regular", size: 12))
                                         }
                                         
@@ -212,20 +212,11 @@ struct CurrentTripsView: View  {
                             .padding(.bottom)
                             .background(Color.white)
                             .onTapGesture {
-                                guard let tripID = myTripsViewModel.currentTrips[index].id else {
-                                    print("can't get tripID")
-                                    return
-                                }
-                                self.tripID = tripID
-                                self.isActive = (getDaysUntilTrip(start: myTripsViewModel.currentTrips[index].start) <= 0)
-                                print("tripID", self.tripID)
-                                // navigate to overview page
                                 navigateToOverview = true
-                                
                             }
                             .navigationDestination(isPresented: $navigateToOverview) {
-                                if self.tripID != "" {
-                                    TripView(tripId: self.tripID, isActive: $isActive)
+                                if let tripId = trip.id {
+                                    TripView(tripId: tripId, isActive: getDaysUntilTrip(start: trip.start) <= 0)
                                         .navigationBarBackButtonHidden(true)
                                 }
                             }
@@ -257,26 +248,26 @@ struct PastTripsView: View {
                     .padding()
 
                 ScrollView {
-                    ForEach(0..<myTripsViewModel.pastTrips.count, id: \.self) { index in
+                    ForEach(myTripsViewModel.pastTrips, id: \.id) { trip in
                         ZStack {
                             RoundedRectangle(cornerRadius: 20)
                                 .fill(.lighterGray)
                                 .frame(width: UIScreen.main.bounds.width * 0.8, height:120)
                             HStack {
                                 VStack (alignment: .leading) {
-                                    Text(myTripsViewModel.pastTrips[index].name)
+                                    Text(trip.name)
                                         .font(.custom("Poppins-Bold", size: 16))
                                         .frame(maxWidth: .infinity, alignment: .leading)
                                         .foregroundStyle(.darkTeal)
-                                    Text("\(myTripsViewModel.pastTrips[index].city), \(myTripsViewModel.pastTrips[index].state)")
+                                    Text("\(trip.city), \(trip.state)")
                                         .font(.custom("Poppins-Regular", size: 12))
                                         .padding(.bottom, 5)
                                         .frame(maxWidth: .infinity, alignment: .leading)
                                     HStack {
-                                        Text("\(getDateString(date: myTripsViewModel.pastTrips[index].start)) - \(getDateString(date: myTripsViewModel.pastTrips[index].end))")
+                                        Text("\(getDateString(date: trip.start)) - \(getDateString(date: trip.end))")
                                             .font(.custom("Poppins-Regular", size: 12))
                                         
-                                        Text("(\(getTripDuration(start: myTripsViewModel.pastTrips[index].start, end: myTripsViewModel.pastTrips[index].end)) days)")
+                                        Text("(\(getTripDuration(start: trip.start, end: trip.end)) days)")
                                             .font(.custom("Poppins-Regular", size: 12))
                                             .foregroundStyle(Color.gray)
                                     }
@@ -291,18 +282,11 @@ struct PastTripsView: View {
                         .padding(.bottom)
                         .background(Color.white)
                         .onTapGesture {
-                            guard let tripID = myTripsViewModel.pastTrips[index].id else {
-                                print("can't get tripID")
-                                return
-                            }
-                            self.tripID = tripID
-                            print("tripID", self.tripID)
-                            // navigate to overview page
                             navigateToOverview = true
                         }
                         .navigationDestination(isPresented: $navigateToOverview) {
-                            if self.tripID != "" {
-                                TripView(tripId: self.tripID, isActive: $isActive)
+                            if let tripId = trip.id {
+                                TripView(tripId: tripId, isActive: false)
                                     .navigationBarBackButtonHidden(true)
                             }
                         }
