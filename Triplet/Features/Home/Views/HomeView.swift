@@ -19,13 +19,17 @@ struct HomeView: View {
     }
     
     var body: some View {
-        if selectedIndex == 0 {
-            MyTripsView(selectedIndex: $selectedIndex)
-        } else if selectedIndex == 1 {
-            NewTripView(selectedIndex: $selectedIndex)
-        } else {
-            SettingView()
+        VStack {
+            if selectedIndex == 0 {
+                MyTripsView(selectedIndex: $selectedIndex)
+            } else if selectedIndex == 1 {
+                NewTripView(selectedIndex: $selectedIndex)
+            } else {
+                SettingView()
+            }
         }
+        .frame(width: UIScreen.main.bounds.width * 0.8)
+        Spacer()
         AnimatedTabBar(selectedIndex: $selectedIndex, views: (0..<names.count).map { wiggleButtonAt($0, name: names[$0]) })
             .cornerRadius(16)
             .selectedColor(.darkTeal)

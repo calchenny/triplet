@@ -61,16 +61,19 @@ struct NewTripView: View {
     
     var body: some View {
         VStack {
-            Text("Plan a new trip")
-                .font(.custom("Poppins-Bold", size: 32))
-                .foregroundStyle(Color("Dark Teal"))
-                .padding(.bottom, 5)
-            
-            Text("Build an itinerary and map out your upcoming travel plans")
-                .font(.custom("Poppins-Regular", size: 14))
-                .frame(maxWidth: UIScreen.main.bounds.width/1.5, alignment: .center)
-                .multilineTextAlignment(.center)
-                .fixedSize(horizontal: false, vertical:true)
+            VStack {
+                Text("Plan New Trip")
+                    .font(.custom("Poppins-Bold", size: 30))
+                    .foregroundStyle(Color("Dark Teal"))
+                    .padding(.bottom, 5)
+                
+                Text("Build an itinerary and map out your upcoming travel plans")
+                    .font(.custom("Poppins-Regular", size: 14))
+                    .frame(maxWidth: UIScreen.main.bounds.width/1.5, alignment: .center)
+                    .multilineTextAlignment(.center)
+                    .fixedSize(horizontal: false, vertical:true)
+            }
+            .padding()
 
             Text("Where to?")
                 .font(.custom("Poppins-Bold", size: 16))
@@ -267,7 +270,6 @@ struct NewTripView: View {
             .padding(.vertical)
             .tint(.darkTeal)
         }
-        .padding()
     }
 }
 

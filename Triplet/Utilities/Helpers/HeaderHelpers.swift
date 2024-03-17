@@ -18,9 +18,3 @@ func getHeaderHeightScale(collapseProgress: CGFloat) -> CGFloat {
     let minHeight = CGFloat(60)
     return max((1 - collapseProgress + 0.5 * collapseProgress) * maxHeight, minHeight) / maxHeight
 }
-
-func getHeaderTitleSize(collapseProgress: CGFloat) -> CGFloat {
-    let maxSize = CGFloat(30)
-    let minSize = CGFloat(16)
-    return max((1 - collapseProgress + 0.5 * collapseProgress) * maxSize, minSize)
-}

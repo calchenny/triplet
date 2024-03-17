@@ -97,7 +97,6 @@ struct NoTripPlanned: View {
                     .cornerRadius(15)
                 }
                 .padding(25)
-                .frame(width: UIScreen.main.bounds.width * 0.8)
             }
             Spacer()
         }
@@ -232,7 +231,6 @@ struct CurrentTripsView: View  {
                             }
                         }
                     }
-                    .frame(width: UIScreen.main.bounds.width * 0.85)
                 }
             }
         }
@@ -310,7 +308,6 @@ struct PastTripsView: View {
                         }
                     }
                 }
-                .frame(width: UIScreen.main.bounds.width * 0.85)
             }
         }
         .frame(maxHeight: .infinity)
