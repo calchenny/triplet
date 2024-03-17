@@ -13,9 +13,8 @@ struct NewTripView: View {
     @Environment(\.dismiss) var dismiss
     @StateObject var destinationViewModel = DestinationViewModel()
     @State var tripId: String?
-    @State var guests: Int = 0
-    @State var startDate: Date = Date()
-    @State var endDate: Date = Date()
+    @State var startDate: Date = Date.distantPast
+    @State var endDate: Date = Date.distantPast
     @State var tripName: String = ""
     @State var showDestinationSheet: Bool = false
     @State var isActive: Bool = false
@@ -42,7 +41,6 @@ struct NewTripView: View {
                         start: start,
                         end: end,
                         destination: GeoPoint(latitude: latitude, longitude: longitude),
-                        numGuests: guests,
                         city: city,
                         state: state)
 
@@ -193,45 +191,6 @@ struct NewTripView: View {
                     .padding(.horizontal, 10)
                     .tint(.darkTeal)
             }
-            
-            HStack {
-                VStack {
-                    Text("How many guests?")
-                        .font(.custom("Poppins-Bold", size: 16))
-                        .foregroundStyle(Color("Dark Teal"))
-                        .padding(.trailing)
-                    Text("(Including yourself)")
-                        .font(.custom("Poppins-Regular", size: 11))
-                        .foregroundStyle(.darkerGray)
-                        .padding(.trailing)
-                }
-                
-                Stepper {
-                    Text("\(guests)")
-                        .font(.custom("Poppins-Regular", size: 16))
-                        .foregroundStyle(.black)
-                    
-                } onIncrement: {
-                    if (guests < 20) {
-                        guests += 1
-                    }
-                } onDecrement: {
-                    if (guests <= 1) {
-                        guests = 0
-                    } else {
-                        guests -= 1
-
-                    }
-                }
-                .padding(.leading, 10)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 10)
-                        .stroke(.gray)
-                )
-                .padding(.top, 10)
-
-            }
-            .padding(.top)
 
             Text("Trip Name")
                 .font(.custom("Poppins-Bold", size: 16))
