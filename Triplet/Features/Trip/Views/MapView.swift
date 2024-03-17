@@ -11,7 +11,7 @@ import CoreLocation
 
 
 struct MapView: View {
-    @ObservedObject var locationManager = LocationManager()
+    @ObservedObject var locationManagerService = LocationManagerService()
     @State private var mapSelection: String?
     @State private var selectedMarkerName: String?
     @State private var selectedMarker: MKMapItem = MKMapItem()
@@ -83,7 +83,7 @@ struct MapView: View {
             request.pointOfInterestFilter = .includingAll
             
             // Narrowing down the search to the region near the user
-            request.region = locationManager.region
+            request.region = locationManagerService.region
                         
             let search = MKLocalSearch(request: request)
             search.start {(response, error) in
@@ -97,7 +97,7 @@ struct MapView: View {
                     for item in response.mapItems {
                         if let location = item.placemark.location {
                             
-                            if let userLocation = locationManager.currentLocation {
+                            if let userLocation = locationManagerService.currentLocation {
                                 let distance = userLocation.distance(from: location)
                                 
                                 // Only display locations that are within 7.5 mile radius
@@ -116,7 +116,7 @@ struct MapView: View {
     }
     
     func fetchRouteFrom(destination: CLLocationCoordinate2D) {
-        if let currentLocation = locationManager.currentLocation {
+        if let currentLocation = locationManagerService.currentLocation {
 
             let request = MKDirections.Request()
             request.source = MKMapItem(placemark: MKPlacemark(coordinate: currentLocation.coordinate))
@@ -143,7 +143,7 @@ struct MapView: View {
             VStack {
                 Map(position: $position, selection: $mapSelection) {
                     // Make an always viewable pin of the user's location
-                    if let userLocation = locationManager.currentLocation {
+                    if let userLocation = locationManagerService.currentLocation {
                         Annotation("My location", coordinate: userLocation.coordinate) {
                             ZStack {
                                 Circle()

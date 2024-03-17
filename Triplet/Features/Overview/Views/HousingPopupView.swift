@@ -16,8 +16,8 @@ struct HousingPopupView: View {
     @State private var startDate: Date = Date()
     @State private var endDate: Date = Date()
     @State var location: String = ""
-    @State var selectedLandmark: LandmarkViewModel?
-    @State var landmarks: [LandmarkViewModel] = [LandmarkViewModel]()
+    @State var selectedLandmark: Landmark?
+    @State var landmarks: [Landmark] = [Landmark]()
     @State var showAlert: Bool = false
     
     private func getNearByLandmarks() {
@@ -38,7 +38,7 @@ struct HousingPopupView: View {
         
         search.start { response, error in
             if let response = response {
-                self.landmarks = response.mapItems.compactMap { LandmarkViewModel(placemark: $0.placemark) }
+                self.landmarks = response.mapItems.compactMap { Landmark(placemark: $0.placemark) }
             }
         }
     }
@@ -99,7 +99,7 @@ struct HousingPopupView: View {
                                         VStack(alignment: .leading) {
                                             Text(landmark.name)
                                                 .font(.custom("Poppins-Regular", size: 14))
-                                            Text(landmark.title)
+                                            Text(landmark.address)
                                                 .foregroundStyle(.darkerGray)
                                                 .font(.custom("Poppins-Regular", size: 12))
                                         }
@@ -137,7 +137,7 @@ struct HousingPopupView: View {
                     overviewViewModel.addHousingPlace(name: selectedLandmark.name,
                                                       location: GeoPoint(latitude: selectedLandmark.coordinate.latitude,
                                                                          longitude: selectedLandmark.coordinate.longitude),
-                                                      address: selectedLandmark.title,
+                                                      address: selectedLandmark.address,
                                                       start: startDate,
                                                       end: endDate, tripId: tripId)
                     overviewViewModel.showHousingPopup.toggle()

@@ -1,5 +1,5 @@
 //
-//  LocationServiceModel.swift
+//  LocationSearchService.swift
 //  Triplet
 //
 //  Created by Calvin Chen on 2/20/24.
@@ -9,7 +9,7 @@ import Foundation
 import Combine
 import MapKit
 
-class LocationSearch: NSObject, ObservableObject, MKLocalSearchCompleterDelegate {
+class LocationSearchService: NSObject, ObservableObject, MKLocalSearchCompleterDelegate {
     enum LocationStatus: Equatable {
         case idle
         case isSearching
@@ -136,5 +136,4 @@ class LocationSearch: NSObject, ObservableObject, MKLocalSearchCompleterDelegate
     func completer(_ completer: MKLocalSearchCompleter, didFailWithError error: Error) {
         self.status = .error(error.localizedDescription)
     }
-    
 }

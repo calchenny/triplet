@@ -9,11 +9,11 @@ import SwiftUI
 import MapKit
 
 struct DestinationSearchView: View {
-    @ObservedObject var locationSearch = LocationSearch()
+    @ObservedObject var locationSearchService = LocationSearchService()
     @EnvironmentObject var destinationViewModel: DestinationViewModel
     @Environment(\.dismiss) var dismiss
     
-    func selectedDestination(result: LocationSearch.CityResult) {
+    func selectedDestination(result: LocationSearchService.CityResult) {
         print("Selected place: \(result.city)")
         // Store into model
         destinationViewModel.setDestination(city: result.city,
@@ -45,10 +45,10 @@ struct DestinationSearchView: View {
                     Section(header: Text("Location Search")
                         .font(.custom("Poppins-Regular", size: 14))) {
                         ZStack(alignment: .trailing) {
-                            TextField("Search", text: $locationSearch.searchQuery)
+                            TextField("Search", text: $locationSearchService.searchQuery)
                                 .font(.custom("Poppins-Regular", size: 16))
                             // Displays an icon during an active search
-                            if locationSearch.status == .isSearching {
+                            if locationSearchService.status == .isSearching {
                                 Image(systemName: "clock")
                                     .foregroundColor(Color.gray)
                             }
@@ -58,7 +58,7 @@ struct DestinationSearchView: View {
                     
                     Section(header: Text("Results")
                         .font(.custom("Poppins-Regular", size: 14))) {
-                        List(locationSearch.searchResults, id: \.self) { result in
+                        List(locationSearchService.searchResults, id: \.self) { result in
                             Button(action: {
                                 selectedDestination(result: result)
                             }) {
@@ -79,6 +79,6 @@ struct DestinationSearchView: View {
 }
 
 #Preview {
-    DestinationSearchView(locationSearch: LocationSearch())
+    DestinationSearchView(locationSearchService: LocationSearchService())
         .environmentObject(DestinationViewModel())
 }
