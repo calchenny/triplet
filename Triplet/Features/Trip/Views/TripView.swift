@@ -13,8 +13,8 @@ import PopupView
 
 struct TripView: View {
     var tripId: String
+    var isActive: Bool
     @StateObject var tripViewModel: TripViewModel = TripViewModel()
-    @Binding var isActive: Bool
     @State var selectedIndex: Int = 0
     @State var showMapView: Bool = false
     @Environment(\.dismiss) var dismiss
@@ -164,8 +164,4 @@ struct TripView: View {
             .verticalPadding(15)
             .ballTrajectory(.teleport)
     }
-}
-
-#Preview {
-    TripView(tripId: "9xXh1qW2Yh9dRT5qYT0m", isActive: .constant(false))
 }

@@ -12,8 +12,6 @@ struct MyTripsView: View {
     @Binding var selectedIndex: Int
     @State var tabSelection = 0
     @StateObject var myTripsViewModel: MyTripsViewModel = MyTripsViewModel()
-    @State var tripCities: [String] = []
-    @State var tripStates: [String] = []
     @State var isTripsLoading = true
     
     var body: some View {
@@ -149,9 +147,6 @@ func getDaysUntilTrip(start: Date?) -> Int {
 struct CurrentTripsView: View  {
     @EnvironmentObject var myTripsViewModel: MyTripsViewModel
     @Binding var selectedIndex: Int
-    @State private var navigateToOverview: Bool = false
-    @State private var tripID: String = ""
-    @State private var isActive: Bool = false
     @Binding var isTripsLoading: Bool
     
     var body: some View {
@@ -168,67 +163,57 @@ struct CurrentTripsView: View  {
                     NoTripPlanned(selectedIndex: $selectedIndex)
                 } else {
                     ScrollView {
-                        ForEach(0..<myTripsViewModel.currentTrips.count, id: \.self) { index in
-                            ZStack {
-                                RoundedRectangle(cornerRadius: 20)
-                                    .fill(.lighterGray)
-                                    .frame(width: UIScreen.main.bounds.width * 0.8, height:120)
-                                HStack {
-                                    VStack (alignment: .leading) {
-                                        Text(myTripsViewModel.currentTrips[index].name)
-                                            .font(.custom("Poppins-Bold", size: 16))
-                                            .frame(maxWidth: .infinity, alignment: .leading)
-                                            .foregroundStyle(.darkTeal)
-                                        Text("\(myTripsViewModel.currentTrips[index].city), \(myTripsViewModel.currentTrips[index].state)")
-                                            .font(.custom("Poppins-Regular", size: 12))
-                                            .padding(.bottom, 5)
-                                            .frame(maxWidth: .infinity, alignment: .leading)
-                                        HStack {
-                                            Text("\(getDateString(date: myTripsViewModel.currentTrips[index].start)) - \(getDateString(date: myTripsViewModel.currentTrips[index].end))")
-                                                .font(.custom("Poppins-Regular", size: 12))
-                                            
-                                            Text("(\(getTripDuration(start: myTripsViewModel.currentTrips[index].start, end: myTripsViewModel.currentTrips[index].end)) days)")
-                                                .font(.custom("Poppins-Regular", size: 12))
-                                                .foregroundStyle(Color.gray)
-                                        }
-                                        
-                                        if (getDaysUntilTrip(start: myTripsViewModel.currentTrips[index].start) <= 0) {
-                                            Text("Happening Now")
-                                                .font(.custom("Poppins-Bold", size: 12))
-                                                .foregroundStyle(.darkTeal)
-                                        } else {
-                                            Text("\(getDaysUntilTrip(start: myTripsViewModel.currentTrips[index].start)) days until trip starts")
-                                                .font(.custom("Poppins-Regular", size: 12))
-                                        }
-                                        
-                                    }
-                                    Image(systemName: "chevron.right")
-                                        .padding(.trailing, 10)
-                                        .foregroundStyle(.darkTeal)
-                                }
-                                .padding(15)
-                                .padding(.leading, 15)
-                            }
-                            .padding(.bottom)
-                            .background(Color.white)
-                            .onTapGesture {
-                                guard let tripID = myTripsViewModel.currentTrips[index].id else {
-                                    print("can't get tripID")
-                                    return
-                                }
-                                self.tripID = tripID
-                                self.isActive = (getDaysUntilTrip(start: myTripsViewModel.currentTrips[index].start) <= 0)
-                                print("tripID", self.tripID)
-                                // navigate to overview page
-                                navigateToOverview = true
-                                
-                            }
-                            .navigationDestination(isPresented: $navigateToOverview) {
-                                if self.tripID != "" {
-                                    TripView(tripId: self.tripID, isActive: $isActive)
+                        ForEach(myTripsViewModel.currentTrips, id: \.id) { trip in
+                            NavigationLink {
+                                if let tripId = trip.id {
+                                    TripView(tripId: tripId, isActive: getDaysUntilTrip(start: trip.start) <= 0)
                                         .navigationBarBackButtonHidden(true)
                                 }
+                            } label: {
+                                ZStack {
+                                    RoundedRectangle(cornerRadius: 20)
+                                        .fill(.lighterGray)
+                                        .frame(width: UIScreen.main.bounds.width * 0.8, height:120)
+                                    HStack {
+                                        VStack (alignment: .leading) {
+                                            Text(trip.name)
+                                                .font(.custom("Poppins-Bold", size: 16))
+                                                .frame(maxWidth: .infinity, alignment: .leading)
+                                                .foregroundStyle(.darkTeal)
+                                            Text("\(trip.city), \(trip.state)")
+                                                .font(.custom("Poppins-Regular", size: 12))
+                                                .padding(.bottom, 5)
+                                                .frame(maxWidth: .infinity, alignment: .leading)
+                                                .foregroundStyle(.black)
+                                            HStack {
+                                                Text("\(getDateString(date: trip.start)) - \(getDateString(date: trip.end))")
+                                                    .font(.custom("Poppins-Regular", size: 12))
+                                                    .foregroundStyle(.black)
+                                                
+                                                Text("(\(getTripDuration(start: trip.start, end: trip.end)) days)")
+                                                    .font(.custom("Poppins-Regular", size: 12))
+                                                    .foregroundStyle(.gray)
+                                            }
+                                            
+                                            if (getDaysUntilTrip(start: trip.start) <= 0) {
+                                                Text("Happening Now")
+                                                    .font(.custom("Poppins-Bold", size: 12))
+                                                    .foregroundStyle(.darkTeal)
+                                            } else {
+                                                Text("\(getDaysUntilTrip(start: trip.start)) days until trip starts")
+                                                    .font(.custom("Poppins-Regular", size: 12))
+                                                    .foregroundStyle(.black)
+                                            }
+                                            
+                                        }
+                                        Image(systemName: "chevron.right")
+                                            .font(.title2)
+                                            .foregroundStyle(.darkTeal)
+                                    }
+                                    .padding(.horizontal, 35)
+                                }
                             }
+                            .padding(.bottom)
                         }
                     }
                 }
@@ -240,9 +225,6 @@ struct CurrentTripsView: View  {
 
 struct PastTripsView: View {
     @EnvironmentObject var myTripsViewModel: MyTripsViewModel
-    @State private var navigateToOverview: Bool = false
-    @State private var tripID: String = ""
-    @State private var isActive: Bool = false
     @Binding var isTripsLoading: Bool
     
     var body: some View {
@@ -257,54 +239,45 @@ struct PastTripsView: View {
                     .padding()
 
                 ScrollView {
-                    ForEach(0..<myTripsViewModel.pastTrips.count, id: \.self) { index in
-                        ZStack {
-                            RoundedRectangle(cornerRadius: 20)
-                                .fill(.lighterGray)
-                                .frame(width: UIScreen.main.bounds.width * 0.8, height:120)
-                            HStack {
-                                VStack (alignment: .leading) {
-                                    Text(myTripsViewModel.pastTrips[index].name)
-                                        .font(.custom("Poppins-Bold", size: 16))
-                                        .frame(maxWidth: .infinity, alignment: .leading)
-                                        .foregroundStyle(.darkTeal)
-                                    Text("\(myTripsViewModel.pastTrips[index].city), \(myTripsViewModel.pastTrips[index].state)")
-                                        .font(.custom("Poppins-Regular", size: 12))
-                                        .padding(.bottom, 5)
-                                        .frame(maxWidth: .infinity, alignment: .leading)
-                                    HStack {
-                                        Text("\(getDateString(date: myTripsViewModel.pastTrips[index].start)) - \(getDateString(date: myTripsViewModel.pastTrips[index].end))")
-                                            .font(.custom("Poppins-Regular", size: 12))
-                                        
-                                        Text("(\(getTripDuration(start: myTripsViewModel.pastTrips[index].start, end: myTripsViewModel.pastTrips[index].end)) days)")
-                                            .font(.custom("Poppins-Regular", size: 12))
-                                            .foregroundStyle(Color.gray)
-                                    }
-                                }
-                                Image(systemName: "chevron.right")
-                                    .foregroundStyle(.darkTeal)
-                                    .padding(.trailing, 10)
-                            }
-                            .padding(15)
-                            .padding(.leading, 15)
-                        }
-                        .padding(.bottom)
-                        .background(Color.white)
-                        .onTapGesture {
-                            guard let tripID = myTripsViewModel.pastTrips[index].id else {
-                                print("can't get tripID")
-                                return
-                            }
-                            self.tripID = tripID
-                            print("tripID", self.tripID)
-                            // navigate to overview page
-                            navigateToOverview = true
-                        }
-                        .navigationDestination(isPresented: $navigateToOverview) {
-                            if self.tripID != "" {
-                                TripView(tripId: self.tripID, isActive: $isActive)
+                    ForEach(myTripsViewModel.pastTrips, id: \.id) { trip in
+                        NavigationLink {
+                            if let tripId = trip.id {
+                                TripView(tripId: tripId, isActive: false)
                                     .navigationBarBackButtonHidden(true)
                             }
+                        } label: {
+                            ZStack {
+                                RoundedRectangle(cornerRadius: 20)
+                                    .fill(.lighterGray)
+                                    .frame(width: UIScreen.main.bounds.width * 0.8, height:120)
+                                HStack {
+                                    VStack (alignment: .leading) {
+                                        Text(trip.name)
+                                            .font(.custom("Poppins-Bold", size: 16))
+                                            .frame(maxWidth: .infinity, alignment: .leading)
+                                            .foregroundStyle(.darkTeal)
+                                        Text("\(trip.city), \(trip.state)")
+                                            .font(.custom("Poppins-Regular", size: 12))
+                                            .padding(.bottom, 5)
+                                            .frame(maxWidth: .infinity, alignment: .leading)
+                                            .foregroundStyle(.black)
+                                        HStack {
+                                            Text("\(getDateString(date: trip.start)) - \(getDateString(date: trip.end))")
+                                                .font(.custom("Poppins-Regular", size: 12))
+                                                .foregroundStyle(.black)
+                                            
+                                            Text("(\(getTripDuration(start: trip.start, end: trip.end)) days)")
+                                                .font(.custom("Poppins-Regular", size: 12))
+                                                .foregroundStyle(.gray)
+                                        }
+                                    }
+                                    Image(systemName: "chevron.right")
+                                        .font(.title2)
+                                        .foregroundStyle(.darkTeal)
+                                }
+                                .padding(.horizontal, 35)
+                            }
+                            .padding(.bottom)
                         }
                     }
                 }
