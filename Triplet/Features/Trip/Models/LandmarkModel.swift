@@ -8,17 +8,15 @@
 import Foundation
 import MapKit
 
-struct LandmarkViewModel: Identifiable, Hashable{
+struct Landmark: Identifiable, Hashable {
+    let id: UUID = UUID()
     let placemark: MKPlacemark
-    var id: UUID {
-        return UUID()
-    }
-    
+
     var name: String {
         self.placemark.name ?? ""
     }
     
-    var title: String {
+    var address: String {
         self.placemark.title ?? ""
     }
     

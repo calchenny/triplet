@@ -17,8 +17,8 @@ struct FoodPopupView: View {
     @State var selectedFoodCategory: FoodCategory = .breakfast
     @State var date: Date = Date()
     @State var location: String = ""
-    @State var selectedLandmark: LandmarkViewModel?
-    @State var landmarks: [LandmarkViewModel] = [LandmarkViewModel]()
+    @State var selectedLandmark: Landmark?
+    @State var landmarks: [Landmark] = [Landmark]()
     @State var showAlert: Bool = false
     
     private func getNearByLandmarks() {
@@ -40,7 +40,7 @@ struct FoodPopupView: View {
         
         search.start { response, error in
             if let response = response {
-                self.landmarks = response.mapItems.compactMap { LandmarkViewModel(placemark: $0.placemark) }
+                self.landmarks = response.mapItems.compactMap { Landmark(placemark: $0.placemark) }
             }
         }
     }
@@ -89,7 +89,7 @@ struct FoodPopupView: View {
                         .font(.custom("Poppins-Regular", size: 14))
                     ScrollView {
                         VStack(spacing: 5) {
-                            ForEach(landmarks) { landmark in
+                            ForEach(landmarks, id: \.self) { landmark in
                                 ZStack {
                                     RoundedRectangle(cornerRadius: 10)
                                         .foregroundStyle(landmark == selectedLandmark ? .lighterGray : .white)
@@ -101,7 +101,7 @@ struct FoodPopupView: View {
                                         VStack(alignment: .leading) {
                                             Text(landmark.name)
                                                 .font(.custom("Poppins-Regular", size: 14))
-                                            Text(landmark.title)
+                                            Text(landmark.address)
                                                 .foregroundStyle(.darkerGray)
                                                 .font(.custom("Poppins-Regular", size: 12))
                                         }
@@ -157,7 +157,7 @@ struct FoodPopupView: View {
                     overviewViewModel.addFoodPlace(name: selectedLandmark.name,
                                                    location: GeoPoint(latitude: selectedLandmark.coordinate.latitude, 
                                                                       longitude: selectedLandmark.coordinate.longitude),
-                                                   address: selectedLandmark.title, 
+                                                   address: selectedLandmark.address,
                                                    start: date,
                                                    foodCategory: selectedFoodCategory, tripId: tripId)
                     overviewViewModel.showFoodPopup.toggle()

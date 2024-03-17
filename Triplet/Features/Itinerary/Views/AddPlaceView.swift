@@ -17,12 +17,12 @@ struct AddPlaceView: View {
     @State private var endDate: Date = Date()
     @State private var category: EventType = .attraction
     @State var showAlert: Bool = false
-    @State private var selectedLandmark: LandmarkViewModel?
+    @State private var selectedLandmark: Landmark?
     @Environment(\.presentationMode) var presentationMode
     
     @State private var search: String = ""
     
-    @State private var landmarks: [LandmarkViewModel] = [LandmarkViewModel]()
+    @State private var landmarks: [Landmark] = [Landmark]()
     
     private func getNearByLandmarks() {
         guard let trip = tripViewModel.trip else {
@@ -42,7 +42,7 @@ struct AddPlaceView: View {
         
         search.start { response, error in
             if let response = response {
-                self.landmarks = response.mapItems.compactMap { LandmarkViewModel(placemark: $0.placemark) }
+                self.landmarks = response.mapItems.compactMap { Landmark(placemark: $0.placemark) }
             }
         }
     }
@@ -108,7 +108,7 @@ struct AddPlaceView: View {
                                         VStack(alignment: .leading) {
                                             Text(landmark.name)
                                                 .font(.custom("Poppins-Regular", size: 14))
-                                            Text(landmark.title)
+                                            Text(landmark.address)
                                                 .foregroundStyle(.darkerGray)
                                                 .font(.custom("Poppins-Regular", size: 12))
                                         }
@@ -168,7 +168,15 @@ struct AddPlaceView: View {
                         showAlert.toggle()
                         return
                     }
-                    itineraryModel.addEvent(name: selectedLandmark.name, location: GeoPoint(latitude: selectedLandmark.coordinate.latitude, longitude: selectedLandmark.coordinate.longitude),type: category, category: nil, start: startDate, address: selectedLandmark.title, end: endDate, tripId: tripId)
+                    itineraryModel.addEvent(name: selectedLandmark.name,
+                                            location: GeoPoint(latitude: selectedLandmark.coordinate.latitude,
+                                                               longitude: selectedLandmark.coordinate.longitude),
+                                            type: category,
+                                            category: nil,
+                                            start: startDate,
+                                            address: selectedLandmark.address,
+                                            end: endDate,
+                                            tripId: tripId)
                                                    
                     itineraryModel.showNewPlacePopUp.toggle()
                 } label: {

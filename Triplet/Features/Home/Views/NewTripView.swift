@@ -97,7 +97,7 @@ struct NewTripView: View {
                             showDestinationSheet.toggle()
                         }
                         .sheet(isPresented: $showDestinationSheet) {
-                            DestinationSearchView(locationSearch: LocationSearch())
+                            DestinationSearchView(locationSearchService: LocationSearchService())
                                 .environmentObject(destinationViewModel)
                         }
                 }
@@ -117,7 +117,7 @@ struct NewTripView: View {
                         showDestinationSheet.toggle()
                     }
                     .sheet(isPresented: $showDestinationSheet) {
-                        DestinationSearchView(locationSearch: LocationSearch())
+                        DestinationSearchView(locationSearchService: LocationSearchService())
                             .environmentObject(destinationViewModel)
                             .presentationDragIndicator(.visible)
                             .presentationCornerRadius(25)

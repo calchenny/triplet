@@ -1,5 +1,5 @@
 //
-//  LocationManager.swift
+//  LocationManagerService.swift
 //  Triplet
 //
 //  Created by Andy Lam on 2/28/24.
@@ -9,7 +9,7 @@
 import Foundation
 import MapKit
 
-class LocationManager: NSObject, ObservableObject {
+class LocationManagerService: NSObject, ObservableObject {
     private let locationManager = CLLocationManager()
     @Published var currentLocation: CLLocation? = nil
     @Published var authorizationStatus: CLAuthorizationStatus? = nil
@@ -20,7 +20,6 @@ class LocationManager: NSObject, ObservableObject {
     private var hasSetRegion = false
     
     override init() {
-        
         super.init()
         self.locationManager.delegate = self
         self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
@@ -40,7 +39,7 @@ class LocationManager: NSObject, ObservableObject {
     }
 }
 
-extension LocationManager: CLLocationManagerDelegate {
+extension LocationManagerService: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         self.authorizationStatus = manager.authorizationStatus
         
