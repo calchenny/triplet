@@ -160,7 +160,7 @@ struct CurrentTripsView: View  {
                 ProgressView()
                     .controlSize(.large)
             } else {
-                Text(" You have \(myTripsViewModel.currentTrips.count) trips planned.")
+                Text("You have \(myTripsViewModel.currentTrips.count) trips planned.")
                     .font(.custom("Poppins-Regular", size: 16))
                     .frame(width: UIScreen.main.bounds.width * 0.8, alignment: .leading)
                     .padding()

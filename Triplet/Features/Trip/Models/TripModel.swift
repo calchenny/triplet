@@ -16,10 +16,10 @@ struct Trip: Identifiable, Codable {
     var start: Date
     var end: Date
     var destination: GeoPoint
-    var numGuests: Int?
     var notes: [Note]?
     var events: [Event]?
     var expenses: [Expense]?
+    var budget: Double?
     var city: String
     var state: String
 }
