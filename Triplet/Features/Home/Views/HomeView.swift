@@ -11,6 +11,7 @@ import AnimatedTabBar
 
 struct HomeView: View {
     @State var selectedIndex: Int = 0
+
     let names = ["house", "plus.app", "gearshape"]
 
     func wiggleButtonAt(_ index: Int, name: String) -> some View {
@@ -22,14 +23,20 @@ struct HomeView: View {
         VStack {
             if selectedIndex == 0 {
                 MyTripsView(selectedIndex: $selectedIndex)
+                    .transition(.move(edge: .leading))
             } else if selectedIndex == 1 {
                 NewTripView(selectedIndex: $selectedIndex)
+
             } else {
                 SettingView()
+                    .transition(.move(edge: .trailing))
             }
         }
         .frame(width: UIScreen.main.bounds.width * 0.8)
+        .animation(.easeInOut(duration: 0.3), value: selectedIndex)
+        
         Spacer()
+        
         AnimatedTabBar(selectedIndex: $selectedIndex, views: (0..<names.count).map { wiggleButtonAt($0, name: names[$0]) })
             .cornerRadius(16)
             .selectedColor(.darkTeal)
