@@ -18,6 +18,7 @@ struct NewTripView: View {
     @State var tripName: String = ""
     @State var showDestinationSheet: Bool = false
     @State var isActive: Bool = false
+    @State var verifiedField: [Bool] = [false, false, false, false]
     @Binding var selectedIndex: Int
     
     func createTrip() {
@@ -224,6 +225,7 @@ struct NewTripView: View {
                     .padding(5)
                     .frame(width: UIScreen.main.bounds.width/1.5, alignment: .center)
             }
+            .disabled(!(destinationViewModel.city != nil && destinationViewModel.state != nil && startDate != Date.distantPast && endDate != Date.distantPast && !tripName.isEmpty))
             .cornerRadius(15)
             .buttonStyle(.borderedProminent)
             .padding(.vertical)

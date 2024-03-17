@@ -11,6 +11,7 @@ import SwiftUI
 struct SettingView: View {
     @EnvironmentObject var authenticationModel: AuthenticationModel
     @State var signedOut = false
+    @State var notifications = false
     
     var body: some View {
         VStack {
@@ -20,13 +21,9 @@ struct SettingView: View {
                 .padding()
             Form {
                 Section(header: Text("Account Settings")) {
-                    Toggle("Push Notifications", isOn: .constant(false))
+                    Toggle("Push Notifications", isOn: $notifications)
                         .font(.custom("Poppins-Regular", size: 15))
                     Text("About Us")
-                        .font(.custom("Poppins-Regular", size: 15))
-                    Text("Privacy Policy")
-                        .font(.custom("Poppins-Regular", size: 15))
-                    Text("Terms and conditions")
                         .font(.custom("Poppins-Regular", size: 15))
                     
                 }
