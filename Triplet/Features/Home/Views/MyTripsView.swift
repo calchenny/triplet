@@ -12,8 +12,6 @@ struct MyTripsView: View {
     @Binding var selectedIndex: Int
     @State var tabSelection = 0
     @StateObject var myTripsViewModel: MyTripsViewModel = MyTripsViewModel()
-    @State var tripCities: [String] = []
-    @State var tripStates: [String] = []
     @State var isTripsLoading = true
     
     var body: some View {
@@ -150,8 +148,6 @@ struct CurrentTripsView: View  {
     @EnvironmentObject var myTripsViewModel: MyTripsViewModel
     @Binding var selectedIndex: Int
     @State private var navigateToOverview: Bool = false
-    @State private var tripID: String = ""
-    @State private var isActive: Bool = false
     @Binding var isTripsLoading: Bool
     
     var body: some View {
@@ -232,8 +228,6 @@ struct CurrentTripsView: View  {
 struct PastTripsView: View {
     @EnvironmentObject var myTripsViewModel: MyTripsViewModel
     @State private var navigateToOverview: Bool = false
-    @State private var tripID: String = ""
-    @State private var isActive: Bool = false
     @Binding var isTripsLoading: Bool
     
     var body: some View {
