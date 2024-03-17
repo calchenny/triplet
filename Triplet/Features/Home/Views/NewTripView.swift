@@ -228,7 +228,7 @@ struct NewTripView: View {
             .disabled(!(destinationViewModel.city != nil && destinationViewModel.state != nil && startDate != Date.distantPast && endDate != Date.distantPast && !tripName.isEmpty))
             .cornerRadius(15)
             .buttonStyle(.borderedProminent)
-            .padding(.vertical)
+            .padding(.vertical, 30)
             .tint(.darkTeal)
         }
     }

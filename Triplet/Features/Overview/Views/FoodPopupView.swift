@@ -28,7 +28,8 @@ struct FoodPopupView: View {
         }
 
         let request = MKLocalSearch.Request()
-        request.pointOfInterestFilter = .includingAll
+        request.pointOfInterestFilter = MKPointOfInterestFilter(including: [.bakery, .brewery, .cafe, .foodMarket, .nightlife, .restaurant, .winery])
+
         request.naturalLanguageQuery = "\(location) \(trip.city) \(trip.state)"
         request.region = MKCoordinateRegion(
             center: CLLocationCoordinate2D(latitude: trip.destination.latitude, longitude: trip.destination.longitude),

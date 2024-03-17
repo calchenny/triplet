@@ -36,7 +36,6 @@ struct DestinationSearchView: View {
                         .background(.darkTeal)
                         .foregroundColor(.white)
                         .clipShape(Circle())
-                        .shadow(radius: 4, x: 0, y: 4)
                 })
                 Spacer()
             }
