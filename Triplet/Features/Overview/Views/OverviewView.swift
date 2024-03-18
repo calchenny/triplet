@@ -83,8 +83,8 @@ struct OverviewView: View {
                             Image(systemName: "house")
                                 .foregroundStyle(Color("Dark Teal"))
                                 .font(.title2)
+                                .padding(5)
                             Spacer()
-                                .frame(maxWidth: 20)
                             VStack(alignment: .leading) {
                                 Text(housing.name)
                                     .font(.custom("Poppins-Medium", size: 16))
@@ -96,6 +96,12 @@ struct OverviewView: View {
                                     .foregroundStyle(.secondary)
                             }
                             Spacer()
+                            Button {
+                                
+                            } label: {
+                                Image(systemName: "ellipsis")
+                                    .font(.title2)
+                            }
                         }
                         .padding([.top, .leading, .trailing])
                     }
@@ -153,8 +159,8 @@ struct OverviewView: View {
                             Image(systemName: "cup.and.saucer")
                                 .foregroundStyle(Color("Dark Teal"))
                                 .font(.title2)
+                                .padding(5)
                             Spacer()
-                                .frame(maxWidth: 20)
                             VStack(alignment: .leading) {
                                 Text(event.name)
                                     .font(.custom("Poppins-Medium", size: 16))
@@ -166,13 +172,19 @@ struct OverviewView: View {
                                     .foregroundStyle(.secondary)
                             }
                             Spacer()
+                            Button {
+                                
+                            } label: {
+                                Image(systemName: "ellipsis")
+                                    .font(.title2)
+                            }
                         }
                         .padding(.top)
                     }
                     
                 } label: {
                     Text("Breakfast/Brunch")
-                        .font(.custom("Poppins-Medium", size: 20))
+                        .font(.custom("Poppins-Bold", size: 20))
                 }
                 .padding([.top, .leading, .trailing])
                 DisclosureGroup(isExpanded: $overviewViewModel.toggleStates.food.lunch) {
@@ -190,8 +202,8 @@ struct OverviewView: View {
                             Image(systemName: "takeoutbag.and.cup.and.straw")
                                 .foregroundStyle(Color("Dark Teal"))
                                 .font(.title2)
+                                .padding(5)
                             Spacer()
-                                .frame(maxWidth: 20)
                             VStack(alignment: .leading) {
                                 Text(event.name)
                                     .font(.custom("Poppins-Medium", size: 16))
@@ -203,12 +215,18 @@ struct OverviewView: View {
                                     .foregroundStyle(.secondary)
                             }
                             Spacer()
+                            Button {
+                                
+                            } label: {
+                                Image(systemName: "ellipsis")
+                                    .font(.title2)
+                            }
                         }
                         .padding(.top)
                     }
                 } label: {
                     Text("Lunch")
-                        .font(.custom("Poppins-Medium", size: 20))
+                        .font(.custom("Poppins-Bold", size: 20))
                 }
                 .padding([.top, .leading, .trailing])
                 DisclosureGroup(isExpanded: $overviewViewModel.toggleStates.food.dinner) {
@@ -226,8 +244,8 @@ struct OverviewView: View {
                             Image(systemName: "wineglass")
                                 .foregroundStyle(Color("Dark Teal"))
                                 .font(.title2)
+                                .padding(5)
                             Spacer()
-                                .frame(maxWidth: 20)
                             VStack(alignment: .leading) {
                                 Text(event.name)
                                     .font(.custom("Poppins-Medium", size: 16))
@@ -239,12 +257,18 @@ struct OverviewView: View {
                                     .foregroundStyle(.secondary)
                             }
                             Spacer()
+                            Button {
+                                
+                            } label: {
+                                Image(systemName: "ellipsis")
+                                    .font(.title2)
+                            }
                         }
                         .padding(.top)
                     }
                 } label: {
                     Text("Dinner")
-                        .font(.custom("Poppins-Medium", size: 20))
+                        .font(.custom("Poppins-Bold", size: 20))
                 }
                 .padding()
             } label: {

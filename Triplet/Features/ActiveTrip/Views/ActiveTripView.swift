@@ -133,11 +133,13 @@ struct ActiveTripView: View {
                             VStack(alignment: .leading) {
                                 Text(event.name)
                                     .font(.custom("Poppins-Medium", size: 16))
+                                    .fixedSize(horizontal: false, vertical: true)
                                 Text("\(getDateString(date: event.start, includeTime: true)) - \(getDateString(date: event.end, includeTime: true))")
                                     .font(.custom("Poppins-Regular", size: 12))
                                 Text(event.address)
                                     .font(.custom("Poppins-Regular", size: 12))
                                     .foregroundStyle(.secondary)
+                                    .fixedSize(horizontal: false, vertical: true)
                             }
                             .padding()
                             Spacer()
@@ -151,7 +153,6 @@ struct ActiveTripView: View {
                                     .foregroundColor(.darkTeal)
                             }
                         }
-                        .frame(maxHeight: 100)
                         if event.start < Date() {
                             let location = event.location
                             let latitude = location.latitude
