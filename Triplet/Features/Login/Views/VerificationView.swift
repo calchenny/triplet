@@ -38,9 +38,9 @@ struct VerificationView: View {
     // function that verifies otp code and then creates the account (same process)
     func verifyAndCreateAccount() {
         authenticationModel.signIn(loginViewModel.code) {
+            navigateToHome.toggle()
             loginViewModel.code = ""
             loginViewModel.phoneNumber = ""
-            navigateToHome.toggle()
         }
     }
     
@@ -119,6 +119,7 @@ struct VerificationView: View {
             }
             Button {
                 present.wrappedValue.dismiss()
+                loginViewModel.code = ""
             } label: {
                 Image(systemName: "arrowshape.backward.fill")
                     .font(.title2)

@@ -95,9 +95,9 @@ struct LoginView: View {
                         .font(.custom("Poppins-Medium", size: 18))
                         .padding(.vertical, 20)
                         .padding(.horizontal, 30)
-                        .foregroundStyle(.white)
+                        .foregroundStyle(login.phoneNumber.count < 14 ? .darkerGray : .white)
                         .frame(width: 200, height: 50)
-                        .background(login.phoneNumber.count < 14 ? Color.gray.opacity(0.5) : login.phoneNumber.count == 14 ? Color(.darkTeal) : Color.red.opacity(0.5))
+                        .background(login.phoneNumber.count < 14 ? .lighterGray : login.phoneNumber.count == 14 ? .darkTeal : Color.red.opacity(0.5))
                         .cornerRadius(15)
                 }
                 .disabled(login.phoneNumber.count != 14)

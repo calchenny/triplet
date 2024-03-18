@@ -79,34 +79,28 @@ struct NewTripView: View {
             }
             .padding()
 
-            Text("Where to?")
-                .font(.custom("Poppins-Bold", size: 16))
-                .foregroundStyle(Color("Dark Teal"))
+            Text("Destination")
+                .font(.custom("Poppins-Medium", size: 16))
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.top)
             
-            if let city = destinationViewModel.city {
-                // Store city into user model
-                if let state = destinationViewModel.state {
-                    // Store state into user model
-                    Text("\(city), \(state)")
-                        .font(.custom("Poppins-Regular", size: 16))
-                        .frame(maxWidth: 270, alignment: .leading)
-                        .padding(8)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 10)
-                                .stroke(.gray)
-                        )
-                        .padding(.top, 10)
-                        .onTapGesture {
-                            showDestinationPopup.toggle()
-                        }
-                }
-                
+            if let city = destinationViewModel.city, let state = destinationViewModel.state {
+                Text("\(city), \(state)")
+                    .font(.custom("Poppins-Regular", size: 16))
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(8)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 10)
+                            .stroke(.gray)
+                    )
+                    .padding(.top, 10)
+                    .onTapGesture {
+                        showDestinationPopup.toggle()
+                    }
             } else {
                 Text("e.g, Davis, New York, Seattle")
                     .font(.custom("Poppins-Regular", size: 16))
-                    .frame(maxWidth: 270, alignment: .leading)
+                    .frame(maxWidth: .infinity, alignment: .leading)
                     .foregroundStyle(.placeholder)
                     .padding(8)
                     .overlay(
@@ -121,8 +115,7 @@ struct NewTripView: View {
             }
             
             Text("Dates")
-                .font(.custom("Poppins-Bold", size: 16))
-                .foregroundStyle(Color("Dark Teal"))
+                .font(.custom("Poppins-Medium", size: 16))
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.top)
             
@@ -147,7 +140,6 @@ struct NewTripView: View {
                 RoundedRectangle(cornerRadius: 10)
                     .stroke(.gray)
             )
-            .padding(.horizontal, 10)
             .overlay{
                 DatePicker("",selection: $startDate, in: Date.now..., displayedComponents: .date)
                     .datePickerStyle(.compact)
@@ -176,7 +168,6 @@ struct NewTripView: View {
                 RoundedRectangle(cornerRadius: 10)
                     .stroke(.gray)
             )
-            .padding(.horizontal, 10)
             .padding(.top, 10)
             .overlay{
                 DatePicker("",selection: $endDate, in: startDate..., displayedComponents: .date)
@@ -189,8 +180,7 @@ struct NewTripView: View {
             }
 
             Text("Trip Name")
-                .font(.custom("Poppins-Bold", size: 16))
-                .foregroundStyle(Color("Dark Teal"))
+                .font(.custom("Poppins-Medium", size: 16))
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.top)
             
@@ -210,12 +200,11 @@ struct NewTripView: View {
                             Color(.gray) : Color(.green)
                         )
                 )
-                .padding(.horizontal, 20)
 
             Button {
                 createTrip()
             } label: {
-                Text("Start Planning")
+                Text("Create")
                     .font(.custom("Poppins-Medium", size: 18))
                     .foregroundStyle(isInputsValid ? .darkerGray : .white)
                     .frame(width: 200, height: 50)
