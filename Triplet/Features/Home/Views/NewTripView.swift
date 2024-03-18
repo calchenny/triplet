@@ -21,6 +21,10 @@ struct NewTripView: View {
     @State var showDestinationPopup: Bool = false
     @State var showError: Bool = false
     @Binding var selectedIndex: Int
+    var isInputsValid: Bool {
+        !(destinationViewModel.city != nil && destinationViewModel.state != nil 
+          && startDate != Date.distantPast && endDate != Date.distantPast && !tripName.isEmpty)
+    }
     
     func createTrip() {
         guard let uid = Auth.auth().currentUser?.uid,
@@ -212,15 +216,14 @@ struct NewTripView: View {
                 createTrip()
             } label: {
                 Text("Start Planning")
-                    .font(.custom("Poppins-Bold", size: 16))
-                    .padding(5)
-                    .frame(width: UIScreen.main.bounds.width/1.5, alignment: .center)
+                    .font(.custom("Poppins-Medium", size: 18))
+                    .foregroundStyle(isInputsValid ? .darkerGray : .white)
+                    .frame(width: 200, height: 50)
+                    .background(isInputsValid ? .lighterGray : .darkTeal)
+                    .cornerRadius(15)
             }
-            .disabled(!(destinationViewModel.city != nil && destinationViewModel.state != nil && startDate != Date.distantPast && endDate != Date.distantPast && !tripName.isEmpty))
-            .cornerRadius(15)
-            .buttonStyle(.borderedProminent)
+            .disabled(isInputsValid && !tripName.isEmpty)
             .padding(.vertical, 30)
-            .tint(.darkTeal)
         }
         .popup(isPresented: $showDestinationPopup) {
             DestinationSearchView(locationSearchService: LocationSearchService(), showDestinationPopup: $showDestinationPopup)

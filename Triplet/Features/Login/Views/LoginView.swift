@@ -87,12 +87,12 @@ struct LoginView: View {
                     .font(.custom("Poppins-Regular", size: 14))
                     .foregroundStyle(.darkerGray)
                     .padding(.bottom, 30)
-
+                
                 Button {
                     continueClick()
                 } label: {
                     Text("Login")
-                        .font(.custom("Poppins-Bold", size: 16))
+                        .font(.custom("Poppins-Medium", size: 18))
                         .padding(.vertical, 20)
                         .padding(.horizontal, 30)
                         .foregroundStyle(.white)

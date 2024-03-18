@@ -97,17 +97,15 @@ struct VerificationView: View {
                     resendCode()
                 } label: {
                     Text("Resend Code")
-                        .font(.custom("Poppins-Bold", size: 16))
+                        .font(.custom("Poppins-Medium", size: 18))
                         .foregroundStyle(.white)
                         .padding(.vertical)
-                        .frame(width:UIScreen.main.bounds.width * 0.6)
+                        .frame(width: 200, height: 50)
                         .background(.darkTeal)
                         .cornerRadius(15)
                 }
                 .padding(.top, 20)
-                
                 Spacer()
-
             }
             .navigationDestination(isPresented: $navigateToHome) {
                 HomeView()

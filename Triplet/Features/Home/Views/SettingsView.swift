@@ -27,20 +27,23 @@ struct SettingView: View {
                         .font(.custom("Poppins-Regular", size: 15))
                     
                 }
-                Button {
-                    authenticationModel.signOut {
-                        signedOut = true
-                    }
-                } label: {
-                    ZStack{
-                        RoundedRectangle(cornerRadius: 12)
-                            .fill(Color.darkTeal)
+                HStack {
+                    Button {
+                        authenticationModel.signOut {
+                            signedOut = true
+                        }
+                    } label: {
                         Text("Logout")
-                            .font(.custom("Poppins-Regular", size: 18))
-                            .foregroundColor(.white)
-                            .padding(.vertical, 7)
+                            .font(.custom("Poppins-Medium", size: 18))
+                            .padding(.vertical, 20)
+                            .padding(.horizontal, 30)
+                            .foregroundStyle(.white)
+                            .frame(width: 200, height: 50)
+                            .background(.darkTeal)
+                            .cornerRadius(15)
                     }
                 }
+                .frame(maxWidth: .infinity)
             }
             .navigationDestination(isPresented: $signedOut) {
                 LoginView()
