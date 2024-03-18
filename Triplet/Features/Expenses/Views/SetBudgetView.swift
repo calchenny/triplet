@@ -9,7 +9,13 @@ import SwiftUI
 
 struct SetBudgetView: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack {
+            Text("Set a budget")
+                .font(.custom("Poppins-Bold", size: 25))
+            .foregroundColor(Color.darkTeal)
+            Spacer()
+        }
+        
     }
 }
 

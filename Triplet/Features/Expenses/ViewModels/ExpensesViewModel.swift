@@ -47,6 +47,10 @@ class ExpensesViewModel: ObservableObject {
         showNewExpensePopup.toggle()
     }
     
+    func changeBudget(budget: Double, tripId: String) {
+        
+    }
+    
     func subscribe(tripId: String) {
         if listenerRegistration == nil {
             let expensesQuery = db.collection("trips/\(tripId)/expenses")
