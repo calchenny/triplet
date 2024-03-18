@@ -81,8 +81,8 @@ struct OverviewView: View {
                     ForEach(overviewViewModel.housing, id: \.id) { housing in
                         HStack {
                             Image(systemName: "house")
+                                .font(.title)
                                 .foregroundStyle(Color("Dark Teal"))
-                                .font(.title2)
                                 .padding(5)
                             Spacer()
                             VStack(alignment: .leading) {
@@ -157,8 +157,8 @@ struct OverviewView: View {
                     ForEach(breakfast, id: \.id) { event in
                         HStack {
                             Image(systemName: "cup.and.saucer")
+                                .font(.title)
                                 .foregroundStyle(Color("Dark Teal"))
-                                .font(.title2)
                                 .padding(5)
                             Spacer()
                             VStack(alignment: .leading) {
@@ -200,8 +200,8 @@ struct OverviewView: View {
                     ForEach(lunch, id: \.id) { event in
                         HStack {
                             Image(systemName: "takeoutbag.and.cup.and.straw")
+                                .font(.title)
                                 .foregroundStyle(Color("Dark Teal"))
-                                .font(.title2)
                                 .padding(5)
                             Spacer()
                             VStack(alignment: .leading) {
@@ -242,8 +242,8 @@ struct OverviewView: View {
                     ForEach(dinner, id: \.id) { event in
                         HStack {
                             Image(systemName: "wineglass")
+                                .font(.title)
                                 .foregroundStyle(Color("Dark Teal"))
-                                .font(.title2)
                                 .padding(5)
                             Spacer()
                             VStack(alignment: .leading) {

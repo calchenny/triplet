@@ -120,9 +120,8 @@ struct ActiveTripView: View {
                         HStack {
                             // Image for the event's category
                             Image(systemName: getCategoryImageName(category: event.type.rawValue))
-                                .resizable()
-                                .frame(width: 30, height: 30)
-                                .padding([.leading, .trailing])
+                                .font(.title)
+                                .padding(.horizontal)
                                 .foregroundColor(.darkTeal)
                             
                             Divider()
@@ -148,8 +147,7 @@ struct ActiveTripView: View {
                                 toggleEventCheck(eventID: event.id ?? "")
                             }) {
                                 Image(systemName: checkedEvents.contains(event.id ?? "") ? "checkmark.square.fill" : "square")
-                                    .resizable()
-                                    .frame(width: 20, height: 20)
+                                    .font(.title2)
                                     .foregroundColor(.darkTeal)
                             }
                         }

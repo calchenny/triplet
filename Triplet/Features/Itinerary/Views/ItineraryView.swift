@@ -124,8 +124,7 @@ struct ItineraryView: View {
                                             HStack {
                                                 // Image for the event's category
                                                 Image(systemName: getCategoryImageName(category: event.type.rawValue))
-                                                    .resizable()
-                                                    .frame(width: 30, height: 30)
+                                                    .font(.title)
                                                     .padding([.leading, .trailing])
                                                     .foregroundColor(.darkTeal)
                                                 
