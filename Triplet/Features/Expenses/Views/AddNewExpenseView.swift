@@ -18,6 +18,7 @@ struct AddNewExpenseView: View {
     @State private var selection: ExpenseCategory = .housing
     @State var date: Date = Date()
     @State private var error: Bool = false
+    @FocusState private var costFocus: Bool
 
     // function that will bring down the keyboard
     func hideKeyboard() {
@@ -75,6 +76,7 @@ struct AddNewExpenseView: View {
                         .overlay(RoundedRectangle(cornerRadius: 5).stroke(Color("Darker Gray")))
                         .padding(.bottom)
                         .keyboardType(.decimalPad)
+                        .focused($costFocus)
                 }
                 
                 Text("Category")
@@ -154,6 +156,9 @@ struct AddNewExpenseView: View {
                 }
             }
             .padding([.leading, .trailing], 20)
+            .onTapGesture {
+                costFocus = false
+            }
         }
         .padding()
         .frame(maxHeight: 600)
