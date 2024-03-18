@@ -95,13 +95,6 @@ struct OverviewView: View {
                                     .font(.custom("Poppins-Regular", size: 12))
                                     .foregroundStyle(.secondary)
                             }
-                            Spacer()
-                            Button {
-                                
-                            } label: {
-                                Image(systemName: "ellipsis")
-                                    .font(.title2)
-                            }
                         }
                         .padding([.top, .leading, .trailing])
                     }
@@ -172,12 +165,6 @@ struct OverviewView: View {
                                     .foregroundStyle(.secondary)
                             }
                             Spacer()
-                            Button {
-                                
-                            } label: {
-                                Image(systemName: "ellipsis")
-                                    .font(.title2)
-                            }
                         }
                         .padding(.top)
                     }
@@ -215,12 +202,6 @@ struct OverviewView: View {
                                     .foregroundStyle(.secondary)
                             }
                             Spacer()
-                            Button {
-                                
-                            } label: {
-                                Image(systemName: "ellipsis")
-                                    .font(.title2)
-                            }
                         }
                         .padding(.top)
                     }
@@ -257,12 +238,6 @@ struct OverviewView: View {
                                     .foregroundStyle(.secondary)
                             }
                             Spacer()
-                            Button {
-                                
-                            } label: {
-                                Image(systemName: "ellipsis")
-                                    .font(.title2)
-                            }
                         }
                         .padding(.top)
                     }
