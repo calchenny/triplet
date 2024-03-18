@@ -32,7 +32,6 @@ struct DestinationSearchView: View {
         ZStack {
             RoundedRectangle(cornerRadius: 15)
                 .foregroundStyle(.white)
-            
             VStack {
                 ZStack(alignment: .trailing) {
                     HStack {
@@ -53,7 +52,7 @@ struct DestinationSearchView: View {
                             }
                     })
                 }
-                .padding(.top, 20)
+                .padding(.top)
                 ZStack(alignment: .trailing) {
                     TextField("Search cities", text: $searchQuery)
                         .padding(20)
@@ -128,7 +127,8 @@ struct DestinationSearchView: View {
                     Text("Please select a destination")
                 }
             }
-            .padding(20)
+            .padding(.horizontal, 20)
+            .padding(.vertical, 10)
         }
         .padding()
         .frame(maxHeight: 500)
