@@ -154,6 +154,7 @@ struct OverviewView: View {
                                 .foregroundStyle(Color("Dark Teal"))
                                 .padding(5)
                             Spacer()
+                                .frame(maxWidth: 20)
                             VStack(alignment: .leading) {
                                 Text(event.name)
                                     .font(.custom("Poppins-Medium", size: 16))
@@ -191,6 +192,7 @@ struct OverviewView: View {
                                 .foregroundStyle(Color("Dark Teal"))
                                 .padding(5)
                             Spacer()
+                                .frame(maxWidth: 20)
                             VStack(alignment: .leading) {
                                 Text(event.name)
                                     .font(.custom("Poppins-Medium", size: 16))
@@ -227,6 +229,7 @@ struct OverviewView: View {
                                 .foregroundStyle(Color("Dark Teal"))
                                 .padding(5)
                             Spacer()
+                                .frame(maxWidth: 20)
                             VStack(alignment: .leading) {
                                 Text(event.name)
                                     .font(.custom("Poppins-Medium", size: 16))
