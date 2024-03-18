@@ -12,7 +12,9 @@ struct DestinationSearchView: View {
     @ObservedObject var locationSearchService = LocationSearchService()
     @EnvironmentObject var destinationViewModel: DestinationViewModel
     @State private var searchQuery: String = ""
-    @State private var displayedResults: [LocationSearchService.CityResult] = []
+    @State private var displayedResults = [LocationSearchService.CityResult]()
+    @State var selectedLandmark: LocationSearchService.CityResult?
+    @State var showAlert: Bool = false
     @Binding var showDestinationPopup: Bool
 
     func selectedDestination(result: LocationSearchService.CityResult) {
@@ -32,9 +34,13 @@ struct DestinationSearchView: View {
                 .foregroundStyle(.white)
             
             VStack {
-                HStack {
-                    Spacer()
-                    
+                ZStack(alignment: .trailing) {
+                    HStack {
+                        Text("Destination")
+                            .font(.custom("Poppins-Bold", size: 30))
+                            .foregroundStyle(.darkTeal)
+                    }
+                    .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/)
                     Button(action: {
                         showDestinationPopup.toggle()
                     }, label: {
@@ -47,52 +53,84 @@ struct DestinationSearchView: View {
                             }
                     })
                 }
-                .padding(.top)
-                
-                Form {
-                    Section(header: Text("Location Search")
-                        .font(.custom("Poppins-Regular", size: 14))) {
-                        ZStack(alignment: .trailing) {
-                            TextField("Search", text: $searchQuery)
-                                .font(.custom("Poppins-Regular", size: 16))
-                                .onChange(of: searchQuery) {
-                                    // Update the locationSearchService when the text changes
-                                    locationSearchService.searchQuery = searchQuery
-                                    displayedResults = locationSearchService.searchResults // Update displayed results
-
-                                }
-                            // Displays an icon during an active search
-                            if locationSearchService.status == .isSearching {
-                                Image(systemName: "clock")
-                                    .foregroundColor(Color.gray)
-                            }
+                .padding(.top, 20)
+                ZStack(alignment: .trailing) {
+                    TextField("Search cities", text: $searchQuery)
+                        .padding(20)
+                        .frame(maxHeight: 35)
+                        .font(.custom("Poppins-Regular", size: 16))
+                        .overlay(RoundedRectangle(cornerRadius: 5).stroke(Color("Darker Gray")))
+                        .onChange(of: searchQuery) {
+                            locationSearchService.searchQuery = searchQuery
+                            displayedResults = locationSearchService.searchResults
                         }
-                    }
-                    .listRowBackground(Color(UIColor.systemGray6))
-                    
-                    Section(header: Text("Results")
-                        .font(.custom("Poppins-Regular", size: 14))) {
-                        List(displayedResults, id: \.self) { result in
-                            Button(action: {
-                                selectedDestination(result: result)
-                            }) {
-                                HStack {
-                                    Text("\(result.city), \(result.state), \(result.country)")
-                                        .font(.custom("Poppins-Regular", size: 16))
-                                        .foregroundStyle(.black)
-                                }
-                            }
-                        }
-                    }
-                    .listRowBackground(Color(UIColor.systemGray6))
+                    Image(systemName: "magnifyingglass")
+                        .padding(.trailing)
+                        .foregroundStyle(.darkerGray)
                 }
-                .background(.white)
-                .scrollContentBackground(.hidden)
+                VStack(alignment: .leading) {
+                    Text("\(displayedResults.count) Results")
+                        .font(.custom("Poppins-Regular", size: 14))
+                    ScrollView {
+                        VStack(spacing: 5) {
+                            ForEach(displayedResults, id: \.self) { landmark in
+                                ZStack {
+                                    RoundedRectangle(cornerRadius: 10)
+                                        .foregroundStyle(landmark == selectedLandmark ? .lighterGray : .white)
+                                    HStack {
+                                        Image(systemName: "mappin.and.ellipse")
+                                            .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
+                                            .padding(.trailing)
+                                            .foregroundStyle(.darkTeal)
+                                        VStack(alignment: .leading) {
+                                            Text(landmark.city)
+                                                .font(.custom("Poppins-Regular", size: 14))
+                                            Text("\(landmark.state), \(landmark.country)")
+                                                .foregroundStyle(.darkerGray)
+                                                .font(.custom("Poppins-Regular", size: 12))
+                                        }
+                                        Spacer()
+                                    }
+                                    .padding(5)
+                                }
+                                .onTapGesture {
+                                    selectedLandmark = selectedLandmark == landmark ? nil : landmark
+                                }
+                            }
+                        }
+                    }
+                    .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, maxHeight: .infinity)
+                }
+                .padding(.top)
+                Button {
+                    guard let selectedLandmark else {
+                        showAlert.toggle()
+                        return
+                    }
+                    selectedDestination(result: selectedLandmark)
+                } label: {
+                    RoundedRectangle(cornerRadius: 10)
+                        .frame(width: 200, height: 40)
+                        .foregroundStyle(Color("Dark Teal"))
+                        .overlay(
+                            HStack {
+                                Image(systemName: "plus")
+                                Text("Add destination")
+                                    .font(.custom("Poppins-Medium", size: 16))
+                            }
+                                .tint(.white)
+                        )
+                        .padding([.top, .bottom])
+                }
+                .alert("No Destination Selected", isPresented: $showAlert) {
+                    Button("OK", role: .cancel) { }
+                } message: {
+                    Text("Please select a destination")
+                }
             }
-            .padding([.leading, .trailing], 20)
-
+            .padding(20)
         }
         .padding()
-        .frame(maxHeight: 550)
+        .frame(maxHeight: 500)
     }
 }
