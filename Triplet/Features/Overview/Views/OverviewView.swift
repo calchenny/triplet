@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import MapKit
 import Firebase
 import ScalingHeaderScrollView
 import PopupView

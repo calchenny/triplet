@@ -9,9 +9,9 @@ import SwiftUI
 import MapKit
 import CoreLocation
 
-
 struct MapView: View {
     @ObservedObject var locationManagerService = LocationManagerService()
+    @EnvironmentObject var tripViewModel: TripViewModel
     @State private var mapSelection: String?
     @State private var selectedMarkerName: String?
     @State private var selectedMarker: MKMapItem = MKMapItem()
@@ -161,6 +161,16 @@ struct MapView: View {
                         }
                     }
                                     
+                    // Fetching events from itinerary to display on map
+                    if let trip = tripViewModel.trip, let events = trip.events {
+                        ForEach(events, id: \.id) { event in
+                          let destination = event.location
+                          Marker(event.name, systemImage: "toilet.fill", coordinate: CLLocationCoordinate2D(latitude: destination.latitude, longitude: destination.longitude))
+                                .tint(.purple)
+                        }
+                    }
+                    
+                    // Displaying important locations near the user
                     ForEach(searchResults, id: \.id) { result in
                         let categoryData = getCategoryData(category: result.category)
                         
@@ -286,8 +296,3 @@ struct MapView: View {
         .ignoresSafeArea()
     }
 }
-
-//
-//#Preview {
-//    MapView()
-//}

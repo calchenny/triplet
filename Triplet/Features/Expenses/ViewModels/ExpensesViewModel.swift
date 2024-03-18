@@ -8,7 +8,6 @@
 import SwiftUI
 import EventKit
 import ScalingHeaderScrollView
-import MapKit
 import FirebaseFirestore
 
 class ExpensesViewModel: ObservableObject {

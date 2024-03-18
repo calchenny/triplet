@@ -8,7 +8,6 @@
 import SwiftUI
 import EventKit
 import ScalingHeaderScrollView
-import MapKit
 import CoreLocation
 import FirebaseFirestore
 import PopupView
