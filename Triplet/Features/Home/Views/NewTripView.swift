@@ -93,7 +93,6 @@ struct NewTripView: View {
                         RoundedRectangle(cornerRadius: 10)
                             .stroke(.gray)
                     )
-                    .padding(.top, 10)
                     .onTapGesture {
                         showDestinationPopup.toggle()
                     }
@@ -107,7 +106,6 @@ struct NewTripView: View {
                         RoundedRectangle(cornerRadius: 10)
                             .stroke(.gray)
                     )
-                    .padding(.top, 10)
                     .onTapGesture {
                         showDestinationPopup.toggle()
                     }
