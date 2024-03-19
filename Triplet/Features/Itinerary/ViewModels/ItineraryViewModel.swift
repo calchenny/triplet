@@ -50,7 +50,9 @@ class ItineraryViewModel: ObservableObject {
     }
     
     
+    //function to delete an event from firebase database
     func deleteEventFromFirestore(eventID: String, tripId: String) {
+        // check to see if event is in collection
         let eventReference = db.collection("trips").document(tripId).collection("events").document(eventID)
         
         eventReference.delete { error in
@@ -62,6 +64,7 @@ class ItineraryViewModel: ObservableObject {
         }
     }
     
+    //function to load events from database into model
     func subscribe(tripId: String) {
         if listenerRegistration == nil {
             let eventsQuery = db.collection("trips/\(tripId)/events")
@@ -83,6 +86,7 @@ class ItineraryViewModel: ObservableObject {
         }
     }
     
+    //function to stop loading events from database
     func unsubscribe() {
         if listenerRegistration != nil {
             listenerRegistration?.remove()

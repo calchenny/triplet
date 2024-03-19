@@ -22,6 +22,8 @@ struct ItineraryView: View {
     @State var searchText: String = ""
     @State private var reverseGeocodedAddress: String = ""
     
+    
+    //function to grab image from sfsymbols
     func getCategoryImageName(category: String) -> String {
         switch category {
         case "Food":
@@ -37,20 +39,6 @@ struct ItineraryView: View {
         }
     }
     
-    func reverseGeocoding(latitude: Double, longitude: Double, completion: @escaping (CLPlacemark?) -> Void) {
-        let geocoder = CLGeocoder()
-        let location = CLLocation(latitude: latitude, longitude: longitude)
-
-        // Look up the location and retrieve address
-        geocoder.reverseGeocodeLocation(location) { placemarks, error in
-            guard error == nil, let placemark = placemarks?.first else {
-                print("Failed to retrieve address:", error?.localizedDescription ?? "Unknown error")
-                completion(nil)
-                return
-            }
-            completion(placemark)
-        }
-    }
     
     var body: some View {
         VStack {
@@ -97,6 +85,7 @@ struct ItineraryView: View {
                     .padding(.top, 10)
             } else {
                 VStack {
+                    // grab trip information from trip model and then display some details about trip
                     if let trip = tripViewModel.trip {
                         let rangeOfDates = datesInRange(from: trip.start, to: trip.end)
                         ForEach(rangeOfDates, id: \.self) { day in
@@ -165,9 +154,11 @@ struct ItineraryView: View {
                 }
             }
         }
+        // activate listener 
         .onAppear {
             itineraryModel.subscribe(tripId: tripId)
         }
+        // deactivate listener
         .onDisappear {
             itineraryModel.unsubscribe()
         }

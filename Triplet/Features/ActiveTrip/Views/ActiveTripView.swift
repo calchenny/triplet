@@ -17,6 +17,7 @@ struct ActiveTripView: View {
     var tripId: String
     @StateObject var itineraryModel = ItineraryViewModel()
     @EnvironmentObject var tripViewModel: TripViewModel
+    @StateObject var activeTripViewModel = ActiveTripViewModel()
     
     @State var isExpanded = false
     @State var searchText: String = ""
@@ -28,16 +29,7 @@ struct ActiveTripView: View {
     @State var navigateToHome: Bool = false
     @State private var reverseGeocodedAddress: String = ""
     private let timer = Timer.publish(every: 60, on: .main, in: .default).autoconnect()
-    
-    // Function to toggle event check
-    private func toggleEventCheck(eventID: String) {
-        if checkedEvents.contains(eventID) {
-            checkedEvents.remove(eventID)
-        } else {
-            checkedEvents.insert(eventID)
-        }
-    }
-    
+        
     // Function to refresh the screen if current time matches an event's start or end time
     private func refreshScreenIfNeeded() {
         let currentTime = Date()
@@ -144,14 +136,14 @@ struct ActiveTripView: View {
                             Spacer()
                             // Checkbox (Toggle) for the current event
                             Button(action: {
-                                toggleEventCheck(eventID: event.id ?? "")
+                                activeTripViewModel.toggleEventCheck(eventID: event.id ?? "")
                             }) {
-                                Image(systemName: checkedEvents.contains(event.id ?? "") ? "checkmark.square.fill" : "square")
+                                Image(systemName: activeTripViewModel.isEventChecked(eventID: event.id ?? "") ? "checkmark.square.fill" : "square")
                                     .font(.title2)
                                     .foregroundColor(.darkTeal)
                             }
                         }
-                        if event.start < Date() {
+                        if event.start < Date() && !activeTripViewModel.isEventChecked(eventID: event.id ?? "") {
                             let location = event.location
                             let latitude = location.latitude
                             let longitude = location.longitude

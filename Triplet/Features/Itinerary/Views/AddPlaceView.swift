@@ -24,6 +24,7 @@ struct AddPlaceView: View {
     
     @State private var landmarks: [Landmark] = [Landmark]()
     
+    // function used to grab nearby locations
     private func getNearByLandmarks() {
         guard let trip = tripViewModel.trip else {
             print("Missing trip")
@@ -41,6 +42,7 @@ struct AddPlaceView: View {
         let search = MKLocalSearch(request: request)
         
         search.start { response, error in
+            // map of locations are placed into landmarks
             if let response = response {
                 self.landmarks = response.mapItems.compactMap { Landmark(placemark: $0.placemark) }
             }
@@ -96,6 +98,7 @@ struct AddPlaceView: View {
                         .font(.custom("Poppins-Regular", size: 14))
                     ScrollView {
                         VStack(spacing: 5) {
+                            // display the locations based on search
                             ForEach(landmarks) { landmark in
                                 ZStack {
                                     RoundedRectangle(cornerRadius: 10)
@@ -168,6 +171,7 @@ struct AddPlaceView: View {
                         showAlert.toggle()
                         return
                     }
+                    // add event to firebase
                     itineraryModel.addEvent(name: selectedLandmark.name,
                                             location: GeoPoint(latitude: selectedLandmark.coordinate.latitude,
                                                                longitude: selectedLandmark.coordinate.longitude),
@@ -193,6 +197,7 @@ struct AddPlaceView: View {
                         )
                         .padding([.top, .bottom])
                 }
+                // alert if user has not selected a location and clicked on add
                 .alert("No Place Selected", isPresented: $showAlert) {
                     Button("OK", role: .cancel) { }
                 } message: {
