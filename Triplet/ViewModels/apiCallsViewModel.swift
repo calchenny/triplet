@@ -69,11 +69,39 @@ class APICaller: ObservableObject {
         let limit: Int = 5
         let sortBy: String = "best_match"
         let locale: String = "en_US"
-        let apiKey = ProcessInfo.processInfo.environment["YELP_API_KEY"] ?? ""
+        var apiKey = ""
+        
+        //access info plist
+        guard let path = Bundle.main.path(forResource: "Info", ofType: "plist") else {
+            print("Info.plist not found")
+            return
+        }
+
+        let url = URL(fileURLWithPath: path)
+
+        do {
+            let data = try Data(contentsOf: url)
+            guard let plist = try PropertyListSerialization.propertyList(from: data, options: [], format: nil) as? [String: Any] else {
+                print("Unable to cast plist to dictionary")
+                return
+            }
+            //if we are able to access, set apiKey equal to the yelpSecret
+            if let yelpSecret = plist["YELPSECRET"] as? String {
+                //print("Value of 'YELPSECRET': \(specificEntry)")
+                apiKey = yelpSecret
+                
+            } else {
+                //print("Entry 'YELPSECRET' not found or is not a string")
+            }
+        } catch {
+            print("Error loading Info.plist: \(error)")
+        }
+
+
 
         let headers = [
             "accept": "application/json",
-            "Authorization": "Bearer FwiasY2l76GjWQI7hkhhmuwMoRXv699G-bDsgynfLZBtP8lECbXnGViDQpu0sOrnO9clj9E6LnFedgyGiTZ_sv-ln3TQ4gRcDxqYl9h7QylshWushYJtF9LAtHH0ZXYx"
+            "Authorization": "Bearer \(apiKey)"
         ]
 
         let request = NSMutableURLRequest(url: NSURL(string: "https://api.yelp.com/v3/businesses/search?latitude=\(latitude)&longitude=\(longitude)&term=\(term)&locale=\(locale)&open_now=true&sort_by=\(sortBy)&limit=\(limit)")! as URL,
@@ -128,10 +156,38 @@ class APICaller: ObservableObject {
 
     func yelpLoadSuggestions(alias: String, completionHandler: @escaping ([(String, String, String)]?, Error?) -> Void) {
 
+        var apiKey = ""
+        
+        //access info plist
+        guard let path = Bundle.main.path(forResource: "Info", ofType: "plist") else {
+            print("Info.plist not found")
+            return
+        }
+
+        let url = URL(fileURLWithPath: path)
+
+        do {
+            let data = try Data(contentsOf: url)
+            guard let plist = try PropertyListSerialization.propertyList(from: data, options: [], format: nil) as? [String: Any] else {
+                print("Unable to cast plist to dictionary")
+                return
+            }
+            //if we are able to access, set apiKey equal to the yelpSecret
+            if let yelpSecret = plist["YELPSECRET"] as? String {
+                //print("Value of 'YELPSECRET': \(specificEntry)")
+                apiKey = yelpSecret
+                
+            } else {
+                //print("Entry 'YELPSECRET' not found or is not a string")
+            }
+        } catch {
+            print("Error loading Info.plist: \(error)")
+        }
+        
         print("inside yelpLoadSuggestions")
         let headers = [
             "accept": "application/json",
-            "Authorization": "Bearer FwiasY2l76GjWQI7hkhhmuwMoRXv699G-bDsgynfLZBtP8lECbXnGViDQpu0sOrnO9clj9E6LnFedgyGiTZ_sv-ln3TQ4gRcDxqYl9h7QylshWushYJtF9LAtHH0ZXYx"
+            "Authorization": "Bearer \(apiKey)"
         ]
 
         let request = NSMutableURLRequest(url: NSURL(string: "https://api.yelp.com/v3/businesses/\(alias)")! as URL,

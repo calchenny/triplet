@@ -1,0 +1,12 @@
+//
+//  APIConfig.xcconfig
+//  Triplet
+//
+//  Created by Newland Luu on 3/19/24.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+
+//newland's yelp API key
+SECRET_KEY = f4Rf97-CC8Z0pjBX_4eQ1_5ytMfPcx4vQd0xAsxJHPwACJGG4Tvku5z-Ca8x3Shnu3BqkRI3hW1U6ZJLcmAQB2tiPFUqNWmTr4Ahag0i7LUfwzVE6KY0NlyXK5nhZXYx

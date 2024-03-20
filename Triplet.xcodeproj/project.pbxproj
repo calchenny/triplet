@@ -111,6 +111,7 @@
 		24246BFA2B97EE290028DAAF /* RootView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		3C51D0BB2BA2DC1700BAC49F /* apiCallsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = apiCallsViewModel.swift; sourceTree = "<group>"; };
 		3C51D0BD2BA2DC3A00BAC49F /* testAPICallsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = testAPICallsView.swift; sourceTree = "<group>"; };
+		3C587C0B2BAAB52A00500390 /* APIConfig.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = APIConfig.xcconfig; sourceTree = "<group>"; };
 		3C6F6D9F2BA6B9A90059DD9D /* SetBudgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetBudgetView.swift; sourceTree = "<group>"; };
 		3CE48FD02B9D324900710CCA /* ExpensesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpensesViewModel.swift; sourceTree = "<group>"; };
 		89031F572B80012800282C88 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -218,6 +219,7 @@
 				8935A4292B7F496300F62185 /* Assets.xcassets */,
 				89B9FFC52B9ABF4D005C530A /* Launch Screen.storyboard */,
 				8935A42B2B7F496300F62185 /* Preview Content */,
+				3C587C0B2BAAB52A00500390 /* APIConfig.xcconfig */,
 			);
 			path = Triplet;
 			sourceTree = "<group>";
@@ -651,6 +653,7 @@
 /* Begin XCBuildConfiguration section */
 		8935A42E2B7F496300F62185 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3C587C0B2BAAB52A00500390 /* APIConfig.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -714,6 +717,7 @@
 		};
 		8935A42F2B7F496300F62185 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3C587C0B2BAAB52A00500390 /* APIConfig.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
