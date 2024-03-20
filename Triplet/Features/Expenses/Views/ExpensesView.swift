@@ -143,6 +143,14 @@ struct ExpensesView: View {
                                         }
                                         .padding([.bottom, .leading, .trailing], 10)
                                     }
+                                    Button {
+                                        expensesViewModel.deleteExpenseFromFirestore(expenseID: expense.id ?? "", tripId: tripId)
+                                    } label: {
+                                        Image(systemName: "trash")
+                                            .font(.title2)
+                                            .foregroundStyle(.darkerGray)
+                                    }
+                                    .tint(.primary)
                                 }
                                 .padding([.leading, .trailing])
                             }

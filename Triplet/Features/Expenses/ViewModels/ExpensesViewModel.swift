@@ -51,6 +51,20 @@ class ExpensesViewModel: ObservableObject {
         
     }
     
+    //function to delete an expense from firebase database
+    func deleteExpenseFromFirestore(expenseID: String, tripId: String) {
+        // check to see if event is in collection
+        let expenseReference = db.collection("trips").document(tripId).collection("expenses").document(expenseID)
+        
+        expenseReference.delete { error in
+            if let error = error {
+                print("Error deleting expense from Firestore: \(error.localizedDescription)")
+            } else {
+                print("Expense deleted from Firestore")
+            }
+        }
+    }
+    
     func subscribe(tripId: String) {
         if listenerRegistration == nil {
             let expensesQuery = db.collection("trips/\(tripId)/expenses")
