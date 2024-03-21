@@ -154,7 +154,7 @@ class APICaller: ObservableObject {
         dataTask.resume()
     }
 
-    func yelpLoadSuggestions(alias: String, completionHandler: @escaping ([(String, String, String)]?, Error?) -> Void) {
+    func yelpLoadSuggestions(alias: String, completionHandler: @escaping ([(String, String, String, String)]?, Error?) -> Void) {
 
         var apiKey = ""
         
@@ -205,12 +205,16 @@ class APICaller: ObservableObject {
                     let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
 
                     if let photosArray = json?["photos"] as? [String],
-                       let name = json?["name"] as? String, let yelpURL = json?["url"] as? String,
-                       let firstPhotoURL = photosArray.first {
-
-                        let result: (String, String, String) = (name, firstPhotoURL, yelpURL)
+                        let name = json?["name"] as? String,
+                        let yelpURL = json?["url"] as? String,
+                        let firstPhotoURL = photosArray.first,
+                        let location = json?["location"] as? [String: Any],
+                        let address1 = location["address1"] as? String {
+                            
+                        let result: (String, String, String, String) = (name, firstPhotoURL, yelpURL, address1)
                         completionHandler([result], nil)
-                        print("tuple of (name, photoURL, and yelpURL) successfully returned from yelpLoadSuggestions()")
+                        print("Tuple of (name, photoURL, yelpURL, and address) successfully returned from yelpLoadSuggestions()")
+                        print("Address: \(address1)")
                         return
                     }
 

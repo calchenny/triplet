@@ -101,7 +101,7 @@ struct ActiveTripView: View {
                 )
                 .padding(.bottom, 25)
                 .padding([.leading, .trailing])
-            Text("Happening Now:")
+            Text(itineraryModel.events.filter { Calendar.current.isDate($0.start, inSameDayAs: currentDate) && $0.end > Date() }.isEmpty ? "No events happening now:" : "Happening now:")
                 .font(.custom("Poppins-Medium", size: 16))
                 .foregroundStyle(.darkerGray)
             ForEach(itineraryModel.events.filter { Calendar.current.isDate($0.start, inSameDayAs: currentDate) && $0.end > Date() }, id: \.id) { event in
