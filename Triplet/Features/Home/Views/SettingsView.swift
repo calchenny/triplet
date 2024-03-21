@@ -7,11 +7,13 @@
 //
 
 import SwiftUI
+import PopupView
 
 struct SettingView: View {
     @EnvironmentObject var authenticationModel: AuthenticationModel
     @State var signedOut = false
     @State var notifications = false
+    @State var showAboutUsToggle = false
     
     var body: some View {
         VStack {
@@ -23,8 +25,13 @@ struct SettingView: View {
                 Section(header: Text("Account Settings")) {
                     Toggle("Push Notifications", isOn: $notifications)
                         .font(.custom("Poppins-Regular", size: 15))
-                    Text("About Us")
-                        .font(.custom("Poppins-Regular", size: 15))
+                    Button {
+                        showAboutUsToggle = true
+                    } label: {
+                        Text("About Us")
+                            .font(.custom("Poppins-Regular", size: 15))
+                            .foregroundColor(.black)
+                    }
                     
                 }
                 HStack {
@@ -54,5 +61,18 @@ struct SettingView: View {
             .cornerRadius(10)
             .scrollContentBackground(.hidden)
         }
+        .popup(isPresented: $showAboutUsToggle) {
+            AboutUs(showAboutUs: $showAboutUsToggle)
+        } customize: { popup in
+            popup
+                .type(.floater())
+                .position(.center)
+                .animation(.spring())
+                .closeOnTap(false)
+                .closeOnTapOutside(false)
+                .isOpaque(true)
+                .backgroundColor(.black.opacity(0.25))
+        }
+        .padding()
     }
 }
