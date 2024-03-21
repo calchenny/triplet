@@ -28,14 +28,14 @@ struct LoginView: View {
     var body: some View {
         ZStack {
             VStack{
+                // Logo
                 Image(.fullIcon)
                     .resizable()
                     .scaledToFit()
                     .padding(.vertical, 100)
                     .frame(width: UIScreen.main.bounds.width * 0.5, alignment: .center)
                     
-                //Handles the phone number text view; could maybe do a state variable here instead for the
-                // phone number
+                // Handles the phone number text view
                 HStack {
                     HStack {
                         Text("🇺🇸 +1") // Hardcoded country code

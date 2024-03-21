@@ -15,6 +15,7 @@ class AuthenticationModel: ObservableObject {
         verificationId = UserDefaults.standard.string(forKey: "verificationId")
     }
     
+    // Method to verify phone number using Firebase Phone Auth
     func verifyPhoneNumber(_ phoneNumber: String, completion: (() -> Void)? = nil) {
         let e164PhoneNumber = "+1\(phoneNumber)"
         PhoneAuthProvider.provider()
@@ -29,6 +30,7 @@ class AuthenticationModel: ObservableObject {
           }
     }
     
+    // Method to sign in using verification code
     func signIn(_ verificationCode: String, completion: (() -> Void)? = nil) {
         guard let verificationId else {
             print("Missing verificationId")
@@ -38,6 +40,7 @@ class AuthenticationModel: ObservableObject {
           withVerificationID: verificationId,
           verificationCode: verificationCode
         )
+        // Create credential using verification ID and code
         Auth.auth().signIn(with: credential) { authResult, error in
             if let error {
                 print("Hit: " + error.localizedDescription)
@@ -50,7 +53,7 @@ class AuthenticationModel: ObservableObject {
     
     func signOut(completion: (() -> Void)? = nil) {
         do {
-            try Auth.auth().signOut()
+            try Auth.auth().signOut() // Sign out from Firebase Auth
             completion?()
         } catch {
             print(error.localizedDescription)
