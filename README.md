@@ -11,7 +11,7 @@ Triplet is an application aimed to minimize disruptions during trips. Our applic
 [Figma Wireframe](https://www.figma.com/file/8epjXgVJ385PMJiG4TgJOY/Triplet-Design?type=design&node-id=245%3A6380&mode=design&t=C2eqYvmU2h2ePDjS-1)
 
 
-### **Build the App**
+### **Credentials to Build the App**
 - Test Account: 650-555-1234 (OTP Code: 123456)
 - You may login with your own phone number but there's a quota of 10 logins on Firebase, so it's best to use test account
 - There's a quota of 250 runs for the Yelp API as well
