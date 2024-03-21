@@ -191,13 +191,6 @@
 			path = ViewModels;
 			sourceTree = "<group>";
 		};
-		1294580A2BA95DB1005EFA4D /* ViewModels */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = ViewModels;
-			sourceTree = "<group>";
-		};
 		8935A4192B7F496200F62185 = {
 			isa = PBXGroup;
 			children = (
@@ -246,7 +239,6 @@
 			isa = PBXGroup;
 			children = (
 				129457E72BA18719005EFA4D /* ActiveTripView.swift */,
-				1294580A2BA95DB1005EFA4D /* ViewModels */,
 				129458082BA95DA5005EFA4D /* ActiveTripViewModel.swift */,
 			);
 			path = Views;
