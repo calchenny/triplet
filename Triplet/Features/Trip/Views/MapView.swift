@@ -184,23 +184,49 @@ struct MapView: View {
                     }
                 }
                 .overlay(
-                    Button {
-                        showMarkers.toggle()
-                    } label: {
-                        Circle()
-                            .frame(maxWidth: 25)
-                            .overlay {
-                                Image(systemName: showMarkers ? "eye.fill" : "eye.slash.fill")
-                                    .foregroundStyle(.darkTeal)
-                                    .padding()
-                                    .background(Color.white.opacity(0.9))
-                                    .foregroundColor(.black)
-                                    .clipShape(Circle())
+                    VStack {
+                        HStack {
+                            Spacer()
+                            Button {
+                                if let trip = tripViewModel.trip {
+                                    let destination = trip.destination
+                                    position = .camera(.init(centerCoordinate: CLLocationCoordinate2D(latitude: destination.latitude, longitude: destination.longitude), distance: 50000))
+                                }
+                            } label: {
+                                Circle()
+                                    .frame(maxWidth: 25)
+                                    .overlay {
+                                        Image(systemName: "location.magnifyingglass")
+                                            .foregroundStyle(.darkTeal)
+                                            .padding()
+                                            .background(Color.white.opacity(0.9))
+                                            .foregroundColor(.black)
+                                            .clipShape(Circle())
+                                    }
                             }
+                            .padding(.top, 18)
+                            .padding(.trailing, 25)
+                            
+                            Button {
+                                showMarkers.toggle()
+                            } label: {
+                                Circle()
+                                    .frame(maxWidth: 25)
+                                    .overlay {
+                                        Image(systemName: showMarkers ? "eye.fill" : "eye.slash.fill")
+                                            .foregroundStyle(.darkTeal)
+                                            .padding()
+                                            .background(Color.white.opacity(0.9))
+                                            .foregroundColor(.black)
+                                            .clipShape(Circle())
+                                    }
+                            }
+                            .padding(.top, 18)
+                            
+                            Spacer()
+                        }
                     }
-                    .padding(.top, 25)
-                    .tint(.primary),
-                    alignment: .top
+                    , alignment: .top
                 )
                 .onChange(of: mapSelection, { oldValue, newValue in
                     DispatchQueue.main.async {
