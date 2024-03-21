@@ -41,6 +41,7 @@ class TripViewModel: ObservableObject {
     
     func subscribe(tripId: String) {
         if listenerRegistration == nil {
+            // Retrieve trip
             let tripQuery = db.document("trips/\(tripId)")
             listenerRegistration = tripQuery.addSnapshotListener { documentSnapshot, error in
                 switch (documentSnapshot, error) {
@@ -51,6 +52,7 @@ class TripViewModel: ObservableObject {
                 case (.some(let document), _):
                     do {
                         let trip = try document.data(as: Trip.self)
+                        
                         print("Trip loaded successfully")
                         withAnimation {
                             self.trip = trip
@@ -65,6 +67,40 @@ class TripViewModel: ObservableObject {
                         }
                     } catch {
                         print("Error: \(error.localizedDescription)")
+                    }
+                }
+            }
+            
+            // Retrieve Events
+            let eventsQuery = db.collection("trips/\(tripId)/events")
+            listenerRegistration = eventsQuery.addSnapshotListener { collectionSnapshot, error in
+                switch (collectionSnapshot, error) {
+                case (.none, .none):
+                    print("No events found")
+                case (.none, .some(let error)):
+                    print("Error: \(error.localizedDescription)")
+                case (.some(let collection), _):
+                    withAnimation {
+                        self.trip?.events = collection.documents.compactMap { document in
+                            try? document.data(as: Event.self)
+                        }
+                    }
+                }
+            }
+            
+            // Retrieve Expenses
+            let expensesQuery = db.collection("trips/\(tripId)/expenses")
+            listenerRegistration = expensesQuery.addSnapshotListener { collectionSnapshot, error in
+                switch (collectionSnapshot, error) {
+                case (.none, .none):
+                    print("No expenses found")
+                case (.none, .some(let error)):
+                    print("Error: \(error.localizedDescription)")
+                case (.some(let collection), _):
+                    withAnimation {
+                        self.trip?.expenses = collection.documents.compactMap { document in
+                            try? document.data(as: Expense.self)
+                        }
                     }
                 }
             }

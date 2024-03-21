@@ -12,6 +12,7 @@ import CoreLocation
 struct MapView: View {
     @ObservedObject var locationManagerService = LocationManagerService()
     @EnvironmentObject var tripViewModel: TripViewModel
+    @Environment(\.dismiss) var dismiss
     @State private var mapSelection: String?
     @State private var selectedMarkerName: String?
     @State private var selectedMarker: MKMapItem = MKMapItem()
@@ -22,6 +23,7 @@ struct MapView: View {
     @State private var position = MapCameraPosition.userLocation(followsHeading: true, fallback: .automatic)
     @State private var route: MKRoute?
     @State private var distanceToMarker: Double?
+    @State var showMarkers: Bool = true
     @Binding var showMapView: Bool
 
     func getCategoryData(category: String) -> (image: String, color: Color) {
@@ -165,45 +167,68 @@ struct MapView: View {
                     if let trip = tripViewModel.trip, let events = trip.events {
                         ForEach(events, id: \.id) { event in
                           let destination = event.location
-                          Marker(event.name, systemImage: "toilet.fill", coordinate: CLLocationCoordinate2D(latitude: destination.latitude, longitude: destination.longitude))
-                                .tint(.purple)
+                            
+                          Marker(event.name, systemImage: "flag.fill", coordinate: CLLocationCoordinate2D(latitude: destination.latitude, longitude: destination.longitude))
+                                .tint(.darkTeal)
                         }
                     }
                     
-                    // Displaying important locations near the user
-                    ForEach(searchResults, id: \.id) { result in
-                        let categoryData = getCategoryData(category: result.category)
-                        
-                        Marker(result.name, systemImage: categoryData.image, coordinate: CLLocationCoordinate2D(latitude: result.latitude, longitude: result.longitude))
-                            .tint(Color(categoryData.color))
+                    if showMarkers {
+                        // Displaying important locations near the user
+                        ForEach(searchResults, id: \.id) { result in
+                            let categoryData = getCategoryData(category: result.category)
+                            
+                            Marker(result.name, systemImage: categoryData.image, coordinate: CLLocationCoordinate2D(latitude: result.latitude, longitude: result.longitude))
+                                .tint(Color(categoryData.color))
+                        }
                     }
                 }
+                .overlay(
+                    Button {
+                        showMarkers.toggle()
+                    } label: {
+                        Circle()
+                            .frame(maxWidth: 25)
+                            .overlay {
+                                Image(systemName: showMarkers ? "eye.fill" : "eye.slash.fill")
+                                    .foregroundStyle(.darkTeal)
+                                    .padding()
+                                    .background(Color.white.opacity(0.9))
+                                    .foregroundColor(.black)
+                                    .clipShape(Circle())
+                            }
+                    }
+                    .padding(.top, 25)
+                    .tint(.primary),
+                    alignment: .top
+                )
                 .onChange(of: mapSelection, { oldValue, newValue in
-                    
-                    if let selectedMarkerID = newValue {
-                        // Find the selected Marker in the searchResults array using its ID
-                        if let marker = searchResults.first(where: { $0.id == selectedMarkerID }) {
-                            // Fetching distance from user to marker
-                            fetchRouteFrom(destination: CLLocationCoordinate2D(latitude: marker.latitude, longitude: marker.longitude))
-                            
-                            // Extract name from selected Marker
-                            selectedMarkerName = marker.name
-                            
-                            // Extract address from coordinates
-                            reverseGeocoding(latitude: marker.latitude, longitude: marker.longitude) { placemark in
-                                if let placemark = placemark {
-                                    // Handle the retrieved placemark
-                                    let marker = MKPlacemark(placemark: placemark)
-                                    selectedMarker = MKMapItem(placemark: marker)
-
-                                } else {
-                                    // Handle the case where no placemark is found
-                                    print("No Matching Address Found")
+                    DispatchQueue.main.async {
+                        if let selectedMarkerID = newValue {
+                            print(selectedMarkerID)
+                            // Find the selected Marker in the searchResults array using its ID
+                            if let marker = searchResults.first(where: { $0.id == selectedMarkerID }) {
+                                // Fetching distance from user to marker
+                                fetchRouteFrom(destination: CLLocationCoordinate2D(latitude: marker.latitude, longitude: marker.longitude))
+                                
+                                // Extract name from selected Marker
+                                selectedMarkerName = marker.name
+                                
+                                // Extract address from coordinates
+                                reverseGeocoding(latitude: marker.latitude, longitude: marker.longitude) { placemark in
+                                    if let placemark = placemark {
+                                        // Handle the retrieved placemark
+                                        let marker = MKPlacemark(placemark: placemark)
+                                        selectedMarker = MKMapItem(placemark: marker)
+                                        
+                                    } else {
+                                        // Handle the case where no placemark is found
+                                        print("No Matching Address Found")
+                                    }
                                 }
                             }
                         }
                     }
-                    
                     showDetails = newValue != nil
                 })
                 .sheet(isPresented: $showDetails, content: {
@@ -261,7 +286,6 @@ struct MapView: View {
                     .presentationBackgroundInteraction(.enabled(upThrough: .height(250)))
                 })
                 .mapControls {
-                    // Adds UI functionality to the map
                     MapCompass()
                     MapPitchToggle()
                     MapUserLocationButton()
@@ -293,6 +317,8 @@ struct MapView: View {
                 AlertView(msg: alertMsg, show: $showError)
             }
         }
-        .ignoresSafeArea()
+        .presentationCornerRadius(50)
+        .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, maxHeight: UIScreen.main.bounds.height * 0.87)
+
     }
 }

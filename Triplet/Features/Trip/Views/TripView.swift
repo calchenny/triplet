@@ -136,6 +136,7 @@ struct TripView: View {
         .ignoresSafeArea(edges: .top)
         .popup(isPresented: $showMapView) {
             MapView(showMapView: $showMapView)
+                .environmentObject(tripViewModel)
                 .navigationBarBackButtonHidden(true)
         } customize: { popup in
             popup
@@ -147,7 +148,7 @@ struct TripView: View {
                 .closeOnTapOutside(false)
                 .dragToDismiss(false)
                 .isOpaque(true)
-                .backgroundColor(.black.opacity(0.25))
+                .backgroundColor(.white)
         }
         .environmentObject(tripViewModel)
         .onAppear {
