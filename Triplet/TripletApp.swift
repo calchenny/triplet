@@ -7,6 +7,7 @@
 
 import SwiftUI
 import FirebaseCore
+import TipKit
 
 class AppDelegate: NSObject, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
@@ -24,6 +25,9 @@ struct TripletApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     
     init() {
+        Tips.showAllTipsForTesting()
+        try? Tips.configure()
+        
         UISegmentedControl.appearance()
             .backgroundColor = UIColor(Color.lighterGray)
         UISegmentedControl.appearance()

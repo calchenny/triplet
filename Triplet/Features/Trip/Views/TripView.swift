@@ -10,6 +10,21 @@ import MapKit
 import AnimatedTabBar
 import ScalingHeaderScrollView
 import PopupView
+import TipKit
+
+struct MapTip: Tip {
+    var title: Text {
+        Text("Explore to the Map!")
+    }
+    
+    var message: Text? {
+        Text("Tap on the map to expand it, allowing you to find and engage with nearby landmarks or your itineraries.")
+    }
+    
+    var image: Image? {
+        Image(systemName: "map")
+    }
+}
 
 struct TripView: View {
     var tripId: String
@@ -52,6 +67,7 @@ struct TripView: View {
                     .onTapGesture {
                             showMapView = true
                     }
+                    .popoverTip(MapTip(), arrowEdge: .top)
                     RoundedRectangle(cornerRadius: 15)
                         .frame(maxWidth: UIScreen.main.bounds.width * 0.9, maxHeight: 100)
                         .foregroundStyle(Color("Even Lighter Blue"))

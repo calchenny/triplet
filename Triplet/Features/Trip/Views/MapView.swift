@@ -8,6 +8,17 @@
 import SwiftUI
 import MapKit
 import CoreLocation
+import TipKit
+
+struct ToolTip: Tip {
+    var title: Text {
+        Text("Useful Map Tools")
+    }
+    
+    var message: Text? {
+        Text("Quickly move the camera to your destination or hide markers!")
+    }
+}
 
 struct MapView: View {
     @ObservedObject var locationManagerService = LocationManagerService()
@@ -225,6 +236,7 @@ struct MapView: View {
                             
                             Spacer()
                         }
+                        .popoverTip(ToolTip(), arrowEdge: .top).tipBackground(.evenLighterBlue)
                     }
                     , alignment: .top
                 )
@@ -339,6 +351,7 @@ struct MapView: View {
             .padding(.top, 60)
             .padding(.leading)
             .tint(.primary)
+            
             if showError {
                 AlertView(msg: alertMsg, show: $showError)
             }
