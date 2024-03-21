@@ -200,8 +200,9 @@ struct NewTripView: View {
             
             TextField("e.g, Most Amazing Trip Ever", text: $tripName)
                 .onChange(of: tripName) {
-                    if (tripName.count > 30) {
-                        tripName = String(tripName.prefix(30))
+                    // Prevent the user from typing past a 25 character limit
+                    if (tripName.count > 25) {
+                        tripName = String(tripName.prefix(25))
                     }
                 }
                 .font(.custom("Poppins-Regular", size: 16))

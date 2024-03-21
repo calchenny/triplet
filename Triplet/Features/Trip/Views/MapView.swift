@@ -21,22 +21,27 @@ struct ToolTip: Tip {
 }
 
 struct MapView: View {
-    @ObservedObject var locationManagerService = LocationManagerService()
-    @EnvironmentObject var tripViewModel: TripViewModel
-    @Environment(\.dismiss) var dismiss
-    @State private var mapSelection: String?
-    @State private var selectedMarkerName: String?
-    @State private var selectedMarker: MKMapItem = MKMapItem()
-    @State private var showDetails: Bool = false
-    @State private var alertMsg: String = ""
-    @State var showError: Bool = false
-    @State private var searchResults: [PointOfInterestResult] = []
-    @State private var position = MapCameraPosition.userLocation(followsHeading: true, fallback: .automatic)
-    @State private var route: MKRoute?
-    @State private var distanceToMarker: Double?
-    @State var showMarkers: Bool = true
-    @Binding var showMapView: Bool
+     @ObservedObject var locationManagerService = LocationManagerService() // Observes changes in user's location
+     
+     @EnvironmentObject var tripViewModel: TripViewModel // Provides access to trip-related data
+    
+     @Environment(\.dismiss) var dismiss
+     
+     // State variables
+     @State private var mapSelection: String?
+     @State private var selectedMarkerName: String?
+     @State private var selectedMarker: MKMapItem = MKMapItem()
+     @State private var showDetails: Bool = false
+     @State private var alertMsg: String = ""
+     @State var showError: Bool = false
+     @State private var searchResults: [PointOfInterestResult] = [] // Results of location search
+     @State private var position = MapCameraPosition.userLocation(followsHeading: true, fallback: .automatic) // Camera position
+     @State private var route: MKRoute?
+     @State private var distanceToMarker: Double?
+     @State var showMarkers: Bool = true
+     @Binding var showMapView: Bool
 
+    // Retrieves image and color data based on category
     func getCategoryData(category: String) -> (image: String, color: Color) {
         switch category {
         case "Hospitals":
@@ -58,6 +63,7 @@ struct MapView: View {
         }
     }
     
+    // Represents a point of interest result
     struct PointOfInterestResult: Hashable, Identifiable {
         var id: String = UUID().uuidString
         var name: String
@@ -128,6 +134,7 @@ struct MapView: View {
         
     }
     
+    // Fetches route information from user's current location to a destination
     func fetchRouteFrom(destination: CLLocationCoordinate2D) {
         if let currentLocation = locationManagerService.currentLocation {
 
@@ -155,7 +162,7 @@ struct MapView: View {
         ZStack(alignment: .topLeading) {
             VStack {
                 Map(position: $position, selection: $mapSelection) {
-                    // Make an always viewable pin of the user's location
+                    // Display always-viewable pin of the user's location.
                     if let userLocation = locationManagerService.currentLocation {
                         Annotation("My location", coordinate: userLocation.coordinate) {
                             ZStack {
@@ -173,18 +180,18 @@ struct MapView: View {
                             }
                         }
                     }
-                                    
-                    // Fetching events from itinerary to display on map
-                    if let trip = tripViewModel.trip, let events = trip.events {
-                        ForEach(events, id: \.id) { event in
-                          let destination = event.location
-                            
-                          Marker(event.name, systemImage: "flag.fill", coordinate: CLLocationCoordinate2D(latitude: destination.latitude, longitude: destination.longitude))
-                                .tint(.darkTeal)
-                        }
-                    }
                     
                     if showMarkers {
+                        // Fetch events from the itinerary to display on the map.
+                        if let trip = tripViewModel.trip, let events = trip.events {
+                            ForEach(events, id: \.id) { event in
+                              let destination = event.location
+                                
+                              Marker(event.name, systemImage: "flag.fill", coordinate: CLLocationCoordinate2D(latitude: destination.latitude, longitude: destination.longitude))
+                                    .tint(.darkTeal)
+                            }
+                        }
+                        
                         // Displaying important locations near the user
                         ForEach(searchResults, id: \.id) { result in
                             let categoryData = getCategoryData(category: result.category)
@@ -305,7 +312,7 @@ struct MapView: View {
                         
                         HStack(spacing: 24) {
                             Button {
-                                selectedMarker.openInMaps()
+                                selectedMarker.openInMaps() // Open the selected marker in Apple Maps
                             } label: {
                                 Text("Open in Maps")
                                     .font(.custom("Poppins-Bold", size: 16))
