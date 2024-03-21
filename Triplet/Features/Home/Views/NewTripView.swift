@@ -21,12 +21,16 @@ struct NewTripView: View {
     @State var showDestinationPopup: Bool = false
     @State var showError: Bool = false
     @Binding var selectedIndex: Int
+    
+    // Check if the inputs are valid before allowing the user to create the trip
     var isInputsValid: Bool {
         !(destinationViewModel.city != nil && destinationViewModel.state != nil 
           && startDate != Date.distantPast && endDate != Date.distantPast && !tripName.isEmpty)
     }
     
+    // Function to create a trip using the user-provided info
     func createTrip() {
+        // Check if all required values are non-nil and appropriately set
         guard let uid = Auth.auth().currentUser?.uid,
               let latitude = destinationViewModel.latitude,
               let longitude = destinationViewModel.longitude,
@@ -39,6 +43,7 @@ struct NewTripView: View {
             return
         }
         
+        // Create trip instance with data
         let trip = Trip(owner: uid,
                         name: tripName,
                         start: start,
@@ -47,24 +52,23 @@ struct NewTripView: View {
                         city: city,
                         state: state)
 
-        // Add the trip to firebase
+        // Attempt to add the trip to Firestore
         do {
             let ref = try Firestore.firestore().collection("trips").addDocument(from: trip)
             print("Added to Firestore")
             print("Trip ID: ", ref.documentID)
-            tripId = ref.documentID
-            selectedIndex = 0
+            tripId = ref.documentID // Store the trip id
+            selectedIndex = 0 // Resetting the view to home after creation
         } catch {
             alertMsg = "Error adding trip: \(error)"
             showError = true
             return
         }
-
-        print("Created Trip: \(trip)")
     }
     
     var body: some View {
         VStack {
+            // Header text
             VStack {
                 Text("Plan New Trip")
                     .font(.custom("Poppins-Bold", size: 30))
@@ -198,7 +202,8 @@ struct NewTripView: View {
                             Color(.gray) : Color(.green)
                         )
                 )
-
+            
+            // Button to create the trip, disabled if inputs are not valid
             Button {
                 createTrip()
             } label: {
@@ -212,7 +217,7 @@ struct NewTripView: View {
             .disabled(isInputsValid && !tripName.isEmpty)
             .padding(.vertical, 30)
         }
-        .popup(isPresented: $showDestinationPopup) {
+        .popup(isPresented: $showDestinationPopup) { // Popup for destination search
             DestinationSearchView(locationSearchService: LocationSearchService(), showDestinationPopup: $showDestinationPopup)
                 .environmentObject(destinationViewModel)
         } customize: { popup in
