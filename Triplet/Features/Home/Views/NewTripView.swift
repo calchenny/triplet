@@ -20,6 +20,7 @@ struct NewTripView: View {
     @State var alertMsg: String = ""
     @State var showDestinationPopup: Bool = false
     @State var showError: Bool = false
+    @State var showAlert: Bool = false
     @Binding var selectedIndex: Int
     
     // Check if the inputs are valid before allowing the user to create the trip
@@ -158,6 +159,11 @@ struct NewTripView: View {
                         .font(.custom("Poppins-Regular", size: 16))
                         .frame(width: 150)
                         .foregroundStyle(.placeholder)
+                        .onTapGesture(perform: {
+                            if (startDate == Date.distantPast) {
+                                showAlert.toggle() // Show alert message when nothing is selected
+                            }
+                        })
                 } else{
                     Text(endDate, style: .date)
                         .font(.custom("Poppins-Regular", size: 16))
@@ -179,6 +185,12 @@ struct NewTripView: View {
                     .blendMode(.destinationOver)
                     .padding(.horizontal, 10)
                     .tint(.darkTeal)
+            }
+            // Alert configuration for when no destination is selected
+            .alert("No Start Date Selected", isPresented: $showAlert) {
+                Button("OK", role: .cancel) { }
+            } message: {
+                Text("Please select a start date before picking the end date")
             }
 
             Text("Trip Name")
