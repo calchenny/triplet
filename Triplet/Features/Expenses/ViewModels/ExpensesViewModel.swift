@@ -12,7 +12,7 @@ import FirebaseFirestore
 
 class ExpensesViewModel: ObservableObject {
     @Published var expenses: [Expense] = []
-    @Published var budget: Double = 10000.00
+    @Published var budget: Double = 0.00
     @Published var currentTotal: Double = 0.00
     @Published var percentage: Double = 0.00
     @Published var showNewExpensePopup: Bool = false
@@ -21,16 +21,25 @@ class ExpensesViewModel: ObservableObject {
     private var db = Firestore.firestore()
     private var listenerRegistration: ListenerRegistration?
     
+    // calculate the total expenses
     func calculateTotal () -> Double {
         print("inside calculateTotal")
         return self.expenses.reduce(0.0) { $0 + $1.cost }
     }
     
+    //set currentTotal
+    func setCurrentTotal() {
+        let total = calculateTotal()
+        self.currentTotal = self.budget - total
+    }
+    
+    // calculate the percentage of total expenses to budget
     func calculatePercentage () -> Double {
         print("inside calculatePercentage")
         return self.currentTotal/self.budget
     }
     
+    //add expense to firebase db
     func addExpenseToFirestore(_ expense: Expense, tripId: String) {
         do {
             let expenseReference = try db.collection("trips/\(tripId)/expenses").addDocument(from: expense)
@@ -48,12 +57,16 @@ class ExpensesViewModel: ObservableObject {
         showNewExpensePopup.toggle()
     }
     
+    //function to set budget to firebase db
     func setBudgetToFirestore(budget: Double, tripId: String) {
-        do {
-            let budgetReference = try db.collection("trips/\(tripId)/budget").addDocument(from: budget)
-            print("Budget set to Firestore")
-        } catch {
-            print("Error adding expense to Firestore: \(error.localizedDescription)")
+        let tripReference = db.collection("trips").document(tripId)
+
+        tripReference.updateData(["budget": budget]) { error in
+            if let error = error {
+                print("Error updating budget in Firestore: \(error.localizedDescription)")
+            } else {
+                print("Budget updated in Firestore")
+            }
         }
     }
     
@@ -73,6 +86,8 @@ class ExpensesViewModel: ObservableObject {
     
     func subscribe(tripId: String) {
         if listenerRegistration == nil {
+
+            // Query for expenses
             let expensesQuery = db.collection("trips/\(tripId)/expenses")
             listenerRegistration = expensesQuery.addSnapshotListener { collectionSnapshot, error in
                 switch (collectionSnapshot, error) {
@@ -88,6 +103,24 @@ class ExpensesViewModel: ObservableObject {
                     }
                 }
             }
+            
+            // Query for budget
+            let budgetQuery = db.collection("trips").document(tripId)
+            budgetQuery.getDocument { documentSnapshot, error in
+                if let error = error {
+                    print("Error fetching budget document: \(error.localizedDescription)")
+                    return
+                }
+                
+                guard let budgetData = documentSnapshot?.data(),
+                      let budget = budgetData["budget"] as? Double else {
+                    print("Error parsing budget data or budget not found")
+                    return
+                }
+                
+                self.budget = budget
+            }
+            setCurrentTotal()
         }
     }
     

@@ -46,16 +46,22 @@ struct SetBudgetView: View {
                             error = true
                         }
                         else {
-                            if let budget = Double(budgetInput) {
-                                expensesViewModel.setBudgetToFirestore(budget: budget, tripId: tripId)
-                                
-                                expensesViewModel.showSetBudgetPopup.toggle()
+                            guard var trip = tripViewModel.trip, let budget = Double(budgetInput) else {
+                                print("Cannot get budget")
+                                error = true
+                                return
                             }
-                            else {
-                                print("can't convert budget to double")
+                            
+                            trip.budget = budget
+                            if let tripId = trip.id {
+                                expensesViewModel.setBudgetToFirestore(budget: budget, tripId: tripId)
+                            } else {
+                                print("No trip id")
                                 error = true
                             }
                             
+                            expensesViewModel.showSetBudgetPopup.toggle()
+                        
                         }
                         //expensesViewModel.showSetBudgetPopup.toggle()
                     } label: {

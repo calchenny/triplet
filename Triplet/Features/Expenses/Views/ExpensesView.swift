@@ -17,8 +17,6 @@ struct ExpensesView: View {
     @StateObject var expensesViewModel = ExpensesViewModel()
     @EnvironmentObject var tripViewModel: TripViewModel
     
-    @State private var testBudget: Double = 0
-    
     var body: some View {
         VStack {
             VStack {
@@ -28,7 +26,7 @@ struct ExpensesView: View {
                     .padding(25)
                 Text("$\(expensesViewModel.currentTotal, specifier: "%.2f")")
                     .font(.custom("Poppins-Regular", size: 30))
-                if testBudget == 0 {
+                if expensesViewModel.budget == 0.00{
                     ProgressView(value: 0)
                         .tint(Color.darkTeal)
                         .frame(minWidth: 0, maxWidth: 200)
@@ -58,7 +56,7 @@ struct ExpensesView: View {
                     ProgressView(value: expensesViewModel.percentage)
                         .tint(Color.darkTeal)
                         .frame(minWidth: 0, maxWidth: 200)
-                    Text("Budget: $\(testBudget, specifier: "%.2f")")
+                    Text("Budget: $\(expensesViewModel.budget, specifier: "%.2f")")
                         .font(.custom("Poppins-Medium", size: 16))
                         .foregroundColor(Color.darkTeal)
                         .padding(.bottom, 40)

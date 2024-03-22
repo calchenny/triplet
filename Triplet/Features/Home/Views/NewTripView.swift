@@ -215,6 +215,7 @@ struct NewTripView: View {
                             Color(.gray) : Color(.green)
                         )
                 )
+        
             
             // Button to create the trip, disabled if inputs are not valid
             Button {
