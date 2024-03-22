@@ -50,9 +50,15 @@ struct AddNewExpenseView: View {
                             }
                     }
                 }
+                .onTapGesture {
+                    costFocus = false
+                }
                 .padding([.top, .bottom], 20)
                 Text("Expense Name")
                     .font(.custom("Poppins-Medium", size: 16))
+                    .onTapGesture {
+                        costFocus = false
+                    }
                 
                 TextField("Hotel, taxi, dinner, etc.", text: $name)
                     .padding(20)
@@ -60,9 +66,15 @@ struct AddNewExpenseView: View {
                     .font(.custom("Poppins-Regular", size: 16))
                     .overlay(RoundedRectangle(cornerRadius: 5).stroke(Color("Darker Gray")))
                     .padding(.bottom)
+                    .onTapGesture {
+                        costFocus = false
+                    }
                 
                 Text("Cost")
                     .font(.custom("Poppins-Medium", size: 16))
+                    .onTapGesture {
+                        costFocus = false
+                    }
                 
                 ZStack(alignment: .leadingFirstTextBaseline) {
                     Image(systemName: "dollarsign")
@@ -81,6 +93,9 @@ struct AddNewExpenseView: View {
                 
                 Text("Category")
                     .font(.custom("Poppins-Medium", size: 16))
+                    .onTapGesture {
+                        costFocus = false
+                    }
                 
                 Menu {
                     Picker("", selection: $selection) {
@@ -101,6 +116,9 @@ struct AddNewExpenseView: View {
                 .frame(width: 200, height: 35)
                 .overlay(RoundedRectangle(cornerRadius: 5).stroke(Color("Darker Gray")))
                 .padding(.bottom)
+                .onTapGesture {
+                    costFocus = false
+                }
                 
                 Text("Date")
                     .font(.custom("Poppins-Medium", size: 16))
@@ -156,9 +174,6 @@ struct AddNewExpenseView: View {
                 }
             }
             .padding([.leading, .trailing], 20)
-            .onTapGesture {
-                costFocus = false
-            }
         }
         .padding()
         .frame(maxHeight: 600)

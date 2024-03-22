@@ -19,7 +19,7 @@ struct Trip: Identifiable, Codable {
     var notes: [Note]?
     var events: [Event]?
     var expenses: [Expense]?
-    var budget: Double?
+    var budget: Double = 0.00
     var city: String
     var state: String
 }

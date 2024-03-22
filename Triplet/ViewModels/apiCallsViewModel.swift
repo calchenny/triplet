@@ -10,60 +10,6 @@ import Foundation
 
 class APICaller: ObservableObject {
 
-    func getWalkScore2() {
-
-        let headers = [
-            "X-RapidAPI-Key": "91ed20891fmsh4fdbf2da84b83b0p1f41d1jsn0d920a828bad",
-            "X-RapidAPI-Host": "walk-score.p.rapidapi.com"
-        ]
-
-        let request = NSMutableURLRequest(url: NSURL(string: "https://walk-score.p.rapidapi.com/score?lat=38.5449&address=1%20Shields%20Ave%2C%20Davis%2C%20CA%2095616&wsapikey=b89e81fdd187be1ff6decff8f1234345&lon=-121.7405")! as URL,
-                                                cachePolicy: .useProtocolCachePolicy,
-                                            timeoutInterval: 10.0)
-        request.httpMethod = "GET"
-        request.allHTTPHeaderFields = headers
-
-        let session = URLSession.shared
-        let dataTask = session.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
-            if (error != nil) {
-                print(error as Any)
-            } else {
-                let httpResponse = response as? HTTPURLResponse
-                print(httpResponse ?? "")
-            }
-        })
-
-        dataTask.resume()
-    }
-
-    func getWalkScore(latitude: Double, longitude: Double, address: String, completionHandler: @escaping (Int?, String?, Error?) -> Void) {
-        let key = "b89e81fdd187be1ff6decff8f1234345"
-
-        let headers = [
-            "X-RapidAPI-Key": "91ed20891fmsh4fdbf2da84b83b0p1f41d1jsn0d920a828bad",
-            "X-RapidAPI-Host": "walk-score.p.rapidapi.com"
-        ]
-
-        let request = NSMutableURLRequest(url: NSURL(string: "https://walk-score.p.rapidapi.com/score?lat=\(latitude)&address=\(address)&wsapikey=\(key)&lon=\(longitude)")! as URL,
-                                                cachePolicy: .useProtocolCachePolicy,
-                                            timeoutInterval: 10.0)
-        request.httpMethod = "GET"
-        request.allHTTPHeaderFields = headers
-
-        let session = URLSession.shared
-        let dataTask = session.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
-            if (error != nil) {
-                print(error as Any)
-            } else {
-                let httpResponse = response as? HTTPURLResponse
-                print(httpResponse ?? "")
-            }
-        })
-
-        dataTask.resume()
-    }
-
-
     func yelpRetrieveVenues(eventName: String, longitude: Double, latitude: Double, term: String, completionHandler: @escaping ([String]?, Error?) -> Void) {
         print("inside yelpRetrieveVenues()")
         let limit: Int = 5

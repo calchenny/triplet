@@ -16,6 +16,7 @@ class ExpensesViewModel: ObservableObject {
     @Published var currentTotal: Double = 0.00
     @Published var percentage: Double = 0.00
     @Published var showNewExpensePopup: Bool = false
+    @Published var showSetBudgetPopup: Bool = false
     
     private var db = Firestore.firestore()
     private var listenerRegistration: ListenerRegistration?
@@ -47,8 +48,13 @@ class ExpensesViewModel: ObservableObject {
         showNewExpensePopup.toggle()
     }
     
-    func changeBudget(budget: Double, tripId: String) {
-        
+    func setBudgetToFirestore(budget: Double, tripId: String) {
+        do {
+            let budgetReference = try db.collection("trips/\(tripId)/budget").addDocument(from: budget)
+            print("Budget set to Firestore")
+        } catch {
+            print("Error adding expense to Firestore: \(error.localizedDescription)")
+        }
     }
     
     //function to delete an expense from firebase database

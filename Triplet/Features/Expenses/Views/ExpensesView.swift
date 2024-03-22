@@ -16,7 +16,6 @@ struct ExpensesView: View {
     var tripId: String
     @StateObject var expensesViewModel = ExpensesViewModel()
     @EnvironmentObject var tripViewModel: TripViewModel
-    @State private var showSetBudgetView: Bool = false
     
     @State private var testBudget: Double = 0
     
@@ -34,12 +33,25 @@ struct ExpensesView: View {
                         .tint(Color.darkTeal)
                         .frame(minWidth: 0, maxWidth: 200)
                     Button() {
-                        showSetBudgetView.toggle()
+                        expensesViewModel.showSetBudgetPopup.toggle()
                     } label: {
                         Text("Set a budget")
                             .font(.custom("Poppins-Medium", size: 16))
                             .foregroundColor(Color.darkTeal)
                             .padding(.bottom, 40)
+                    }
+                    .popup(isPresented: $expensesViewModel.showSetBudgetPopup) {
+                        SetBudgetView(tripId: tripId)
+                            .environmentObject(expensesViewModel)
+                    } customize: { popup in
+                        popup
+                            .type(.floater())
+                            .position(.center)
+                            .animation(.spring())
+                            .closeOnTap(false)
+                            .closeOnTapOutside(false)
+                            .isOpaque(true)
+                            .backgroundColor(.black.opacity(0.25))
                     }
                 }
                 else {

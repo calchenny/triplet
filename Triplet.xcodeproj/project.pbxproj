@@ -135,7 +135,7 @@
 		89D806542BA4F4F800654DBC /* TripViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripViewModel.swift; sourceTree = "<group>"; };
 		89D8065A2BA5084F00654DBC /* HeaderHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderHelpers.swift; sourceTree = "<group>"; };
 		89D8065D2BA50B0900654DBC /* DateHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateHelpers.swift; sourceTree = "<group>"; };
-		92C713CD2BAC135D0067534E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		92C713CD2BAC135D0067534E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		92CA7FCF2BAC18F6000AF37E /* AboutUs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutUs.swift; sourceTree = "<group>"; };
 		92FFAE522BA2EB960080CDD6 /* Triplet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Triplet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
