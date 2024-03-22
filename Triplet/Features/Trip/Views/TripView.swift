@@ -67,7 +67,7 @@ struct TripView: View {
                     .onTapGesture {
                             showMapView = true
                     }
-                    .popoverTip(MapTip(), arrowEdge: .top)
+                    .popoverTip(MapTip())
                     RoundedRectangle(cornerRadius: 15)
                         .frame(maxWidth: UIScreen.main.bounds.width * 0.9, maxHeight: 100)
                         .foregroundStyle(Color("Even Lighter Blue"))

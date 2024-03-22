@@ -27,6 +27,8 @@ struct TripletApp: App {
     init() {
         Tips.showAllTipsForTesting()
         try? Tips.configure()
+        UIView.appearance(whenContainedInInstancesOf: [TipUIPopoverViewController.self]).tintColor = UIColor(.darkTeal)
+        UIView.appearance(whenContainedInInstancesOf: [UIAlertController.self]).tintColor = UIColor(Color.darkTeal)
         
         UISegmentedControl.appearance()
             .backgroundColor = UIColor(Color.lighterGray)
@@ -36,7 +38,6 @@ struct TripletApp: App {
             .setTitleTextAttributes([.font: UIFont(name: "Poppins-Regular", size: 14) as Any], for: .normal)
         UISegmentedControl.appearance()
             .setTitleTextAttributes([.foregroundColor: UIColor(.white)], for: .selected)
-        UINavigationBar.appearance().tintColor = .darkTeal
     }
     
     var body: some Scene {

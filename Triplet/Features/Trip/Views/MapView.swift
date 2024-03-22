@@ -355,7 +355,6 @@ struct MapView: View {
                     .foregroundColor(.white)
                     .clipShape(Circle())
             }
-            .padding(.top, 60)
             .padding(.leading)
             .tint(.primary)
             
