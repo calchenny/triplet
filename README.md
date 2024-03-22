@@ -24,5 +24,6 @@ Majority of code has been organized by feature in the [Features](https://github.
 - Trip: tab view that displays the following tabs and also the map view in every view
     - Active Trip: if the trip has started, then the trip will have an active trip tab
     - Overview: overview tab of the trip with the notes, hotel and food selections
-    - Itinerary: itinerary tab of the trip to show trip itinerary in a dijestable format
-    - Expenses: expenses tab
+    - Itinerary: itinerary tab of the trip to show trip itinerary in a digestable format
+    - Expenses: expense tab for users to keep track of their budget and expenses for the trip
+    - Map: view important landmarks and itineraries near the user
