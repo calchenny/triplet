@@ -10,8 +10,11 @@ import Foundation
 
 class APICaller: ObservableObject {
 
+    //returns a completion object, on success it will be an array of aliases of venues from yelp API
     func yelpRetrieveVenues(eventName: String, longitude: Double, latitude: Double, term: String, completionHandler: @escaping ([String]?, Error?) -> Void) {
         print("inside yelpRetrieveVenues()")
+        
+        //hard-coded parameters
         let limit: Int = 5
         let sortBy: String = "best_match"
         let locale: String = "en_US"
@@ -33,26 +36,31 @@ class APICaller: ObservableObject {
             }
             //if we are able to access, set apiKey equal to the yelpSecret
             if let yelpSecret = plist["YELPSECRET"] as? String {
-                //print("Value of 'YELPSECRET': \(specificEntry)")
                 apiKey = yelpSecret
                 
             } else {
-                //print("Entry 'YELPSECRET' not found or is not a string")
+                print("Entry 'YELPSECRET' not found or is not a string")
+                return
             }
         } catch {
             print("Error loading Info.plist: \(error)")
         }
 
 
-
+        //headers for yelp API call
         let headers = [
             "accept": "application/json",
             "Authorization": "Bearer \(apiKey)"
         ]
 
-        let request = NSMutableURLRequest(url: NSURL(string: "https://api.yelp.com/v3/businesses/search?latitude=\(latitude)&longitude=\(longitude)&term=\(term)&locale=\(locale)&open_now=true&sort_by=\(sortBy)&limit=\(limit)")! as URL,
-                                                cachePolicy: .useProtocolCachePolicy,
-                                            timeoutInterval: 10.0)
+        //generate URL request for yelp API call, unwrap the URL
+        guard let url = URL(string: "https://api.yelp.com/v3/businesses/search?latitude=\(latitude)&longitude=\(longitude)&term=\(term)&locale=\(locale)&open_now=true&sort_by=\(sortBy)&limit=\(limit)") else {
+            print("Invalid URL")
+            return
+        }
+
+        let request = NSMutableURLRequest(url: url, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 10.0)
+        
         request.httpMethod = "GET"
         request.allHTTPHeaderFields = headers
 
@@ -124,7 +132,7 @@ class APICaller: ObservableObject {
                 apiKey = yelpSecret
                 
             } else {
-                //print("Entry 'YELPSECRET' not found or is not a string")
+                print("Entry 'YELPSECRET' not found or is not a string")
             }
         } catch {
             print("Error loading Info.plist: \(error)")
@@ -136,9 +144,15 @@ class APICaller: ObservableObject {
             "Authorization": "Bearer \(apiKey)"
         ]
 
-        let request = NSMutableURLRequest(url: NSURL(string: "https://api.yelp.com/v3/businesses/\(alias)")! as URL,
-                                          cachePolicy: .useProtocolCachePolicy,
-                                          timeoutInterval: 10.0)
+        //generate URL request for yelp API call, unwrap the URL
+        guard let urlString = "https://api.yelp.com/v3/businesses/\(alias)".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
+              let url = URL(string: urlString) else {
+            print("Invalid URL")
+            return
+        }
+
+        let request = NSMutableURLRequest(url: url, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 10.0)
+        
         request.httpMethod = "GET"
         request.allHTTPHeaderFields = headers
 

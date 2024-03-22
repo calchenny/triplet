@@ -12,14 +12,15 @@ struct testAPICallsView: View {
     @State private var photoURLs: [String] = []
     @State private var names: [String] = []
     @State private var yelpURLs: [String] = []
+    
+    //instantiate apiCaller object to make calls to API functions
     @StateObject var apiCaller = APICaller()
 
-    //local testing variables
+    //yelp API parameters
     @State var eventName: String
     @State var longitude: Double
     @State var latitude: Double
     @State var term: String
-    @State private var address: String = "1%20Shields%20Ave%2C%20Davis%2C%20CA%2095616"
 
     var body: some View {
         VStack(alignment: .center) {
@@ -67,6 +68,7 @@ struct testAPICallsView: View {
         .padding(.bottom, 5)
         .onAppear {
             print("appeared")
+            //make API call when the view appears
             apiCaller.yelpRetrieveVenues(eventName: eventName, longitude: longitude, latitude: latitude, term: term) { (aliases, error) in
                 
                 if let aliases = aliases {
@@ -77,6 +79,8 @@ struct testAPICallsView: View {
                     for alias in aliases {
                         let currentAlias = alias // Create a local copy
 
+                        //yelpLoadSuggestions() returns a tuple, (name, photoURL, yelpURL)
+                        //make second API call using the specifc business aliases returned from yelpRetrieveVenues()
                         apiCaller.yelpLoadSuggestions(alias: currentAlias) { (result, error) in
                             if let result = result {
                                 DispatchQueue.main.async {
@@ -99,6 +103,6 @@ struct testAPICallsView: View {
     }
 }
 
-#Preview {
-    testAPICallsView(eventName: "T4", longitude: -121.7405, latitude: 38.5449, term: "boba")
-}
+//#Preview {
+//    testAPICallsView(eventName: "T4", longitude: -121.7405, latitude: 38.5449, term: "boba")
+//}

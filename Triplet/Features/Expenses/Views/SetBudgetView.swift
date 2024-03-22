@@ -63,7 +63,6 @@ struct SetBudgetView: View {
                             expensesViewModel.showSetBudgetPopup.toggle()
                         
                         }
-                        //expensesViewModel.showSetBudgetPopup.toggle()
                     } label: {
                         Circle()
                             .frame(maxWidth: 30)
