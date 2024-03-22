@@ -28,21 +28,7 @@ struct ActiveTripView: View {
     @State var showAddEventSheet: Bool = false
     @State var navigateToHome: Bool = false
     @State private var reverseGeocodedAddress: String = ""
-    private let timer = Timer.publish(every: 60, on: .main, in: .default).autoconnect()
-        
-    // Function to refresh the screen if current time matches an event's start or end time
-    private func refreshScreenIfNeeded() {
-        let currentTime = Date()
-        let events = itineraryModel.events.filter { event in
-            // Check if current time matches event's start or end time
-            return currentTime >= event.start && currentTime <= event.end
-        }
-        
-        if !events.isEmpty {
-            // Refresh the screen if the current time matches any event's start or end time
-            currentDate = Date()
-        }
-    }
+
     
     // Function to check if current time is within event start and end time
     func isCurrentTimeWithinEventTime(event: Event) -> Bool {
