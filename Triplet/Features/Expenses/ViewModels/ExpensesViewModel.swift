@@ -27,12 +27,6 @@ class ExpensesViewModel: ObservableObject {
         return self.expenses.reduce(0.0) { $0 + $1.cost }
     }
     
-    //set currentTotal
-    func setCurrentTotal() {
-        let total = calculateTotal()
-        self.currentTotal = self.budget - total
-    }
-    
     // calculate the percentage of total expenses to budget
     func calculatePercentage () -> Double {
         //print("inside calculatePercentage")
@@ -122,7 +116,7 @@ class ExpensesViewModel: ObservableObject {
                 self.budget = budget
                 //print("self.budget is now \(self.budget)")
             }
-            //setCurrentTotal()
+            
         }
     }
     
