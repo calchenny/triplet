@@ -29,7 +29,6 @@ struct ActiveTripView: View {
     @State var navigateToHome: Bool = false
     @State private var reverseGeocodedAddress: String = ""
 
-    
     // Function to check if current time is within event start and end time
     func isCurrentTimeWithinEventTime(event: Event) -> Bool {
         let currentTime = Date()
@@ -69,10 +68,13 @@ struct ActiveTripView: View {
         
     var body: some View {
         VStack {
+            
             Text("Today")
                 .font(.custom("Poppins-Bold", size: 30))
                 .foregroundStyle(Color.darkTeal)
                 .padding(.top, 25)
+                
+            
             RoundedRectangle(cornerRadius: 10)
                 .frame(height: 40)
                 .foregroundStyle(.evenLighterBlue)
@@ -87,7 +89,10 @@ struct ActiveTripView: View {
                 )
                 .padding(.bottom, 25)
                 .padding([.leading, .trailing])
-            Text(itineraryModel.events.filter { Calendar.current.isDate($0.start, inSameDayAs: currentDate) && $0.end > Date() }.isEmpty ? "No events happening now:" : "Happening now:")
+            Text(itineraryModel.events.contains { event in
+                let currentTime = Date()
+                return event.start <= currentTime && event.end >= currentTime
+            } ? "Happening now:" : "No events happening now:")
                 .font(.custom("Poppins-Medium", size: 16))
                 .foregroundStyle(.darkerGray)
             ForEach(itineraryModel.events.filter { Calendar.current.isDate($0.start, inSameDayAs: currentDate) && $0.end > Date() }, id: \.id) { event in
