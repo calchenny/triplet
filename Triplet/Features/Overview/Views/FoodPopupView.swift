@@ -13,7 +13,7 @@ struct FoodPopupView: View {
     var tripId: String
     @EnvironmentObject var overviewViewModel: OverviewViewModel
     @EnvironmentObject var tripViewModel: TripViewModel
-    
+    @State private var startDate: Date = Date()
     @State var selectedFoodCategory: FoodCategory = .breakfast
     @State var date: Date = Date()
     @State var location: String = ""
@@ -144,10 +144,20 @@ struct FoodPopupView: View {
                 HStack(alignment: .center, spacing: 15) {
                     Text("Date/Time")
                         .font(.custom("Poppins-Medium", size: 16))
-                    DatePicker("Please enter a date", selection: $date)
-                        .labelsHidden()
-                        .frame(maxWidth: .infinity, maxHeight: 25)
-                        .tint(.darkTeal)
+                    if let trip = tripViewModel.trip {
+                        if trip.end <= Date() {
+                            DatePicker("Please enter a date", selection: $date)
+                                .labelsHidden()
+                                .frame(maxWidth: .infinity, maxHeight: 25)
+                                .tint(.darkTeal)
+                        } else {
+                            DatePicker("Please enter a date", selection: $date, in: trip.start...trip.end)
+                                .labelsHidden()
+                                .frame(maxWidth: .infinity, maxHeight: 25)
+                                .tint(.darkTeal)
+                        }
+                    }
+                    
                 }
                 Button {
                     guard let selectedLandmark else {
@@ -185,5 +195,11 @@ struct FoodPopupView: View {
         }
         .padding()
         .frame(maxHeight: 600)
+        .onAppear() {
+            if let trip = tripViewModel.trip {
+                startDate = trip.start
+            }
+            
+        }
     }
 }

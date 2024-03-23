@@ -178,5 +178,12 @@ struct HousingPopupView: View {
         }
         .padding()
         .frame(maxHeight: 600)
+        .onAppear() {
+            if let trip = tripViewModel.trip {
+                endDate = trip.start
+                startDate = trip.start
+            }
+            
+        }
     }
 }
