@@ -10,7 +10,6 @@ Triplet is an application aimed to minimize disruptions during trips. Our applic
 
 [Figma Wireframe](https://www.figma.com/file/8epjXgVJ385PMJiG4TgJOY/Triplet-Design?type=design&node-id=245%3A6380&mode=design&t=C2eqYvmU2h2ePDjS-1)
 
-
 ### **Credentials to Build the App**
 - Test Account: 650-555-1234 (OTP Code: 123456)
 - You may login with your own phone number but there's a quota of 10 logins on Firebase, so it's best to use test account
@@ -26,4 +25,15 @@ Majority of code has been organized by feature in the [Features](https://github.
     - Overview: overview tab of the trip with the notes, hotel and food selections
     - Itinerary: itinerary tab of the trip to show trip itinerary in a digestable format
     - Expenses: expense tab for users to keep track of their budget and expenses for the trip
-    - Map: view important landmarks and itineraries near the user
+    - Map: view important landmarks, such as police stations, hospitals, and itineraries near the user
+
+#### Packages and APIs
+- Yelp API: location suggestions
+- MapKit: map view
+- PhoneNumberKit: Formating the phone number
+- PopupView for pop-up content, like searching, notes, and expenses
+- Firebase iOS SDK: Authentication, Firestore Database
+- AnimatedTabBar: Fun tab bar that's animated
+- ScalingHeaderScrollView: Sticky header which shrinks as you scroll
+- TipKit: Popup tips
+
