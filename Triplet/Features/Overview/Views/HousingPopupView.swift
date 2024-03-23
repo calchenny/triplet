@@ -116,18 +116,31 @@ struct HousingPopupView: View {
                     .frame(maxWidth: .infinity, maxHeight: 200)
                 }
                 if let trip = tripViewModel.trip {
-                    DatePicker(selection: $startDate, in: trip.start...trip.end, displayedComponents: [.date, .hourAndMinute]) {
-                        Text("Start:")
-                            .font(.custom("Poppins-Medium", size: 16))
+                    if trip.end <= Date() {
+                        DatePicker(selection: $startDate, displayedComponents: [.date, .hourAndMinute]) {
+                            Text("Start:")
+                                .font(.custom("Poppins-Medium", size: 16))
+                        }
+                        .tint(.darkTeal)
+                        
+                        DatePicker(selection: $endDate, displayedComponents: [.date, .hourAndMinute]) {
+                            Text("End:")
+                                .font(.custom("Poppins-Medium", size: 16))
+                        }
+                        .tint(.darkTeal)
+                    } else {
+                        DatePicker(selection: $startDate, in: trip.start...trip.end, displayedComponents: [.date, .hourAndMinute]) {
+                            Text("Start:")
+                                .font(.custom("Poppins-Medium", size: 16))
+                        }
+                        .tint(.darkTeal)
+                        
+                        DatePicker(selection: $endDate, in: startDate...trip.end, displayedComponents: [.date, .hourAndMinute]) {
+                            Text("End:")
+                                .font(.custom("Poppins-Medium", size: 16))
+                        }
+                        .tint(.darkTeal)
                     }
-                    .tint(.darkTeal)
-
-                    DatePicker(selection: $endDate, in: startDate...trip.end, displayedComponents: [.date, .hourAndMinute]) {
-                        Text("End:")
-                            .font(.custom("Poppins-Medium", size: 16))
-                    }
-                    .tint(.darkTeal)
-                    
                 }
                 Button {
                     guard let selectedLandmark else {

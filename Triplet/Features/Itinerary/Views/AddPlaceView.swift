@@ -128,18 +128,33 @@ struct AddPlaceView: View {
                     .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, maxHeight: 300)
                 }
                 if let trip = tripViewModel.trip {
-                    DatePicker(selection: $startDate, in: trip.start...trip.end , displayedComponents: [.date, .hourAndMinute]) {
-                        Text("Start:")
-                            .font(.custom("Poppins-Medium", size: 16))
-                    }
-                    .tint(.darkTeal)
+                    // Past trip date picker
+                    if trip.end <= Date() {
+                        DatePicker(selection: $startDate, displayedComponents: [.date, .hourAndMinute]) {
+                            Text("Start:")
+                                .font(.custom("Poppins-Medium", size: 16))
+                        }
+                        .tint(.darkTeal)
 
-                    DatePicker(selection: $endDate, in: startDate...trip.end , displayedComponents: [.date, .hourAndMinute]) {
-                        Text("End:")
-                            .font(.custom("Poppins-Medium", size: 16))
+                        DatePicker(selection: $endDate, displayedComponents: [.date, .hourAndMinute]) {
+                            Text("End:")
+                                .font(.custom("Poppins-Medium", size: 16))
+                        }
+                        .tint(.darkTeal)
+                    } else {
+                        // Current trip date picker
+                        DatePicker(selection: $startDate, in: trip.start...trip.end, displayedComponents: [.date, .hourAndMinute]) {
+                            Text("Start:")
+                                .font(.custom("Poppins-Medium", size: 16))
+                        }
+                        .tint(.darkTeal)
+
+                        DatePicker(selection: $endDate, in: startDate...trip.end,  displayedComponents: [.date, .hourAndMinute]) {
+                            Text("End:")
+                                .font(.custom("Poppins-Medium", size: 16))
+                        }
+                        .tint(.darkTeal)
                     }
-                    .tint(.darkTeal)
-                    
                     
                 }
                 HStack(alignment: .center, spacing: 15) {
