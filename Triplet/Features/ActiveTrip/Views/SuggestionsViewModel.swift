@@ -1,5 +1,5 @@
 //
-//  APICallsViewModel.swift
+//  SuggestionsViewModel.swift
 //  Triplet
 //
 //  Created by Newland Luu on 3/13/24.
@@ -8,7 +8,7 @@
 import Foundation
 
 
-class APICaller: ObservableObject {
+class SuggestionsViewModel: ObservableObject {
 
     //returns a completion object, on success it will be an array of aliases of venues from yelp API
     func yelpRetrieveVenues(eventName: String, longitude: Double, latitude: Double, term: String, completionHandler: @escaping ([String]?, Error?) -> Void) {

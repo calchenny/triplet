@@ -1,5 +1,5 @@
 //
-//  testAPICallsView.swift
+//  SuggestionsView.swift
 //  Triplet
 //
 //  Created by Newland Luu on 3/14/24.
@@ -7,14 +7,14 @@
 
 import SwiftUI
 
-struct testAPICallsView: View {
+struct SuggestionsView: View {
     @State private var aliases: [String] = []
     @State private var photoURLs: [String] = []
     @State private var names: [String] = []
     @State private var yelpURLs: [String] = []
     
     //instantiate apiCaller object to make calls to API functions
-    @StateObject var apiCaller = APICaller()
+    @StateObject var apiCaller = SuggestionsViewModel()
 
     //yelp API parameters
     @State var eventName: String
@@ -102,7 +102,3 @@ struct testAPICallsView: View {
         }
     }
 }
-
-//#Preview {
-//    testAPICallsView(eventName: "T4", longitude: -121.7405, latitude: 38.5449, term: "boba")
-//}

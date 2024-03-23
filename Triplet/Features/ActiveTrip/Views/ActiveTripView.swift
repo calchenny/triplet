@@ -138,7 +138,7 @@ struct ActiveTripView: View {
                             let location = event.location
                             let latitude = location.latitude
                             let longitude = location.longitude
-                            testAPICallsView(eventName: event.name, longitude: longitude, latitude: latitude, term: event.type.rawValue)
+                            SuggestionsView(eventName: event.name, longitude: longitude, latitude: latitude, term: event.type.rawValue)
                         }
                     }
                     .padding()

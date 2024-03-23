@@ -30,8 +30,8 @@
 		24246BFB2B97EE290028DAAF /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24246BF92B97EE290028DAAF /* MapView.swift */; };
 		24246BFC2B97EE290028DAAF /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24246BFA2B97EE290028DAAF /* RootView.swift */; };
 		24AD39C42B982C42005223D7 /* PhoneNumberKit in Frameworks */ = {isa = PBXBuildFile; productRef = 24AD39C32B982C42005223D7 /* PhoneNumberKit */; };
-		3C51D0BC2BA2DC1700BAC49F /* apiCallsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C51D0BB2BA2DC1700BAC49F /* apiCallsViewModel.swift */; };
-		3C51D0BE2BA2DC3A00BAC49F /* testAPICallsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C51D0BD2BA2DC3A00BAC49F /* testAPICallsView.swift */; };
+		3C51D0BC2BA2DC1700BAC49F /* SuggestionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C51D0BB2BA2DC1700BAC49F /* SuggestionsViewModel.swift */; };
+		3C51D0BE2BA2DC3A00BAC49F /* SuggestionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C51D0BD2BA2DC3A00BAC49F /* SuggestionsView.swift */; };
 		3C6F6DA02BA6B9A90059DD9D /* SetBudgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C6F6D9F2BA6B9A90059DD9D /* SetBudgetView.swift */; };
 		3CE48FD12B9D324900710CCA /* ExpensesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CE48FD02B9D324900710CCA /* ExpensesViewModel.swift */; };
 		8935A4262B7F496200F62185 /* TripletApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8935A4252B7F496200F62185 /* TripletApp.swift */; };
@@ -110,8 +110,8 @@
 		24246BE72B97ED690028DAAF /* AlertView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
 		24246BF92B97EE290028DAAF /* MapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		24246BFA2B97EE290028DAAF /* RootView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
-		3C51D0BB2BA2DC1700BAC49F /* apiCallsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = apiCallsViewModel.swift; sourceTree = "<group>"; };
-		3C51D0BD2BA2DC3A00BAC49F /* testAPICallsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = testAPICallsView.swift; sourceTree = "<group>"; };
+		3C51D0BB2BA2DC1700BAC49F /* SuggestionsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestionsViewModel.swift; sourceTree = "<group>"; };
+		3C51D0BD2BA2DC3A00BAC49F /* SuggestionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestionsView.swift; sourceTree = "<group>"; };
 		3C587C0B2BAAB52A00500390 /* APIConfig.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = APIConfig.xcconfig; sourceTree = "<group>"; };
 		3C6F6D9F2BA6B9A90059DD9D /* SetBudgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetBudgetView.swift; sourceTree = "<group>"; };
 		3CE48FD02B9D324900710CCA /* ExpensesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpensesViewModel.swift; sourceTree = "<group>"; };
@@ -182,15 +182,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		128284142B81FAE500E3E084 /* ViewModels */ = {
-			isa = PBXGroup;
-			children = (
-				3C51D0BB2BA2DC1700BAC49F /* apiCallsViewModel.swift */,
-				3C51D0BD2BA2DC3A00BAC49F /* testAPICallsView.swift */,
-			);
-			path = ViewModels;
-			sourceTree = "<group>";
-		};
 		8935A4192B7F496200F62185 = {
 			isa = PBXGroup;
 			children = (
@@ -206,7 +197,6 @@
 				89D806582BA5082D00654DBC /* Utilities */,
 				89BAEF372BA791FA00CC0D5C /* Services */,
 				89B3F3A12B8FA6DD00D79E5D /* Resources */,
-				128284142B81FAE500E3E084 /* ViewModels */,
 				24246BFA2B97EE290028DAAF /* RootView.swift */,
 				8935A4252B7F496200F62185 /* TripletApp.swift */,
 				89031F572B80012800282C88 /* Info.plist */,
@@ -240,6 +230,8 @@
 			children = (
 				129457E72BA18719005EFA4D /* ActiveTripView.swift */,
 				129458082BA95DA5005EFA4D /* ActiveTripViewModel.swift */,
+				3C51D0BB2BA2DC1700BAC49F /* SuggestionsViewModel.swift */,
+				3C51D0BD2BA2DC3A00BAC49F /* SuggestionsView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -605,7 +597,7 @@
 				24246BFB2B97EE290028DAAF /* MapView.swift in Sources */,
 				24246BF52B97ED690028DAAF /* LoginView.swift in Sources */,
 				24246BF02B97ED690028DAAF /* SettingsView.swift in Sources */,
-				3C51D0BC2BA2DC1700BAC49F /* apiCallsViewModel.swift in Sources */,
+				3C51D0BC2BA2DC1700BAC49F /* SuggestionsViewModel.swift in Sources */,
 				24246BF22B97ED690028DAAF /* DestinationSearchView.swift in Sources */,
 				24246BEC2B97ED690028DAAF /* OverviewView.swift in Sources */,
 				24246BF62B97ED690028DAAF /* VerificationView.swift in Sources */,
@@ -635,7 +627,7 @@
 				24246BEB2B97ED690028DAAF /* FoodPopupView.swift in Sources */,
 				89BDCE702B8FB45600C69895 /* LocationManagerService.swift in Sources */,
 				24246BED2B97ED690028DAAF /* HousingPopupView.swift in Sources */,
-				3C51D0BE2BA2DC3A00BAC49F /* testAPICallsView.swift in Sources */,
+				3C51D0BE2BA2DC3A00BAC49F /* SuggestionsView.swift in Sources */,
 				89BDCE6A2B8FB3C800C69895 /* LandmarkModel.swift in Sources */,
 				89621B062B915053006C0848 /* MyTripsViewModel.swift in Sources */,
 				129458092BA95DA5005EFA4D /* ActiveTripViewModel.swift in Sources */,
@@ -777,7 +769,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Triplet/Preview Content\"";
-				DEVELOPMENT_TEAM = JF766DDY34;
+				DEVELOPMENT_TEAM = 2P8FAYUBDM;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Triplet/Info.plist;
@@ -794,7 +786,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = edu.ucdavis.cs.ecs189e.Triplet.Xiaolin;
+				PRODUCT_BUNDLE_IDENTIFIER = edu.ucdavis.cs.ecs189e.Triplet.Calvin;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -812,7 +804,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Triplet/Preview Content\"";
-				DEVELOPMENT_TEAM = JF766DDY34;
+				DEVELOPMENT_TEAM = 2P8FAYUBDM;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Triplet/Info.plist;
@@ -829,7 +821,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = edu.ucdavis.cs.ecs189e.Triplet.Xiaolin;
+				PRODUCT_BUNDLE_IDENTIFIER = edu.ucdavis.cs.ecs189e.Triplet.Calvin;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
