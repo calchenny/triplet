@@ -14,7 +14,7 @@ class SuggestionsViewModel: ObservableObject {
     func yelpRetrieveVenues(eventName: String, longitude: Double, latitude: Double, term: String, completionHandler: @escaping ([String]?, Error?) -> Void) {
         print("inside yelpRetrieveVenues()")
         
-        //hard-coded parameters
+        // Search parameters
         let limit: Int = 5
         let sortBy: String = "best_match"
         let locale: String = "en_US"
@@ -128,7 +128,6 @@ class SuggestionsViewModel: ObservableObject {
             }
             //if we are able to access, set apiKey equal to the yelpSecret
             if let yelpSecret = plist["YELPSECRET"] as? String {
-                //print("Value of 'YELPSECRET': \(specificEntry)")
                 apiKey = yelpSecret
                 
             } else {
@@ -173,17 +172,13 @@ class SuggestionsViewModel: ObservableObject {
                             
                         let result: (String, String, String, String) = (name, firstPhotoURL, yelpURL, address1)
                         completionHandler([result], nil)
-                        print("Tuple of (name, photoURL, yelpURL, and address) successfully returned from yelpLoadSuggestions()")
-                        print("Address: \(address1)")
                         return
                     }
 
                     // If photos array or name is empty or not present
-                    print("return tuple empty")
                     completionHandler(nil, nil)
 
                 } catch {
-                    print("there was an error")
                     completionHandler(nil, error)
                 }
             }
