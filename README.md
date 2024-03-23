@@ -10,13 +10,15 @@ Triplet is an application aimed to minimize disruptions during trips. Our applic
 
 [Figma Wireframe](https://www.figma.com/file/8epjXgVJ385PMJiG4TgJOY/Triplet-Design?type=design&node-id=245%3A6380&mode=design&t=C2eqYvmU2h2ePDjS-1)
 
-### **Credentials to Build the App**
+### **How to Use the App**
+- Use Xcode 15.3 and ensure that the simulator is running on iOS 17.4
 - Test Account: 650-555-1234 (OTP Code: 123456)
 - You may login with your own phone number but there's a quota of 10 logins on Firebase, so it's best to use test account
 - There's a quota of 250 runs for the Yelp API as well
+- The location of the user is defaulted on the simulator to Cupertino, CA. This means that if you want to test out the map view thoroughly, please install on your device or set your simulator's current location
+- Use a unique bundle identifier, such as: edu.ucdavis.cs.ecs189e.Triplet.Sam
 
 ### **Basic Overview of Our Code**
-
 Majority of code has been organized by feature in the [Features](https://github.com/calchenny/triplet/tree/main/Triplet/Features) folder
 - Login: handles login and verification
 - Home: tab view that displays user trips, creating a new trip, and settings page
