@@ -12,11 +12,12 @@ Triplet is an application aimed to minimize disruptions during trips. Our applic
 
 ### **How to Use the App**
 - Use Xcode 15.3 and ensure that the simulator is running on iOS 17.4
-- Test Account: 650-555-1234 (OTP Code: 123456)
+- Test Account: `650-555-1234` (OTP Code: `123456`)
 - You may login with your own phone number but there's a quota of 10 logins on Firebase, so it's best to use test account
-- There's a quota of 250 runs for the Yelp API as well
+- There's a daily quota of 250 runs for the suggestions using the Yelp API
 - The location of the user is defaulted on the simulator to Cupertino, CA. This means that if you want to test out the map view thoroughly, please install on your device or set your simulator's current location
 - Use a unique bundle identifier, such as: edu.ucdavis.cs.ecs189e.Triplet.Sam
+- If there are dependency issues, please run this command in your terminal within the project directory and restart Xcode: `xcodebuild -resolvePackageDependencies` 
 
 ### **Basic Overview of Our Code**
 Majority of code has been organized by feature in the [Features](https://github.com/calchenny/triplet/tree/main/Triplet/Features) folder
