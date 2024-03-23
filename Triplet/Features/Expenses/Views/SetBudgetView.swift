@@ -83,7 +83,6 @@ struct SetBudgetView: View {
                         .padding(40)
                         .frame(maxHeight: 35)
                         .font(.custom("Poppins-Regular", size: 40))
-    //                    .overlay(RoundedRectangle(cornerRadius: 5).stroke(Color("Darker Gray")))
                         .keyboardType(.decimalPad)
                         .focused($budgetFocus)
                     .multilineTextAlignment(.center)

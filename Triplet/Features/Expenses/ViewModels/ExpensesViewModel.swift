@@ -23,14 +23,11 @@ class ExpensesViewModel: ObservableObject {
     
     // calculate the total expenses
     func calculateTotal () -> Double {
-        //print("inside calculateTotal")
         return self.expenses.reduce(0.0) { $0 + $1.cost }
     }
     
     // calculate the percentage of total expenses to budget
     func calculatePercentage () -> Double {
-        //print("inside calculatePercentage")
-        //print("total is \(currentTotal) and budget is \(budget)")
         return self.currentTotal/self.budget
     }
     
@@ -112,9 +109,7 @@ class ExpensesViewModel: ObservableObject {
                     print("Error parsing budget data or budget not found")
                     return
                 }
-                //print("budget in trips firebase is \(budget)")
                 self.budget = budget
-                //print("self.budget is now \(self.budget)")
             }
             
         }
