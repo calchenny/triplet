@@ -25,7 +25,6 @@ struct TripletApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     
     init() {
-        Tips.showAllTipsForTesting()
         try? Tips.configure()
         UIView.appearance(whenContainedInInstancesOf: [TipUIPopoverViewController.self]).tintColor = UIColor(.darkTeal)
         UIView.appearance(whenContainedInInstancesOf: [UIAlertController.self]).tintColor = UIColor(Color.darkTeal)
