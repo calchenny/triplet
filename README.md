@@ -17,6 +17,7 @@ Triplet is an application aimed to minimize disruptions during trips. Our applic
 - There's a quota of 250 runs for the Yelp API as well
 - The location of the user is defaulted on the simulator to Cupertino, CA. This means that if you want to test out the map view thoroughly, please install on your device or set your simulator's current location
 - Use a unique bundle identifier, such as: edu.ucdavis.cs.ecs189e.Triplet.Sam
+- If there are dependency issues, please run this command in your terminal within the project directory and restart Xcode: `xcodebuild -resolvePackageDependencies` 
 
 ### **Basic Overview of Our Code**
 Majority of code has been organized by feature in the [Features](https://github.com/calchenny/triplet/tree/main/Triplet/Features) folder
